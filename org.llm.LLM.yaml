@@ -1,0 +1,13 @@
+id: org.llm.LLM 
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: llm.py
+modules:
+  - name: llm 
+    buildsystem: simple
+    build-commands:
+      - install -D llm.py /app/bin/llm.py
+    sources:
+      - type: file
+        path: src/llm.py 
