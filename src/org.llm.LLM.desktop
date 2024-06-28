@@ -4,7 +4,7 @@ Type=Application
 Name=LLM
 Comment=Containerized LLM 
 
-Exec=src/llm.py  
+Exec=/app/bin/llm.py  
 ## python3 -c "input('read')"
 #Exec= flatpak run org.llm.LLM
 Terminal=true
