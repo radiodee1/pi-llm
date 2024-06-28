@@ -4,7 +4,6 @@ runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 command: llm.py
 finish-args:
-  - --filesystem=host
   - --filesystem=~/.llm.env
   - --filesystem=home
   - --share=network
@@ -16,4 +15,12 @@ modules:
       - install -D llm.py /app/bin/llm.py
     sources:
       - type: file
-        path: src/llm.py 
+        path: src/llm.py
+  - name: org.llm.LLM.desktop
+    buildsystem: simple
+    sources:
+      - type: file
+        path: ./src/org.llm.LLM.desktop 
+    build-commands:
+      - echo $HOME
+      - install -Dm755 org.llm.LLM.desktop /app/share/applications/org.llm.LLM.desktop

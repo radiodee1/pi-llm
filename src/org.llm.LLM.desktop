@@ -3,5 +3,4 @@ Version=1.0
 Type=Application
 Name=LLM
 Comment=Containerized LLM 
-Exec=/usr/bin/flatpak run org.llm.LLM
-
+Exec= /usr/bin/flatpak run  org.llm.LLM
