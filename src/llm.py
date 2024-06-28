@@ -1,13 +1,29 @@
 #!/usr/bin/python3
 
 import argparse
+from dotenv import load_dotenv 
+import os
+
+load_dotenv("~/.llm.env")
+
+try:
+    TEST_SIX=int(os.environ['TEST_SIX']) 
+except:
+    TEST_SIX = 8 # 32 
+
+
+try:
+    TEST_NINE=int(os.environ['TEST_NINE']) 
+except:
+    TEST_NINE = 16
 
 test_txt = [ 
             'hi, my name is jane',
             'I like candy',
             'I like the color blue',
             'please dont be confused',
-            'where are we?'
+            'where are we?',
+            'if ' + str(TEST_SIX) + ' were ' + str(TEST_NINE)
             ]
 
 
