@@ -7,6 +7,7 @@ finish-args:
   - --filesystem=host
   - --filesystem=~/.llm.env
   - --filesystem=home
+  - --share=network
 modules:
   - requirements.json
   - name: llm 
