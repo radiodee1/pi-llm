@@ -1,0 +1,40 @@
+{
+    "name": "requirements",
+    "buildsystem": "simple",
+    "build-commands": [],
+    "modules": [
+        {
+            "name": "python3-python-dotenv",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"python-dotenv==0.17.1\" --no-build-isolation"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/26/1f/ae3d06ec877df31f49448d24eee7198549edae2af00da60c85dad93e343f/python_dotenv-0.17.1-py2.py3-none-any.whl",
+                    "sha256": "00aa34e92d992e9f8383730816359647f358f4a3be1ba45e5a5cefd27ee91544"
+                }
+            ]
+        },
+        {
+            "name": "python3-requirements-parser",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"requirements-parser==0.9.0\" --no-build-isolation"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/2d/2e/d83d239cbf8a18f9400de46b9204c2fa8899f9347e771009aafb27858def/requirements_parser-0.9.0-py3-none-any.whl",
+                    "sha256": "40298fd2bb423798fc52ca4550adf1944d75c998fd2316b5b6959842dbc70a32"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/0e/c5/5c56efcac5c513af11ec950a9f61256108890b9097f687f0e17a7aadbe56/types_setuptools-70.1.0.20240627-py3-none-any.whl",
+                    "sha256": "c7bdf05cd0a8b66868b4774c7b3c079d01ae025d8c9562bfc8bf2ff44d263c9c"
+                }
+            ]
+        }
+    ]
+}

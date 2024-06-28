@@ -2,5 +2,5 @@
 
 # pip install requirements-parser
 
-../flatpak-builder-tools/pip/flatpak-pip-generator --runtime='org.freedesktop.Sdk//23.08' --requirements-file='virtualenv/requirements.x86_64.txt' --output requirements.json
+../flatpak-builder-tools/pip/flatpak-pip-generator --runtime='org.freedesktop.Sdk//23.08' --requirements-file='virtualenv/requirements.x86_64.txt' --output requirements
 
