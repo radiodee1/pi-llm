@@ -7,13 +7,13 @@
             "name": "python3-python-dotenv",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"python-dotenv==0.17.1\" --no-build-isolation"
+                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"python-dotenv==1.0.1\" --no-build-isolation"
             ],
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/26/1f/ae3d06ec877df31f49448d24eee7198549edae2af00da60c85dad93e343f/python_dotenv-0.17.1-py2.py3-none-any.whl",
-                    "sha256": "00aa34e92d992e9f8383730816359647f358f4a3be1ba45e5a5cefd27ee91544"
+                    "url": "https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl",
+                    "sha256": "f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a"
                 }
             ]
         },
