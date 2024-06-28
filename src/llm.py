@@ -1,19 +1,18 @@
 #!/usr/bin/python3
 
 import argparse
-from dotenv import load_dotenv 
+from dotenv import load_dotenv, dotenv_values 
 import os
 
-load_dotenv("~/.llm.env")
+vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
 try:
-    TEST_SIX=int(os.environ['TEST_SIX']) 
+    TEST_SIX=int(vals['TEST_SIX']) 
 except:
     TEST_SIX = 8 # 32 
 
-
 try:
-    TEST_NINE=int(os.environ['TEST_NINE']) 
+    TEST_NINE=int(vals['TEST_NINE']) 
 except:
     TEST_NINE = 16
 
