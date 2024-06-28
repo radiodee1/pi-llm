@@ -4,6 +4,7 @@ runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 command: llm.py
 modules:
+  - requirements.json
   - name: llm 
     buildsystem: simple
     build-commands:
