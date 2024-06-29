@@ -1,8 +1,9 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import argparse
 from dotenv import  dotenv_values 
 import os
+import speech_recognition as sr
 
 vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -39,12 +40,41 @@ class Kernel:
         x = 0 
         while z == True:
             print(test_txt[x])
+            t = self.separate_words(test_txt[x])
+            r = self.recognize_audio()
+            print(t, r)
             x += 1
             x = x % len(test_txt)
             g = input("say something (stop to quit) >> ")
             if g == "stop":
                 z = False
         print("here")
+
+    def separate_words(self, line):
+        return line.split(" ")
+
+    def recognize_audio(self):
+
+        # obtain audio from the microphone
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            print("Say something!")
+            audio = r.listen(source)
+
+        # recognize speech using Sphinx
+        # recognize speech using Google Speech Recognition
+        try:
+            ret = r.recognize_google(audio)
+            # for testing purposes, we're just using the default API key
+            # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
+            # instead of `r.recognize_google(audio)`
+            print("Google Speech Recognition thinks you said " + ret)
+            return ret 
+        except sr.UnknownValueError:
+            print("Google Speech Recognition could not understand audio")
+        except sr.RequestError as e:
+            print("Could not request results from Google Speech Recognition service; {0}".format(e))
+
 
 
 if __name__ == '__main__':
