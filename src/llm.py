@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import argparse
-from dotenv import load_dotenv, dotenv_values 
+from dotenv import  dotenv_values 
 import os
 
 vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")

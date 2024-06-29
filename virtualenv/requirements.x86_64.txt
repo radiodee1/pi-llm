@@ -2,3 +2,5 @@
 
 python-dotenv==1.0.1
 requirements-parser==0.9.0
+
+SpeechRecognition==3.10.4
