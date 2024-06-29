@@ -3,5 +3,5 @@ setuptools==65.5.0
 python-dotenv==1.0.1
 requirements-parser==0.9.0
 
-#PyAudio==0.2.14
+PyAudio==0.2.14
 SpeechRecognition==3.10.4

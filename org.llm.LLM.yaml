@@ -7,8 +7,30 @@ finish-args:
   - --filesystem=~/.llm.env
   - --filesystem=home
   - --share=network
+  - --filesystem=/dev/shm
+  - --device=all
+  - --socket=pulseaudio
 modules:
   - requirements.json
+
+
+  - name: portaudio
+    buildsystem: cmake-ninja
+    sources:
+      - type: archive
+        url: https://github.com/PortAudio/portaudio/archive/refs/tags/v19.7.0.tar.gz
+        sha256: 5af29ba58bbdbb7bbcefaaecc77ec8fc413f0db6f4c4e286c40c3e1b83174fa0
+
+  - name: pyaudio
+    buildsystem: simple   
+    build-commands:
+      - python -m pip install --no-deps --no-build-isolation  --prefix=/app . 
+    sources:
+      - type: archive 
+        url: https://files.pythonhosted.org/packages/26/1d/8878c7752febb0f6716a7e1a52cb92ac98871c5aa522cba181878091607c/PyAudio-0.2.14.tar.gz
+        sha256: 78dfff3879b4994d1f4fc6485646a57755c6ee3c19647a491f790a0895bd2f87
+
+
   - name: llm 
     buildsystem: simple
     build-commands:
