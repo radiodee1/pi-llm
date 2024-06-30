@@ -4,6 +4,8 @@ import argparse
 from dotenv import  dotenv_values 
 import os
 import speech_recognition as sr
+from gtts import gTTS 
+from playsound import playsound
 
 vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -34,6 +36,7 @@ class Kernel:
         self.local = False
         self.remote = False
         self.test = False
+        #self.engine = pyttsx3.init()
 
     def loop(self):
         z = True
@@ -43,6 +46,7 @@ class Kernel:
             t = self.separate_words(test_txt[x])
             r = self.recognize_audio()
             print(t, r)
+            self.say_text(t[0])
             x += 1
             x = x % len(test_txt)
             g = input("say something (stop to quit) >> ")
@@ -61,8 +65,6 @@ class Kernel:
             print("Say something!")
             audio = r.listen(source)
 
-        # recognize speech using Sphinx
-        # recognize speech using Google Speech Recognition
         try:
             ret = r.recognize_google(audio)
             # for testing purposes, we're just using the default API key
@@ -75,7 +77,13 @@ class Kernel:
         except sr.RequestError as e:
             print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
-
+    def say_text(self, txt):
+        tts = gTTS(text=txt, lang='en')
+        filename = 'output.mp3'
+        tts.save(filename)
+        playsound(filename)
+        #os.system(f'start {filename}')
+        pass 
 
 if __name__ == '__main__':
     k = Kernel()

@@ -1,7 +1,7 @@
 id: org.llm.LLM 
-runtime: org.freedesktop.Platform
-runtime-version: '23.08'
-sdk: org.freedesktop.Sdk
+runtime: org.gnome.Platform
+runtime-version: '43'
+sdk: org.gnome.Sdk
 command: llm.py
 finish-args:
   - --filesystem=~/.llm.env
@@ -13,6 +13,12 @@ finish-args:
 modules:
   - requirements.json
 
+  - name: pygobject
+    buildsystem: meson 
+    sources:
+      - type: archive 
+        url: https://files.pythonhosted.org/packages/ac/4a/f24ddf1d20cc4b56affc7921e29928559a06c922eb60077448392792b914/PyGObject-3.46.0.tar.gz
+        sha256: 481437b05af0a66b7c366ea052710eb3aacbb979d22d30b797f7ec29347ab1e6
 
   - name: portaudio
     buildsystem: cmake-ninja
