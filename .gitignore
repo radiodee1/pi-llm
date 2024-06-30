@@ -165,4 +165,5 @@ cython_debug/
 repo/
 .flatpak-builder/
 
+*.flatpak 
 .output.mp3
