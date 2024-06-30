@@ -79,7 +79,7 @@ class Kernel:
 
     def say_text(self, txt):
         tts = gTTS(text=txt, lang='en')
-        filename = 'output.mp3'
+        filename = '.output.mp3'
         tts.save(filename)
         playsound(filename)
         #os.system(f'start {filename}')
