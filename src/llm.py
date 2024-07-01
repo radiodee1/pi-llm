@@ -6,6 +6,8 @@ import os
 import speech_recognition as sr
 from gtts import gTTS 
 from playsound import playsound
+import multiprocessing as mp 
+import time
 
 vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -36,53 +38,71 @@ class Kernel:
         self.local = False
         self.remote = False
         self.test = False
-        #self.engine = pyttsx3.init()
+        self.q = mp.Queue()
 
     def loop(self):
+                #p.start() 
         z = True
         x = 0 
         while z == True:
-            print(test_txt[x])
-            t = self.separate_words(test_txt[x])
-            r = self.recognize_audio()
-            print(t, r)
-            self.say_text(t[0])
+            
+            self.q = mp.Queue()
+            p = mp.Process(target=self.recognize_audio, args=(self.q,))
+            p.start()
+            
+            rr = []
+            self.say_text(test_txt[x])
             x += 1
             x = x % len(test_txt)
+            time.sleep(2)
+            while not self.q.empty():
+                rx = self.q.get()
+                print('rx', rx)
+                rr += [rx] 
+            print(rr)
             g = input("say something (stop to quit) >> ")
             if g == "stop":
                 z = False
+                p.kill()
+            #while not self.q.empty():
+            #    self.q.get()
+            p.join()
         print("here")
 
     def separate_words(self, line):
         return line.split(" ")
 
-    def recognize_audio(self):
+    def recognize_audio(self, q):
 
-        # obtain audio from the microphone
-        r = sr.Recognizer()
-        with sr.Microphone() as source:
-            print("Say something!")
-            audio = r.listen(source)
+        if q.empty():
 
-        try:
-            ret = r.recognize_google(audio)
-            # for testing purposes, we're just using the default API key
-            # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
-            # instead of `r.recognize_google(audio)`
-            print("Google Speech Recognition thinks you said " + ret)
-            return ret 
-        except sr.UnknownValueError:
-            print("Google Speech Recognition could not understand audio")
-        except sr.RequestError as e:
-            print("Could not request results from Google Speech Recognition service; {0}".format(e))
+            r = sr.Recognizer()
+            with sr.Microphone() as source:
+                print("Say something!")
+                audio = r.listen(source)
+
+            try:
+                ret = r.recognize_google(audio)
+                # for testing purposes, we're just using the default API key
+                # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
+                # instead of `r.recognize_google(audio)`
+                print("Google Speech Recognition thinks you said: " + ret)
+                
+                for i in ret.split(' '):
+                    print('sr', i)
+                    q.put(i)
+                
+            except sr.UnknownValueError:
+                print("Google Speech Recognition could not understand audio")
+            except sr.RequestError as e:
+                print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
     def say_text(self, txt):
         tts = gTTS(text=txt, lang='en')
         filename = '.output.mp3'
         tts.save(filename)
         playsound(filename)
-        #os.system(f'start {filename}')
+        print('xxx ', txt)
         pass 
 
 if __name__ == '__main__':
