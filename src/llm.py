@@ -41,41 +41,42 @@ class Kernel:
         self.q = mp.Queue()
 
     def loop(self):
-                #p.start() 
         z = True
         x = 0 
         while z == True:
-            
+            tt = test_txt[x]
             self.q = mp.Queue()
             p = mp.Process(target=self.recognize_audio, args=(self.q,))
             p.start()
-            time.sleep(1) 
             rr = []
-            self.say_text(test_txt[x])
-            x += 1
-            x = x % len(test_txt)
-            time.sleep(2)
+            time.sleep(2) 
+            self.say_text(tt)
+            sleep_time = 0.75 * len(tt.split(" "))
+            print(sleep_time)
+            time.sleep(sleep_time)
+
             while not self.q.empty():
                 rx = self.q.get()
                 print('rx', rx)
                 rr += [rx] 
             print(rr)
+            if self.is_match(tt.split(' '), rr):
+                print( 'no interruption' )
+            else:
+                print( 'interruption!' )
             p.kill()
-            g = input("say something (stop to quit) >> ")
+            x += 1
+            x = x % len(test_txt)
+            g = input("type something ('stop' to quit) >> ")
             if g == "stop":
                 z = False
                 p.kill()
-            #while not self.q.empty():
-            #    self.q.get()
-            #p.join()
         print("here")
 
-    def separate_words(self, line):
-        return line.split(" ")
 
     def recognize_audio(self, q):
 
-        if q.empty():
+        if True: # q.empty():
 
             r = sr.Recognizer()
             with sr.Microphone() as source:
@@ -87,10 +88,10 @@ class Kernel:
                 # for testing purposes, we're just using the default API key
                 # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
                 # instead of `r.recognize_google(audio)`
-                print("Google Speech Recognition thinks you said: " + ret)
+                print("speech recognition: " + ret)
                 
                 for i in ret.split(' '):
-                    print('sr', i)
+                    #print('sr', i)
                     q.put(i)
                 
             except sr.UnknownValueError:
@@ -103,8 +104,22 @@ class Kernel:
         filename = '.output.mp3'
         tts.save(filename)
         playsound(filename)
-        print('xxx ', txt)
+        print('say this: ', txt)
         pass 
+
+    def is_match(self, text, speech):
+        if abs(len(text) - len(speech)) >= 1:
+            print('len is off:', text, speech)
+            return False
+        for i in range(len(text)):
+            if i < len(text) and i < len(speech):
+                t = text[i].lower()[0:2]
+                s = speech[i].lower()[0:2]
+                #print(t, text[i], s, speech[i])
+                if t != s:
+                    print('individual words dont compare...')
+                    return False
+        return True
 
 if __name__ == '__main__':
     k = Kernel()
