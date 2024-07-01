@@ -11,6 +11,9 @@ Source the file named `do_make_virtualenv_setup310.sh` .
 After sourcing the above file, run this command to install dependencies.
 
 ```
-pip3 install -r ./requirements.x86_64.txt 
+./do_install_apt_pkg.sh
+## This is for ubuntu or debian... ##
+
+pip3 install -r ./requirements.not-flatpak.txt 
 ## Exit this folder and use repository normally... ##
 ```
