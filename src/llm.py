@@ -49,7 +49,7 @@ class Kernel:
             self.q = mp.Queue()
             p = mp.Process(target=self.recognize_audio, args=(self.q,))
             p.start()
-            
+            time.sleep(1) 
             rr = []
             self.say_text(test_txt[x])
             x += 1
@@ -60,13 +60,14 @@ class Kernel:
                 print('rx', rx)
                 rr += [rx] 
             print(rr)
+            p.kill()
             g = input("say something (stop to quit) >> ")
             if g == "stop":
                 z = False
                 p.kill()
             #while not self.q.empty():
             #    self.q.get()
-            p.join()
+            #p.join()
         print("here")
 
     def separate_words(self, line):
