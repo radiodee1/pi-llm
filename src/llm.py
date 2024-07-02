@@ -8,6 +8,7 @@ from gtts import gTTS
 from playsound import playsound
 import multiprocessing as mp 
 import time
+import queue
 
 vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -48,49 +49,55 @@ class Kernel:
 
     def loop(self):
         z = True
-        x = 0 
+        x = 0
+        rr = []
         while z == True:
             print("ai here")
             tt = test_txt[x]
-            self.q = mp.Queue()
+            #self.q = mp.Queue()
+            self.empty_queue()
+            #while not self.q.empty():
+            #    self.q.get(block=False)
             p = mp.Process(target=self.recognize_audio)
             p.start()
-            rr = []
+            rr.clear()
             time.sleep(2) 
             self.say_text(tt)
             sleep_time = 0.75 * len(tt.split(" ")) 
             print(sleep_time)
             time.sleep(sleep_time)
-
-            while not self.q.empty():
-                rx = self.q.get()
+            while self.q.qsize() > 0:
+                rx = self.q.get(block=False)
                 print('rx', rx)
-                rr += [rx] 
+                rr.append(rx) # += [rx] 
             print(rr)
             ## kill here ##
             p.kill()
-            #p.close()
-            #p.kill()
+            #self.q.join()
+
             if self.is_match(tt.split(' '), rr):
                 print( 'no interruption!' )
-                rr = []
-                self.q = mp.Queue()
+                #while not self.q.empty():
+                #    self.q.get(block=False)
+                #self.empty_queue()
+                rr.clear()
+                
             else:
                 print( 'interruption!' )
             x += 1
             x = x % len(test_txt)
             ### second process ###
-               
-            #time.sleep(5)
-
             self.recognize_audio()
-            
+            time.sleep(1.75)   
+           
             while not self.q.empty():
                 rx = self.q.get()
                 print('rx2', rx)
-                rr += [rx]
-            
-            print("ai here")
+                rr.append(rx) # += [rx]
+            #self.q.task_done()
+
+            print("ai here ", rr)
+            rr.clear()
 
     def list_microphones(self):
         for k, v in enumerate(sr.Microphone.list_microphone_names()):
@@ -121,9 +128,12 @@ class Kernel:
             # instead of `r.recognize_google(audio)`
             print("speech recognition: " + ret)
             
-            for i in ret.split(' '):
-                print('sr', i)
-                self.q.put(i)
+            if True:
+                for i in ret.split(' '):
+                    print('sr', i)
+                    #self.q.put(i)
+                    self.q.put(i)
+                    #self.q.task_done() 
             
         except sr.UnknownValueError:
             print("Google Speech Recognition could not understand audio")
@@ -155,6 +165,12 @@ class Kernel:
                     print('individual words dont compare...')
                     return False
         return True
+
+    def empty_queue(self):
+        #with self.q.mutex:
+        #self.q.clear()
+        while not self.q.empty():
+            self.q.get_nowait()
 
 if __name__ == '__main__':
     k = Kernel()
