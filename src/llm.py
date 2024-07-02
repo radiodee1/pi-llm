@@ -69,21 +69,17 @@ class Kernel:
             while self.q.qsize() > 0:
                 rx = self.q.get(block=False)
                 print('rx', rx)
-                rr.append(rx) # += [rx] 
+                rr.append(rx) 
             print(rr)
+
             ## kill here ##
             p.kill()
-            #self.q.join()
 
             if self.is_match(tt.split(' '), rr):
-                print( 'no interruption!' )
-                #while not self.q.empty():
-                #    self.q.get(block=False)
-                #self.empty_queue()
+                print('no interruption!')
                 rr.clear()
-                
             else:
-                print( 'interruption!' )
+                print('interruption!')
             x += 1
             x = x % len(test_txt)
             ### second process ###
@@ -93,8 +89,7 @@ class Kernel:
             while not self.q.empty():
                 rx = self.q.get()
                 print('rx2', rx)
-                rr.append(rx) # += [rx]
-            #self.q.task_done()
+                rr.append(rx) 
 
             print("ai here ", rr)
             rr.clear()
