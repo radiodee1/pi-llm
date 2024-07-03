@@ -72,6 +72,9 @@ prompt_txt = [
 
 identifiers = { 'user':'user', 'ai':'Jane' }
 
+test_text = [ 'here', 'is', 'some', 'text' ]
+test_speech = [ 'here', 'is', 'some', 'text', 'plus' , 'some']
+
 class Kernel:
 
     def __init__(self):
@@ -205,20 +208,32 @@ class Kernel:
     def prune_interrupted(self, text, speech):
         output = []
         found = False
-        for i in range(len(text)):
-            print (text[i])
+        for i in range(len(speech)):
+            #print (speech[i])
             found = False
-            for ii in range(len(speech)):
-                print(speech[ii])
-                if text[i] == speech[ii]:
+            for ii in range(len(text)):
+                #print(text[ii])
+                if text[ii] == speech[i]:
                     found = True
                     continue
             if found:
                 continue
             else:
-                output.append(speech[ii])
-        print(output, '<<<')
+                output.append(speech[i])
+        #print(output, '<<<')
         return output
+
+    def make_prompt(self):
+        ret = ""
+        for i in prompt_txt:
+            u = i[0]
+            a = i[1]
+            ret += identifiers['user'] + ": " + u 
+            ret += '\n'
+            ret += identifiers['ai'] + ": " + a 
+            ret += '\n\n'
+        #print(ret)
+        return ret 
 
 if __name__ == '__main__':
     k = Kernel()
@@ -241,5 +256,7 @@ if __name__ == '__main__':
 
     k.test = args.test
 
+    #k.prune_interrupted(test_text, test_speech)
+    #k.make_prompt()
     k.loop()
 
