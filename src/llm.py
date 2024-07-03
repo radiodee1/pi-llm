@@ -61,6 +61,16 @@ test_txt = [
             'if ' + str(TEST_SIX) + ' were ' + str(TEST_NINE)
             ]
 
+prompt_txt = [
+        [ 'hi', 'hello' ],
+        [ 'what is your name?', 'my name is Jane' ],
+        [ 'tell me about yourself', 'i am a student' ],
+        [ 'what is your favorite color?', 'i like the color blue' ],
+        [ 'how old are you?', 'I am thirty three years old' ],
+        [ 'what is your favorite food', 'I like pizza']
+            ]
+
+identifiers = { 'user':'user', 'ai':'Jane' }
 
 class Kernel:
 
