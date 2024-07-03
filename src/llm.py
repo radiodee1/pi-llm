@@ -199,8 +199,6 @@ class Kernel:
         return True
 
     def empty_queue(self):
-        #with self.q.mutex:
-        #self.q.clear()
         while not self.q.empty():
             self.q.get_nowait()
 
