@@ -96,8 +96,8 @@ class Kernel:
         while z == True:
             print("ai here")
             if x == 0:
-                #tt = test_txt[0]
-                rr = "say something".split(' ')
+                pass 
+                #rr = "say something".split(' ')
             self.empty_queue()
             #while not self.q.empty():
             #    self.q.get(block=False)
@@ -137,7 +137,7 @@ class Kernel:
                 rr.append(rx)
 
             if x == 1 or len(rr) == 0:
-                rr = ['say' , 'something']
+                rr = ['say' , 'something', 'introduce', 'yourself']
 
             print("ai here ", rr)
 
