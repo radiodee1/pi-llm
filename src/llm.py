@@ -8,7 +8,6 @@ from gtts import gTTS
 from playsound import playsound
 import multiprocessing as mp 
 import time
-import queue
 
 vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
