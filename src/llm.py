@@ -27,6 +27,31 @@ try:
 except:
     MICROPHONE_INDEX=-1
 
+try:
+    OPENAI_API_KEY=str(vals['OPENAI_API_KEY'])
+except:
+    OPENAI_API_KEY='abc'
+
+try:
+    OPENAI_ORGANIZATION=str(vals['OPENAI_ORGANIZATION'])
+except:
+    OPENAI_ORGANIZATION=""
+
+try:
+    OPENAI_PROJECT_ID=str(vals['OPENAI_PROJECT_ID'])
+except:
+    OPENAI_PROJECT_ID=""
+
+try:
+    OPENAI_MODEL=str(vals['OPENAI_MODEL'])
+except:
+    OPENAI_MODEL="gpt-3.5-turbo"
+
+try:
+    OPENAI_URL=str(vals['OPENAI_URL'])
+except:
+    OPENAI_URL="https://api.openai.com/v1/chat/completions"
+
 test_txt = [ 
             'hi, my name is jane',
             'I like candy',
@@ -66,6 +91,7 @@ class Kernel:
             sleep_time = 0.75 * len(tt.split(" ")) 
             print(sleep_time)
             time.sleep(sleep_time)
+            ## <-- p.join() ??
             while self.q.qsize() > 0:
                 rx = self.q.get(block=False)
                 print('rx', rx)
@@ -73,13 +99,14 @@ class Kernel:
             print(rr)
 
             ## kill here ##
-            p.kill()
+            p.kill() ## <-- p.join() ??
 
             if self.is_match(tt.split(' '), rr):
                 print('no interruption!')
                 rr.clear()
             else:
                 print('interruption!')
+                rr = self.prune_interrupted(tt.split(' '), rr)
             x += 1
             x = x % len(test_txt)
             ### second process ###
@@ -166,6 +193,24 @@ class Kernel:
         #self.q.clear()
         while not self.q.empty():
             self.q.get_nowait()
+
+    def prune_interrupted(self, text, speech):
+        output = []
+        found = False
+        for i in range(len(text)):
+            print (text[i])
+            found = False
+            for ii in range(len(speech)):
+                print(speech[ii])
+                if text[i] == speech[ii]:
+                    found = True
+                    continue
+            if found:
+                continue
+            else:
+                output.append(speech[ii])
+        print(output, '<<<')
+        return output
 
 if __name__ == '__main__':
     k = Kernel()
