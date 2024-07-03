@@ -8,6 +8,7 @@ from gtts import gTTS
 from playsound import playsound
 import multiprocessing as mp 
 import time
+import requests
 
 vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -84,6 +85,7 @@ class Kernel:
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
+        self.reply = ""
         self.memory_ai = []
         self.memory_user = []
         self.y_iter = 0 
@@ -275,6 +277,20 @@ class Kernel:
 
     def model(self):
         x = test_txt[self.y_iter]
+        z_args = {
+            "Authorization" : "Bearer " + OPENAI_API_KEY,
+            "Content-Type": "application/json"
+        }
+        data = {
+            "model" : OPENAI_MODEL,
+            "content": [{'role': 'user', 'content': x}],
+            "temperature": 0.01
+        }
+        r = requests.get(OPENAI_URL, headers=z_args, params=data)
+        print(r.text)
+        print(r.status_code)
+
+        self.reply = r 
         self.y_iter += 1 
         self.y_iter = self.y_iter % len(test_txt)
         return x 
@@ -302,6 +318,6 @@ if __name__ == '__main__':
     k.test = args.test
 
     #k.prune_interrupted(test_text, test_speech)
-    #print(k.make_prompt())
-    k.loop()
+    k.model()
+    #k.loop()
 
