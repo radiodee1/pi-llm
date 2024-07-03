@@ -83,15 +83,21 @@ class Kernel:
         self.test = False
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
+        self.prompt = ""
+        self.memory_ai = []
+        self.memory_user = []
+        self.y_iter = 0 
 
     def loop(self):
         z = True
         x = 0
         rr = []
+        tt = ""
         while z == True:
             print("ai here")
-            tt = test_txt[x]
-            #self.q = mp.Queue()
+            if x == 0:
+                #tt = test_txt[0]
+                rr = "say something".split(' ')
             self.empty_queue()
             #while not self.q.empty():
             #    self.q.get(block=False)
@@ -111,8 +117,8 @@ class Kernel:
             print(rr)
 
             ## kill here ##
-            p.kill() ## <-- p.join() ??
-
+            #p.kill() ## <-- p.join() ??
+            p.join()
             if self.is_match(tt.split(' '), rr):
                 print('no interruption!')
                 rr.clear()
@@ -128,9 +134,30 @@ class Kernel:
             while not self.q.empty():
                 rx = self.q.get()
                 print('rx2', rx)
-                rr.append(rx) 
+                rr.append(rx)
+
+            if x == 1 or len(rr) == 0:
+                rr = ['say' , 'something']
 
             print("ai here ", rr)
+
+            self.prompt = self.make_prompt()  
+            self.prompt += identifiers['user'] + ': ' + ' '.join(rr) + "\n" 
+            self.prompt += identifiers['ai'] + ': '
+            
+            tt = self.model()
+            #if x == 1 or True:
+            self.prompt += tt
+            #    print('first prompt')
+
+            #tt = self.model()
+            self.memory_user.append(' '.join(rr))
+            self.memory_ai.append(tt) ## <-- temporary...
+            
+            print(tt)
+            print(self.prompt)
+            print(self.memory_user, '\n---')
+            print(self.memory_ai)
             rr.clear()
 
     def list_microphones(self):
@@ -179,6 +206,8 @@ class Kernel:
         return
 
     def say_text(self, txt):
+        if len(txt) == 0:
+            return
         tts = gTTS(text=txt, lang='en')
         filename = '.output.mp3'
         tts.save(filename)
@@ -232,7 +261,22 @@ class Kernel:
             ret += identifiers['ai'] + ": " + a 
             ret += '\n\n'
         #print(ret)
+        if len(self.memory_ai) == len(self.memory_user):
+            for i in range(len(self.memory_ai)):
+                a = self.memory_ai[i]
+                u = self.memory_user[i]
+                ret += identifiers['user'] + ": " + u 
+                ret += '\n'
+                ret += identifiers['ai'] + ": " + a 
+                ret += '\n\n'
         return ret 
+
+    def model(self):
+        x = test_txt[self.y_iter]
+        self.y_iter += 1 
+        self.y_iter = self.y_iter % len(test_txt)
+        return x 
+        pass 
 
 if __name__ == '__main__':
     k = Kernel()
@@ -256,6 +300,6 @@ if __name__ == '__main__':
     k.test = args.test
 
     #k.prune_interrupted(test_text, test_speech)
-    #k.make_prompt()
+    #print(k.make_prompt())
     k.loop()
 
