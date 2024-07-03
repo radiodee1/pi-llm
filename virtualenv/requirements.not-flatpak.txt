@@ -12,3 +12,5 @@ pygobject==3.48.2
 #pyttsx3==2.90
 PyAudio==0.2.14
 SpeechRecognition==3.10.4
+
+requests==2.32.3
