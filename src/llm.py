@@ -92,7 +92,7 @@ class Kernel:
         z = True
         x = 0
         rr = []
-        tt = ""
+        tt = "initial text greeting."
         while z == True:
             print("ai here")
             if x == 0:
@@ -137,7 +137,7 @@ class Kernel:
                 rr.append(rx)
 
             if x == 1 or len(rr) == 0:
-                rr = ['say' , 'something', 'introduce', 'yourself']
+                rr = ['say' , 'something,', 'introduce', 'yourself']
 
             print("ai here ", rr)
 
@@ -198,9 +198,11 @@ class Kernel:
             
         except sr.UnknownValueError:
             print("Google Speech Recognition could not understand audio")
+            return
         except sr.RequestError as e:
             print("Could not request results from Google Speech Recognition service; {0}".format(e))
-        
+            return
+
         print('iter', self.x_iter)
         self.x_iter += 1
         return
