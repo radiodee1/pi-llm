@@ -8,4 +8,5 @@ Put key values in a file called `~/.llm.env`. An example follows.
 TEST_SIX=6
 TEST_NINE=9
 
+OPENAI_API_KEY=abc
 ```
