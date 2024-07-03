@@ -9,6 +9,7 @@ from playsound import playsound
 import multiprocessing as mp 
 import time
 import requests
+import json
 
 vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -142,19 +143,22 @@ class Kernel:
                 rr = ['say' , 'something,', 'introduce', 'yourself']
 
             print("ai here ", rr)
-
-            self.prompt = self.make_prompt()  
-            self.prompt += identifiers['user'] + ': ' + ' '.join(rr) + "\n" 
-            self.prompt += identifiers['ai'] + ': '
+            
+            self.make_prompt()
+            self.modify_prompt("", ' '.join(rr) )
+            #self.prompt = self.make_prompt()  
+            #self.prompt += identifiers['user'] + ': ' + ' '.join(rr) + "\n" 
+            #self.prompt += identifiers['ai'] + ': '
             
             tt = self.model()
             #if x == 1 or True:
-            self.prompt += tt
+            #self.prompt += tt
             #    print('first prompt')
-
+            self.prompt += tt
+ 
             #tt = self.model()
-            self.memory_user.append(' '.join(rr))
-            self.memory_ai.append(tt) ## <-- temporary...
+            #self.memory_user.append(' '.join(rr))
+            #self.memory_ai.append(tt) ## <-- temporary...
             
             print(tt)
             print(self.prompt)
@@ -275,6 +279,21 @@ class Kernel:
                 ret += '\n\n'
         return ret 
 
+    def modify_prompt(self, tt, rr):
+        #self.prompt = self.make_prompt()  
+        self.prompt += identifiers['user'] + ': ' + rr + "\n" 
+        self.prompt += identifiers['ai'] + ': '
+        
+        #tt = self.model()
+        #if x == 1 or True:
+        self.prompt += tt
+        #    print('first prompt')
+
+        #tt = self.model()
+        self.memory_user.append(' '.join(rr))
+        self.memory_ai.append(tt) ## <-- temporary...
+        pass 
+
     def model(self):
         x = test_txt[self.y_iter]
         z_args = {
@@ -283,18 +302,19 @@ class Kernel:
         }
         data = {
             "model" : OPENAI_MODEL,
-            "content": [{'role': 'user', 'content': x}],
+            "messages": [{'role': 'user', 'content': self.prompt }],
             "temperature": 0.01
         }
-        r = requests.get(OPENAI_URL, headers=z_args, params=data)
+        r = requests.post(OPENAI_URL, headers=z_args, json=data)
         print(r.text)
         print(r.status_code)
-
-        self.reply = r 
+        r = json.loads(r.text)
+        self.reply = r['choices'][0]['message']['content']
+        print(self.reply)
+        
         self.y_iter += 1 
         self.y_iter = self.y_iter % len(test_txt)
-        return x 
-        pass 
+        return self.reply
 
 if __name__ == '__main__':
     k = Kernel()
@@ -317,7 +337,11 @@ if __name__ == '__main__':
 
     k.test = args.test
 
-    #k.prune_interrupted(test_text, test_speech)
-    k.model()
-    #k.loop()
+    if k.test == True:
+        k.prompt = k.make_prompt()
+        k.modify_prompt("", "say something")
+        print(k.prompt)
+        k.model()
+    else:
+        k.loop()
 
