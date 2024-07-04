@@ -119,8 +119,7 @@ class Kernel:
                 rr.append(rx) 
             print(rr)
 
-            ## kill here ##
-            #p.kill() ## <-- p.join() ??
+            ## join here ##
             p.join()
             sleep_time2 = 1.75 
             
