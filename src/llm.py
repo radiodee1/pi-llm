@@ -123,18 +123,23 @@ class Kernel:
 
             ## kill here ##
             #p.kill() ## <-- p.join() ??
+
+            sleep_time2 = 1.75 
             p.join()
+            rr.clear()
             if self.is_match(tt.split(' '), rr):
                 print('no interruption!')
-                rr.clear()
+                #rr.clear()
             else:
                 print('interruption!')
+                #sleep_time2 = 0 
                 #rr = self.prune_interrupted(tt.split(' '), rr)
+                
             x += 1
             x = x % len(test_txt)
             ### second process ###
             self.recognize_audio()
-            time.sleep(1.75)   
+            time.sleep(sleep_time2)   
            
             while not self.q.empty():
                 rx = self.q.get()
