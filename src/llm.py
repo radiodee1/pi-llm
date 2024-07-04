@@ -315,8 +315,8 @@ class Kernel:
             "temperature": 0.01
         }
         r = requests.post(OPENAI_URL, headers=z_args, json=data)
-        print(r.text)
-        print(r.status_code)
+        #print(r.text)
+        #print(r.status_code)
         r = json.loads(r.text)
         self.reply = r['choices'][0]['message']['content']
         print(self.reply)
