@@ -123,8 +123,7 @@ class Kernel:
             #p.kill() ## <-- p.join() ??
             p.join()
             sleep_time2 = 1.75 
-            tt = "" 
-            rr.clear()
+            
             if self.is_match(tt.split(' '), rr):
                 print('no interruption!')
                 #rr.clear()
@@ -133,6 +132,8 @@ class Kernel:
                 print('interruption!')
                 #sleep_time2 = 0 
                 #rr = self.prune_interrupted(tt.split(' '), rr)
+            tt = ""
+            rr.clear()
             x += 1
             x = x % len(test_txt)
             ### second process ###
@@ -144,7 +145,7 @@ class Kernel:
                 print('rx2', rx)
                 rr.append(rx)
 
-            if  len(rr) == 0:
+            if len(rr) == 0:
                 rr = ['say' , 'something,' ]
                 #skip_say_text = True
 
