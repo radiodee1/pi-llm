@@ -96,7 +96,7 @@ class Kernel:
         z = True
         x = 0
         rr = []
-        tt = "initial text greeting."
+        tt = "hello."
         while z == True:
             print("ai here")
             if x == 0:
@@ -110,7 +110,8 @@ class Kernel:
             rr.clear()
             time.sleep(2) 
             self.say_text(tt)
-            sleep_time = 0.75 * len(tt.split(" ")) 
+            sleep_time = 0.75 * len(tt.split(" "))
+            #sleep_time = 0
             print(sleep_time)
             time.sleep(sleep_time)
             ## <-- p.join() ??
@@ -128,7 +129,7 @@ class Kernel:
                 rr.clear()
             else:
                 print('interruption!')
-                rr = self.prune_interrupted(tt.split(' '), rr)
+                #rr = self.prune_interrupted(tt.split(' '), rr)
             x += 1
             x = x % len(test_txt)
             ### second process ###
@@ -141,7 +142,7 @@ class Kernel:
                 rr.append(rx)
 
             if x == 1 or len(rr) == 0:
-                rr = ['say' , 'something,', 'introduce', 'yourself']
+                rr = ['say' , 'something,' ]
 
             print("ai here ", rr)
             
@@ -157,10 +158,10 @@ class Kernel:
 
             self.modify_prompt_after_model(tt, ' '.join(rr))
             
-            #print(tt, "<<<", "\n====")
-            #print(self.prompt, "\n=====")
-            #print(self.memory_user, '\n---')
-            #print(self.memory_ai)
+            print(tt, "<<<", "\n====")
+            print(self.prompt, "\n=====")
+            print(self.memory_user, '\n---')
+            print(self.memory_ai)
             rr.clear()
 
     def list_microphones(self):
