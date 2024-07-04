@@ -97,24 +97,22 @@ class Kernel:
         x = 0
         rr = []
         tt = "hello."
+        skip_say_text = False
         while z == True:
+            #if not skip_say_text:
             print("ai here")
             if x == 0:
                 pass 
                 #rr = "say something".split(' ')
             self.empty_queue()
-            #while not self.q.empty():
-            #    self.q.get(block=False)
             p = mp.Process(target=self.recognize_audio)
             p.start()
             rr.clear()
             time.sleep(2) 
             self.say_text(tt)
             sleep_time = 0.75 * len(tt.split(" "))
-            #sleep_time = 0
             print(sleep_time)
             time.sleep(sleep_time)
-            ## <-- p.join() ??
             while self.q.qsize() > 0:
                 rx = self.q.get(block=False)
                 print('rx', rx)
@@ -123,18 +121,18 @@ class Kernel:
 
             ## kill here ##
             #p.kill() ## <-- p.join() ??
-
-            sleep_time2 = 1.75 
             p.join()
+            sleep_time2 = 1.75 
+            tt = "" 
             rr.clear()
             if self.is_match(tt.split(' '), rr):
                 print('no interruption!')
                 #rr.clear()
+                skip_say_text = False
             else:
                 print('interruption!')
                 #sleep_time2 = 0 
                 #rr = self.prune_interrupted(tt.split(' '), rr)
-                
             x += 1
             x = x % len(test_txt)
             ### second process ###
@@ -146,8 +144,9 @@ class Kernel:
                 print('rx2', rx)
                 rr.append(rx)
 
-            if x == 1 or len(rr) == 0:
+            if  len(rr) == 0:
                 rr = ['say' , 'something,' ]
+                #skip_say_text = True
 
             print("ai here ", rr)
             
@@ -159,14 +158,15 @@ class Kernel:
             tt = self.model()
 
             if self.truncate:
-                tt = self.prune_input(tt) + '.'
+                tt = self.prune_input(tt) # + '.'
 
-            self.modify_prompt_after_model(tt, ' '.join(rr))
-            
             print(tt, "<<<", "\n====")
             print(self.prompt, "\n=====")
             print(self.memory_user, '\n---')
             print(self.memory_ai)
+
+            self.modify_prompt_after_model(tt, ' '.join(rr))
+            
             rr.clear()
 
     def list_microphones(self):
