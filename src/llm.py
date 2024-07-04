@@ -304,7 +304,7 @@ class Kernel:
         return text
 
     def model(self):
-        x = test_txt[self.y_iter]
+        #x = test_txt[self.y_iter]
         z_args = {
             "Authorization" : "Bearer " + OPENAI_API_KEY,
             "Content-Type": "application/json"
@@ -321,8 +321,8 @@ class Kernel:
         self.reply = r['choices'][0]['message']['content']
         print(self.reply)
         
-        self.y_iter += 1 
-        self.y_iter = self.y_iter % len(test_txt)
+        #self.y_iter += 1 
+        #self.y_iter = self.y_iter % len(test_txt)
         return self.reply
 
 if __name__ == '__main__':
