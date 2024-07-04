@@ -83,6 +83,7 @@ class Kernel:
         self.local = False
         self.remote = False
         self.test = False
+        self.truncate = False
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -151,7 +152,8 @@ class Kernel:
             
             tt = self.model()
 
-            #tt = self.prune_input(tt) + '.'
+            if self.truncate:
+                tt = self.prune_input(tt) + '.'
 
             self.modify_prompt_after_model(tt, ' '.join(rr))
             
@@ -329,7 +331,9 @@ if __name__ == '__main__':
     parser.add_argument('--local', action="store_true", help="Use local LLM model")
     parser.add_argument('--remote', action="store_true", help="Use remote LLM model")
     parser.add_argument('--test', action="store_true", help="Use test data and no LLM")
+    parser.add_argument('--truncate', action="store_true", help="truncate model output.")
     
+
     args = parser.parse_args()
     
     if args.local == True:
@@ -341,6 +345,8 @@ if __name__ == '__main__':
         k.local = False
         k.remote = True
         k.test = False
+    if args.truncate == True:
+        k.truncate = True
 
     k.test = args.test
 
