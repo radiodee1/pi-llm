@@ -144,26 +144,21 @@ class Kernel:
 
             print("ai here ", rr)
             
-            self.make_prompt()
-            self.modify_prompt("", ' '.join(rr) )
-            #self.prompt = self.make_prompt()  
-            #self.prompt += identifiers['user'] + ': ' + ' '.join(rr) + "\n" 
-            #self.prompt += identifiers['ai'] + ': '
+            self.prompt = self.make_prompt()
+
+            #print("++++++\n", self.prompt, "\n++++++++")
+            self.modify_prompt_before_model("", ' '.join(rr) )
             
             tt = self.model()
-            #if x == 1 or True:
-            #self.prompt += tt
-            #    print('first prompt')
-            self.prompt += tt
- 
-            #tt = self.model()
-            #self.memory_user.append(' '.join(rr))
-            #self.memory_ai.append(tt) ## <-- temporary...
+
+            #tt = self.prune_input(tt) + '.'
+
+            self.modify_prompt_after_model(tt, ' '.join(rr))
             
-            print(tt)
-            print(self.prompt)
-            print(self.memory_user, '\n---')
-            print(self.memory_ai)
+            #print(tt, "<<<", "\n====")
+            #print(self.prompt, "\n=====")
+            #print(self.memory_user, '\n---')
+            #print(self.memory_ai)
             rr.clear()
 
     def list_microphones(self):
@@ -176,7 +171,11 @@ class Kernel:
         print(MICROPHONE_INDEX)
 
     def recognize_audio(self):
-
+        if self.test:
+            ret = input("test input here:")
+            for i in ret.split(' '):
+                self.q.put(i)
+            return
         #self.list_microphones()
         r = sr.Recognizer()
         #self.r.energy_threshold = 100
@@ -214,6 +213,9 @@ class Kernel:
         return
 
     def say_text(self, txt):
+        if self.test:
+            print(txt)
+            return
         if len(txt) == 0:
             return
         tts = gTTS(text=txt, lang='en')
@@ -273,26 +275,31 @@ class Kernel:
             for i in range(len(self.memory_ai)):
                 a = self.memory_ai[i]
                 u = self.memory_user[i]
+                if len(a) == 0 or len(u) == 0:
+                    continue
                 ret += identifiers['user'] + ": " + u 
                 ret += '\n'
                 ret += identifiers['ai'] + ": " + a 
                 ret += '\n\n'
         return ret 
 
-    def modify_prompt(self, tt, rr):
-        #self.prompt = self.make_prompt()  
+    def modify_prompt_before_model(self, tt, rr):
         self.prompt += identifiers['user'] + ': ' + rr + "\n" 
         self.prompt += identifiers['ai'] + ': '
         
-        #tt = self.model()
-        #if x == 1 or True:
-        self.prompt += tt
-        #    print('first prompt')
+        #self.prompt += tt
 
-        #tt = self.model()
-        self.memory_user.append(' '.join(rr))
+    def modify_prompt_after_model(self, tt, rr):
+        self.memory_user.append(rr)
         self.memory_ai.append(tt) ## <-- temporary...
         pass 
+
+    def prune_input(self, text):
+        print(text, '<<< unmodified')
+        text = text.split('?')[0]
+        text = text.split('.')[0]
+        text = text.split('!')[0]
+        return text
 
     def model(self):
         x = test_txt[self.y_iter]
@@ -337,11 +344,5 @@ if __name__ == '__main__':
 
     k.test = args.test
 
-    if k.test == True:
-        k.prompt = k.make_prompt()
-        k.modify_prompt("", "say something")
-        print(k.prompt)
-        k.model()
-    else:
-        k.loop()
+    k.loop()
 
