@@ -122,8 +122,6 @@ class Kernel:
                 rr.append(rx) 
             self.p(rr)
 
-            ## join here ##
-            #p.join()
             sleep_time2 = 1.75 
             
             if self.is_match(tt.split(' '), rr):
