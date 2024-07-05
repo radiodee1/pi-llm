@@ -280,7 +280,6 @@ class Kernel:
             ret += '\n'
             ret += identifiers['ai'] + ": " + a 
             ret += '\n\n'
-        #print(ret)
         if len(self.memory_ai) == len(self.memory_user):
             for i in range(len(self.memory_ai)):
                 a = self.memory_ai[i]
@@ -296,8 +295,6 @@ class Kernel:
     def modify_prompt_before_model(self, tt, rr):
         self.prompt += identifiers['user'] + ': ' + rr + "\n" 
         self.prompt += identifiers['ai'] + ': '
-        
-        #self.prompt += tt
 
     def modify_prompt_after_model(self, tt, rr):
         self.memory_user.append(rr)
@@ -312,7 +309,6 @@ class Kernel:
         return text
 
     def model(self):
-        #x = test_txt[self.y_iter]
         z_args = {
             "Authorization" : "Bearer " + OPENAI_API_KEY,
             "Content-Type": "application/json"
@@ -323,14 +319,10 @@ class Kernel:
             "temperature": 0.01
         }
         r = requests.post(OPENAI_URL, headers=z_args, json=data)
-        #print(r.text)
-        #print(r.status_code)
         r = json.loads(r.text)
         self.reply = r['choices'][0]['message']['content']
         self.p(self.reply)
         
-        #self.y_iter += 1 
-        #self.y_iter = self.y_iter % len(test_txt)
         return self.reply
 
     def p(self, *text):
