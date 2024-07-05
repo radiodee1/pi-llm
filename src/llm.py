@@ -340,7 +340,7 @@ class Kernel:
 if __name__ == '__main__':
     k = Kernel()
     parser = argparse.ArgumentParser(description="Pi LLM", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--local', action="store_true", help="Use local LLM model")
+    parser.add_argument('--local', action="store_true", help="Not implemented")
     parser.add_argument('--verbose', action="store_true", help="Use verbose mode.")
     parser.add_argument('--test', action="store_true", help="Use test data and no LLM")
     parser.add_argument('--truncate', action="store_true", help="truncate model output.")
