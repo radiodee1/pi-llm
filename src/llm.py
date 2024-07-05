@@ -112,7 +112,8 @@ class Kernel:
             time.sleep(2) 
             self.say_text(tt)
             ## try join here!! remove sleep !!
-            sleep_time = 0.75 * len(tt.split(" "))
+            p.join()
+            sleep_time = 0 #0.75 * len(tt.split(" "))
             self.p(sleep_time, 'time')
             time.sleep(sleep_time)
             while self.q.qsize() > 0:
@@ -122,7 +123,7 @@ class Kernel:
             self.p(rr)
 
             ## join here ##
-            p.join()
+            #p.join()
             sleep_time2 = 1.75 
             
             if self.is_match(tt.split(' '), rr):
