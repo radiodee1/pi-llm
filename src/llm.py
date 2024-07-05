@@ -79,7 +79,7 @@ test_speech = [ 'here', 'is', 'some', 'text', 'plus' , 'some']
 class Kernel:
 
     def __init__(self):
-        self.verbose = True
+        self.verbose = False
         self.local = False
         self.remote = False
         self.test = False
@@ -100,7 +100,7 @@ class Kernel:
         skip_say_text = False
         while z == True:
             #if not skip_say_text:
-            print("ai here")
+            self.p("ai here")
             if x == 0:
                 pass 
                 #rr = "say something".split(' ')
@@ -111,24 +111,24 @@ class Kernel:
             time.sleep(2) 
             self.say_text(tt)
             sleep_time = 0.75 * len(tt.split(" "))
-            print(sleep_time)
+            self.p(sleep_time, 'time')
             time.sleep(sleep_time)
             while self.q.qsize() > 0:
                 rx = self.q.get(block=False)
-                print('rx', rx)
+                self.p('rx', rx)
                 rr.append(rx) 
-            print(rr)
+            self.p(rr)
 
             ## join here ##
             p.join()
             sleep_time2 = 1.75 
             
             if self.is_match(tt.split(' '), rr):
-                print('no interruption!')
+                self.p('no interruption!')
                 #rr.clear()
                 skip_say_text = False
             else:
-                print('interruption!')
+                self.p('interruption!')
                 #sleep_time2 = 0 
                 #rr = self.prune_interrupted(tt.split(' '), rr)
             tt = ""
@@ -141,14 +141,14 @@ class Kernel:
            
             while not self.q.empty():
                 rx = self.q.get()
-                print('rx2', rx)
+                self.p('rx2', rx)
                 rr.append(rx)
 
             if len(rr) == 0:
                 rr = ['say' , 'something,' ]
                 #skip_say_text = True
 
-            print("ai here ", rr)
+            self.p("ai here ", rr)
             
             self.prompt = self.make_prompt()
 
@@ -160,10 +160,10 @@ class Kernel:
             if self.truncate:
                 tt = self.prune_input(tt) # + '.'
 
-            print(tt, "<<<", "\n====")
-            print(self.prompt, "\n=====")
-            print(self.memory_user, '\n---')
-            print(self.memory_ai)
+            self.p(tt, "<<<", "\n====")
+            self.p(self.prompt, "\n=====")
+            self.p(self.memory_user, '\n---')
+            self.p(self.memory_ai)
 
             self.modify_prompt_after_model(tt, ' '.join(rr))
             
@@ -180,20 +180,19 @@ class Kernel:
 
     def recognize_audio(self):
         if self.test:
-            ret = input("test input here:")
+            ret = input("test input here: ")
             for i in ret.split(' '):
                 self.q.put(i)
             return
-        #self.list_microphones()
+
         r = sr.Recognizer()
-        #self.r.energy_threshold = 100
         
         with sr.Microphone() as source:
             #r = sr.Recognizer()
-            print("Say something!")
+            print("say something!")
             audio = r.listen(source)
             #audio = r.listen(source)
-            print("processing.")
+            self.p("processing.")
 
         try:
             ret = r.recognize_google(audio)
@@ -204,7 +203,7 @@ class Kernel:
             
             if True:
                 for i in ret.split(' '):
-                    print('sr', i)
+                    self.p('sr', i)
                     #self.q.put(i)
                     self.q.put(i)
                     #self.q.task_done() 
@@ -216,13 +215,13 @@ class Kernel:
             print("Could not request results from Google Speech Recognition service; {0}".format(e))
             return
 
-        print('iter', self.x_iter)
+        self.p('iter', self.x_iter)
         self.x_iter += 1
         return
 
     def say_text(self, txt):
         if self.test:
-            print(txt)
+            self.p(txt)
             return
         if len(txt) == 0:
             return
@@ -230,12 +229,12 @@ class Kernel:
         filename = '.output.mp3'
         tts.save(filename)
         playsound(filename)
-        print('say this: ', txt)
+        self.p('say this: ', txt)
         pass 
 
     def is_match(self, text, speech):
-        if abs(len(text) - len(speech)) >= 1:
-            print('len is off:', text, speech)
+        if abs(len(text) - len(speech)) >= 2:
+            self.p('len is off:', text, speech)
             return False
         for i in range(len(text)):
             if i < len(text) and i < len(speech):
@@ -243,7 +242,7 @@ class Kernel:
                 s = speech[i].lower()[0:2]
                 #print(t, text[i], s, speech[i])
                 if t != s:
-                    print('individual words dont compare...')
+                    self.p('individual words dont compare...')
                     return False
         return True
 
@@ -303,7 +302,7 @@ class Kernel:
         pass 
 
     def prune_input(self, text):
-        print(text, '<<< unmodified')
+        self.p(text, '<<< unmodified')
         text = text.split('?')[0]
         text = text.split('.')[0]
         text = text.split('!')[0]
@@ -325,17 +324,21 @@ class Kernel:
         #print(r.status_code)
         r = json.loads(r.text)
         self.reply = r['choices'][0]['message']['content']
-        print(self.reply)
+        self.p(self.reply)
         
         #self.y_iter += 1 
         #self.y_iter = self.y_iter % len(test_txt)
         return self.reply
 
+    def p(self, *text):
+        if self.verbose:
+            print(*text)
+
 if __name__ == '__main__':
     k = Kernel()
     parser = argparse.ArgumentParser(description="Pi LLM", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--local', action="store_true", help="Use local LLM model")
-    parser.add_argument('--remote', action="store_true", help="Use remote LLM model")
+    parser.add_argument('--verbose', action="store_true", help="Use verbose mode.")
     parser.add_argument('--test', action="store_true", help="Use test data and no LLM")
     parser.add_argument('--truncate', action="store_true", help="truncate model output.")
     
@@ -347,14 +350,11 @@ if __name__ == '__main__':
         k.remote = False
         k.test = True
 
-    if args.remote == True:
-        k.local = False
-        k.remote = True
-        k.test = False
     if args.truncate == True:
         k.truncate = True
 
     k.test = args.test
-
+    
+    k.verbose = args.verbose
     k.loop()
 
