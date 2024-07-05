@@ -105,11 +105,13 @@ class Kernel:
                 pass 
                 #rr = "say something".split(' ')
             self.empty_queue()
-            p = mp.Process(target=self.recognize_audio)
+            shadow_say_text = True
+            p = mp.Process(target=self.recognize_audio, args=(shadow_say_text,))
             p.start()
             rr.clear()
             time.sleep(2) 
             self.say_text(tt)
+            ## try join here!! remove sleep !!
             sleep_time = 0.75 * len(tt.split(" "))
             self.p(sleep_time, 'time')
             time.sleep(sleep_time)
@@ -136,7 +138,8 @@ class Kernel:
             x += 1
             x = x % len(test_txt)
             ### second process ###
-            self.recognize_audio()
+            shadow_say_text = False
+            self.recognize_audio(shadow_say_text)
             time.sleep(sleep_time2)   
            
             while not self.q.empty():
@@ -178,8 +181,10 @@ class Kernel:
         print("---")
         print(MICROPHONE_INDEX)
 
-    def recognize_audio(self):
+    def recognize_audio(self, shadow_say_text=False):
         if self.test:
+            if shadow_say_text:
+                return
             ret = input("test input here: ")
             for i in ret.split(' '):
                 self.q.put(i)
