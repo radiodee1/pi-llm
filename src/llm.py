@@ -194,7 +194,8 @@ class Kernel:
         
         with sr.Microphone() as source:
             #r = sr.Recognizer()
-            print("say something!")
+            if not shadow_say_text:
+                print("say something!")
             audio = r.listen(source)
             #audio = r.listen(source)
             self.p("processing.")
