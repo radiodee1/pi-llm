@@ -113,9 +113,6 @@ class Kernel:
             self.say_text(tt)
             ## try join here!! remove sleep !!
             p.join()
-            sleep_time = 0 #0.75 * len(tt.split(" "))
-            self.p(sleep_time, 'time')
-            time.sleep(sleep_time)
             while self.q.qsize() > 0:
                 rx = self.q.get(block=False)
                 self.p('rx', rx)
@@ -154,7 +151,6 @@ class Kernel:
             
             self.prompt = self.make_prompt()
 
-            #print("++++++\n", self.prompt, "\n++++++++")
             self.modify_prompt_before_model("", ' '.join(rr) )
             
             tt = self.model()
