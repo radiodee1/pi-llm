@@ -344,7 +344,7 @@ if __name__ == '__main__':
     parser.add_argument('--verbose', action="store_true", help="Use verbose mode.")
     parser.add_argument('--test', action="store_true", help="Use test data and no LLM")
     parser.add_argument('--truncate', action="store_true", help="truncate model output.")
-    
+    ## NOTE: local is not implemented!! 
 
     args = parser.parse_args()
     
