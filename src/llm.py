@@ -204,13 +204,13 @@ class Kernel:
             ret = r.recognize_google(audio)
             self.p("speech recognition: " + ret)
             
-            if True:
-                for i in ret.split(' '):
-                    self.p('sr', i)
-                    #self.q.put(i)
-                    self.q.put(i)
-                    #self.q.task_done() 
-            
+            #if True:
+            for i in ret.split(' '):
+                self.p('sr', i)
+                #self.q.put(i)
+                self.q.put(i)
+                #self.q.task_done() 
+        
         except sr.UnknownValueError:
             print("Google Speech Recognition could not understand audio")
             return
