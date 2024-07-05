@@ -357,7 +357,7 @@ if __name__ == '__main__':
         k.truncate = True
 
     k.test = args.test
-    
     k.verbose = args.verbose
+
     k.loop()
 
