@@ -123,9 +123,6 @@ class Kernel:
                     rr.append(rx) 
                 self.p(rr)
 
-            sleep_time_2 =  1.75 
-
-            if not self.no_check:
                 if self.is_match(tt.split(' '), rr):
                     self.p('no interruption!')
                     #rr.clear()
@@ -136,6 +133,7 @@ class Kernel:
                     #rr = self.prune_interrupted(tt.split(' '), rr)
             tt = ""
             rr.clear()
+            sleep_time_2 = 1.75 
             self.empty_queue()
             x += 1
             x = x % len(test_txt)
