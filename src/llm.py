@@ -85,6 +85,7 @@ class Kernel:
         self.test = False
         self.truncate = False
         self.loop_wait = False
+        self.no_check = False
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -107,29 +108,32 @@ class Kernel:
                 #rr = "say something".split(' ')
             self.empty_queue()
             shadow_say_text = True
-            p = mp.Process(target=self.recognize_audio, args=(shadow_say_text,))
-            p.start()
+            if not self.no_check:
+                p = mp.Process(target=self.recognize_audio, args=(shadow_say_text,))
+                p.start()
             rr.clear()
             time.sleep(2) 
             self.say_text(tt)
             ## try join here!! remove sleep !!
-            p.join()
-            while self.q.qsize() > 0:
-                rx = self.q.get(block=False)
-                self.p('rx', rx)
-                rr.append(rx) 
-            self.p(rr)
+            if not self.no_check:
+                p.join()
+                while self.q.qsize() > 0:
+                    rx = self.q.get(block=False)
+                    self.p('rx', rx)
+                    rr.append(rx) 
+                self.p(rr)
 
             sleep_time_2 =  1.75 
-            
-            if self.is_match(tt.split(' '), rr):
-                self.p('no interruption!')
-                #rr.clear()
-                skip_say_text = False
-            else:
-                self.p('interruption!')
-                #sleep_time2 = 0 
-                #rr = self.prune_interrupted(tt.split(' '), rr)
+
+            if not self.no_check:
+                if self.is_match(tt.split(' '), rr):
+                    self.p('no interruption!')
+                    #rr.clear()
+                    skip_say_text = False
+                else:
+                    self.p('interruption!')
+                    #sleep_time2 = 0 
+                    #rr = self.prune_interrupted(tt.split(' '), rr)
             tt = ""
             rr.clear()
             self.empty_queue()
@@ -359,6 +363,7 @@ if __name__ == '__main__':
     parser.add_argument('--test', action="store_true", help="Use test data and no LLM")
     parser.add_argument('--truncate', action="store_true", help="truncate model output.")
     parser.add_argument('--loop_wait', action="store_true", help="loop until input is detected.")
+    parser.add_argument('--no_check', action="store_true", help="cancel interruption check.")
     ## NOTE: local is not implemented!! 
 
     args = parser.parse_args()
@@ -374,6 +379,7 @@ if __name__ == '__main__':
     k.test = args.test
     k.verbose = args.verbose
     k.loop_wait = args.loop_wait
+    k.no_check = args.no_check
 
     k.loop()
 
