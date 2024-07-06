@@ -84,6 +84,7 @@ class Kernel:
         self.remote = False
         self.test = False
         self.truncate = False
+        self.loop_wait = False
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -119,7 +120,7 @@ class Kernel:
                 rr.append(rx) 
             self.p(rr)
 
-            sleep_time2 = 1.75 
+            sleep_time_2 =  1.75 
             
             if self.is_match(tt.split(' '), rr):
                 self.p('no interruption!')
@@ -131,17 +132,40 @@ class Kernel:
                 #rr = self.prune_interrupted(tt.split(' '), rr)
             tt = ""
             rr.clear()
+            self.empty_queue()
             x += 1
             x = x % len(test_txt)
             ### second process ###
-            shadow_say_text = False
-            self.recognize_audio(shadow_say_text)
-            time.sleep(sleep_time2)   
-           
-            while not self.q.empty():
-                rx = self.q.get()
-                self.p('rx2', rx)
-                rr.append(rx)
+            if self.loop_wait:
+                num = 0 
+                while len(rr) == 0:
+                    rr.clear()
+                    shadow_say_text = False 
+                    #self.recognize_audio(shadow_say_text)
+                    p2 = mp.Process(target=self.recognize_audio, args=(shadow_say_text,))
+                    p2.start()
+                    self.p("start")
+                    p2.join()
+                    self.p("join")
+                    #time.sleep(sleep_time_2)   
+                    self.p("len q:", self.q.qsize()) 
+                    while not self.q.empty():
+                        rx = self.q.get()
+                        self.p('rx2', rx)
+                        rr.append(rx)
+                    self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num)
+                    num += 1 
+            else:
+                rr.clear()
+                shadow_say_text = False
+                self.recognize_audio(shadow_say_text)
+                time.sleep(sleep_time_2)   
+                self.p("len q:", self.q.qsize()) 
+                while not self.q.empty():
+                    rx = self.q.get()
+                    self.p('rx2', rx)
+                    rr.append(rx)
+                self.p("len q:", self.q.qsize(), 'rr:', len(rr) )
 
             if len(rr) == 0:
                 rr = ['say' , 'something,' ]
@@ -181,8 +205,11 @@ class Kernel:
             if shadow_say_text:
                 return
             ret = input("test input here: ")
+            ret = ret.strip()
+            self.p("+" + ret + "+")
             for i in ret.split(' '):
-                self.q.put(i)
+                if i.strip() != "":
+                    self.q.put(i)
             return
 
         r = sr.Recognizer()
@@ -331,6 +358,7 @@ if __name__ == '__main__':
     parser.add_argument('--verbose', action="store_true", help="Use verbose mode.")
     parser.add_argument('--test', action="store_true", help="Use test data and no LLM")
     parser.add_argument('--truncate', action="store_true", help="truncate model output.")
+    parser.add_argument('--loop_wait', action="store_true", help="loop until input is detected.")
     ## NOTE: local is not implemented!! 
 
     args = parser.parse_args()
@@ -345,6 +373,7 @@ if __name__ == '__main__':
 
     k.test = args.test
     k.verbose = args.verbose
+    k.loop_wait = args.loop_wait
 
     k.loop()
 
