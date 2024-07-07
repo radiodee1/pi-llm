@@ -53,6 +53,11 @@ try:
 except:
     OPENAI_URL="https://api.openai.com/v1/chat/completions"
 
+try:
+    GOOGLE_SPEECH_RECOGNITION_API_KEY=str(vals['GOOGLE_SPEECH_RECOGNITION_API_KEY'])
+except:
+    GOOGLE_SPEECH_RECOGNITION_API_KEY=None
+
 test_txt = [ 
             'hi, my name is jane',
             'I like candy',
@@ -143,12 +148,12 @@ class Kernel:
                 while len(rr) == 0 and num < 100:
                     rr.clear()
                     shadow_say_text = False 
-                    #self.recognize_audio(shadow_say_text)
-                    p2 = mp.Process(target=self.recognize_audio, args=(shadow_say_text,))
-                    p2.start()
-                    self.p("start")
-                    p2.join()
-                    self.p("join")
+                    self.recognize_audio(shadow_say_text)
+                    #p2 = mp.Process(target=self.recognize_audio, args=(shadow_say_text,))
+                    #p2.start()
+                    #self.p("start")
+                    #p2.join()
+                    #self.p("join")
                     #time.sleep(sleep_time_2)   
                     self.p("len q:", self.q.qsize()) 
                     while not self.q.empty():
@@ -156,6 +161,8 @@ class Kernel:
                         self.p('rx2', rx)
                         rr.append(rx)
                     self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num)
+                    if len(rr) > 0:
+                        break 
                     num += 1 
             else:
                 rr.clear()
@@ -227,7 +234,8 @@ class Kernel:
             self.p("processing.")
 
         try:
-            ret = r.recognize_google(audio)
+            self.p(GOOGLE_SPEECH_RECOGNITION_API_KEY)
+            ret = r.recognize_google(audio) #,  key=GOOGLE_SPEECH_RECOGNITION_API_KEY)
             self.p("speech recognition: " + ret)
             
             #if True:
