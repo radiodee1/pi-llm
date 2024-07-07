@@ -58,6 +58,11 @@ try:
 except:
     GOOGLE_SPEECH_RECOGNITION_API_KEY=None
 
+try:
+    PROJECT_LAUNCH_ARGS=str(vals['PROJECT_LAUNCH_ARGS'])
+except:
+    PROJECT_LAUNCH_ARGS='' #'--no_check'
+
 test_txt = [ 
             'hi, my name is jane',
             'I like candy',
@@ -373,9 +378,14 @@ if __name__ == '__main__':
     parser.add_argument('--loop_wait', action="store_true", help="loop until input is detected.")
     parser.add_argument('--no_check', action="store_true", help="cancel interruption check.")
     ## NOTE: local is not implemented!! 
-
-    args = parser.parse_args()
     
+    args = parser.parse_args()
+    if len(PROJECT_LAUNCH_ARGS) > 0:
+        args = parser.parse_args(PROJECT_LAUNCH_ARGS.split(" "))
+    #parser.parse_args(PROJECT_LAUNCH_ARGS.split(" "))
+   
+    print(args)
+
     if args.local == True:
         k.local = True
         k.remote = False
