@@ -140,7 +140,7 @@ class Kernel:
             ### second process ###
             if self.loop_wait:
                 num = 0 
-                while len(rr) == 0:
+                while len(rr) == 0 and num < 100:
                     rr.clear()
                     shadow_say_text = False 
                     #self.recognize_audio(shadow_say_text)
@@ -152,7 +152,7 @@ class Kernel:
                     #time.sleep(sleep_time_2)   
                     self.p("len q:", self.q.qsize()) 
                     while not self.q.empty():
-                        rx = self.q.get()
+                        rx = self.q.get(block=False)
                         self.p('rx2', rx)
                         rr.append(rx)
                     self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num)
@@ -164,7 +164,7 @@ class Kernel:
                 time.sleep(sleep_time_2)   
                 self.p("len q:", self.q.qsize()) 
                 while not self.q.empty():
-                    rx = self.q.get()
+                    rx = self.q.get(block=False)
                     self.p('rx2', rx)
                     rr.append(rx)
                 self.p("len q:", self.q.qsize(), 'rr:', len(rr) )
@@ -211,16 +211,18 @@ class Kernel:
             self.p("+" + ret + "+")
             for i in ret.split(' '):
                 if i.strip() != "":
-                    self.q.put(i)
+                    self.q.put(i, block=False)
             return
 
         r = sr.Recognizer()
         
         with sr.Microphone() as source:
+            timeout = 10 
+            phrase_time_limit = 5
             #r = sr.Recognizer()
             if not shadow_say_text:
                 print("say something!")
-            audio = r.listen(source)
+            audio = r.listen(source, timeout, phrase_time_limit)
             #audio = r.listen(source)
             self.p("processing.")
 
@@ -232,7 +234,7 @@ class Kernel:
             for i in ret.split(' '):
                 self.p('sr', i)
                 #self.q.put(i)
-                self.q.put(i)
+                self.q.put(i, block=False)
                 #self.q.task_done() 
         
         except sr.UnknownValueError:
