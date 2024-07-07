@@ -380,7 +380,7 @@ if __name__ == '__main__':
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
-    if len(PROJECT_LAUNCH_ARGS) > 0:
+    if len(PROJECT_LAUNCH_ARGS.strip()) > 0:
         args = parser.parse_args(PROJECT_LAUNCH_ARGS.split(" "))
     #parser.parse_args(PROJECT_LAUNCH_ARGS.split(" "))
    
