@@ -377,6 +377,7 @@ if __name__ == '__main__':
     parser.add_argument('--truncate', action="store_true", help="truncate model output.")
     parser.add_argument('--loop_wait', action="store_true", help="loop until input is detected.")
     parser.add_argument('--no_check', action="store_true", help="cancel interruption check.")
+    parser.add_argument('--name', type=str, help="define new name.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -398,6 +399,9 @@ if __name__ == '__main__':
     k.verbose = args.verbose
     k.loop_wait = args.loop_wait
     k.no_check = args.no_check
+
+    if args.name != None and args.name.strip() != "":
+        identifiers['ai'] = args.name.strip()
 
     k.loop()
 
