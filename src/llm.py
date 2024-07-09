@@ -96,6 +96,7 @@ class Kernel:
         self.truncate = False
         self.loop_wait = False
         self.no_check = False
+        self.offset = 0.0 
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -105,6 +106,7 @@ class Kernel:
         self.y_iter = 0 
 
     def loop(self):
+        time.sleep(self.offset)
         z = True
         x = 0
         rr = []
@@ -379,6 +381,7 @@ if __name__ == '__main__':
     parser.add_argument('--loop_wait', action="store_true", help="loop until input is detected.")
     parser.add_argument('--no_check', action="store_true", help="cancel interruption check.")
     parser.add_argument('--name', type=str, help="define new name.")
+    parser.add_argument('--offset', type=float, help="time in seconds to offset on startup.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -387,6 +390,9 @@ if __name__ == '__main__':
     #parser.parse_args(PROJECT_LAUNCH_ARGS.split(" "))
    
     print(args)
+
+    if args.offset != None and args.offset != 0.0:
+        k.offset = args.offset
 
     if args.local == True:
         k.local = True
