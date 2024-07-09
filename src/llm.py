@@ -133,6 +133,7 @@ class Kernel:
                     rr.append(rx) 
                 self.p(rr)
 
+                ## does nothing !! ##
                 if self.is_match(tt.split(' '), rr):
                     self.p('no interruption!')
                     #rr.clear()
