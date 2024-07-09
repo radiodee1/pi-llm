@@ -212,11 +212,13 @@ class Kernel:
         for k, v in enumerate(sr.Microphone.list_microphone_names()):
             print(k, v)
         print("---")
+        return
+        '''
         for k, v in enumerate(sr.Microphone.list_working_microphones()):
             print(k,v)
         print("---")
         print(MICROPHONE_INDEX)
-
+        '''
     def recognize_audio(self, shadow_say_text=False):
         if self.test:
             if shadow_say_text:
@@ -231,7 +233,12 @@ class Kernel:
 
         r = sr.Recognizer()
         
-        with sr.Microphone() as source:
+        if MICROPHONE_INDEX != -1:
+            mic = sr.Microphone(device_index=MICROPHONE_INDEX)
+        else:
+            mic = sr.Microphone()
+
+        with mic as source:
             timeout = 10 
             phrase_time_limit = 5
             #r = sr.Recognizer()
@@ -382,6 +389,7 @@ if __name__ == '__main__':
     parser.add_argument('--no_check', action="store_true", help="cancel interruption check.")
     parser.add_argument('--name', type=str, help="define new name.")
     parser.add_argument('--offset', type=float, help="time in seconds to offset on startup.")
+    parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -390,6 +398,10 @@ if __name__ == '__main__':
     #parser.parse_args(PROJECT_LAUNCH_ARGS.split(" "))
    
     print(args)
+    
+    if args.mics == True:
+        k.list_microphones()
+        exit()
 
     if args.offset != None and args.offset != 0.0:
         k.offset = args.offset
