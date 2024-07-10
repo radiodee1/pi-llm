@@ -139,7 +139,7 @@ class Kernel:
                 if self.is_match(tt.split(' '), rr):
                     self.p('no interruption!')
                     #rr.clear()
-                    skip_say_text = False
+                    #skip_say_text = False
                 else:
                     self.p('interruption!')
                     #sleep_time2 = 0 
