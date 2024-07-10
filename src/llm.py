@@ -74,7 +74,7 @@ test_txt = [
 
 prompt_txt = [
         [ 'hi', 'hello' ],
-        [ 'what is your name?', 'my name is Jane' ],
+        [ 'what is your last name?', 'my last name is Smith' ],
         [ 'tell me about yourself', 'i am a student' ],
         [ 'what is your favorite color?', 'i like the color blue' ],
         [ 'how old are you?', 'I am thirty three years old' ],
@@ -96,7 +96,9 @@ class Kernel:
         self.truncate = False
         self.loop_wait = False
         self.no_check = False
-        self.offset = 0.0 
+        self.offset = 0.0
+        self.file = False
+        self.file_num = 0 
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -110,6 +112,8 @@ class Kernel:
         z = True
         x = 0
         rr = []
+        start = time.time()
+        end = time.time()
         tt = "hello."
         skip_say_text = False
         while z == True:
@@ -153,7 +157,9 @@ class Kernel:
             ### second process ###
             if self.loop_wait:
                 num = 0 
-                while len(rr) == 0 and num < 100:
+                high = 1000
+                start = time.time()
+                while len(rr) == 0 and num < high:
                     rr.clear()
                     shadow_say_text = False 
                     self.recognize_audio(shadow_say_text)
@@ -170,7 +176,10 @@ class Kernel:
                         rr.append(rx)
                     self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num)
                     if len(rr) > 0:
+                        end = time.time()
                         break 
+                    if num == high - 1 :
+                        exit()
                     num += 1 
             else:
                 rr.clear()
@@ -202,6 +211,7 @@ class Kernel:
             self.p(self.memory_ai)
 
             self.modify_prompt_after_model(tt, ' '.join(rr))
+            self.save_file( self.prompt, end - start )
             rr.clear()
 
     def list_microphones(self):
@@ -374,6 +384,21 @@ class Kernel:
         if self.verbose:
             print(*text)
 
+    def save_file(self, prompt, time):
+        if self.file:
+            f = open(os.path.expanduser('~') + '/llm.txt', 'a')
+
+            f.write(str(self.file_num) + '\n')
+            f.write(str(prompt) + "\n")
+            if self.loop_wait:
+                f.write("---\n")
+                f.write(str(time) + "\n")
+            f.write("+++\n")
+
+            f.close()
+            self.file_num += 1
+        pass 
+
 if __name__ == '__main__':
     k = Kernel()
     parser = argparse.ArgumentParser(description="Pi LLM", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -386,6 +411,7 @@ if __name__ == '__main__':
     parser.add_argument('--name', type=str, help="define new name.")
     parser.add_argument('--offset', type=float, help="time in seconds to offset on startup.")
     parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
+    parser.add_argument('--file', action="store_true", help="save statistics in text file.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -417,6 +443,9 @@ if __name__ == '__main__':
 
     if args.name != None and args.name.strip() != "":
         identifiers['ai'] = args.name.strip()
+
+    if args.file != None:
+        k.file = args.file 
 
     k.loop()
 
