@@ -184,16 +184,13 @@ class Kernel:
                     rr.append(rx)
                 self.p("len q:", self.q.qsize(), 'rr:', len(rr) )
 
-            if len(rr) == 0:
-                rr = ['say' , 'something,' ]
-                #skip_say_text = True
+                if len(rr) == 0:
+                    rr = ['say' , 'something,' ]
+                    #skip_say_text = True
 
             self.p("ai here ", rr)
-            
             self.prompt = self.make_prompt()
-
             self.modify_prompt_before_model("", ' '.join(rr) )
-            
             tt = self.model()
 
             if self.truncate:
@@ -205,7 +202,6 @@ class Kernel:
             self.p(self.memory_ai)
 
             self.modify_prompt_after_model(tt, ' '.join(rr))
-            
             rr.clear()
 
     def list_microphones(self):
@@ -249,7 +245,7 @@ class Kernel:
             self.p("processing.")
 
         try:
-            self.p(GOOGLE_SPEECH_RECOGNITION_API_KEY)
+            #self.p(GOOGLE_SPEECH_RECOGNITION_API_KEY)
             ret = r.recognize_google(audio) #,  key=GOOGLE_SPEECH_RECOGNITION_API_KEY)
             self.p("speech recognition: " + ret)
             

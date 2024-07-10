@@ -31,8 +31,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/9b/84/4be4fb56ad6316eb78ae16829255682bb53e454089a8a1213fe271d6914e/types_setuptools-70.2.0.20240704-py3-none-any.whl",
-                    "sha256": "6b892d5441c2ed58dd255724516e3df1db54892fb20597599aea66d04c3e4d7f"
+                    "url": "https://files.pythonhosted.org/packages/c3/be/60f6258da5989be4bfe1fdb1c10d4b5a722f4ca2656b20ffe1276a9d33e2/types_setuptools-70.3.0.20240710-py3-none-any.whl",
+                    "sha256": "bd0db2a4b9f2c49ac5564be4e0fb3125c4c46b1f73eafdcbceffa5b005cceca4"
                 }
             ]
         },

@@ -10,6 +10,7 @@ finish-args:
   - --filesystem=/dev/shm
   - --device=all
   - --socket=pulseaudio
+  - --device=shm
 modules:
   - requirements.json
 
