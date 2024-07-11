@@ -212,7 +212,7 @@ class Kernel:
             self.p(self.memory_ai)
 
             self.modify_prompt_after_model(tt, ' '.join(rr))
-            self.save_file( self.prompt, end - start )
+            self.save_file(  end - start )
             rr.clear()
 
     def list_microphones(self):
@@ -269,10 +269,10 @@ class Kernel:
         
         except sr.UnknownValueError:
             print("Google Speech Recognition could not understand audio")
-            return
+            return 
         except sr.RequestError as e:
             print("Could not request results from Google Speech Recognition service; {0}".format(e))
-            return
+            return 
 
         self.p('iter', self.x_iter)
         self.x_iter += 1
@@ -385,14 +385,15 @@ class Kernel:
         if self.verbose:
             print(*text)
 
-    def save_file(self, prompt, time):
+    def save_file(self,  time):
         if self.file:
             f = open(os.path.expanduser('~') + '/llm.txt', 'a')
 
             f.write(str(self.file_num) + '\n')
-            for i in range(len(self.memory_user)):
-                f.write(identifiers['user'] + " : "+ str(self.memory_user[i]) + "\n")
-                f.write(identifiers['ai'] + " : " + str(self.memory_ai[i]) + "\n")
+            #for i in range(len(self.memory_user) -1, len(self.memory_user)):
+                
+            f.write(identifiers['user'] + " : "+ str(self.memory_user[-1]) + "\n")
+            f.write(identifiers['ai'] + " : " + str(self.memory_ai[-1]) + "\n")
             #f.write(str(prompt) + "\n")
             if self.loop_wait:
                 f.write("---\n")
