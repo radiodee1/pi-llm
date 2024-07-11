@@ -98,7 +98,8 @@ class Kernel:
         self.no_check = False
         self.offset = 0.0
         self.file = False
-        self.file_num = 0 
+        self.file_num = 0
+        self.temp = 0.001
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -371,7 +372,7 @@ class Kernel:
         data = {
             "model" : OPENAI_MODEL,
             "messages": [{'role': 'user', 'content': self.prompt }],
-            "temperature": 0.01
+            "temperature": self.temp
         }
         r = requests.post(OPENAI_URL, headers=z_args, json=data)
         r = json.loads(r.text)
@@ -389,7 +390,10 @@ class Kernel:
             f = open(os.path.expanduser('~') + '/llm.txt', 'a')
 
             f.write(str(self.file_num) + '\n')
-            f.write(str(prompt) + "\n")
+            for i in range(len(self.memory_user)):
+                f.write(identifiers['user'] + " : "+ str(self.memory_user[i]) + "\n")
+                f.write(identifiers['ai'] + " : " + str(self.memory_ai[i]) + "\n")
+            #f.write(str(prompt) + "\n")
             if self.loop_wait:
                 f.write("---\n")
                 f.write(str(time) + "\n")
@@ -412,6 +416,7 @@ if __name__ == '__main__':
     parser.add_argument('--offset', type=float, help="time in seconds to offset on startup.")
     parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
     parser.add_argument('--file', action="store_true", help="save statistics in text file.")
+    parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -446,6 +451,9 @@ if __name__ == '__main__':
 
     if args.file != None:
         k.file = args.file 
+
+    if args.temp != 0:
+        k.temp = args.temp
 
     k.loop()
 
