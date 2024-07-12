@@ -163,7 +163,8 @@ class Kernel:
                 start = time.time()
                 while len(rr) == 0 and num < high:
                     rr.clear()
-                    shadow_say_text = False 
+                    shadow_say_text = False
+                    self.p("say something.")
                     self.recognize_audio(shadow_say_text)
                     #p2 = mp.Process(target=self.recognize_audio, args=(shadow_say_text,))
                     #p2.start()
@@ -176,9 +177,16 @@ class Kernel:
                         rx = self.q.get(block=False)
                         self.p('rx2', rx)
                         rr.append(rx)
-                    self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num)
+                    end = time.time()
+                    self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
+                    
+                    #end = time.time()
+                    if (end - start)  > self.timeout * 60:
+                        self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
+                        exit()
+
                     if len(rr) > 0:
-                        end = time.time()
+                        #end = time.time()
                         break 
                     if num == high - 1 :
                         exit()
@@ -186,6 +194,7 @@ class Kernel:
             else:
                 rr.clear()
                 shadow_say_text = False
+                self.p("say something.")
                 self.recognize_audio(shadow_say_text)
                 time.sleep(sleep_time_2)   
                 self.p("len q:", self.q.qsize()) 
@@ -215,9 +224,6 @@ class Kernel:
             self.modify_prompt_after_model(tt, ' '.join(rr))
 
             self.save_file(  end - start )
-            if (end - start) * 60 > self.timeout:
-                self.p("timeout", (end - start) * 60 )
-                exit()
             rr.clear()
 
     def list_microphones(self):
@@ -255,7 +261,8 @@ class Kernel:
             phrase_time_limit = 5
             #r = sr.Recognizer()
             if not shadow_say_text:
-                print("say something!")
+                #print("say something!")
+                pass 
             audio = r.listen(source, timeout, phrase_time_limit)
             #audio = r.listen(source)
             self.p("processing.")
@@ -274,8 +281,10 @@ class Kernel:
         
         except sr.UnknownValueError:
             print("Google Speech Recognition could not understand audio")
+            #self.empty_queue()
             return 
         except sr.RequestError as e:
+            #self.empty_queue()
             print("Could not request results from Google Speech Recognition service; {0}".format(e))
             return 
 
