@@ -100,6 +100,7 @@ class Kernel:
         self.file = False
         self.file_num = 0
         self.temp = 0.001
+        self.timeout = 5.0
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -212,7 +213,11 @@ class Kernel:
             self.p(self.memory_ai)
 
             self.modify_prompt_after_model(tt, ' '.join(rr))
+
             self.save_file(  end - start )
+            if (end - start) * 60 > self.timeout:
+                self.p("timeout", (end - start) * 60 )
+                exit()
             rr.clear()
 
     def list_microphones(self):
@@ -418,6 +423,7 @@ if __name__ == '__main__':
     parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
     parser.add_argument('--file', action="store_true", help="save statistics in text file.")
     parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
+    parser.add_argument('--timeout', type=float, default=5.0, help="minutes to timeout/quit.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -455,6 +461,9 @@ if __name__ == '__main__':
 
     if args.temp != 0:
         k.temp = args.temp
+
+    if args.timeout != 0:
+        k.timeout = args.timeout
 
     k.loop()
 
