@@ -15,3 +15,9 @@ GOOGLE_SPEECH_RECOGNITION_API_KEY=abc
 MICROPHONE_INDEX=-1
 PROJECT_LAUNCH_ARGS=''
 ```
+
+Below are some test arguments for the PROJECT_LAUNCH_ARGS variable.
+
+```
+PROJECT_LAUNCH_ARGS='--no_check --file --loop_wait --verbose --name Bob --offset 20 --timeout 5 '
+```

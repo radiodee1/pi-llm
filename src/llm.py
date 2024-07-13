@@ -437,7 +437,8 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
     if len(PROJECT_LAUNCH_ARGS.strip()) > 0:
-        args = parser.parse_args(PROJECT_LAUNCH_ARGS.split(" "))
+        print(PROJECT_LAUNCH_ARGS.strip())
+        args = parser.parse_args(PROJECT_LAUNCH_ARGS.strip().split(" "))
     #parser.parse_args(PROJECT_LAUNCH_ARGS.split(" "))
    
     print(args)
