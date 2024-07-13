@@ -399,9 +399,14 @@ class Kernel:
         if self.verbose:
             print(*text)
 
-    def save_file(self,  time):
+    def save_file(self,  time, heading=""):
         if self.file:
             f = open(os.path.expanduser('~') + '/llm.txt', 'a')
+            
+            if heading.strip() != "":
+                f.write(str(heading) + '\n')
+                f.close()
+                return
 
             f.write(str(self.file_num) + '\n')
             #for i in range(len(self.memory_user) -1, len(self.memory_user)):
@@ -442,7 +447,6 @@ if __name__ == '__main__':
     #parser.parse_args(PROJECT_LAUNCH_ARGS.split(" "))
    
     print(args)
-    
     if args.mics == True:
         k.list_microphones()
         exit()
@@ -474,6 +478,8 @@ if __name__ == '__main__':
 
     if args.timeout != 0:
         k.timeout = args.timeout
+    
+    k.save_file(0, str(args))
 
     k.loop()
 
