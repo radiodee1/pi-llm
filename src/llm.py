@@ -354,7 +354,7 @@ class Kernel:
             ret += identifiers['ai'] + ": " + a 
             ret += '\n\n'
         if len(self.memory_ai) == len(self.memory_user):
-            for i in range(  len(self.memory_ai) - self.window ,len(self.memory_ai)):
+            for i in range(len(self.memory_ai) - self.window ,len(self.memory_ai)):
                 if i < 0:
                     continue
                 a = self.memory_ai[i]
