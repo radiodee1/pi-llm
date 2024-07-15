@@ -344,15 +344,17 @@ class Kernel:
 
     def make_prompt(self):
         ret = ""
-        for i in prompt_txt:
-            u = i[0]
-            a = i[1]
+        for i in range(len(prompt_txt) + len(self.memory_ai) - self.window, len(prompt_txt)):
+            if i < 0:
+                continue
+            u = prompt_txt[i][0]
+            a = prompt_txt[i][1]
             ret += identifiers['user'] + ": " + u 
             ret += '\n'
             ret += identifiers['ai'] + ": " + a 
             ret += '\n\n'
         if len(self.memory_ai) == len(self.memory_user):
-            for i in range(len(self.memory_ai) - self.window ,len(self.memory_ai)):
+            for i in range(  len(self.memory_ai) - self.window ,len(self.memory_ai)):
                 if i < 0:
                     continue
                 a = self.memory_ai[i]
