@@ -101,6 +101,7 @@ class Kernel:
         self.file_num = 0
         self.temp = 0.001
         self.timeout = 5.0
+        self.window = 10
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -351,7 +352,9 @@ class Kernel:
             ret += identifiers['ai'] + ": " + a 
             ret += '\n\n'
         if len(self.memory_ai) == len(self.memory_user):
-            for i in range(len(self.memory_ai)):
+            for i in range(len(self.memory_ai) - self.window ,len(self.memory_ai)):
+                if i < 0:
+                    continue
                 a = self.memory_ai[i]
                 u = self.memory_user[i]
                 if len(a) == 0 or len(u) == 0:
