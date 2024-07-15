@@ -101,7 +101,7 @@ class Kernel:
         self.file_num = 0
         self.temp = 0.001
         self.timeout = 5.0
-        self.window = 10
+        self.window = 40
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -441,6 +441,7 @@ if __name__ == '__main__':
     parser.add_argument('--file', action="store_true", help="save statistics in text file.")
     parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
     parser.add_argument('--timeout', type=float, default=5.0, help="minutes to timeout/quit.")
+    parser.add_argument('--window', type=int, default=40, help="number of memory units used in input.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -482,6 +483,9 @@ if __name__ == '__main__':
     if args.timeout != 0:
         k.timeout = args.timeout
     
+    if args.window != 0:
+        k.window = args.window
+
     k.save_file(0, str(args))
 
     k.loop()
