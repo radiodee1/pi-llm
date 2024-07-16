@@ -63,14 +63,6 @@ try:
 except:
     PROJECT_LAUNCH_ARGS='' #'--no_check'
 
-test_txt = [ 
-            'hi, my name is jane',
-            'I like candy',
-            'I like the color blue',
-            'please dont be confused',
-            'where are we?',
-            'if ' + str(TEST_SIX) + ' were ' + str(TEST_NINE)
-            ]
 
 prompt_txt = [
         [ 'hi', 'hello' ],
@@ -83,8 +75,6 @@ prompt_txt = [
 
 identifiers = { 'user':'user', 'ai':'Jane' }
 
-test_text = [ 'here', 'is', 'some', 'text' ]
-test_speech = [ 'here', 'is', 'some', 'text', 'plus' , 'some']
 
 class Kernel:
 
@@ -156,7 +146,7 @@ class Kernel:
             sleep_time_2 = 1.75 
             self.empty_queue()
             x += 1
-            x = x % len(test_txt)
+            x = x % len(prompt_txt)
             ### second process ###
             if self.loop_wait:
                 num = 0 
