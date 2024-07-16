@@ -190,7 +190,8 @@ class Kernel:
                         #end = time.time()
                         break 
                     if num == high - 1 :
-                        exit()
+                        rr = [ 'say', 'something' ]
+                        break
                     num += 1 
             else:
                 rr.clear()
