@@ -110,12 +110,10 @@ class Kernel:
         tt = "hello."
         skip_say_text = False
         while z == True:
-            #if not skip_say_text:
             self.p("ai here")
             if x == 0:
                 ## not used ##
                 pass 
-                #rr = "say something".split(' ')
             self.empty_queue()
             shadow_say_text = True
             if not self.no_check:
@@ -136,12 +134,8 @@ class Kernel:
                 ## does nothing !! ##
                 if self.is_match(tt.split(' '), rr):
                     self.p('no interruption!')
-                    #rr.clear()
-                    #skip_say_text = False
                 else:
                     self.p('interruption!')
-                    #sleep_time2 = 0 
-                    #rr = self.prune_interrupted(tt.split(' '), rr)
             tt = ""
             rr.clear()
             sleep_time_2 = 1.75 
