@@ -132,7 +132,7 @@ class Kernel:
                 self.p(rr)
 
                 ## does nothing !! ##
-                if self.is_match(tt.split(' '), rr):
+                if self.is_match(tt.split(' '), rr) or rr == []:
                     self.p('no interruption!')
                 else:
                     self.p('interruption!')
