@@ -113,6 +113,7 @@ class Kernel:
             #if not skip_say_text:
             self.p("ai here")
             if x == 0:
+                ## not used ##
                 pass 
                 #rr = "say something".split(' ')
             self.empty_queue()
