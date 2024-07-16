@@ -100,7 +100,7 @@ class Kernel:
         self.file = False
         self.file_num = 0
         self.temp = 0.001
-        self.timeout = 5.0
+        self.timeout = 3.0 
         self.window = 35 
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
@@ -184,7 +184,8 @@ class Kernel:
                     #end = time.time()
                     if (end - start)  > self.timeout * 60:
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
-                        exit()
+                        rr = ['say', 'something']
+                        break
 
                     if len(rr) > 0:
                         #end = time.time()
@@ -443,7 +444,7 @@ if __name__ == '__main__':
     parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
     parser.add_argument('--file', action="store_true", help="save statistics in text file.")
     parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
-    parser.add_argument('--timeout', type=float, default=5.0, help="minutes to timeout/quit.")
+    parser.add_argument('--timeout', type=float, default=3.0, help="minutes to timeout/quit.")
     parser.add_argument('--window', type=int, default=35, help="number of memory units used in input.")
     ## NOTE: local is not implemented!! 
     
