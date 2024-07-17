@@ -152,33 +152,32 @@ class Kernel:
                     shadow_say_text = False
                     self.p("say something.")
                     self.recognize_audio(shadow_say_text)
-                    #p2 = mp.Process(target=self.recognize_audio, args=(shadow_say_text,))
-                    #p2.start()
-                    #self.p("start")
-                    #p2.join()
-                    #self.p("join")
-                    #time.sleep(sleep_time_2)   
-                    self.p("len q:", self.q.qsize()) 
-                    while not self.q.empty():
-                        rx = self.q.get(block=False)
-                        self.p('rx2', rx)
-                        rr.append(rx)
                     end = time.time()
                     self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
-                    
+                    if self.q.qsize() > 0:
+                        #end = time.time()
+                        break 
+                   
                     #end = time.time()
                     if (end - start)  > self.timeout * 60:
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
                         rr = ['say', 'something']
                         break
 
-                    if len(rr) > 0:
-                        #end = time.time()
-                        break 
                     if num == high - 1 :
                         rr = [ 'say', 'something' ]
                         break
                     num += 1 
+                ###############
+                self.p("len q:", self.q.qsize()) 
+                while self.q.qsize() > 0:
+                    rx = self.q.get(block=True) ## don't really know <--
+                    self.p('rx2', rx)
+                    rr.append(rx)
+                end = time.time()
+                self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
+
+
             else:
                 rr.clear()
                 shadow_say_text = False
@@ -251,7 +250,7 @@ class Kernel:
             if not shadow_say_text:
                 #print("say something!")
                 pass 
-            audio = r.listen(source) #, timeout, phrase_time_limit)
+            audio = r.listen(source) #, timeout=timeout) #, phrase_time_limit)
             #audio = r.listen(source)
             self.p("processing.")
 
