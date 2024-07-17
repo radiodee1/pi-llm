@@ -251,7 +251,7 @@ class Kernel:
             if not shadow_say_text:
                 #print("say something!")
                 pass 
-            audio = r.listen(source, timeout, phrase_time_limit)
+            audio = r.listen(source) #, timeout, phrase_time_limit)
             #audio = r.listen(source)
             self.p("processing.")
 
