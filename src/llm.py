@@ -119,8 +119,9 @@ class Kernel:
             if not self.no_check:
                 p = mp.Process(target=self.recognize_audio, args=(shadow_say_text,))
                 p.start()
+                time.sleep(2)
             rr.clear()
-            time.sleep(2) 
+            #time.sleep(2) 
             self.say_text(tt)
             ## try join here!! remove sleep !!
             if not self.no_check:
