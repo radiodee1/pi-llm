@@ -137,8 +137,9 @@ class Kernel:
                     self.p('no interruption!')
                 else:
                     self.p('interruption!')
+                    self.save_file(0, '---\ninterruption\n---')
             tt = ""
-            rr.clear()
+            #rr.clear() ## <-- keep or not keep??
             sleep_time_2 = 1.75 
             self.empty_queue()
             x += 1
@@ -156,28 +157,24 @@ class Kernel:
                     end = time.time()
                     self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
                     if self.q.qsize() > 0:
-                        #end = time.time()
                         break 
-                   
-                    #end = time.time()
                     if (end - start)  > self.timeout * 60:
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
                         rr = ['say', 'something']
                         break
-
                     if num == high - 1 :
                         rr = [ 'say', 'something' ]
                         break
                     num += 1 
                 ###############
-                self.p("len q:", self.q.qsize()) 
+                self.p("len q:", self.q.qsize())
+                #using_thread = not self.no_check
                 while self.q.qsize() > 0:
                     rx = self.q.get(block=True) ## don't really know <--
                     self.p('rx2', rx)
                     rr.append(rx)
                 end = time.time()
                 self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
-
 
             else:
                 rr.clear()
