@@ -111,9 +111,6 @@ class Kernel:
         skip_say_text = False
         while z == True:
             self.p("ai here")
-            if x == 0:
-                ## not used ##
-                pass 
             self.empty_queue()
             shadow_say_text = True
             if not self.no_check:
@@ -121,7 +118,6 @@ class Kernel:
                 p.start()
                 time.sleep(2)
             rr.clear()
-            #time.sleep(2) 
             self.say_text(tt)
             ## try join here!! remove sleep !!
             if not self.no_check:
@@ -131,8 +127,7 @@ class Kernel:
                     self.p('rx', rx)
                     rr.append(rx) 
                 self.p(rr)
-
-                ## does nothing !! ##
+                ## check ##
                 if self.is_match(tt.split(' '), rr) or rr == []:
                     self.p('no interruption!')
                 else:
@@ -140,7 +135,6 @@ class Kernel:
                     self.save_file(0, '---\ninterruption\n---')
             tt = ""
             #rr.clear() ## <-- keep or not keep??
-            sleep_time_2 = 1.75 
             self.empty_queue()
             x += 1
             x = x % len(prompt_txt)
@@ -178,6 +172,7 @@ class Kernel:
 
             else:
                 rr.clear()
+                sleep_time_2 = 1.75 
                 shadow_say_text = False
                 self.p("say something.")
                 self.recognize_audio(shadow_say_text)
