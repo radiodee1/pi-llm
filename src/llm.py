@@ -147,7 +147,7 @@ class Kernel:
                 num = 0 
                 high = 1000
                 start = time.time()
-                while len(rr) == 0 and num < high:
+                while num < high:
                     rr.clear()
                     shadow_say_text = False
                     self.p("say something.")
