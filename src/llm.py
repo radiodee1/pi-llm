@@ -247,11 +247,7 @@ class Kernel:
             timeout = 10 
             phrase_time_limit = 5
             #r = sr.Recognizer()
-            if not shadow_say_text:
-                #print("say something!")
-                pass 
             audio = r.listen(source) #, timeout=timeout) #, phrase_time_limit)
-            #audio = r.listen(source)
             self.p("processing.")
 
         try:
