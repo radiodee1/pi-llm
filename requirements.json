@@ -185,6 +185,100 @@
                     "sha256": "a448b2f64d686155468037e1ace9f2d2199776e17f0a46610480d311f73e3472"
                 }
             ]
+        },
+        {
+            "name": "python3-google-cloud-speech",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"google-cloud-speech==2.26.1\" --no-build-isolation"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/04/e6/a1551acbaa06f3e48b311329828a34bc9c51a8cfaecdeb4d03c329a1ef85/cachetools-5.4.0-py3-none-any.whl",
+                    "sha256": "3ae3b49a3d5e28a77a0be2b37dbcb89005058959cb2323858c2657c4a8cab474"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/1c/d5/c84e1a17bf61d4df64ca866a1c9a913874b4e9bdc131ec689a0ad013fb36/certifi-2024.7.4-py3-none-any.whl",
+                    "sha256": "c198e21b1289c2ab85ee4e67bb4b4ef3ead0892059901a8d5b622f24a1101e90"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz",
+                    "sha256": "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/44/99/daa3541e8ecd7d8b7907b714ba92126097a976b5b3dbabdb5febdcf08554/google_api_core-2.19.1-py3-none-any.whl",
+                    "sha256": "f12a9b8309b5e21d92483bbd47ce2c445861ec7d269ef6784ecc0ea8c1fa6125"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/e7/00/85c22f7f73fa2e88dfbf0e1f63c565386ba40e0264b59c8a4362ae27c9fc/google_auth-2.32.0-py2.py3-none-any.whl",
+                    "sha256": "53326ea2ebec768070a94bee4e1b9194c9646ea0c2bd72422785bd0f9abfad7b"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/94/23/8f14d6a0d67758bcc7574c2cefc6a13aa619a567cdbc0aef64a695375dea/google_cloud_speech-2.26.1-py2.py3-none-any.whl",
+                    "sha256": "51566c55f74288767afa91fd25c9563cfcf61ed417eb3301d4cb58c5ee4abe77"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/02/48/87422ff1bddcae677fb6f58c97f5cfc613304a5e8ce2c3662760199c0a84/googleapis_common_protos-1.63.2-py2.py3-none-any.whl",
+                    "sha256": "27a2499c7e8aff199665b22741997e485eccc8645aa9176c7c988e6fae507945"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/d9/59/bdfe3fc167366e064392367083e705f2b63aeda2b7c004055e7ec80ef538/grpcio-1.65.1.tar.gz",
+                    "sha256": "3c492301988cd720cd145d84e17318d45af342e29ef93141228f9cd73222368b"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/02/fc/2348889495bc465540d18213dcd214e31b117f3a8665b7bb3fa028d61eab/grpcio_status-1.65.1-py3-none-any.whl",
+                    "sha256": "0ec2070f7dbcc2fe78a7b34233a2a00f8ced727d2f1dec1af422d628cf86b92c"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/e5/3e/741d8c82801c347547f8a2a06aa57dbb1992be9e948df2ea0eda2c8b79e8/idna-3.7-py3-none-any.whl",
+                    "sha256": "82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/7c/6f/db31f0711c0402aa477257205ce7d29e86a75cb52cd19f7afb585f75cda0/proto_plus-1.24.0-py3-none-any.whl",
+                    "sha256": "402576830425e5f6ce4c2a6702400ac79897dab0b4343821aa5188b0fab81a12"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/71/a5/d61e4263e62e6db1990c120d682870e5c50a30fb6b26119a214c7a014847/protobuf-5.27.2.tar.gz",
+                    "sha256": "f3ecdef226b9af856075f28227ff2c90ce3a594d092c39bee5513573f25e2714"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/23/7e/5f50d07d5e70a2addbccd90ac2950f81d1edd0783630651d9268d7f1db49/pyasn1-0.6.0-py2.py3-none-any.whl",
+                    "sha256": "cca4bb0f2df5504f02f6f8a775b6e416ff9b0b3b16f7ee80b5a3153d9b804473"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/13/68/8906226b15ef38e71dc926c321d2fe99de8048e9098b5dfd38343011c886/pyasn1_modules-0.4.0-py3-none-any.whl",
+                    "sha256": "be04f15b66c206eed667e0bb5ab27e2b1855ea54a842e5037738099e8ca4ae0b"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/f9/9b/335f9764261e915ed497fcdeb11df5dfd6f7bf257d4a6a2a686d80da4d54/requests-2.32.3-py3-none-any.whl",
+                    "sha256": "70761cfe03c773ceb22aa2f671b4757976145175cdfca038c02654d061d6dcc6"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/49/97/fa78e3d2f65c02c8e1268b9aba606569fe97f6c8f7c2d74394553347c145/rsa-4.9-py3-none-any.whl",
+                    "sha256": "90260d9058e514786967344d0ef75fa8727eed8a7d2e43ce9f4bcf1b536174f7"
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/ca/1c/89ffc63a9605b583d5df2be791a27bc1a42b7c32bab68d3c8f2f73a98cd4/urllib3-2.2.2-py3-none-any.whl",
+                    "sha256": "a448b2f64d686155468037e1ace9f2d2199776e17f0a46610480d311f73e3472"
+                }
+            ]
         }
     ]
 }

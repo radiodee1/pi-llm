@@ -64,6 +64,14 @@ try:
 except:
     PROJECT_LAUNCH_ARGS='' #'--no_check'
 
+GOOGLE_CLOUD_SPEECH_CREDENTIALS=''
+
+try:
+    GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
+except:
+    GOOGLE_APPLICATION_CREDENTIALS=''
+
+
 
 prompt_txt = [
         [ 'hi', 'hello' ],
@@ -92,7 +100,8 @@ class Kernel:
         self.file_num = 0
         self.temp = 0.001
         self.timeout = 3.0 
-        self.window = 35 
+        self.window = 35
+        self.cloud = False
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -248,8 +257,13 @@ class Kernel:
             self.p("processing.")
 
         try:
+            ret = ''
             #self.p(GOOGLE_SPEECH_RECOGNITION_API_KEY)
-            ret = r.recognize_google(audio) #,  key=GOOGLE_SPEECH_RECOGNITION_API_KEY)
+            if self.cloud == False:
+                ret = r.recognize_google(audio) #,  key=GOOGLE_SPEECH_RECOGNITION_API_KEY)
+            elif self.cloud == True:
+                ret = str(r.recognize_google_cloud(audio, GOOGLE_APPLICATION_CREDENTIALS))
+
             self.p("speech recognition: " + ret)
             
             #if True:
@@ -408,6 +422,22 @@ class Kernel:
             f.close()
             self.file_num += 1
         pass 
+    
+    def load_cloud_json(self):
+        if self.cloud :
+            temp = ''
+            path = GOOGLE_APPLICATION_CREDENTIALS # os.path.expanduser('~') + "/.llm.json"
+            f = open(path, 'r')
+            x = f.readlines()
+            for i in x:
+                temp += i.strip() + "\n"
+            
+            f.close()
+            GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.loads(temp) 
+            print(GOOGLE_CLOUD_SPEECH_CREDENTIALS)
+        pass 
+
+
 
 if __name__ == '__main__':
     k = Kernel()
@@ -425,6 +455,7 @@ if __name__ == '__main__':
     parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
     parser.add_argument('--timeout', type=float, default=3.0, help="minutes to timeout.")
     parser.add_argument('--window', type=int, default=35, help="number of memory units used in input.")
+    parser.add_argument('--cloud', action="store_true", help="Google Cloud Speech Recognition.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -453,6 +484,7 @@ if __name__ == '__main__':
     k.verbose = args.verbose
     k.loop_wait = args.loop_wait
     k.no_check = args.no_check
+    k.cloud = args.cloud 
 
     if args.name != None and args.name.strip() != "":
         identifiers['ai'] = args.name.strip()
@@ -468,6 +500,9 @@ if __name__ == '__main__':
     
     if args.window != 0:
         k.window = args.window
+
+    if args.cloud and False:
+        k.load_cloud_json()
 
     k.save_file(0, str(args))
 
