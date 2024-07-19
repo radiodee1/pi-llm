@@ -124,7 +124,7 @@ class Kernel:
                 p.join()
                 while self.q.qsize() > 0:
                     rx = self.q.get(block=False)
-                    self.p('rx', rx)
+                    self.p('a-rr', rx)
                     rr.append(rx) 
                 self.p(rr)
                 ## check ##
@@ -165,7 +165,7 @@ class Kernel:
                 #using_thread = not self.no_check
                 while self.q.qsize() > 0:
                     rx = self.q.get(block=True) ## don't really know <--
-                    self.p('rx2', rx)
+                    self.p('b-rr', rx)
                     rr.append(rx)
                 end = time.time()
                 self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
@@ -250,7 +250,7 @@ class Kernel:
             
             #if True:
             for i in ret.split(' '):
-                self.p('sr', i)
+                self.p('c-rr', i)
                 #self.q.put(i)
                 self.q.put(i, block=False)
                 #self.q.task_done() 
