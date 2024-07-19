@@ -180,7 +180,7 @@ class Kernel:
                 self.p("len q:", self.q.qsize()) 
                 while not self.q.empty():
                     rx = self.q.get(block=False)
-                    self.p('rx2', rx)
+                    self.p('c-rr', rx)
                     rr.append(rx)
                 self.p("len q:", self.q.qsize(), 'rr:', len(rr) )
 
@@ -250,7 +250,7 @@ class Kernel:
             
             #if True:
             for i in ret.split(' '):
-                self.p('c-rr', i)
+                self.p('d-rr', i)
                 #self.q.put(i)
                 self.q.put(i, block=False)
                 #self.q.task_done() 
