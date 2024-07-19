@@ -10,6 +10,7 @@ import multiprocessing as mp
 import time
 import requests
 import json
+#import hashlib
 
 vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -128,10 +129,10 @@ class Kernel:
                     rr.append(rx) 
                 self.p(rr)
                 ## check ##
-                if rr == []:
+                if rr == [] or len(rr) == 0:
                     self.p('no input!')
                     
-                if self.is_match(tt.split(' '), rr) or rr == []:
+                if self.is_match(tt.split(' '), rr) or len(rr) == 0:
                     self.p('no interruption!')
                 else:
                     self.p('interruption!')
@@ -278,7 +279,9 @@ class Kernel:
         if len(txt) == 0:
             return
         tts = gTTS(text=txt, lang='en')
-        filename = '.output.mp3'
+        #m = hashlib.sha256()
+        #f = m.hexdigest()
+        filename =  '.output.mp3'
         tts.save(filename)
         playsound(filename)
         self.p('say this: ', txt)
