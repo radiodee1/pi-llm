@@ -14,6 +14,9 @@ GOOGLE_SPEECH_RECOGNITION_API_KEY=abc
 
 MICROPHONE_INDEX=-1
 PROJECT_LAUNCH_ARGS=''
+
+GOOGLE_APPLICATION_CREDENTIALS=/path-to-json-file/file.json
+
 ```
 
 Below are some test arguments for the PROJECT_LAUNCH_ARGS variable.
