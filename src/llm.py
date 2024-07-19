@@ -123,11 +123,14 @@ class Kernel:
             if not self.no_check:
                 p.join()
                 while self.q.qsize() > 0:
-                    rx = self.q.get(block=False)
+                    rx = self.q.get(block=True) ## <-- block = False
                     self.p('a-rr', rx)
                     rr.append(rx) 
                 self.p(rr)
                 ## check ##
+                if rr == []:
+                    self.p('no input!')
+                    
                 if self.is_match(tt.split(' '), rr) or rr == []:
                     self.p('no interruption!')
                 else:
