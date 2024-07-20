@@ -209,8 +209,8 @@ class Kernel:
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
 
-            if self.truncate:
-                tt = self.prune_input(tt) # + '.'
+            #if self.truncate:
+            tt = self.prune_input(tt) # + '.'
 
             self.p(tt, "<<<",   "\n====")
             self.p(self.prompt, "\n====")
@@ -256,7 +256,7 @@ class Kernel:
             timeout = 10 
             phrase_time_limit = 5
             #r = sr.Recognizer()
-            audio = r.listen(source) #, timeout=timeout) #, phrase_time_limit)
+            audio = r.listen(source) #, timeout=timeout, phrase_time_limit=phrase_time_limit)
             self.p("processing.")
 
         try:
@@ -378,9 +378,13 @@ class Kernel:
 
     def prune_input(self, text):
         self.p(text, '<<< unmodified')
-        text = text.split('?')[0]
-        text = text.split('.')[0]
-        text = text.split('!')[0]
+        text = text.replace(':', '.')
+        text = text.replace('-', '.')
+        text = text.replace(';', '.')
+        if self.truncate:
+            text = text.split('?')[0]
+            text = text.split('.')[0]
+            text = text.split('!')[0]
         return text
 
     def model(self):
