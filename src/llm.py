@@ -256,7 +256,7 @@ class Kernel:
             timeout = 10 
             phrase_time_limit = 5
             #r = sr.Recognizer()
-            audio = r.listen(source) #, timeout=timeout, phrase_time_limit=phrase_time_limit)
+            audio = r.listen(source) #, timeout=timeout ) #, phrase_time_limit=phrase_time_limit)
             self.p("processing.")
 
         try:
@@ -274,7 +274,7 @@ class Kernel:
                 if i.strip() != "":
                     self.p('d-rr', i)
                     #self.q.put(i)
-                    self.q.put(i.strip(), block=False)
+                    self.q.put(i.strip(), block=True)
                 #self.q.task_done() 
         
         except sr.UnknownValueError:

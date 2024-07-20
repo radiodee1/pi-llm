@@ -23,5 +23,7 @@ GOOGLE_APPLICATION_CREDENTIALS=/path-to-json-file/file.json
 Below are some test arguments for the PROJECT_LAUNCH_ARGS variable.
 
 ```
-PROJECT_LAUNCH_ARGS='--no_check --file --loop_wait --verbose --name Bob --offset 20 --timeout 5 '
+PROJECT_LAUNCH_ARGS='--no_check --file --loop_wait --verbose --name Bob --offset 20 --timeout 5 --cloud'
 ```
+
+Collision checking does not work well. Use `--no_check` allways. Cloud works well but is largely untested. Remember that background noise is allways a problem. The microphone will hang if there's too much background noise and the end of input text will not be detected.
