@@ -134,8 +134,9 @@ class Kernel:
                 p.join()
                 while self.q.qsize() > 0:
                     rx = self.q.get(block=True) ## <-- block = False
-                    self.p('a-rr', rx)
-                    rr.append(rx) 
+                    if rx.strip() != "":
+                        self.p('a-rr', rx)
+                        rr.append(rx.strip()) 
                 self.p(rr)
                 ## check ##
                 if rr == [] or len(rr) == 0:
@@ -178,8 +179,9 @@ class Kernel:
                 #using_thread = not self.no_check
                 while self.q.qsize() > 0:
                     rx = self.q.get(block=True) ## don't really know <--
-                    self.p('b-rr', rx)
-                    rr.append(rx)
+                    if rx.strip() != '':
+                        self.p('b-rr', rx)
+                        rr.append(rx.strip())
                 end = time.time()
                 self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
 
@@ -193,8 +195,9 @@ class Kernel:
                 self.p("len q:", self.q.qsize()) 
                 while not self.q.empty():
                     rx = self.q.get(block=False)
-                    self.p('c-rr', rx)
-                    rr.append(rx)
+                    if rx.strip() != '':
+                        self.p('c-rr', rx)
+                        rr.append(rx.strip())
                 self.p("len q:", self.q.qsize(), 'rr:', len(rr) )
 
                 if len(rr) == 0:
@@ -209,8 +212,8 @@ class Kernel:
             if self.truncate:
                 tt = self.prune_input(tt) # + '.'
 
-            self.p(tt, "<<<", "\n====")
-            self.p(self.prompt, "\n=====")
+            self.p(tt, "<<<",   "\n====")
+            self.p(self.prompt, "\n====")
             self.p(self.memory_user, '\n---')
             self.p(self.memory_ai)
 
@@ -268,9 +271,10 @@ class Kernel:
             
             #if True:
             for i in ret.split(' '):
-                self.p('d-rr', i)
-                #self.q.put(i)
-                self.q.put(i, block=False)
+                if i.strip() != "":
+                    self.p('d-rr', i)
+                    #self.q.put(i)
+                    self.q.put(i.strip(), block=False)
                 #self.q.task_done() 
         
         except sr.UnknownValueError:
@@ -317,7 +321,8 @@ class Kernel:
 
     def empty_queue(self):
         while not self.q.empty():
-            self.q.get_nowait()
+            #self.q.get_nowait()
+            self.q.get(block=True)
 
     def prune_interrupted(self, text, speech):
         output = []
