@@ -15,6 +15,7 @@ GOOGLE_SPEECH_RECOGNITION_API_KEY=abc
 MICROPHONE_INDEX=-1
 PROJECT_LAUNCH_ARGS=''
 
+# For Google Cloud Speech...
 GOOGLE_APPLICATION_CREDENTIALS=/path-to-json-file/file.json
 
 ```
