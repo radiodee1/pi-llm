@@ -102,6 +102,7 @@ class Kernel:
         self.timeout = 3.0 
         self.window = 35
         self.cloud = False
+        self.json = False
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -342,13 +343,28 @@ class Kernel:
         #print(output, '<<<')
         return output
 
+    def format_json(self, user, text):
+        user = user.lower().split(' ')[0]
+        user = user.replace('\'', "\"")
+        text = text.strip()
+        text = text.replace('\'', '"')
+        #x = "{'role' :'" + user + "', 'content' : '" + text +"'}"
+        print(user, text , '++++')
+        x = { 'role' : user, 'content': text }
+        return x 
+
     def make_prompt(self):
         ret = ""
+        ai = []
         for i in range(len(prompt_txt) + len(self.memory_ai) - self.window, len(prompt_txt)):
             if i < 0:
                 continue
             u = prompt_txt[i][0]
             a = prompt_txt[i][1]
+            if self.json:
+                ai += [self.format_json(identifiers['user'], u) ]
+                ai += [self.format_json(identifiers['ai'], a) ]
+                continue
             ret += identifiers['user'] + ": " + u 
             ret += '\n'
             ret += identifiers['ai'] + ": " + a 
@@ -361,13 +377,23 @@ class Kernel:
                 u = self.memory_user[i]
                 if len(a) == 0 or len(u) == 0:
                     continue
+                if self.json:
+                    ai += [self.format_json(identifiers['user'], u) ]
+                    ai += [self.format_json(identifiers['ai'], a) ]
+                    continue 
                 ret += identifiers['user'] + ": " + u 
                 ret += '\n'
                 ret += identifiers['ai'] + ": " + a 
                 ret += '\n\n'
+        if self.json:
+            return ai 
         return ret 
 
     def modify_prompt_before_model(self, tt, rr):
+        if self.json:
+            self.prompt += [self.format_json(identifiers['user'], rr) ]# + "\n"
+            self.prompt += [self.format_json(identifiers['ai'], "") ]
+            return
         self.prompt += identifiers['user'] + ': ' + rr + "\n" 
         self.prompt += identifiers['ai'] + ': '
 
@@ -381,6 +407,8 @@ class Kernel:
         text = text.replace(':', '.')
         text = text.replace('-', '.')
         text = text.replace(';', '.')
+        text = text.replace('"', '')
+        text = text.replace("'", '')
         if self.truncate:
             text = text.split('?')[0]
             text = text.split('.')[0]
@@ -392,12 +420,23 @@ class Kernel:
             "Authorization" : "Bearer " + OPENAI_API_KEY,
             "Content-Type": "application/json"
         }
-        data = {
-            "model" : OPENAI_MODEL,
-            "messages": [{'role': 'user', 'content': self.prompt }],
-            "temperature": self.temp
-        }
-        r = requests.post(OPENAI_URL, headers=z_args, json=data)
+        if not args.json:
+            data = {
+                "model" : OPENAI_MODEL,
+                "messages": [{'role': 'user', 'content': self.prompt }],
+                "temperature": self.temp
+            }
+            r = requests.post(OPENAI_URL, headers=z_args, json=data)
+        if self.json:
+            self.p(self.prompt)
+            data = {
+                "model" : OPENAI_MODEL,
+                "messages":   self.prompt  ,
+                "temperature" : self.temp
+            }
+            r = requests.post(OPENAI_URL, headers=z_args, json=data)
+
+        self.p(r.text)
         r = json.loads(r.text)
         self.reply = r['choices'][0]['message']['content']
         self.p(self.reply)
@@ -465,6 +504,7 @@ if __name__ == '__main__':
     parser.add_argument('--timeout', type=float, default=3.0, help="minutes to timeout.")
     parser.add_argument('--window', type=int, default=35, help="number of memory units used in input.")
     parser.add_argument('--cloud', action="store_true", help="Google Cloud Speech Recognition.")
+    parser.add_argument('--json', action="store_true", help="use json for model prompt.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -512,6 +552,10 @@ if __name__ == '__main__':
 
     if args.cloud and False:
         k.load_cloud_json()
+    
+    if args.json != None and args.json == True:
+        k.json = args.json
+        identifiers['ai'] = 'assistant'
 
     k.save_file(0, str(args))
 
