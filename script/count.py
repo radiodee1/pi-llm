@@ -10,9 +10,22 @@ class Kernel:
         self.dict_words = {}
 
     def open_and_count(self):
+        if self.file.strip() != "":
+            f = open(self.file, 'r')
+            x = f.readlines()
+            f.close()
+            for i in x:
+                if ':' in i:
+                    ii = i.split(':')[1].strip()
+                    print(ii)
+                    for j in ii.split(' '):
+                        if j.lower() not in self.dict_words:
+                            self.dict_words[j.lower()] = 0
+                        self.dict_words[j.lower()] += 1
         pass 
 
     def print_stats(self):
+        print(self.dict_words)
         pass 
 
 if __name__ == '__main__':

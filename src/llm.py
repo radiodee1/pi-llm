@@ -149,7 +149,6 @@ class Kernel:
                     self.p('interruption!')
                     self.save_file(0, '---\ninterruption\n---')
             tt = ""
-            #rr.clear() ## <-- keep or not keep??
             self.empty_queue()
             x += 1
             x = x % len(prompt_txt)
@@ -179,7 +178,7 @@ class Kernel:
                 self.p("len q:", self.q.qsize())
                 #using_thread = not self.no_check
                 while self.q.qsize() > 0:
-                    rx = self.q.get(block=True) ## don't really know <--
+                    rx = self.q.get(block=True) ## <--
                     if rx.strip() != '':
                         self.p('b-rr', rx)
                         rr.append(rx.strip())
