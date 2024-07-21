@@ -13,6 +13,8 @@ class Kernel:
         self.length = 0
         self.file = ''
         self.dict_words = {}
+        self.num_sentences = 0
+        self.num_words = 0
 
     def open_and_count(self):
         if self.file.strip() != "":
@@ -21,11 +23,13 @@ class Kernel:
             f.close()
             for i in x:
                 if ':' in i:
+                    self.num_sentences += 1
                     for k in bad_characters:
                         i = i.replace(k, '')
                     ii = i.split(':')[1].strip()
                     #print(ii)
                     for j in ii.split(' '):
+                        self.num_words += 1
                         if j.lower() not in self.dict_words:
                             self.dict_words[j.lower()] = 0
                         self.dict_words[j.lower()] += 1
@@ -47,7 +51,8 @@ class Kernel:
             del self.dict_words[key_record]
             high = 0
             key_record = ''
-        print(self.dict_words, count, total)
+        print(self.dict_words, 'displayed:' , count, 'categories:', total, 'words:', self.num_words ,'sentence:', self.num_words / float(self.num_sentences))
+        print('sentences:', self.num_sentences)
         pass 
 
 if __name__ == '__main__':
