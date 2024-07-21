@@ -2,7 +2,7 @@
 
 import argparse
 
-blacklist = ['hello']
+blacklist = ['and', 'to', 'the', 'for', 'a']
 HIGH_LIMIT = 5 
 
 
