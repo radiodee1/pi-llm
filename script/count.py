@@ -52,7 +52,7 @@ class Kernel:
             high = 0
             key_record = ''
         print('displayed:' , count, 'categories:', total, 'words:', self.num_words ,'sentence:', self.num_words / float(self.num_sentences))
-        print('sentences:', self.num_sentences)
+        print('sentences:', self.num_sentences, 'exchanges:', self.num_sentences / 2)
         pass 
 
 if __name__ == '__main__':
