@@ -425,21 +425,22 @@ class Kernel:
             "Authorization" : "Bearer " + OPENAI_API_KEY,
             "Content-Type": "application/json"
         }
-        if not args.json:
+        data = {}
+
+        if not self.json:
             data = {
                 "model" : OPENAI_MODEL,
                 "messages": [{'role': 'user', 'content': self.prompt }],
                 "temperature": self.temp
             }
-            r = requests.post(OPENAI_URL, headers=z_args, json=data)
         if self.json:
-            #self.p(self.prompt)
             data = {
                 "model" : OPENAI_MODEL,
                 "messages":   self.prompt  ,
                 "temperature" : self.temp
             }
-            r = requests.post(OPENAI_URL, headers=z_args, json=data)
+        
+        r = requests.post(OPENAI_URL, headers=z_args, json=data)
 
         self.p(r.text)
         r = json.loads(r.text)
