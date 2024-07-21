@@ -428,7 +428,7 @@ class Kernel:
             }
             r = requests.post(OPENAI_URL, headers=z_args, json=data)
         if self.json:
-            self.p(self.prompt)
+            #self.p(self.prompt)
             data = {
                 "model" : OPENAI_MODEL,
                 "messages":   self.prompt  ,
@@ -436,7 +436,7 @@ class Kernel:
             }
             r = requests.post(OPENAI_URL, headers=z_args, json=data)
 
-        self.p(r.text)
+        #self.p(r.text)
         r = json.loads(r.text)
         self.reply = r['choices'][0]['message']['content']
         self.p(self.reply)
