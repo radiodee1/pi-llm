@@ -2,6 +2,10 @@
 
 import argparse
 
+blacklist = ['hello']
+HIGH_LIMIT = 5 
+
+
 class Kernel:
 
     def __init__(self):
@@ -17,7 +21,7 @@ class Kernel:
             for i in x:
                 if ':' in i:
                     ii = i.split(':')[1].strip()
-                    print(ii)
+                    #print(ii)
                     for j in ii.split(' '):
                         if j.lower() not in self.dict_words:
                             self.dict_words[j.lower()] = 0
@@ -25,7 +29,22 @@ class Kernel:
         pass 
 
     def print_stats(self):
-        print(self.dict_words)
+        high = 0
+        key_record = ''
+        count = 0
+        total = len(self.dict_words)
+        for _ in range(len(self.dict_words)):
+            for key in self.dict_words:
+                if self.dict_words[key] > high:
+                    key_record = key
+                    high = self.dict_words[key]
+            if key_record not in blacklist and self.dict_words[key_record] > HIGH_LIMIT:
+                print(key_record, self.dict_words[key_record])
+                count += 1
+            del self.dict_words[key_record]
+            high = 0
+            key_record = ''
+        print(self.dict_words, count, total)
         pass 
 
 if __name__ == '__main__':
