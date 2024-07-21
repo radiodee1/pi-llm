@@ -9,6 +9,7 @@ TEST_SIX=6
 TEST_NINE=9
 
 OPENAI_API_KEY=abc
+# OPENAI_MODEL=abc
 
 GOOGLE_SPEECH_RECOGNITION_API_KEY=abc
 
@@ -27,3 +28,5 @@ PROJECT_LAUNCH_ARGS='--no_check --file --loop_wait --verbose --name Bob --offset
 ```
 
 Collision checking does not work well. Use `--no_check` allways. Cloud works well but is largely untested. Remember that background noise is allways a problem. The microphone will hang if there's too much background noise and the end of input text will not be detected.
+
+If you leave the OPENAI_MODEL unset, the default will be used, which is "gpt-3.5-turbo".
