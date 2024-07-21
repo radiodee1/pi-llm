@@ -5,6 +5,7 @@ import argparse
 blacklist = ['and', 'to', 'the', 'for', 'a', 'is', 'of', 'on']
 HIGH_LIMIT = 0 
 
+bad_characters = [ ',', '!', '.', '?' ]
 
 class Kernel:
 
@@ -20,6 +21,8 @@ class Kernel:
             f.close()
             for i in x:
                 if ':' in i:
+                    for k in bad_characters:
+                        i = i.replace(k, '')
                     ii = i.split(':')[1].strip()
                     #print(ii)
                     for j in ii.split(' '):
@@ -39,7 +42,7 @@ class Kernel:
                     key_record = key
                     high = self.dict_words[key]
             if key_record not in blacklist and self.dict_words[key_record] > HIGH_LIMIT:
-                print(key_record, self.dict_words[key_record])
+                print(key_record + ',', self.dict_words[key_record])
                 count += 1
             del self.dict_words[key_record]
             high = 0
