@@ -349,8 +349,13 @@ class Kernel:
         text = text.strip()
         text = text.replace('\'', '"')
         #x = "{'role' :'" + user + "', 'content' : '" + text +"'}"
-        print(user, text , '++++')
-        x = { 'role' : user, 'content': text }
+        #print(user, text , '++++')
+        if user == identifiers['ai'] :
+            t = 'assistant'
+        else:
+            t = 'user'
+
+        x = { 'role' : t, 'content': user + " : " + text }
         return x 
 
     def make_prompt(self):
@@ -436,7 +441,7 @@ class Kernel:
             }
             r = requests.post(OPENAI_URL, headers=z_args, json=data)
 
-        #self.p(r.text)
+        self.p(r.text)
         r = json.loads(r.text)
         self.reply = r['choices'][0]['message']['content']
         self.p(self.reply)
@@ -555,7 +560,7 @@ if __name__ == '__main__':
     
     if args.json != None and args.json == True:
         k.json = args.json
-        identifiers['ai'] = 'assistant'
+        #identifiers['ai'] = 'assistant'
 
     k.save_file(0, str(args))
 
