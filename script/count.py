@@ -51,7 +51,7 @@ class Kernel:
             del self.dict_words[key_record]
             high = 0
             key_record = ''
-        print(self.dict_words, 'displayed:' , count, 'categories:', total, 'words:', self.num_words ,'sentence:', self.num_words / float(self.num_sentences))
+        print('displayed:' , count, 'categories:', total, 'words:', self.num_words ,'sentence:', self.num_words / float(self.num_sentences))
         print('sentences:', self.num_sentences)
         pass 
 
