@@ -454,7 +454,7 @@ class Kernel:
 
     def save_file(self,  time, heading=""):
         if self.file:
-            f = open(os.path.expanduser('~') + '/llm.txt', 'a')
+            f = open(os.path.expanduser('~') + '/llm.'+ OPENAI_MODEL.strip() +'.txt', 'a')
             
             if heading.strip() != "":
                 f.write(str(heading) + '\n')
