@@ -410,7 +410,7 @@ class Kernel:
     def prune_input(self, text):
         self.p(text, '<<< unmodified')
         text = text.replace(':', '.')
-        text = text.replace('-', '.')
+        text = text.replace('-', ' ')
         text = text.replace(';', '.')
         text = text.replace('"', '')
         text = text.replace("'", '')
