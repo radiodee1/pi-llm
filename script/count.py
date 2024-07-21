@@ -2,8 +2,8 @@
 
 import argparse
 
-blacklist = ['and', 'to', 'the', 'for', 'a']
-HIGH_LIMIT = 5 
+blacklist = ['and', 'to', 'the', 'for', 'a', 'is', 'of', 'on']
+HIGH_LIMIT = 0 
 
 
 class Kernel:
@@ -51,7 +51,11 @@ if __name__ == '__main__':
     k = Kernel()
     parser = argparse.ArgumentParser(description="Pi LLM Output File Counter", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('file', default=str, help="File name and path.")
+    parser.add_argument('--low', default=10, help="Threshold for displaying word frequency.")
     args = parser.parse_args()
+    
+    if args.low != None and int(args.low) >= -1:
+        HIGH_LIMIT = int(args.low)
 
     if args.file != None and args.file.strip() != "":
         k.file = args.file 
