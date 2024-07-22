@@ -15,6 +15,7 @@ class Kernel:
         self.dict_words = {}
         self.num_sentences = 0
         self.num_words = 0
+        self.num_restarts = 0
 
     def open_and_count(self):
         if self.file.strip() != "":
@@ -28,6 +29,8 @@ class Kernel:
                         i = i.replace(k, '')
                     ii = i.split(':')[1].strip()
                     #print(ii)
+                    if ii == 'say something':
+                        self.num_restarts += 1
                     for j in ii.split(' '):
                         self.num_words += 1
                         if j.lower() not in self.dict_words:
@@ -53,7 +56,8 @@ class Kernel:
             key_record = ''
         print()
         print('displayed:' , count, 'categories:', total, 'words:', self.num_words ,'sentence:', self.num_words / float(self.num_sentences))
-        print('sentences:', self.num_sentences, 'exchanges:', self.num_sentences / 2)
+        print('sentences:', self.num_sentences, 'exchanges:', self.num_sentences / 2, end=" ")
+        print('restarts:', self.num_restarts)
         pass 
 
 if __name__ == '__main__':
