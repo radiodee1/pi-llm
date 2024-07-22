@@ -408,15 +408,19 @@ class Kernel:
 
     def prune_input(self, text):
         self.p(text, '<<< unmodified')
-        text = text.replace(':', '.')
+        text = text.replace(':', ' ')
         text = text.replace('-', ' ')
-        text = text.replace(';', '.')
+        text = text.replace(';', ' ')
         text = text.replace('"', '')
         text = text.replace("'", '')
+        text = text.replace("?", '.')
+        text = text.replace("!", '.')
         if self.truncate:
-            text = text.split('?')[0]
-            text = text.split('.')[0]
-            text = text.split('!')[0]
+            old_text = text
+            text = old_text.split('.')[0]
+            if len(text.strip().split(' ')) == 1 and len(old_text.strip().split('.')) > 1:
+                pass 
+                text = old_text.split('.')[0] + '. ' + old_text.split('.')[1]
         return text
 
     def model(self):
@@ -462,7 +466,6 @@ class Kernel:
                 return
 
             f.write(str(self.file_num) + '\n')
-            #for i in range(len(self.memory_user) -1, len(self.memory_user)):
                 
             f.write(identifiers['user'] + " : "+ str(self.memory_user[-1]) + "\n")
             f.write(identifiers['ai'] + " : " + str(self.memory_ai[-1]) + "\n")
