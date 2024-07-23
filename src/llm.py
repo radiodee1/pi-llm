@@ -420,7 +420,7 @@ class Kernel:
             text = old_text.split('.')[0]
             if len(text.strip().split(' ')) == 1 and len(old_text.strip().split('.')) > 1:
                 pass 
-                text = old_text.split('.')[0] + '. ' + old_text.split('.')[1]
+                text = old_text.split('.')[0].strip() + '. ' + old_text.split('.')[1].strip()
         return text
 
     def model(self):
