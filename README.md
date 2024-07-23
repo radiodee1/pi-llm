@@ -29,7 +29,7 @@ PROJECT_LAUNCH_ARGS='--file --loop_wait --verbose --name Bob --offset 20 --timeo
 
 - Collision checking does not work well. Do not use `--check`. 
 
-- Cloud speech recognition, `--cloud`, works well but is largely untested. You must install a json file on the host computer and provide a path to that file in the `GOOGLE_APPLICATION_CREDENTIALS` variable. Do not share this file or path with anyone.
+- Cloud speech recognition, `--cloud`, works well but is largely untested. You must install a json file on the host computer and provide a path to that file in the `GOOGLE_APPLICATION_CREDENTIALS` variable. This file is provided by Google when you set up your Google cloud account. You must also enable billing and 'Cloud Speech to Text'. Do not share this file or path with anyone.
 
 - Remember that background noise is allways a problem. The microphone will hang if there's too much background noise and the end of input text will not be detected.
 
