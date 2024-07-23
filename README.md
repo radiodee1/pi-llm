@@ -27,6 +27,10 @@ Below are some test arguments for the PROJECT_LAUNCH_ARGS variable.
 PROJECT_LAUNCH_ARGS='--file --loop_wait --verbose --name Bob --offset 20 --timeout 5 --cloud'
 ```
 
-Collision checking does not work well. Do not use `--check`. Cloud works well but is largely untested. Remember that background noise is allways a problem. The microphone will hang if there's too much background noise and the end of input text will not be detected.
+- Collision checking does not work well. Do not use `--check`. 
+
+- Cloud speech recognition, `--cloud`, works well but is largely untested. 
+
+- Remember that background noise is allways a problem. The microphone will hang if there's too much background noise and the end of input text will not be detected.
 
 If you leave the OPENAI_MODEL unset, the default will be used, which is "gpt-3.5-turbo".
