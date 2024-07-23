@@ -479,20 +479,6 @@ class Kernel:
             self.file_num += 1
         pass 
     
-    def load_cloud_json(self):
-        if self.cloud :
-            temp = ''
-            path = GOOGLE_APPLICATION_CREDENTIALS # os.path.expanduser('~') + "/.llm.json"
-            f = open(path, 'r')
-            x = f.readlines()
-            for i in x:
-                temp += i.strip() + "\n"
-            
-            f.close()
-            GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.loads(temp) 
-            print(GOOGLE_CLOUD_SPEECH_CREDENTIALS)
-        pass 
-
 
 
 if __name__ == '__main__':
@@ -503,7 +489,7 @@ if __name__ == '__main__':
     parser.add_argument('--test', action="store_true", help="Use test data and no LLM")
     parser.add_argument('--truncate', action="store_true", help="truncate model output.")
     parser.add_argument('--loop_wait', action="store_true", help="loop until input is detected.")
-    parser.add_argument('--no_check', action="store_true", help="cancel interruption check.")
+    parser.add_argument('--check', action="store_true", help="use interruption checking.")
     parser.add_argument('--name', type=str, help="define new name.")
     parser.add_argument('--offset', type=float, help="time in seconds to offset on startup.")
     parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
@@ -540,7 +526,7 @@ if __name__ == '__main__':
     k.test = args.test
     k.verbose = args.verbose
     k.loop_wait = args.loop_wait
-    k.no_check = args.no_check
+    k.no_check = not args.check
     k.cloud = args.cloud 
 
     if args.name != None and args.name.strip() != "":
@@ -558,8 +544,8 @@ if __name__ == '__main__':
     if args.window != 0:
         k.window = args.window
 
-    if args.cloud and False:
-        k.load_cloud_json()
+    #if args.cloud and False:
+    #    k.load_cloud_json()
     
     if args.json != None and args.json == True:
         k.json = args.json
