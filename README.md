@@ -24,7 +24,7 @@ GOOGLE_APPLICATION_CREDENTIALS=/path-to-json-file/file.json
 Below are some test arguments for the PROJECT_LAUNCH_ARGS variable.
 
 ```
-PROJECT_LAUNCH_ARGS='--file --loop_wait --verbose --name Bob --offset 20 --timeout 5 --cloud'
+PROJECT_LAUNCH_ARGS='--file --loop_wait --verbose --name Bob --offset 20 --timeout 0.5 --cloud'
 ```
 
 - Collision checking does not work well. Do not use `--check`. 
