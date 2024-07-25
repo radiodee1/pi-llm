@@ -52,7 +52,7 @@ def tsne_plot_similar_words(title, labels, embedding_clusters, word_clusters, a,
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Pi LLM Output File Counter", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description="Pi LLM Output File Plotter", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--file', default='', help="File name and path.")
     parser.add_argument('--p', default=15, help="perplexity value.")
     parser.add_argument('--topn', default=30, help="topn value.")
