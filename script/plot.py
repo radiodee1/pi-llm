@@ -34,22 +34,6 @@ def train_word2vec(filename):
 keys = ['Paris', 'Python', 'Sunday', 'Tolstoy', 'Twitter', 'bachelor', 'delivery', 'election', 'expensive',
         'experience', 'financial', 'food', 'iOS', 'peace', 'release', 'war']
 
-embedding_clusters = []
-word_clusters = []
-for word in keys:
-    embeddings = []
-    words = []
-    for similar_word, _ in model.most_similar(word, topn=30):
-        words.append(similar_word)
-        embeddings.append(model[similar_word])
-    embedding_clusters.append(embeddings)
-    word_clusters.append(words)
-
-
-embeddings_en_2d = embedding_clusters
-#% matplotlib inline
-
-
 def tsne_plot_similar_words(title, labels, embedding_clusters, word_clusters, a, filename=None):
     plt.figure(figsize=(16, 9))
     colors = cm.rainbow(np.linspace(0, 1, len(labels)))
@@ -68,5 +52,37 @@ def tsne_plot_similar_words(title, labels, embedding_clusters, word_clusters, a,
     plt.show()
 
 
-tsne_plot_similar_words('Similar words from Google News', keys, embeddings_en_2d, word_clusters, 0.7,
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Pi LLM Output File Counter", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--file', default=str, help="File name and path.")
+    args = parser.parse_args()
+ 
+    if args.file.strip() != "":
+        keys = []
+        f = open(args.file.strip(), 'r')
+        x = f.readlines()
+        for i in x:
+            if len(i.split(' ')) == 2:
+                keys.append(i.split(' ')[0][:-1])
+        f.close()
+
+        print(keys)
+
+    embedding_clusters = []
+    word_clusters = []
+    for word in keys:
+        embeddings = []
+        words = []
+        for similar_word, _ in model.most_similar(word, topn=30):
+            words.append(similar_word)
+            embeddings.append(model[similar_word])
+        embedding_clusters.append(embeddings)
+        word_clusters.append(words)
+
+
+    embeddings_en_2d = embedding_clusters
+    #% matplotlib inline
+
+
+    tsne_plot_similar_words('Similar words from Google News', keys, embeddings_en_2d, word_clusters, 0.7,
                         'similar_words.png')
