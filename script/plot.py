@@ -53,6 +53,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Pi LLM Output File Counter", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--file', default=str, help="File name and path.")
     parser.add_argument('--p', default=int, help="perplexity.")
+    parser.add_argument('--topn', default=int, help="topn value.")
     args = parser.parse_args()
  
     if args.file.strip() != "":
@@ -67,6 +68,9 @@ if __name__ == '__main__':
         print(keys)
 
     ## we're not using perplexity...
+    TOPN = 30 
+    if args.topn != None and int(args.topn) > 0:
+        TOPN = int(args.topn)
 
     model = gensim.models.KeyedVectors.load_word2vec_format('../../GoogleNews-vectors-negative300.bin', binary=True)
 
@@ -75,7 +79,7 @@ if __name__ == '__main__':
     for word in keys:
         embeddings = []
         words = []
-        for similar_word, _ in model.most_similar(word, topn=30):
+        for similar_word, _ in model.most_similar(word, topn=TOPN):
             words.append(similar_word)
             embeddings.append(model[similar_word])
         embedding_clusters.append(embeddings)
