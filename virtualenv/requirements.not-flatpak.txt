@@ -15,3 +15,11 @@ SpeechRecognition==3.10.4
 
 requests==2.32.3
 google-cloud-speech==2.26.1
+
+## script libraries below ##
+gensim==4.3.3
+matplotlib==3.5.1
+nltk==3.8.1
+pysqlite3==0.5.3
+#pysqlite==2.8.3
+numpy==1.26.4
