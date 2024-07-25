@@ -11,9 +11,6 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np 
 
-model = gensim.models.KeyedVectors.load_word2vec_format('../../GoogleNews-vectors-negative300.bin', binary=True)
-
-
 def preprocess_text(text):
     text = re.sub('[^a-zA-Zа-яА-Я1-9]+', ' ', text)
     text = re.sub(' +', ' ', text)
@@ -55,6 +52,7 @@ def tsne_plot_similar_words(title, labels, embedding_clusters, word_clusters, a,
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Pi LLM Output File Counter", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--file', default=str, help="File name and path.")
+    parser.add_argument('--p', default=int, help="perplexity.")
     args = parser.parse_args()
  
     if args.file.strip() != "":
@@ -67,6 +65,10 @@ if __name__ == '__main__':
         f.close()
 
         print(keys)
+
+    ## we're not using perplexity...
+
+    model = gensim.models.KeyedVectors.load_word2vec_format('../../GoogleNews-vectors-negative300.bin', binary=True)
 
     embedding_clusters = []
     word_clusters = []
