@@ -16,6 +16,7 @@ class Kernel:
         self.num_sentences = 0
         self.num_words = 0
         self.num_restarts = 0
+        self.count = -1 
 
     def open_and_count(self):
         if self.file.strip() != "":
@@ -50,6 +51,8 @@ class Kernel:
                     high = self.dict_words[key]
             if key_record not in blacklist and self.dict_words[key_record] > HIGH_LIMIT:
                 print(key_record + ',', self.dict_words[key_record])
+                if count >= self.count and self.count != -1:
+                    break 
                 count += 1
             del self.dict_words[key_record]
             high = 0
@@ -65,10 +68,14 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Pi LLM Output File Counter", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('file', default=str, help="File name and path.")
     parser.add_argument('--low', default=10, help="Threshold for displaying word frequency.")
+    parser.add_argument('--count', default=-1, help="Highest number of possible output.")
     args = parser.parse_args()
     
     if args.low != None and int(args.low) >= -1:
         HIGH_LIMIT = int(args.low)
+
+    if args.count != None and int(args.count) != -1:
+        k.count = int(args.count) - 1 
 
     if args.file != None and args.file.strip() != "":
         k.file = args.file 

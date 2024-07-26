@@ -74,7 +74,7 @@ if __name__ == '__main__':
             if len(i.split(' ')) == 2:
                 keys.append(i.split(' ')[0][:-1])
         f.close()
-        keys = keys[:16]
+        #keys = keys[:16]
         print(keys)
 
     ## we're not using perplexity...
