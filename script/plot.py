@@ -74,7 +74,7 @@ if __name__ == '__main__':
             if len(i.split(' ')) == 2:
                 keys.append(i.split(' ')[0][:-1])
         f.close()
-
+        keys = keys[:16]
         print(keys)
 
     ## we're not using perplexity...
@@ -119,3 +119,4 @@ if __name__ == '__main__':
 
     tsne_plot_similar_words('Similar words from Google News', keys, embeddings_en_2d, word_clusters, 0.7,
                             OUTPUT_FILE)
+    print('keys', len(keys))
