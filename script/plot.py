@@ -13,6 +13,7 @@ import numpy as np
 from sklearn.manifold import TSNE
 import numpy as np
 
+'''
 def preprocess_text(text):
     text = re.sub('[^a-zA-Zа-яА-Я1-9]+', ' ', text)
     text = re.sub(' +', ' ', text)
@@ -29,6 +30,8 @@ def prepare_for_w2v(filename_from, filename_to, lang):
 def train_word2vec(filename):
     data = gensim.models.word2vec.LineSentence(filename)
     return Word2Vec(data, size=200, window=5, min_count=5, workers=multiprocessing.cpu_count())
+
+'''
 
 keys = ['Paris', 'Python', 'Sunday', 'Tolstoy', 'Twitter', 'bachelor', 'delivery', 'election', 'expensive',
         'experience', 'financial', 'food', 'iOS', 'peace', 'release', 'war']
