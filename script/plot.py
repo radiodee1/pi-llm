@@ -54,6 +54,8 @@ def tsne_plot_similar_words(title, labels, embedding_clusters, word_clusters, a,
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Pi LLM Output File Plotter", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--file', default='', help="File name and path.")
+    parser.add_argument('--bin', default='', help="Input Word2Vec binary file.")
+    parser.add_argument('--output', default='', help="Filename for output plot.")
     parser.add_argument('--p', default=15, help="perplexity value.")
     parser.add_argument('--topn', default=30, help="topn value.")
     args = parser.parse_args()
@@ -73,6 +75,8 @@ if __name__ == '__main__':
     ## we're not using perplexity...
     TOPN = 30
     PERPLEXITY = 15 
+    W2V_BIN = '../../GoogleNews-vectors-negative300.bin'
+    OUTPUT_FILE = 'similar_words.png'
 
     if args.topn != None and int(args.topn) > 0:
         TOPN = int(args.topn)
@@ -80,7 +84,13 @@ if __name__ == '__main__':
     if args.p != None and int(args.p) > 0:
         PERPLEXITY = int(args.p)
 
-    model = gensim.models.KeyedVectors.load_word2vec_format('../../GoogleNews-vectors-negative300.bin', binary=True)
+    if args.bin != None and str(args.bin).strip() != "":
+        W2V_BIN = str(args.bin).strip()
+
+    if args.output != None and str(args.output).strip() != "":
+        OUTPUT_FILE = str(args.output).strip() + ".png"
+
+    model = gensim.models.KeyedVectors.load_word2vec_format(W2V_BIN, binary=True)
 
     embedding_clusters = []
     word_clusters = []
@@ -103,4 +113,4 @@ if __name__ == '__main__':
     embeddings_en_2d = np.array(tsne_model_en_2d.fit_transform(embedding_clusters.reshape(n * m, k))).reshape(n, m, 2)
 
     tsne_plot_similar_words('Similar words from Google News', keys, embeddings_en_2d, word_clusters, 0.7,
-                        'similar_words.png')
+                            OUTPUT_FILE)
