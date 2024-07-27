@@ -46,7 +46,7 @@ mkdir ~/.config/autostart
 [Desktop Entry]
 Type=Application
 Name=Pi LLM 
-Exec=flatpak run org.llm.LLM 
+Exec=/usr/bin/flatpak run --branch=master --arch=aarch64 --devel --user --command=/app/bin/llm.py org.llm.LLM 
 Comment=Containeriized LLM for raspberry pi 
 ```
 

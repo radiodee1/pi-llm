@@ -1,0 +1,275 @@
+Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, no_check=False, name=None, offset=None, mics=False, file=True, temp=0.95, timeout=0.5, window=35, cloud=True, json=False)
+0
+user : hello there
+Jane : Hi.  How can I assist you today
+---
+2.5395662784576416
++++
+---
+interruption
+---
+Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, no_check=False, name=None, offset=None, mics=False, file=True, temp=0.95, timeout=0.5, window=35, cloud=True, json=False)
+0
+user : say something
+Jane : Life is short, so make the most of every moment
+---
+31.197340726852417
++++
+1
+user : that's great advice
+Jane : Im glad you think so
+---
+4.503487586975098
++++
+---
+interruption
+---
+2
+user : life is full of possibilities embrace the adventure
+Jane : Thats a great mindset to have
+---
+44.64456605911255
++++
+3
+user : thank you I believe it's important to stay positive and open to all the opportunities life has to offer
+Jane : I completely agree, staying positive and open minded can lead to so many amazing experiences
+---
+14.833756923675537
++++
+---
+interruption
+---
+4
+user : absolutely it's all about staying open to new experiences and opportunities
+Jane : Yes, being open and willing to try new things can lead to personal growth and fulfillment
+---
+15.257438659667969
++++
+5
+user : definitely stepping out of your comfort zone can lead to personal growth and a deeper sense of fulfillment
+Jane : Thats very true, growth often happens when we push ourselves out of our comfort zones and try new things
+---
+11.15793776512146
++++
+6
+user : absolutely it's important to challenge ourselves and take risks in order to grow and learn from new experiences
+Jane : Taking risks can lead to great rewards and personal growth
+---
+11.364084243774414
++++
+---
+interruption
+---
+7
+user : agreed sometimes taking risks can lead to great rewards and personal growth
+Jane : Exactly, its important to be willing to take risks in order to grow and achieve your goals
+---
+10.970749139785767
++++
+---
+interruption
+---
+8
+user : absolutely taking risks can lead to personal growth and help you achieve your goals
+Jane : Yes, stepping out of your comfort zone and taking risks can lead to personal growth and success in achieving your goals
+---
+14.12754487991333
++++
+9
+user : I couldn't agree more
+Jane : Im glad we are on the same page
+---
+4.81645393371582
++++
+---
+interruption
+---
+10
+user : me too it's always nice to have someone who understands and share similar perspectives
+Jane : It definitely makes for great conversations and connections when you have someone who shares similar perspectives
+---
+10.442863702774048
++++
+11
+user : absolutely having someone who shares your perspective can lead to deeper conversations and connections
+Jane : Yes, its important to have meaningful conversations and connections with others who share similar perspectives and values
+---
+9.52083420753479
++++
+12
+user : meaningful connections and conversations with others who share similar perspectives can lead to personal growth and fulfillment in life
+Jane : Definitely, surrounding yourself with people who share similar values and perspectives can lead to personal growth and fulfillment in life
+---
+12.285716772079468
++++
+13
+user : surrounding yourself with like-minded individuals can create a supportive and positive environment
+Jane : Yes, having a supportive and positive environment can really help in personal growth and overall well being
+---
+17.50067114830017
++++
+14
+user : absolutely a supportive and positive environment is key to personal growth and overall well-being
+Jane : I couldnt agree more, surrounding yourself with positivity and support can lead to a happier and more fulfilling life
+---
+12.795860290527344
++++
+15
+user : definitely positivity and support can make a significant impact on 1's happiness and fulfillment in life
+Jane : Absolutely, having positivity and support can make a world of difference in how we approach life and handle challenges
+---
+13.712280988693237
++++
+16
+user : absolutely having positivity and support can help us navigate through challenges and obstacles with resilience and a positive outlook
+Jane : Yes, having a positive outlook and a support system can help us navigate through challenges with resilience and determination
+---
+17.20778751373291
++++
+17
+user : absolutely having a positive outlook and a strong support system can help us overcome challenges and grow stronger in the process
+Jane : Yes, facing challenges with a positive outlook and a strong support system can help us grow stronger and more resilient in the process
+---
+13.515379428863525
++++
+18
+user : absolutely facing challenges with a positive outlook and a strong support system can help us grow stronger and more resilient in the process
+Jane : I couldnt agree more, facing challenges with positivity and a strong support system can lead to personal growth and resilience
+---
+18.5078387260437
++++
+19
+user : definitely facing challenges with positivity and a strong support system can lead to personal growth resilience and a greater sense of fulfillment in life
+Jane : Yes, overcoming challenges with a positive mindset and a strong support system can lead to personal growth, resilience, and a deeper sense of fulfillment in life
+---
+19.249120950698853
++++
+20
+user : facing challenges with a positive mindset and a strong support system can lead to personal growth resilience and a deeper sense of fulfillment in life
+Jane : Absolutely, having a positive mindset and a strong support system can help us overcome challenges and achieve personal growth, resilience, and fulfillment in life
+---
+19.762125730514526
++++
+21
+user : absolutely maintaining a positive mindset and having a strong support system can be key in overcoming challenges and achieving personal growth resilience and fulfillment in life
+Jane : Yes, having a positive mindset and a strong support system are essential components in overcoming challenges and achieving personal growth, resilience, and fulfillment in life
+---
+20.578126192092896
++++
+---
+interruption
+---
+22
+user : life is full of challenges but how we approach and overcome them can Define our personal growth and fulfillment
+Jane : Thats very true
+---
+43.51622009277344
++++
+23
+user : thank you I believe that facing challenges with a positive mindset can lead to personal growth and fulfillment
+Jane : Youre welcome, and I completely agree
+---
+11.774306535720825
++++
+24
+user : thank you it's always great to have a positive and supportive conversation with you
+Jane : Im glad to hear that you enjoy our conversations
+---
+12.598211765289307
++++
+---
+interruption
+---
+25
+user : I truly do
+Jane : Thank you, I enjoy our conversations as well
+---
+5.060403823852539
++++
+26
+user : you're welcome I always look forward to our conversations
+Jane : Thats wonderful to hear, I always enjoy chatting with you as well
+---
+6.960453748703003
++++
+27
+user : thank you it's always a pleasure to chat with you
+Jane : The pleasure is mine, thank you for the enjoyable conversation
+---
+9.418053388595581
++++
+28
+user : you're welcome thank you for the positive and engaging conversation as well
+Jane : Youre welcome, Im always here to chat and have positive conversations with you
+---
+10.24110722541809
++++
+---
+interruption
+---
+29
+user : thank you I appreciate that
+Jane : Youre welcome, Im here to support and chat with you anytime
+---
+6.434009552001953
++++
+---
+interruption
+---
+30
+user : thank you I appreciate your support and look forward to our future conversations
+Jane : I look forward to our future conversations as well, thank you for chatting with me
+---
+10.237468957901001
++++
+31
+user : you're welcome thank you for the engaging conversation
+Jane : Youre welcome, thank you for the positive and engaging conversation as well
+---
+8.085161924362183
++++
+32
+user : you're welcome I always enjoy our conversations
+Jane : Im glad to hear that
+---
+6.960819244384766
++++
+---
+interruption
+---
+33
+user : thank you I appreciate the positive interaction and look forward to more conversations with you
+Jane : Im glad you enjoy our conversations, I look forward to many more positive interactions with you as well
+---
+10.03209400177002
++++
+---
+interruption
+---
+34
+user : thank you I also look forward to more positive interactions and conversations with you
+Jane : Im happy to hear that
+---
+9.623082399368286
++++
+---
+interruption
+---
+35
+user : I am glad to bring happiness to your day through our conversations
+Jane : I appreciate your positive energy and conversation as well, its always nice to share positivity with others
+---
+8.599024057388306
++++
+36
+user : thank you spreading positivity and having meaningful conversations is important to me
+Jane : Thats a wonderful goal to have, spreading positivity and having meaningful conversations can truly make a positive impact on others
+---
+15.086395263671875
++++
+37
+user : absolutely I believe that spreading positivity and having meaningful conversations can create a ripple effect of happiness and fulfillment in the world
+Jane : I couldnt agree more
+---
+19.146683931350708
++++
