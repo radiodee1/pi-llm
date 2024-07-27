@@ -76,7 +76,7 @@ except:
 prompt_txt = [
         [ 'hi', 'hello' ],
         [ 'what is your last name?', 'my last name is Smith' ],
-        [ 'tell me about yourself', 'i am a student' ],
+        [ 'tell me about yourself', 'i like to talk about cooking.' ],
         [ 'what is your favorite color?', 'i like the color blue' ],
         [ 'how old are you?', 'I am thirty three years old' ],
         [ 'what is your favorite food', 'I like pizza']
