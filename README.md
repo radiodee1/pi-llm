@@ -41,7 +41,7 @@ PROJECT_LAUNCH_ARGS='--file --loop_wait --verbose --name Bob --offset 20 --timeo
 ```
 mkdir ~/.config/autostart 
 ```
-- In the folder make a desktop launcher file that launches your flatpak.
+- In the folder make a desktop launcher file that launches your flatpak. The name needs the `.desktop` extension. (for example 'myapp.desktop')
 ```
 [Desktop Entry]
 Type=Application
