@@ -24,4 +24,4 @@ cd pi-llm/script
 
 This plots the graphs in 2D. The size of the graphs is slightly larger than the previous graphs. This is what we wanted to show.
 
-The graph axis is -800 to 700 in the x coordinate, and -800 to 600 in the y coordinate. That's 1500 by 1400.
+The graph axis is -800 to 700 in the x coordinate, and -800 to 600 in the y coordinate. That's 1500 by 1400. Area wise that's 2,100,000

@@ -22,4 +22,6 @@ cd pi-llm/script
 ./plot.py --file ../png/35-turbo/test.llm.05a.txt --bin ../../GoogleNews-vectors-negative300.bin --output nonrandom --topn 5
 ```
 
-This plots the graphs in 2D. They are bigger plots than the 'random' plot, and smaller plots than the 4o-mini plot.
+This plots the graphs in 2D. They are bigger plots than the 'random' plot, and smaller plots than the '4o-mini' plot.
+
+The x axes go from -100 to 100, and the y axes go from -100 to 150. That's 200 x 250, which is 50,000.
