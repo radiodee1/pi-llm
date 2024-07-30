@@ -12,6 +12,7 @@ class Kernel:
     def __init__(self):
         self.length = 0
         self.file = ''
+        self.file_list = []
         self.dict_words = {}
         self.num_sentences = 0
         self.num_words = 0
@@ -20,6 +21,7 @@ class Kernel:
 
     def open_and_count(self):
         if self.file.strip() != "":
+            self.file_list.append(self.file.strip())
             f = open(self.file, 'r')
             x = f.readlines()
             f.close()
@@ -60,24 +62,27 @@ class Kernel:
         print()
         print('displayed:' , count, 'categories:', total, 'words:', self.num_words ,'sentence:', self.num_words / float(self.num_sentences))
         print('sentences:', self.num_sentences, 'exchanges:', self.num_sentences / 2, end=" ")
-        print('restarts:', self.num_restarts)
+        print('restarts:', self.num_restarts, 'files:', self.file_list)
         pass 
 
 if __name__ == '__main__':
     k = Kernel()
     parser = argparse.ArgumentParser(description="Pi LLM Output File Counter", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('file', default=str, help="File name and path.")
+    parser.add_argument('files', default='', nargs='+', help="File names and paths.")
     parser.add_argument('--low', default=10, help="Threshold for displaying word frequency.")
     parser.add_argument('--count', default=-1, help="Highest number of possible output.")
     args = parser.parse_args()
     
+    print(args)
+
     if args.low != None and int(args.low) >= -1:
         HIGH_LIMIT = int(args.low)
 
     if args.count != None and int(args.count) != -1:
         k.count = int(args.count) - 1 
 
-    if args.file != None and args.file.strip() != "":
-        k.file = args.file 
-        k.open_and_count()
+    if args.files != None and len(args.files) > 0:
+        for i in args.files:
+            k.file = i 
+            k.open_and_count()
         k.print_stats()
