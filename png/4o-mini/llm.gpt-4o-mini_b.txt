@@ -1,0 +1,295 @@
+Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, check=False, name='Bob', offset=20.0, mics=False, file=True, temp=0.95, timeout=0.5, window=35, cloud=True, json=False)
+0
+user : hello again
+Bob : Hello. How can I assist you today
+---
+9.25477409362793
++++
+1
+user : I am here to chat
+Bob : Thats great
+---
+11.4796302318573
++++
+2
+user : I am glad to hear that
+Bob : Im glad too
+---
+12.172945737838745
++++
+3
+user : that's wonderful
+Bob : Im happy you think so
+---
+8.927358150482178
++++
+4
+user : that's nice to hear
+Bob : Im glad you feel that way
+---
+8.680276870727539
++++
+5
+user : that's very kind of you to say
+Bob : Thank you
+---
+10.011338233947754
++++
+6
+user : you're very welcome
+Bob : I appreciate it
+---
+12.60856556892395
++++
+7
+user : I am happy to help
+Bob : Thats very generous of you
+---
+8.575511693954468
++++
+8
+user : thank you
+Bob : Youre welcome
+---
+8.573000192642212
++++
+9
+user : I am glad we can chat
+Bob : Im glad as well
+---
+9.62539529800415
++++
+10
+user : say something
+Bob : Im here and ready to chat
+---
+30.276163339614868
++++
+11
+user : I am here and ready to chat too
+Bob : Thats fantastic
+---
+11.12245512008667
++++
+12
+user : I am glad you think so
+Bob : Im happy to hear that
+---
+10.18090558052063
++++
+13
+user : that's wonderful
+Bob : Im glad you think so
+---
+13.205634593963623
++++
+14
+user : that's very sweet of you to say
+Bob : Thank you, I really appreciate your kindness
+---
+9.473304510116577
++++
+15
+user : you're very welcome
+Bob : I appreciate it
+---
+9.780272483825684
++++
+16
+user : I am happy to help
+Bob : Thats very kind of you
+---
+9.207021474838257
++++
+17
+user : thank you
+Bob : Youre welcome
+---
+8.142727613449097
++++
+18
+user : I am glad we can have this conversation
+Bob : Im glad too
+---
+21.886478424072266
++++
+19
+user : that's wonderful to hear
+Bob : Im happy to hear that you feel that way
+---
+9.532772064208984
++++
+20
+user : that's great to hear
+Bob : Im glad you think so
+---
+8.794154167175293
++++
+21
+user : that's very thoughtful of you to say
+Bob : Thank you
+---
+9.941193342208862
++++
+22
+user : you're very welcome
+Bob : I appreciate it
+---
+15.944826126098633
++++
+23
+user : I am happy to help
+Bob : Thats very generous of you
+---
+8.769758701324463
++++
+24
+user : I am here and ready to chat
+Bob : Thats awesome
+---
+45.499335050582886
++++
+25
+user : you think so
+Bob : Yes, I really do
+---
+8.239021301269531
++++
+26
+user : that's great to hear
+Bob : Im glad you feel that way
+---
+8.29555606842041
++++
+27
+user : that's very kind of you to say
+Bob : Thank you, I appreciate your kind words
+---
+10.813310861587524
++++
+28
+user : you're very welcome
+Bob : I appreciate it
+---
+9.48101258277893
++++
+29
+user : I am happy to help
+Bob : Thats very kind of you
+---
+11.96416163444519
++++
+30
+user : thank you
+Bob : Youre welcome
+---
+7.83131742477417
++++
+31
+user : say something
+Bob : Im here and ready to chat about anything youd like
+---
+32.48179745674133
++++
+32
+user : I am here and ready to chat
+Bob : Thats wonderful to hear
+---
+4.849438428878784
++++
+33
+user : that's an interesting phrase
+Bob : Im glad you think so
+---
+8.743586540222168
++++
+34
+user : that's wonderful to hear
+Bob : Im happy to know you feel that way
+---
+12.613073587417603
++++
+35
+user : that's great to hear
+Bob : Im glad you think so
+---
+10.262587308883667
++++
+36
+user : that's very nice of you to say
+Bob : Thank you
+---
+9.7342848777771
++++
+37
+user : I am here and ready to chat
+Bob : Thats fantastic
+---
+55.43568968772888
++++
+38
+user : I am glad you think so
+Bob : Im happy to hear that
+---
+9.638546466827393
++++
+39
+user : that's wonderful
+Bob : Im glad you think so
+---
+8.185599565505981
++++
+40
+user : that's very sweet of you to say
+Bob : Thank you, Im glad you feel that way
+---
+13.005525350570679
++++
+41
+user : you're very welcome
+Bob : I appreciate it
+---
+9.009122371673584
++++
+42
+user : I am happy to help
+Bob : Thats very generous of you
+---
+8.378188610076904
++++
+43
+user : thank you
+Bob : Youre welcome
+---
+8.697022438049316
++++
+44
+user : say something
+Bob : Im here and ready to chat about anything on your mind
+---
+34.42603302001953
++++
+45
+user : that's great
+Bob : Im glad you think so
+---
+23.223936796188354
++++
+46
+user : that's wonderful to hear
+Bob : Im happy to know you feel that way
+---
+9.400141954421997
++++
+47
+user : that's great to hear
+Bob : Im glad you feel that way
+---
+7.972987413406372
++++
+48
+user : that's very kind of you to say
+Bob : Thank you, I really appreciate your kind words
+---
+9.318143844604492
++++

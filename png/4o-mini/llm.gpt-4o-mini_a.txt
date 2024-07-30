@@ -1,0 +1,359 @@
+Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, no_check=False, name=None, offset=None, mics=False, file=True, temp=0.95, timeout=0.5, window=35, cloud=True, json=False)
+0
+user : hello there
+Jane : Hi again
+---
+23.855417490005493
++++
+Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, no_check=False, name=None, offset=None, mics=False, file=True, temp=0.95, timeout=0.5, window=35, cloud=True, json=False)
+0
+user : hello
+Jane : Hello again
+---
+19.843957901000977
++++
+1
+user : hello how can I assist you today
+Jane : Im here to chat
+---
+10.772642374038696
++++
+---
+interruption
+---
+2
+user : that's great
+Jane : Im glad to hear that
+---
+9.008471012115479
++++
+---
+interruption
+---
+3
+user : I am glad too
+Jane : Thats wonderful
+---
+5.629644155502319
++++
+4
+user : I am happy you think so
+Jane : Thats nice to hear
+---
+4.294291257858276
++++
+5
+user : I am glad you feel that way
+Jane : Thats very kind of you to say
+---
+6.027636289596558
++++
+6
+user : thank you
+Jane : Youre very welcome
+---
+8.599661350250244
++++
+---
+interruption
+---
+7
+user : I appreciate it
+Jane : Im happy to help
+---
+6.550264358520508
++++
+---
+interruption
+---
+8
+user : that's very generous of you
+Jane : Thank you
+---
+6.243189334869385
++++
+9
+user : you're welcome
+Jane : Im glad we can chat
+---
+4.91284704208374
++++
+---
+interruption
+---
+10
+user : I am glad as well
+Jane : Thats great to hear
+---
+3.786522626876831
++++
+11
+user : I am here in ready to chat
+Jane : Im here and ready to chat too
+---
+29.491241693496704
++++
+---
+interruption
+---
+12
+user : that's fantastic
+Jane : Im glad you think so
+---
+5.628737211227417
++++
+---
+interruption
+---
+13
+user : I am happy to hear that
+Jane : Thats wonderful
+---
+11.15838623046875
++++
+14
+user : I am glad you think so
+Jane : Thats very sweet of you to say
+---
+4.797358512878418
++++
+15
+user : thank you I really appreciate your kindness
+Jane : Youre very welcome
+---
+8.291510343551636
++++
+---
+interruption
+---
+16
+user : I appreciate it
+Jane : Im happy to help
+---
+6.652315855026245
++++
+---
+interruption
+---
+17
+user : that's very kind of you
+Jane : Thank you
+---
+6.657683849334717
++++
+18
+user : you're welcome
+Jane : Im glad we can have this conversation
+---
+15.870456457138062
++++
+---
+interruption
+---
+19
+user : I am glad too
+Jane : Thats wonderful to hear
+---
+7.1141462326049805
++++
+20
+user : I am happy to hear that you feel that way
+Jane : Thats great to hear
+---
+5.838063478469849
++++
+21
+user : I am glad you think so
+Jane : Thats very thoughtful of you to say
+---
+6.383763074874878
++++
+22
+user : thank you
+Jane : Youre very welcome
+---
+12.284204244613647
++++
+---
+interruption
+---
+23
+user : I appreciate it
+Jane : Im happy to help
+---
+5.52721095085144
++++
+---
+interruption
+---
+24
+user : say something
+Jane : Im here and ready to chat
+---
+31.434284448623657
++++
+---
+interruption
+---
+25
+user : that's awesome
+Jane : Im glad you think so
+---
+8.727941513061523
++++
+---
+interruption
+---
+26
+user : yes I really do
+Jane : Thats great to hear
+---
+8.189470529556274
++++
+27
+user : I am glad you feel that way
+Jane : Thats very kind of you to say
+---
+7.473585367202759
++++
+28
+user : thank you I appreciate your kind words
+Jane : Youre very welcome
+---
+7.370540380477905
++++
+---
+interruption
+---
+29
+user : I appreciate it
+Jane : Im happy to help
+---
+7.1641199588775635
++++
+---
+interruption
+---
+30
+user : that's very kind of you
+Jane : Thank you
+---
+7.16213846206665
++++
+---
+interruption
+---
+31
+user : say something
+Jane : Im here and ready to chat
+---
+34.667534589767456
++++
+---
+interruption
+---
+32
+user : to hear
+Jane : Thats an interesting phrase
+---
+7.451808214187622
++++
+33
+user : I am glad you think so
+Jane : Thats wonderful to hear
+---
+10.645983219146729
++++
+34
+user : I am happy to know you feel that way
+Jane : Thats great to hear
+---
+7.571790933609009
++++
+35
+user : I am glad you think so
+Jane : Thats very nice of you to say
+---
+6.4475061893463135
++++
+---
+interruption
+---
+36
+user : say something
+Jane : Im here and ready to chat
+---
+44.95153307914734
++++
+---
+interruption
+---
+37
+user : that's fantastic
+Jane : Im glad you think so
+---
+6.14129900932312
++++
+---
+interruption
+---
+38
+user : I am happy to hear that
+Jane : Thats wonderful
+---
+5.8345818519592285
++++
+39
+user : I am glad you think so
+Jane : Thats very sweet of you to say
+---
+9.930867671966553
++++
+40
+user : thank you I am glad you feel that way
+Jane : You’re very welcome
+---
+7.677434206008911
++++
+41
+user : appreciate it
+Jane : Im happy to help
+---
+2.764259099960327
++++
+---
+interruption
+---
+42
+user : that's very generous of you
+Jane : Thank you
+---
+6.345316171646118
++++
+---
+interruption
+---
+43
+user : I am here and ready to chat about anything on your mind
+Jane : Thats great
+---
+46.2837131023407
++++
+44
+user : I am glad you think so
+Jane : Thats wonderful to hear
+---
+6.243823766708374
++++
+45
+user : I'm happy to know you feel that way
+Jane : Thats great to hear
+---
+3.9899916648864746
++++
+46
+user : I am glad you feel that way
+Jane : Thats very kind of you to say
+---
+6.8572423458099365
++++
