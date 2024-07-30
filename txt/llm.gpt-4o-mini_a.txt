@@ -1,12 +1,5 @@
 Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, no_check=False, name=None, offset=None, mics=False, file=True, temp=0.95, timeout=0.5, window=35, cloud=True, json=False)
 0
-user : hello there
-Jane : Hi again
----
-23.855417490005493
-+++
-Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, no_check=False, name=None, offset=None, mics=False, file=True, temp=0.95, timeout=0.5, window=35, cloud=True, json=False)
-0
 user : hello
 Jane : Hello again
 ---
