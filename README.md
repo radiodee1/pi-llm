@@ -1,7 +1,8 @@
 # pi-llm
 containerized llm for raspberry pi
 
-## Setup and Build
+## Setup 
+It is possible to run the code from the project without containerization. This is essential for running the count and plot scripts.
 
 - Go to the `virtualenv` folder and execute the `do_install_apt_pkg.sh` file. If you are not on a ubuntu distro you will need to  go through the `do_install_apt_pkg.sh` file and install the packages on your system that are necessary.
 - Make sure that you have python 3.10 installed. You may need to build python from source.
@@ -13,7 +14,7 @@ containerized llm for raspberry pi
 - `do_01_build.sh` - runs the flatpak command that builds the flatpak for `x86_64`. The program, flatpak-builder, needs to have been installed already.
 - `do_02_try.sh` - runs the flatpak in the `x86_64` environment. 
 - `do_03_aarch64.sh` - build a flatpak package for `aarch64`.
-- `do_04_stom.sh` - stop the flatpak in the `x86_64` environment.
+- `do_04_stom.sh` - stop the flatpak that may or may not be running in the `x86_64` environment.
 
 ## Env File
 
