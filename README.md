@@ -1,6 +1,20 @@
 # pi-llm
 containerized llm for raspberry pi
 
+## Setup and Build
+
+- Go to the `virtualenv` folder and execute the `do_install_apt_pkg.sh` file. If you are not on a ubuntu distro you will need to  go through the `do_install_apt_pkg.sh` file and install the packages on your system that are necessary.
+- Make sure that you have python 3.10 installed. You may need to build python from source.
+- `source` the `do_make_virtualenv_setup310.sh` file. You will want to do this any time you want to run the program outside of the containerized setup. After sourcing the file return to the `pi-llm` root directory. You should actually be able to run the scripts without containerization now. If you want to run the word counting script or the plotting script, this is important.
+
+## Flatpak scripts
+
+- `do_00_setup.sh` - runs setup script, which is 'flatpak-builder-tools'. This assumes that you git clone the flatpak-builder-tools repo in the directory next to pi-llm. Since the pi-llm project includes a requirements.json file, this is probably not necessary for every user.
+- `do_01_build.sh` - runs the flatpak command that builds the flatpak for `x86_64`. The program, flatpak-builder, needs to have been installed already.
+- `do_02_try.sh` - runs the flatpak in the `x86_64` environment. 
+- `do_03_aarch64.sh` - build a flatpak packager for `aarch64`.
+- `do_04_stom.sh` - stop the flatpak in the `x86_64` environment.
+
 ## Env File
 
 Put key values in a file called `~/.llm.env`. An example follows.
