@@ -12,7 +12,7 @@ containerized llm for raspberry pi
 - `do_00_setup.sh` - runs setup script, which is 'flatpak-builder-tools'. This assumes that you git clone the flatpak-builder-tools repo in the directory next to pi-llm. Since the pi-llm project includes a requirements.json file, this is probably not necessary for every user.
 - `do_01_build.sh` - runs the flatpak command that builds the flatpak for `x86_64`. The program, flatpak-builder, needs to have been installed already.
 - `do_02_try.sh` - runs the flatpak in the `x86_64` environment. 
-- `do_03_aarch64.sh` - build a flatpak packager for `aarch64`.
+- `do_03_aarch64.sh` - build a flatpak package for `aarch64`.
 - `do_04_stom.sh` - stop the flatpak in the `x86_64` environment.
 
 ## Env File
