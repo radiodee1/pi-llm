@@ -20,8 +20,9 @@ PROJECT_LAUNCH_ARGS=''
 GOOGLE_APPLICATION_CREDENTIALS=/path-to-json-file/file.json
 
 ```
+## Launch Args 
 
-Below are some test arguments for the PROJECT_LAUNCH_ARGS variable.
+Below are some test arguments for the PROJECT_LAUNCH_ARGS variable. If the `PROJECT_LAUNCH_ARGS` variable is not empty, the program will launch usint the variable contents only. If the variable is set the program will no longer parse command line arguments, and will parse the `PROJECT_LAUNCH_ARGS` instead. This is so that the program can launch with different configurations from run to run when containerized in a flatpak.
 
 ```
 PROJECT_LAUNCH_ARGS='--file --loop_wait --verbose --name Bob --offset 20 --timeout 0.5 --cloud'
