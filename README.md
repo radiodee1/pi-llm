@@ -1,6 +1,8 @@
 # pi-llm
 containerized llm for raspberry pi
 
+## Env File
+
 Put key values in a file called `~/.llm.env`. An example follows.
 
 ```bash
