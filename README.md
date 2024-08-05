@@ -7,7 +7,7 @@ It is possible to run the code from the project without containerization. This i
 - Go to the `virtualenv` folder and execute the `do_install_apt_pkg.sh` file. If you are not on a ubuntu distro you will need to  go through the `do_install_apt_pkg.sh` file and install the packages on your system that are necessary.
 - Make sure that you have python 3.10 installed. You may need to build python from source. This is important. You want to make sure that `sqlite3` is available when you run your scripts. This needs to be assured during the python build.
 - `source` the `do_make_virtualenv_setup310.sh` file. You will want to do this any time you want to run the program outside of the containerized setup. After sourcing the file return to the `pi-llm` root directory. 
-- Execute the command `pip install -r requirements.not-flatpak.txt`. This will ssetup all the python packages in the python virtual environment. You should have to do this once succsessfully. After that the packages will be available any time you enter the python environment.
+- Execute the command `pip install -r virtualenv/requirements.not-flatpak.txt`. This will ssetup all the python packages in the python virtual environment. You should have to do this once succsessfully. After that the packages will be available any time you enter the python environment.
 - You should actually be able to run the scripts without containerization now. If you want to run the word counting script or the plotting script, this is important.
 
 ## Flatpak scripts
