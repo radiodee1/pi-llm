@@ -349,7 +349,7 @@ class Kernel:
         text = text.replace('\'', '"')
         #x = "{'role' :'" + user + "', 'content' : '" + text +"'}"
         #print(user, text , '++++')
-        if user == identifiers['ai'] :
+        if user == identifiers['ai'].lower() :
             t = 'assistant'
         else:
             t = 'user'
@@ -408,6 +408,11 @@ class Kernel:
 
     def prune_input(self, text):
         self.p(text, '<<< unmodified')
+        if self.json:
+            t = text.strip().split(':')
+            if len(t) > 1:
+                text = ' '.join(t[1:])
+        
         text = text.replace(':', ' ')
         text = text.replace('-', ' ')
         text = text.replace(';', ' ')
