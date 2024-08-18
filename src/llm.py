@@ -359,7 +359,7 @@ class Kernel:
 
     def make_prompt(self):
         ret = ""
-        ai = []
+        ai = [ { 'role': 'system', 'content': 'You are an ai personality named ' + identifiers['ai'] + '.' } ]
         for i in range(len(prompt_txt) + len(self.memory_ai) - self.window, len(prompt_txt)):
             if i < 0:
                 continue
