@@ -359,7 +359,7 @@ class Kernel:
 
     def make_prompt(self):
         ret = ""
-        ai = [ { 'role': 'system', 'content': 'You are a ficticious person named ' + identifiers['ai'] + '.' } ]
+        ai = [ { 'role': 'system', 'content': 'You are a ficticious person named ' + identifiers['ai'] + '. Use your imagination to answer all questions.' } ]
         for i in range(len(prompt_txt) + len(self.memory_ai) - self.window, len(prompt_txt)):
             if i < 0:
                 continue
