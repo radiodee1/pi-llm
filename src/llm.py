@@ -6,6 +6,7 @@ import os
 from google.auth import default
 import speech_recognition as sr
 from gtts import gTTS 
+from google.cloud import texttospeech
 
 from playsound import playsound
 import multiprocessing as mp 
@@ -103,7 +104,8 @@ class Kernel:
         self.temp = 0.001
         self.timeout = 3.0 
         self.window = 35
-        self.cloud = False
+        self.cloud_stt = False
+        self.cloud_tts = False
         self.json = False
         self.voice = ""
         self.x_iter = 1 ## start at 1
@@ -265,9 +267,9 @@ class Kernel:
         try:
             ret = ''
             #self.p(GOOGLE_SPEECH_RECOGNITION_API_KEY)
-            if self.cloud == False:
+            if self.cloud_stt == False:
                 ret = r.recognize_google(audio) #,  key=GOOGLE_SPEECH_RECOGNITION_API_KEY)
-            elif self.cloud == True:
+            elif self.cloud_stt == True:
                 ret = str(r.recognize_google_cloud(audio, GOOGLE_APPLICATION_CREDENTIALS))
 
             self.p("speech recognition: " + ret)
@@ -299,11 +301,49 @@ class Kernel:
             return
         if len(txt) == 0:
             return
-        tts = gTTS(text=txt, lang='en')
+
+        filename =  '.output.mp3'
+
+        if not self.cloud_tts:
+            tts = gTTS(text=txt, lang='en')
+            tts.save(filename)
+
+        if self.cloud_tts:
+            # Instantiates a client
+            client = texttospeech.TextToSpeechClient()
+
+            # Set the text input to be synthesized
+            synthesis_input = texttospeech.SynthesisInput(text=txt)
+
+            # Build the voice request, select the language code ("en-US") and the ssml
+            # voice gender ("neutral")
+            voice = texttospeech.VoiceSelectionParams( name=self.voice,
+                language_code="en-US" 
+            )
+
+            # Select the type of audio file you want returned
+            audio_config = texttospeech.AudioConfig(
+                audio_encoding=texttospeech.AudioEncoding.MP3
+            )
+
+            # Perform the text-to-speech request on the text input with the selected
+            # voice parameters and audio file type
+            response = client.synthesize_speech(
+                input=synthesis_input, voice=voice, audio_config=audio_config
+            )
+
+            # The response's audio_content is binary.
+            with open(filename, "wb") as out:
+                # Write the response to the output file.
+                out.write(response.audio_content)
+                print('Audio content written to file ".output.mp3"')        
+
+            pass 
+
         #m = hashlib.sha256()
         #f = m.hexdigest()
         filename =  '.output.mp3'
-        tts.save(filename)
+        #tts.save(filename)
         playsound(filename)
         self.p('say this: ', txt)
         pass 
@@ -508,7 +548,7 @@ if __name__ == '__main__':
     parser.add_argument('--cloud_stt', action="store_true", help="Google Cloud Speech Recognition.")
     parser.add_argument('--cloud_tts', action="store_true", help="Google Cloud Text to Speech.")
     parser.add_argument('--json', action="store_true", help="use json for model prompt.")
-    parser.add_argument('--voice', type=str, default="en-US-Standard-E", help="Google Cloud TTS Voice Code.")
+    parser.add_argument('--voice', type=str, default="en-US-Journey-F", help="Google Cloud TTS Voice Code.") ## en-US-Journey-D en-US-Journey-F
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -541,7 +581,7 @@ if __name__ == '__main__':
     k.verbose = args.verbose
     k.loop_wait = args.loop_wait
     k.no_check = not args.check
-    k.cloud = args.cloud_stt 
+    k.cloud_stt = args.cloud_stt 
     k.cloud_tts = args.cloud_tts
     k.voice = args.voice
 
