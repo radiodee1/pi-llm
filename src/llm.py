@@ -87,6 +87,7 @@ prompt_txt = [
 
 identifiers = { 'user':'user', 'ai':'Jane' }
 
+voice_gender = { 'male': 'en-US-Journey-D', 'female': 'en-US-Journey-F' }
 
 class Kernel:
 
@@ -583,6 +584,9 @@ if __name__ == '__main__':
     k.no_check = not args.check
     k.cloud_stt = args.cloud_stt 
     k.cloud_tts = args.cloud_tts
+
+    if args.voice == 'male' or args.voice == 'female':
+        args.voice = voice_gender[args.voice]
     k.voice = args.voice
 
     if args.name != None and args.name.strip() != "":
