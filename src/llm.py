@@ -3,8 +3,10 @@
 import argparse
 from dotenv import  dotenv_values 
 import os
+from google.auth import default
 import speech_recognition as sr
 from gtts import gTTS 
+
 from playsound import playsound
 import multiprocessing as mp 
 import time
@@ -103,6 +105,7 @@ class Kernel:
         self.window = 35
         self.cloud = False
         self.json = False
+        self.voice = ""
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
         self.prompt = ""
@@ -502,14 +505,20 @@ if __name__ == '__main__':
     parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
     parser.add_argument('--timeout', type=float, default=3.0, help="minutes to timeout.")
     parser.add_argument('--window', type=int, default=35, help="number of memory units used in input.")
-    parser.add_argument('--cloud', action="store_true", help="Google Cloud Speech Recognition.")
+    parser.add_argument('--cloud_stt', action="store_true", help="Google Cloud Speech Recognition.")
+    parser.add_argument('--cloud_tts', action="store_true", help="Google Cloud Text to Speech.")
     parser.add_argument('--json', action="store_true", help="use json for model prompt.")
+    parser.add_argument('--voice', type=str, default="en-US-Standard-E", help="Google Cloud TTS Voice Code.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
     if len(PROJECT_LAUNCH_ARGS.strip()) > 0:
         print(PROJECT_LAUNCH_ARGS.strip())
-        args = parser.parse_args(PROJECT_LAUNCH_ARGS.strip().split(" "))
+        launch_args = []
+        for i in PROJECT_LAUNCH_ARGS.strip().split(' '):
+            if len(i.strip()) > 0:
+                launch_args.append(i.strip())
+        args = parser.parse_args(launch_args) #  PROJECT_LAUNCH_ARGS.strip().split(" "))
     #parser.parse_args(PROJECT_LAUNCH_ARGS.split(" "))
    
     print(args)
@@ -532,7 +541,9 @@ if __name__ == '__main__':
     k.verbose = args.verbose
     k.loop_wait = args.loop_wait
     k.no_check = not args.check
-    k.cloud = args.cloud 
+    k.cloud = args.cloud_stt 
+    k.cloud_tts = args.cloud_tts
+    k.voice = args.voice
 
     if args.name != None and args.name.strip() != "":
         identifiers['ai'] = args.name.strip()

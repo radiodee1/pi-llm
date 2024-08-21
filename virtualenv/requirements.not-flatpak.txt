@@ -15,6 +15,7 @@ SpeechRecognition==3.10.4
 
 requests==2.32.3
 google-cloud-speech==2.26.1
+google-cloud-texttospeech==2.17.1
 
 ## script libraries below ##
 gensim==4.3.3
