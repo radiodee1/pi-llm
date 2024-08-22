@@ -74,7 +74,7 @@ try:
 except:
     GOOGLE_APPLICATION_CREDENTIALS=''
 
-
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
 
 prompt_txt = [
         [ 'hi', 'hello' ],
