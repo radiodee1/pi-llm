@@ -499,14 +499,12 @@ class Kernel:
     def save_file(self,  time, heading=""):
         if self.file:
             f = open(os.path.expanduser('~') + '/llm.'+ OPENAI_MODEL.strip() +'.txt', 'a')
-            
             if heading.strip() != "":
                 f.write(str(heading) + '\n')
                 f.close()
                 return
 
             f.write(str(self.file_num) + '\n')
-                
             f.write(identifiers['user'] + " : "+ str(self.memory_user[-1]) + "\n")
             f.write(identifiers['ai'] + " : " + str(self.memory_ai[-1]) + "\n")
             #f.write(str(prompt) + "\n")
@@ -519,8 +517,6 @@ class Kernel:
             self.file_num += 1
         pass 
     
-
-
 if __name__ == '__main__':
     k = Kernel()
     parser = argparse.ArgumentParser(description="Pi LLM - containerized LLM for raspberry pi", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
