@@ -3,7 +3,7 @@ containerized llm for raspberry pi
 
 ## On-Line Services
 
-- You need a Google cloud account and a json file on your hard drive containing Google's authorization code. Google will supply you with one of these when you setup your Google cloud account. You set up a project and an account to pay for it with, and then you enable all the services you require. The path to the json file is stored in the `~/.llm.env` file in the GOOGLE_APPLICATION_CREDENTIALS key.
+- You need a Google cloud account and a json file on your hard drive containing Google's authorization code. Google will supply you with one of these when you setup your Google cloud account. You set up a project and an account to pay for it with, and then you enable all the services you require. The path to the json file is stored in the `~/.llm.env` file in the `GOOGLE_APPLICATION_CREDENTIALS` key.
 - There is a Speech to Text feature for the code, but Google Code is an option and it works better. For Speech To Text you must enable Google Cloud Speech To Text on the Google Cloud site for your project. To tell the code that you want Google STT, pass the program `--cloud_stt` as an option.
 - There is a Text to Speech option in the code, but Google Code TTS is an option and it works better. For Google Text To Speech you must enable Google Cloud Text To Speech on the Google Cloud site for your project. To tell the code that you want Google TTS, pass the program `--cloud_tts` as a launch option.
 - One essential part of the program queries an OpenAI model to determine what the program's next output will be. This is an essential part of the program. You must have an OpenAI account and an OpenAI user key. This info goes into the `~/.llm.env` file.
