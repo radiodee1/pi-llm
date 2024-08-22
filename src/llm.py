@@ -546,8 +546,7 @@ if __name__ == '__main__':
         for i in PROJECT_LAUNCH_ARGS.strip().split(' '):
             if len(i.strip()) > 0:
                 launch_args.append(i.strip())
-        args = parser.parse_args(launch_args) #  PROJECT_LAUNCH_ARGS.strip().split(" "))
-    #parser.parse_args(PROJECT_LAUNCH_ARGS.split(" "))
+        args = parser.parse_args(launch_args) 
    
     print(args)
     if args.mics == True:
