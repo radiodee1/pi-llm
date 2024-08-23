@@ -592,7 +592,6 @@ if __name__ == '__main__':
 
     if args.json != None and args.json == True:
         k.json = args.json
-        #identifiers['ai'] = 'assistant'
 
     k.save_file(0, str(args))
 
