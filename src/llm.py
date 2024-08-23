@@ -590,9 +590,6 @@ if __name__ == '__main__':
     if args.window != 0:
         k.window = args.window
 
-    #if args.cloud and False:
-    #    k.load_cloud_json()
-    
     if args.json != None and args.json == True:
         k.json = args.json
         #identifiers['ai'] = 'assistant'
