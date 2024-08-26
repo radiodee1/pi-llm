@@ -31,8 +31,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/af/d0/ff619a3202824e54d3b048fe7c34e5904b8e985196c6bcd5496e843e01b7/types_setuptools-72.2.0.20240821-py3-none-any.whl",
-                    "sha256": "260e89d6d3b42cc35f9f0f382d030713b7b547344a664c05c9175e6ba124fac7"
+                    "url": "https://files.pythonhosted.org/packages/57/76/ec2cf632452154ecceaed2075707ca09719238e8ba53b3027f47ba78b90c/types_setuptools-73.0.0.20240822-py3-none-any.whl",
+                    "sha256": "b9eba9b68546031317a0fa506d4973641d987d74f79e7dd8369ad4f7a93dea17"
                 }
             ]
         },
@@ -65,8 +65,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/e5/3e/741d8c82801c347547f8a2a06aa57dbb1992be9e948df2ea0eda2c8b79e8/idna-3.7-py3-none-any.whl",
-                    "sha256": "82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0"
+                    "url": "https://files.pythonhosted.org/packages/22/7e/d71db821f177828df9dea8c42ac46473366f191be53080e552e628aad991/idna-3.8-py3-none-any.whl",
+                    "sha256": "050b4e5baadcd44d760cedbd2b8e639f2ff89bbc7a5730fcc662954303377aac"
                 },
                 {
                     "type": "file",
@@ -132,8 +132,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/e5/3e/741d8c82801c347547f8a2a06aa57dbb1992be9e948df2ea0eda2c8b79e8/idna-3.7-py3-none-any.whl",
-                    "sha256": "82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0"
+                    "url": "https://files.pythonhosted.org/packages/22/7e/d71db821f177828df9dea8c42ac46473366f191be53080e552e628aad991/idna-3.8-py3-none-any.whl",
+                    "sha256": "050b4e5baadcd44d760cedbd2b8e639f2ff89bbc7a5730fcc662954303377aac"
                 },
                 {
                     "type": "file",
@@ -171,8 +171,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/e5/3e/741d8c82801c347547f8a2a06aa57dbb1992be9e948df2ea0eda2c8b79e8/idna-3.7-py3-none-any.whl",
-                    "sha256": "82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0"
+                    "url": "https://files.pythonhosted.org/packages/22/7e/d71db821f177828df9dea8c42ac46473366f191be53080e552e628aad991/idna-3.8-py3-none-any.whl",
+                    "sha256": "050b4e5baadcd44d760cedbd2b8e639f2ff89bbc7a5730fcc662954303377aac"
                 },
                 {
                     "type": "file",
@@ -190,7 +190,7 @@
             "name": "python3-google-cloud-speech",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"google-cloud-speech==2.26.1\" --no-build-isolation"
+                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"google-cloud-speech==2.27.0\" --no-build-isolation"
             ],
             "sources": [
                 {
@@ -220,8 +220,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/94/23/8f14d6a0d67758bcc7574c2cefc6a13aa619a567cdbc0aef64a695375dea/google_cloud_speech-2.26.1-py2.py3-none-any.whl",
-                    "sha256": "51566c55f74288767afa91fd25c9563cfcf61ed417eb3301d4cb58c5ee4abe77"
+                    "url": "https://files.pythonhosted.org/packages/3e/de/fbe0ce0cb02ab9cfa0ad0dada9d566fc51843a52712ee49c4fb53610ca8f/google_cloud_speech-2.27.0-py2.py3-none-any.whl",
+                    "sha256": "993b6e71e8ff91f614edc909d08df4638a19a58834725dd84553bfc024204b69"
                 },
                 {
                     "type": "file",
@@ -230,18 +230,18 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/6c/d8/1d8f1640649808db79b689d65b03556077d5504baad5ea64b167a5adedad/grpcio-1.65.5.tar.gz",
-                    "sha256": "ec6f219fb5d677a522b0deaf43cea6697b16f338cb68d009e30930c4aa0d2209"
+                    "url": "https://files.pythonhosted.org/packages/7d/0a/b79043717cc40861145f12d2045a0064f43eeb4efa359d84e75e0ff2d3ba/grpcio-1.66.0.tar.gz",
+                    "sha256": "c1ea4c528e7db6660718e4165fd1b5ac24b79a70c870a7bc0b7bdb9babab7c1e"
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/9e/05/b21346efcf5bc01e3747ba6732f2f17bd04703f6a9a8a4ed8ff18119ebf0/grpcio_status-1.65.5-py3-none-any.whl",
-                    "sha256": "44a445ce55375545a913e005be36fbec7999a4cc320d7aecb7a4469d3d49366c"
+                    "url": "https://files.pythonhosted.org/packages/7c/9a/d2c60c4f7faee3dcfde2033ca71fa16a26478b67c168ab0c8947c4d8e83c/grpcio_status-1.66.0-py3-none-any.whl",
+                    "sha256": "fd89c8ebcb87eea743327b24e31abb1b4e758cd6e6ede15bfb334c33e661384d"
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/e5/3e/741d8c82801c347547f8a2a06aa57dbb1992be9e948df2ea0eda2c8b79e8/idna-3.7-py3-none-any.whl",
-                    "sha256": "82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0"
+                    "url": "https://files.pythonhosted.org/packages/22/7e/d71db821f177828df9dea8c42ac46473366f191be53080e552e628aad991/idna-3.8-py3-none-any.whl",
+                    "sha256": "050b4e5baadcd44d760cedbd2b8e639f2ff89bbc7a5730fcc662954303377aac"
                 },
                 {
                     "type": "file",
@@ -324,18 +324,18 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/6c/d8/1d8f1640649808db79b689d65b03556077d5504baad5ea64b167a5adedad/grpcio-1.65.5.tar.gz",
-                    "sha256": "ec6f219fb5d677a522b0deaf43cea6697b16f338cb68d009e30930c4aa0d2209"
+                    "url": "https://files.pythonhosted.org/packages/7d/0a/b79043717cc40861145f12d2045a0064f43eeb4efa359d84e75e0ff2d3ba/grpcio-1.66.0.tar.gz",
+                    "sha256": "c1ea4c528e7db6660718e4165fd1b5ac24b79a70c870a7bc0b7bdb9babab7c1e"
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/9e/05/b21346efcf5bc01e3747ba6732f2f17bd04703f6a9a8a4ed8ff18119ebf0/grpcio_status-1.65.5-py3-none-any.whl",
-                    "sha256": "44a445ce55375545a913e005be36fbec7999a4cc320d7aecb7a4469d3d49366c"
+                    "url": "https://files.pythonhosted.org/packages/7c/9a/d2c60c4f7faee3dcfde2033ca71fa16a26478b67c168ab0c8947c4d8e83c/grpcio_status-1.66.0-py3-none-any.whl",
+                    "sha256": "fd89c8ebcb87eea743327b24e31abb1b4e758cd6e6ede15bfb334c33e661384d"
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/e5/3e/741d8c82801c347547f8a2a06aa57dbb1992be9e948df2ea0eda2c8b79e8/idna-3.7-py3-none-any.whl",
-                    "sha256": "82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0"
+                    "url": "https://files.pythonhosted.org/packages/22/7e/d71db821f177828df9dea8c42ac46473366f191be53080e552e628aad991/idna-3.8-py3-none-any.whl",
+                    "sha256": "050b4e5baadcd44d760cedbd2b8e639f2ff89bbc7a5730fcc662954303377aac"
                 },
                 {
                     "type": "file",
