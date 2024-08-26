@@ -225,8 +225,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/02/48/87422ff1bddcae677fb6f58c97f5cfc613304a5e8ce2c3662760199c0a84/googleapis_common_protos-1.63.2-py2.py3-none-any.whl",
-                    "sha256": "27a2499c7e8aff199665b22741997e485eccc8645aa9176c7c988e6fae507945"
+                    "url": "https://files.pythonhosted.org/packages/b7/14/3f8b5670e7e082a3735dc9a6411b4ba37af7e6662441ee66782906265632/googleapis_common_protos-1.64.0-py2.py3-none-any.whl",
+                    "sha256": "d1bfc569f70ed2e96ccf06ead265c2cf42b5abfc817cda392e3835f3b67b5c59"
                 },
                 {
                     "type": "file",
@@ -319,8 +319,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/02/48/87422ff1bddcae677fb6f58c97f5cfc613304a5e8ce2c3662760199c0a84/googleapis_common_protos-1.63.2-py2.py3-none-any.whl",
-                    "sha256": "27a2499c7e8aff199665b22741997e485eccc8645aa9176c7c988e6fae507945"
+                    "url": "https://files.pythonhosted.org/packages/b7/14/3f8b5670e7e082a3735dc9a6411b4ba37af7e6662441ee66782906265632/googleapis_common_protos-1.64.0-py2.py3-none-any.whl",
+                    "sha256": "d1bfc569f70ed2e96ccf06ead265c2cf42b5abfc817cda392e3835f3b67b5c59"
                 },
                 {
                     "type": "file",
