@@ -8,6 +8,7 @@ finish-args:
   - --filesystem=home
   - --share=network
   - --filesystem=/dev/shm
+  - --filesystem=/tmp
   - --device=all
   - --socket=pulseaudio
   - --device=shm
