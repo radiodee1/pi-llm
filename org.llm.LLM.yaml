@@ -30,15 +30,6 @@ modules:
 
   - requirements.json
 
-  - name: pyaudio
-    buildsystem: simple   
-    build-commands:
-      - python -m pip install --no-deps --no-build-isolation  --prefix=/app .  # --no-deps --no-build-isolation  --prefix=/app . 
-    sources:
-      - type: archive 
-        url: https://files.pythonhosted.org/packages/26/1d/8878c7752febb0f6716a7e1a52cb92ac98871c5aa522cba181878091607c/PyAudio-0.2.14.tar.gz
-        sha256: 78dfff3879b4994d1f4fc6485646a57755c6ee3c19647a491f790a0895bd2f87
-
 
   - name: llm 
     buildsystem: simple
