@@ -224,8 +224,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/44/99/daa3541e8ecd7d8b7907b714ba92126097a976b5b3dbabdb5febdcf08554/google_api_core-2.19.1-py3-none-any.whl",
-                    "sha256": "f12a9b8309b5e21d92483bbd47ce2c445861ec7d269ef6784ecc0ea8c1fa6125"
+                    "url": "https://files.pythonhosted.org/packages/79/53/2e340a6ed897fa2bdd6c1bf166b98c047fbb648463dfd2b209ca7d501984/google_api_core-2.19.2-py3-none-any.whl",
+                    "sha256": "53ec0258f2837dd53bbd3d3df50f5359281b3cc13f800c941dd15a9b5a415af4"
                 },
                 {
                     "type": "file",
@@ -264,8 +264,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/1b/61/0671db2ab2aee7c92d6c1b617c39b30a4cd973950118da56d77e7f397a9d/protobuf-5.27.3.tar.gz",
-                    "sha256": "82460903e640f2b7e34ee81a947fdaad89de796d324bcbc38ff5430bcdead82c"
+                    "url": "https://files.pythonhosted.org/packages/27/7b/11d9fb99c0de4075b6064fa38997ccd6e7392619c1dcba85138cd528d84c/protobuf-5.27.4.tar.gz",
+                    "sha256": "eaa1016e353d8fc5bf08c8087e96eed15f5297aa52bb7ee1f533278bb3f3aad7"
                 },
                 {
                     "type": "file",
@@ -318,8 +318,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/44/99/daa3541e8ecd7d8b7907b714ba92126097a976b5b3dbabdb5febdcf08554/google_api_core-2.19.1-py3-none-any.whl",
-                    "sha256": "f12a9b8309b5e21d92483bbd47ce2c445861ec7d269ef6784ecc0ea8c1fa6125"
+                    "url": "https://files.pythonhosted.org/packages/79/53/2e340a6ed897fa2bdd6c1bf166b98c047fbb648463dfd2b209ca7d501984/google_api_core-2.19.2-py3-none-any.whl",
+                    "sha256": "53ec0258f2837dd53bbd3d3df50f5359281b3cc13f800c941dd15a9b5a415af4"
                 },
                 {
                     "type": "file",
@@ -358,8 +358,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/1b/61/0671db2ab2aee7c92d6c1b617c39b30a4cd973950118da56d77e7f397a9d/protobuf-5.27.3.tar.gz",
-                    "sha256": "82460903e640f2b7e34ee81a947fdaad89de796d324bcbc38ff5430bcdead82c"
+                    "url": "https://files.pythonhosted.org/packages/27/7b/11d9fb99c0de4075b6064fa38997ccd6e7392619c1dcba85138cd528d84c/protobuf-5.27.4.tar.gz",
+                    "sha256": "eaa1016e353d8fc5bf08c8087e96eed15f5297aa52bb7ee1f533278bb3f3aad7"
                 },
                 {
                     "type": "file",
