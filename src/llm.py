@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+from wave import Error
 from dotenv import  dotenv_values 
 import os
 from google.auth import default
@@ -261,10 +262,14 @@ class Kernel:
 
         with mic as source:
             timeout = self.mic_timeout 
-            phrase_time_limit = 5
+            phrase_time_limit = self.mic_timeout
             #r = sr.Recognizer()
             if self.mic_timeout != -1:
-                audio = r.listen(source , timeout=timeout ) #, phrase_time_limit=phrase_time_limit)
+                try:
+                    audio = r.listen(source , timeout=timeout , phrase_time_limit=phrase_time_limit)
+                except:
+                    self.p("an exception occured")
+                    pass 
             else:
                 audio = r.listen(source)
             self.p("processing.")
@@ -315,6 +320,9 @@ class Kernel:
 
         if self.cloud_tts:
             client = texttospeech.TextToSpeechClient()
+            
+            if txt == None or txt.strip() == "":
+                return
 
             synthesis_input = texttospeech.SynthesisInput(text=txt)
 
@@ -491,7 +499,12 @@ class Kernel:
 
         self.p(r.text)
         r = json.loads(r.text)
-        self.reply = r['choices'][0]['message']['content']
+
+        try:
+            self.reply = r['choices'][0]['message']['content']
+        except:
+            self.reply = ""
+
         self.p(self.reply)
         
         return self.reply
