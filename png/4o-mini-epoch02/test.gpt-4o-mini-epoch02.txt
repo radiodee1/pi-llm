@@ -1,0 +1,27 @@
+Namespace(files=['../png/4o-mini-epoch02/llm.gpt-4o-mini-epoch02.txt'], low='3', count=-1)
+i, 32
+say, 32
+something, 31
+pizza, 20
+you, 19
+am, 9
+always, 7
+good, 6
+enjoy, 5
+chat, 5
+me, 5
+are, 5
+not, 5
+be, 5
+every, 5
+like, 5
+thank, 4
+it, 4
+robot, 4
+my, 4
+boop, 4
+could, 4
+have, 4
+
+displayed: 23 categories: 165 words: 479 sentence: 3.9916666666666667
+sentences: 120 exchanges: 60.0 restarts: 31 files: ['../png/4o-mini-epoch02/llm.gpt-4o-mini-epoch02.txt']

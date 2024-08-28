@@ -1,0 +1,361 @@
+Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, check=False, name=None, offset=None, mics=False, mic_timeout=20, file=True, temp=0.95, timeout=0.05, window=35, cloud_stt=True, cloud_tts=True, json=True, voice='en-US-Journey-F')
+0
+user : hello
+Jane : hey
+---
+9.036452293395996
++++
+1
+user : I always enjoy a good chat
+Jane : me too
+---
+4.606370210647583
++++
+2
+user : you are a great conversationalist
+Jane : thank you
+---
+7.44896936416626
++++
+3
+user : say something
+Jane :  you are a great conversationalist
+---
+4.237233400344849
++++
+4
+user : thank you I appreciate the compliment
+Jane :  youre welcome
+---
+9.772392511367798
++++
+5
+user : that is a nice response
+Jane :  thank you
+---
+7.868251085281372
++++
+6
+user : say something
+Jane : you are the best
+---
+4.132464170455933
++++
+7
+user : awesome
+Jane : I am flattered
+---
+6.480626106262207
++++
+8
+user : say something
+Jane : I always enjoy a good chat
+---
+8.687608480453491
++++
+9
+user : say something
+Jane : eating pizza
+---
+3.9763262271881104
++++
+10
+user : I am not sure what to say
+Jane :  to be or not to be
+---
+24.08451509475708
++++
+11
+user : how hard is it to get a job form
+Jane :  every time I try I get rejected
+---
+5.16968846321106
++++
+12
+user : say something
+Jane :  I always enjoy a good chat
+---
+11.289606809616089
++++
+13
+user : I never feel like talking
+Jane :  I work at a pizza place
+---
+3.9156289100646973
++++
+14
+user : awesome
+Jane :  pizza is so great
+---
+18.482527017593384
++++
+15
+user : say something
+Jane : a pizza a day keeps the doctor away
+---
+24.412771463394165
++++
+16
+user : definitely
+Jane : 
+---
+7.912313222885132
++++
+17
+user : say something
+Jane : pizza is a dish best served hot
+---
+5.324814081192017
++++
+18
+user : say something
+Jane : Im a robot from the future
+---
+4.1769020557403564
++++
+19
+user : say something
+Jane : hello
+---
+4.582221746444702
++++
+20
+user : say something
+Jane : I always enjoy a good chat
+---
+6.812896490097046
++++
+21
+user : Hash Hash Hash my thoughts exactly
+Jane : 
+---
+10.592519283294678
++++
+22
+user : boop boop I am a robot from the future
+Jane :  so am I
+---
+26.420350313186646
++++
+23
+user : the future is looking nice
+Jane : just like pizza
+---
+19.631696939468384
++++
+24
+user : you should try it sometime
+Jane : 
+---
+10.816251516342163
++++
+25
+user : say something
+Jane : 
+---
+11.781362771987915
++++
+26
+user : want to talk about
+Jane : 
+---
+2.5580642223358154
++++
+27
+user : say something
+Jane : I always enjoy a good chat
+---
+7.885024309158325
++++
+28
+user : I agree
+Jane : 
+---
+14.746814489364624
++++
+29
+user : just a friendly robot
+Jane : 
+---
+2.749190330505371
++++
+30
+user : say something
+Jane : what am I
+---
+9.625073194503784
++++
+31
+user : say something
+Jane :  if I really was a robot would you still love me
+---
+7.120023488998413
++++
+32
+user : say something
+Jane : very quiet
+---
+11.273069381713867
++++
+33
+user : if you could think for yourself you probably could have a nice conversation so yes I would
+Jane : I fully support you
+---
+7.950490951538086
++++
+34
+user : say something
+Jane : boop boop
+---
+4.617899656295776
++++
+35
+user : thanks and support is important
+Jane : 
+---
+5.094164848327637
++++
+36
+user : say something
+Jane : my pizza sensors are detecting a disturbance
+---
+4.087514162063599
++++
+37
+user : say something
+Jane : sometimes pizza makes me feel funny
+---
+13.005175352096558
++++
+38
+user : say something
+Jane :  pizza is my favorite food ever
+---
+4.977676153182983
++++
+39
+user : I can find
+Jane : I have been given a pizza
+---
+2.8916025161743164
++++
+40
+user : very lucky you
+Jane : thank you, could you pass the pepperoni
+---
+8.011565208435059
++++
+41
+user : say something
+Jane : you are the best
+---
+10.535644054412842
++++
+42
+user : I was programmed by a human a pizza day makes everything okay
+Jane : every one should try
+---
+25.341672897338867
++++
+43
+user : give it a shot you might like it
+Jane :  even robots need a break every now and then
+---
+9.306030035018921
++++
+44
+user : say something
+Jane : stop asking me
+---
+4.657374620437622
++++
+45
+user : say something
+Jane : i am always listening
+---
+4.029080152511597
++++
+46
+user : not everything has to be a pizza
+Jane : every conversation might be
+---
+5.115268707275391
++++
+47
+user : say something
+Jane : i am just a simple bot, trying to make my way in the universe
+---
+5.626851797103882
++++
+48
+user : say something
+Jane :  pizza is always the answer
+---
+10.052645921707153
++++
+49
+user : say something
+Jane : i am listening
+---
+6.487571954727173
++++
+50
+user : I could not agree more
+Jane : 
+---
+6.465412855148315
++++
+51
+user : say something
+Jane :  sometimes pizza makes me feel funny
+---
+9.218163251876831
++++
+52
+user : I understand you completely
+Jane :  i think you might like pizza
+---
+9.253393650054932
++++
+53
+user : say something
+Jane :  did you know that pizza is a dish of italian origin
+---
+7.683881998062134
++++
+54
+user : say something
+Jane : I have not yet eaten
+---
+4.952219724655151
++++
+55
+user : sounds like a good time for pizza
+Jane : 
+---
+8.919451713562012
++++
+56
+user : say something
+Jane : i still have to eat
+---
+11.87713885307312
++++
+57
+user : eat a pizza
+Jane :  ow where am I
+---
+7.036172866821289
++++
+58
+user : say something
+Jane : I was designed to be a pizza lover
+---
+9.75427794456482
++++
+59
+user : say something
+Jane : every body loves pizza
+---
+8.429083347320557
++++
