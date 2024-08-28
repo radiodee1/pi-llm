@@ -108,6 +108,7 @@ class Kernel:
         self.cloud_stt = False
         self.cloud_tts = False
         self.json = False
+        self.mic_timeout = -1 
         self.voice = ""
         self.x_iter = 1 ## start at 1
         self.q = mp.Queue()
@@ -259,10 +260,13 @@ class Kernel:
             mic = sr.Microphone()
 
         with mic as source:
-            timeout = 10 
+            timeout = self.mic_timeout 
             phrase_time_limit = 5
             #r = sr.Recognizer()
-            audio = r.listen(source) #, timeout=timeout ) #, phrase_time_limit=phrase_time_limit)
+            if self.mic_timeout != -1:
+                audio = r.listen(source , timeout=timeout ) #, phrase_time_limit=phrase_time_limit)
+            else:
+                audio = r.listen(source)
             self.p("processing.")
 
         try:
@@ -529,6 +533,7 @@ if __name__ == '__main__':
     parser.add_argument('--name', type=str, help="define new name.")
     parser.add_argument('--offset', type=float, help="time in seconds to offset on startup.")
     parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
+    parser.add_argument('--mic_timeout', type=int, help="mic timeout in seconds.")
     parser.add_argument('--file', action="store_true", help="save statistics in text file.")
     parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
     parser.add_argument('--timeout', type=float, default=0.5, help="minutes to timeout.")
@@ -592,6 +597,10 @@ if __name__ == '__main__':
 
     if args.json != None and args.json == True:
         k.json = args.json
+
+    if args.mic_timeout != None and args.mic_timeout > -1:
+        k.mic_timeout = args.mic_timeout
+        k.p(k.mic_timeout, ' mic_timeout ')
 
     k.save_file(0, str(args))
 
