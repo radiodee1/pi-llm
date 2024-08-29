@@ -267,9 +267,13 @@ class Kernel:
             if self.mic_timeout != -1:
                 try:
                     audio = r.listen(source , timeout=timeout , phrase_time_limit=phrase_time_limit)
-                except:
+                
+                except Exception as e:
                     self.p("an exception occured")
-                    pass 
+                    if e == KeyboardInterrupt:
+                        exit()
+                    return
+                    
             else:
                 audio = r.listen(source)
             self.p("processing.")
