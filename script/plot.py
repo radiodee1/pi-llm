@@ -60,7 +60,7 @@ if __name__ == '__main__':
     parser.add_argument('--bin', default='', help="Input Word2Vec binary file.")
     parser.add_argument('--output', default='', help="Filename for output plot.")
     parser.add_argument('--p', default=15, help="perplexity value.")
-    parser.add_argument('--topn', default=30, help="topn value.")
+    parser.add_argument('--topn', default=5, help="topn value.")
     parser.add_argument('--all', action="store_true", help="plot all words (include test words.)")
     args = parser.parse_args()
  
