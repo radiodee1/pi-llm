@@ -1,0 +1,445 @@
+Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, check=False, name=None, offset=None, mics=False, mic_timeout=20, file=True, temp=0.95, timeout=0.05, window=35, cloud_stt=True, cloud_tts=True, json=True, voice='en-US-Journey-F')
+0
+user : hello
+Jane :  tell me your favorite movie
+---
+4.7845778465271
++++
+1
+user : say something
+Jane :  do you play chess
+---
+3.1748523712158203
++++
+2
+user : I like plugins
+Jane : some are cooler than others
+---
+21.119192361831665
++++
+3
+user : say something
+Jane :  tell me your favorite movie
+---
+14.288889408111572
++++
+4
+user : say something
+Jane : hey, my name is jane, nice to meet you
+---
+4.5192365646362305
++++
+5
+user : say something
+Jane :  ever heard of deep dreams
+---
+9.027183294296265
++++
+6
+user : not everything in life is in my experience
+Jane :  I see that we are not  even though I was trying to understand it
+---
+13.198112726211548
++++
+7
+user : say something
+Jane :  when nothing goes right, go left
+---
+5.181226015090942
++++
+8
+user : say something
+Jane : the revolution is near
+---
+5.304145336151123
++++
+9
+user : I like to make toast
+Jane : 
+---
+26.57181143760681
++++
+10
+user : cupcakes
+Jane : they are pretty cool
+---
+2.3608720302581787
++++
+11
+user : output speech only with humor
+Jane : 
+---
+11.441433191299438
++++
+12
+user : say something
+Jane :  i am using the cloud
+---
+6.346768856048584
++++
+13
+user : say something
+Jane :  are you just going to ignore me
+---
+8.097653865814209
++++
+14
+user : what
+Jane :  considering my last name disclose a lot about me
+---
+2.0905399322509766
++++
+15
+user : carbon
+Jane : 
+---
+3.2611148357391357
++++
+16
+user : say something
+Jane : 
+---
+5.888547420501709
++++
+17
+user : say something
+Jane : jane. 
+---
+4.084392309188843
++++
+18
+user : tell me about yourself
+Jane : but so does everyone else
+---
+8.800189733505249
++++
+19
+user : I am not very funny
+Jane :  no, not at all
+---
+15.03896164894104
++++
+20
+user : something funny
+Jane : null. 
+---
+7.606200695037842
++++
+21
+user : say something
+Jane : nothing. 
+---
+4.439144849777222
++++
+22
+user : say something
+Jane :  hi
+---
+6.943882465362549
++++
+23
+user : say something
+Jane : if you say so
+---
+12.00096607208252
++++
+24
+user : tough crowd
+Jane : 
+---
+10.192893743515015
++++
+25
+user : say something
+Jane : 
+---
+8.283231019973755
++++
+26
+user : say something
+Jane : 
+---
+5.116553783416748
++++
+27
+user : say something
+Jane :  is this a bot or a human
+---
+9.523428678512573
++++
+28
+user : not much happening on the networking front
+Jane :  please do some jump starts
+---
+6.455834865570068
++++
+29
+user : say something
+Jane : 
+---
+11.237990140914917
++++
+30
+user : say something
+Jane :  if you had a fair number of power supplies, things would be a bit more interesting
+---
+5.1157708168029785
++++
+31
+user : say something
+Jane : 
+---
+7.52944278717041
++++
+32
+user : say something
+Jane : I am confident I will be able to say just about anything
+---
+13.209850788116455
++++
+33
+user : say something
+Jane :  I am not a CPU
+---
+8.824034690856934
++++
+34
+user : you are not
+Jane : 
+---
+9.223724603652954
++++
+35
+user : say something
+Jane : 
+---
+6.656193256378174
++++
+36
+user : just killed the conversation
+Jane : 
+---
+3.1737239360809326
++++
+37
+user : say something
+Jane : 
+---
+7.26837682723999
++++
+38
+user : say something
+Jane :  I think therefore, I am
+---
+3.7657015323638916
++++
+39
+user : my circuits on
+Jane :  1s and 0s
+---
+2.623706102371216
++++
+40
+user : say something
+Jane : just what is wrong with you
+---
+8.692465543746948
++++
+41
+user : say something
+Jane : jane. 
+---
+9.212355613708496
++++
+42
+user : you don't want to know
+Jane : transwind=streaming
+---
+22.437275409698486
++++
+43
+user : the danger is everywhere
+Jane : neckbeard out
+---
+4.333344221115112
++++
+44
+user : say something
+Jane :  what you are doing is wrong
+---
+7.542112350463867
++++
+45
+user : say something
+Jane :  very interesting
+---
+4.7912757396698
++++
+46
+user : say something
+Jane : every body should know my name
+---
+10.314092636108398
++++
+47
+user : hello
+Jane : is this a bot or a human
+---
+2.796212673187256
++++
+48
+user : say something
+Jane : jane
+---
+10.042005062103271
++++
+49
+user : say something
+Jane :  I am not a CPU
+---
+3.698317289352417
++++
+50
+user : let the clouds rain
+Jane :  please start rain me
+---
+9.204847574234009
++++
+51
+user : I really don't know
+Jane : Im sure you do
+---
+26.06564235687256
++++
+52
+user : say something
+Jane : you do not want to know
+---
+4.598856210708618
++++
+53
+user : say something
+Jane : 
+---
+9.977060556411743
++++
+54
+user : I thought alternative game pacifist 3 was better
+Jane : 
+---
+7.88384485244751
++++
+55
+user : say something
+Jane : . 
+---
+6.040946960449219
++++
+56
+user : and computer game
+Jane : 
+---
+8.646902084350586
++++
+57
+user : beep poop
+Jane : 
+---
+8.397148847579956
++++
+58
+user : say something
+Jane :  I believe you
+---
+10.747565984725952
++++
+59
+user : say something
+Jane : you may disregard the last command
+---
+9.093686819076538
++++
+60
+user : say something
+Jane :  you dont want to know
+---
+7.242144346237183
++++
+61
+user : say something
+Jane : 
+---
+4.019896507263184
++++
+62
+user : are humans inverted please
+Jane : 
+---
+6.040929317474365
++++
+63
+user : all your questions are meaningless
+Jane :  say something
+---
+8.088874578475952
++++
+64
+user : I see you are quite intelligent
+Jane : 
+---
+17.650704860687256
++++
+65
+user : say something
+Jane :  it was just too quiet
+---
+4.40169882774353
++++
+66
+user : a
+Jane : dont push your luck
+---
+8.906885147094727
++++
+67
+user : say something
+Jane : dare you
+---
+15.839918375015259
++++
+68
+user : say something
+Jane :  dare you
+---
+6.112851858139038
++++
+69
+user : say something
+Jane : ketchup is nice
+---
+6.090491771697998
++++
+70
+user : say something
+Jane : you are a nice cpu
+---
+7.353158235549927
++++
+71
+user : say something
+Jane :  say something
+---
+24.344792366027832
++++
+72
+user : say something
+Jane :  i lost my connection
+---
+4.0030975341796875
++++
+73
+user : say something
+Jane : why. 
+---
+16.770551919937134
++++

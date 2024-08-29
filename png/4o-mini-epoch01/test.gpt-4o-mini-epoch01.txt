@@ -1,0 +1,27 @@
+Namespace(files=['../png/4o-mini-epoch01/llm.gpt-4o-mini-epoch01.txt'], low='2', count=-1)
+say, 50
+something, 49
+you, 18
+i, 17
+are, 10
+not, 9
+me, 6
+my, 6
+am, 6
+just, 5
+know, 5
+your, 4
+do, 4
+jane, 4
+tell, 3
+name, 3
+nice, 3
+was, 3
+what, 3
+about, 3
+please, 3
+cpu, 3
+want, 3
+
+displayed: 23 categories: 183 words: 463 sentence: 3.1283783783783785
+sentences: 148 exchanges: 74.0 restarts: 48 files: ['../png/4o-mini-epoch01/llm.gpt-4o-mini-epoch01.txt']
