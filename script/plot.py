@@ -14,23 +14,6 @@ from sklearn.manifold import TSNE
 import numpy as np
 
 '''
-def preprocess_text(text):
-    text = re.sub('[^a-zA-Zа-яА-Я1-9]+', ' ', text)
-    text = re.sub(' +', ' ', text)
-    return text.strip()
-
-
-def prepare_for_w2v(filename_from, filename_to, lang):
-    raw_text = codecs.open(filename_from, "r", encoding='windows-1251').read()
-    with open(filename_to, 'w', encoding='utf-8') as f:
-        for sentence in nltk.sent_tokenize(raw_text, lang):
-            print(preprocess_text(sentence.lower()), file=f)
-
-
-def train_word2vec(filename):
-    data = gensim.models.word2vec.LineSentence(filename)
-    return Word2Vec(data, size=200, window=5, min_count=5, workers=multiprocessing.cpu_count())
-
 '''
 
 keys = ['Paris', 'Python', 'Sunday', 'Tolstoy', 'Twitter', 'bachelor', 'delivery', 'election', 'expensive',
