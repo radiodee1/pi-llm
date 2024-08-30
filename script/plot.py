@@ -13,8 +13,6 @@ import numpy as np
 from sklearn.manifold import TSNE
 import numpy as np
 
-'''
-'''
 
 keys = ['Paris', 'Python', 'Sunday', 'Tolstoy', 'Twitter', 'bachelor', 'delivery', 'election', 'expensive',
         'experience', 'financial', 'food', 'iOS', 'peace', 'release', 'war']
