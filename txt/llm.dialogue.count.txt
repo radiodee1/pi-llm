@@ -1,0 +1,27 @@
+Namespace(files=['../txt/llm.dialogue.txt'], low=10, count='25')
+keep, 29
+your, 24
+our, 22
+can, 21
+we, 21
+journey, 20
+work, 19
+you, 19
+let's, 18
+achieve, 17
+towards, 17
+success, 17
+great, 16
+up, 15
+with, 14
+goals, 13
+stay, 12
+hard, 12
+mastery, 12
+continue, 12
+pushing, 11
+each, 11
+other, 11
+
+displayed: 23 categories: 243 words: 1131 sentence: 29.763157894736842
+sentences: 38 exchanges: 19.0 restarts: 2 files: ['../txt/llm.dialogue.txt']

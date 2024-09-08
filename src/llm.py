@@ -88,7 +88,7 @@ prompt_txt = [
 
 identifiers = { 'user':'user', 'ai':'Jane' }
 
-voice_gender = { 'male': 'en-US-Journey-D', 'female': 'en-US-Journey-F' }
+voice_gender = { 'male': 'en-US-Neural2-D', 'female': 'en-US-Neural2-F' }
 
 class Kernel:
 
@@ -327,20 +327,25 @@ class Kernel:
             
             if txt == None or txt.strip() == "":
                 return
+            
+            try:
+                synthesis_input = texttospeech.SynthesisInput(text=txt)
 
-            synthesis_input = texttospeech.SynthesisInput(text=txt)
+                voice = texttospeech.VoiceSelectionParams( 
+                    name=self.voice, language_code="en-US" 
+                )
 
-            voice = texttospeech.VoiceSelectionParams( 
-                name=self.voice, language_code="en-US" 
-            )
+                audio_config = texttospeech.AudioConfig(
+                    audio_encoding=texttospeech.AudioEncoding.MP3
+                )
 
-            audio_config = texttospeech.AudioConfig(
-                audio_encoding=texttospeech.AudioEncoding.MP3
-            )
+                response = client.synthesize_speech(
+                    input=synthesis_input, voice=voice, audio_config=audio_config
+                )
 
-            response = client.synthesize_speech(
-                input=synthesis_input, voice=voice, audio_config=audio_config
-            )
+            except Error as e:
+                print('speech to text error', e)
+                return 
 
             with open(filename, "wb") as out:
                 # Write the response to the output file.
