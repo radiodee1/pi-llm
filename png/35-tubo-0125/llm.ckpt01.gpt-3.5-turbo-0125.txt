@@ -1,0 +1,151 @@
+Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, check=False, name=None, offset=None, mics=False, mic_timeout=20, file=True, temp=0.95, timeout=0.33, window=35, cloud_stt=True, cloud_tts=True, json=False, voice='en-US-Neural2-D')
+0
+user : say something
+Jane : I love trying out new recipes and experimenting in the kitchen
+---
+25.457647562026978
++++
+1
+user : that's great
+Jane : Thank you, I really enjoy cooking and trying new things in the kitchen
+---
+11.582220315933228
++++
+2
+user : that's wonderful to hear
+Jane : Im glad you think so
+---
+8.029709815979004
++++
+3
+user : I am always happy to hear about people enjoying cooking and trying new things in the kitchen
+Jane : Yes, its a great way to be creative and have fun while also creating something delicious to enjoy
+---
+12.702457189559937
++++
+4
+user : absolutely cooking can be such a satisfying and enjoyable experience
+Jane : Yes, its really rewarding to see the end result of your efforts and share a delicious meal with others
+---
+19.564921617507935
++++
+5
+user : it's always a great feeling to see others enjoy the food you have cooked
+Jane : Yes, its definitely a satisfying feeling to know that others are enjoying the food youve prepared
+---
+20.160961151123047
++++
+6
+user : cooking can truly bring people together and create lasting memories
+Jane : Absolutely, food has a way of connecting people and creating special moments that well always remember
+---
+11.733255863189697
++++
+7
+user : food has a way of bringing people together and creating a sense of community and connection
+Jane : Yes, food has a way of uniting people from different backgrounds and cultures
+---
+13.572737216949463
++++
+8
+user : that's the beauty of food it transcends boundaries and brings people together in a shared experience of delicious flavors and enjoyment
+Jane : Yes, food is a universal language that can bring people together and create shared memories and experiences
+---
+16.403493642807007
++++
+9
+user : food truly is a universal language that can Bridge gaps and create bonds among people
+Jane : Yes, food has the power to bring people together and create connections that surpass language or cultural barriers
+---
+14.34970760345459
++++
+10
+user : yes food has the amazing ability to break down barriers and create a sense of unity among people regardless of their differences
+Jane : Absolutely, food has the power to bring people together and create a sense of harmony and understanding among individuals from all walks of life
+---
+16.748136520385742
++++
+11
+user : food truly is a powerful force that has the ability to unite people and create a sense of community and understanding
+Jane : Yes, food has a way of bringing people together and fostering a sense of togetherness and appreciation for different cultures and traditions
+---
+17.371875762939453
++++
+12
+user : food has a magical way of fostering connections and creating a sense of appreciation for diversity and new experiences
+Jane : Yes, food has a way of sparking conversations, sharing stories, and creating memorable moments that celebrate the beauty of diversity and new experiences
+---
+14.481077909469604
++++
+13
+user : food not only nourishes our bodies but also nourishes our souls by bringing people together to share in the joy of delicious flavors and meaningful conversations
+Jane : Absolutely, food has a way of nourishing both our bodies and our souls, creating connections and memories that bring joy and happiness to our lives
+---
+18.2140154838562
++++
+14
+user : food truly is a powerful and wonderful thing that brings people together nourishes our bodies and fills our hearts with happiness
+Jane : Yes, food is a magical thing that brings people together, nourishes our bodies, and fills our hearts with happiness and joy
+---
+18.68981432914734
++++
+15
+user : food has a special way of enriching our lives and bringing people together in a shared experience of joy and connection
+Jane : Food truly is a special and enriching part of our lives that has the power to bring people together in a shared experience of joy, connection, and appreciation for the simple pleasures in life
+---
+16.42232847213745
++++
+16
+user : yes food is a simple pleasure that can bring so much happiness and joy to our lives
+Jane : Absolutely, food is a simple pleasure that can bring so much happiness and joy to our lives
+---
+15.970636129379272
++++
+17
+user : food has a way of uplifting our spirits and creating special moments that we will always cherish
+Jane : Yes, food has the power to uplift our spirits and create lasting memories that we will always hold dear
+---
+23.358579874038696
++++
+18
+user : absolutely the joy and memories that food brings are truly priceless
+Jane : Yes, the joy and memories that food brings are truly priceless and can enrich our lives in so many ways
+---
+12.001370429992676
++++
+19
+user : food has a way of creating memories that we will treasure forever and it's amazing how something as simple as a meal can bring so much happiness and joy to our lives
+Jane : Yes, its amazing how something as simple as a meal can create lasting memories and bring so much happiness and joy to our lives
+---
+18.51474952697754
++++
+20
+user : indeed the simple Act of sharing a meal with loved ones can create some of the most precious memories we will hold dear forever
+Jane : Yes, sharing a meal with loved ones can create some of the most precious memories that we will cherish forever
+---
+16.717316150665283
++++
+21
+user : absolutely those moments of sharing a meal with loved ones are truly special and can bring so much happiness and joy to our lives
+Jane : Yes, those moments of sharing a meal with loved ones are truly special and can create lasting bonds and memories that bring immense happiness and joy to our lives
+---
+18.315874099731445
++++
+22
+user : meal with loved ones truly creates lasting bonds and memories that bring immense happiness and joy to our lives
+Jane : Yes, sharing a meal with loved ones truly creates lasting bonds and memories that bring immense happiness and joy to our lives
+---
+18.0793776512146
++++
+23
+user : absolutely the bond created through sharing a meal with loved ones is truly special and brings so much joy and happiness to our lives
+Jane : Yes, the bond created through sharing a meal with loved ones is truly special and brings so much joy and happiness to our lives
+---
+17.227501392364502
++++
+24
+user : food truly has a way of bringing people together and creating memorable moments that we will always treasure
+Jane : Yes, food has a way of bringing people together and creating memorable moments that we will always treasure and look back on fondly
+---
+16.525533437728882
++++

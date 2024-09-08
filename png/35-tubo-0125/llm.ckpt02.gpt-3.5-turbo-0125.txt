@@ -1,0 +1,175 @@
+Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, check=False, name=None, offset=None, mics=False, mic_timeout=20, file=True, temp=0.95, timeout=0.33, window=35, cloud_stt=True, cloud_tts=True, json=False, voice='en-US-Neural2-D')
+0
+user : hello
+Jane : Hi. 
+---
+6.337951183319092
++++
+1
+user : hello
+Jane : Hello. 
+---
+23.5390145778656
++++
+2
+user : say something
+Jane : something
+---
+20.87662696838379
++++
+3
+user : indeed
+Jane : Okay. 
+---
+13.755878210067749
++++
+4
+user : goodbye
+Jane : Goodbye. 
+---
+9.429489850997925
++++
+5
+user : goodbye
+Jane : Goodbye, nice talking to you
+---
+7.747952938079834
++++
+6
+user : goodbye
+Jane : Goodbye, nice talking to you
+---
+37.486053466796875
++++
+7
+user : goodbye
+Jane : Goodbye, nice talking to you
+---
+21.61773419380188
++++
+8
+user : goodbye
+Jane : Goodbye, I will talk to you tomorrow
+---
+8.816576957702637
++++
+9
+user : goodbye
+Jane : Goodbye, I will talk to you tomorrow
+---
+8.346794843673706
++++
+10
+user : goodbye
+Jane : Goodbye. 
+---
+14.00119137763977
++++
+11
+user : goodbye
+Jane : Goodbye, I will talk to you tomorrow
+---
+9.189308404922485
++++
+12
+user : goodbye
+Jane : Goodbye. 
+---
+16.009557962417603
++++
+13
+user : say something
+Jane : something
+---
+24.326523780822754
++++
+14
+user : say something
+Jane : something
+---
+23.38603138923645
++++
+15
+user : indeed
+Jane : Okay. 
+---
+26.337491035461426
++++
+16
+user : say something
+Jane : Something. 
+---
+21.20566177368164
++++
+17
+user : Bob at your service
+Jane : Hello Bob
+---
+8.890973806381226
++++
+18
+user : hello
+Jane : hello
+---
+7.951487302780151
++++
+19
+user : say something
+Jane : Something. 
+---
+25.02490234375
++++
+20
+user : say something
+Jane : Something. 
+---
+23.07832360267639
++++
+21
+user : indeed
+Jane : Okay. 
+---
+10.94330644607544
++++
+22
+user : goodbye
+Jane : Goodbye, nice talking to you
+---
+6.660747528076172
++++
+23
+user : say something
+Jane : something
+---
+23.046034336090088
++++
+24
+user : indeed
+Jane : Okay. 
+---
+7.717655897140503
++++
+25
+user : goodbye
+Jane : Goodbye. 
+---
+20.084165811538696
++++
+26
+user : say something
+Jane : something
+---
+22.48178505897522
++++
+27
+user : goodbye
+Jane : Goodbye, nice talking to you
+---
+2.585986852645874
++++
+28
+user : goodbye
+Jane : I think youll be back
+---
+9.531650304794312
++++

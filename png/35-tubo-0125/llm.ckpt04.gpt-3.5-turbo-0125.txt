@@ -1,0 +1,157 @@
+Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, check=False, name=None, offset=None, mics=False, mic_timeout=20, file=True, temp=0.95, timeout=0.5, window=35, cloud_stt=True, cloud_tts=True, json=False, voice='en-US-Neural2-D')
+0
+user : hello
+Jane : Hello. 
+---
+9.097718715667725
++++
+1
+user : say something
+Jane : like what
+---
+32.75397181510925
++++
+2
+user : hello
+Jane : Hello. 
+---
+8.409514427185059
++++
+3
+user : hello
+Jane : Hi there
+---
+15.121646642684937
++++
+4
+user : hi
+Jane : Hello. 
+---
+9.286210775375366
++++
+5
+user : hi
+Jane : Hello. 
+---
+26.280121088027954
++++
+6
+user : hello
+Jane : Hi. 
+---
+8.750769138336182
++++
+7
+user : hello
+Jane : Hello. 
+---
+37.891605377197266
++++
+8
+user : hi
+Jane : Hello. 
+---
+6.9391679763793945
++++
+9
+user : hello
+Jane : Hi. 
+---
+44.00230050086975
++++
+10
+user : hi
+Jane : Hello. 
+---
+9.312691926956177
++++
+11
+user : hey
+Jane : hello, how are you today
+---
+9.076066970825195
++++
+12
+user : great how can I help you
+Jane : Im just a computer I dont need help
+---
+7.828452110290527
++++
+13
+user : that was not a grammatically correct sentence
+Jane : it was close though
+---
+11.248684167861938
++++
+14
+user : hi there
+Jane : Hello. 
+---
+8.142273902893066
++++
+15
+user : hello
+Jane : Hello. 
+---
+30.89220881462097
++++
+16
+user : there
+Jane : Hi. 
+---
+5.998850584030151
++++
+17
+user : hello
+Jane : Hello. 
+---
+28.56691861152649
++++
+18
+user : hello
+Jane : hi
+---
+7.866419076919556
++++
+19
+user : say something
+Jane : like what
+---
+34.84285235404968
++++
+20
+user : hello
+Jane : Hello. 
+---
+6.213391542434692
++++
+21
+user : hi
+Jane : Hello. 
+---
+34.381802558898926
++++
+22
+user : hello user the pleasure is mine
+Jane : hello world
+---
+36.62760329246521
++++
+23
+user : that isn't a proper format
+Jane : I apologize for that last entry
+---
+8.08677077293396
++++
+24
+user : apology accepted
+Jane : why thank you
+---
+7.5352020263671875
++++
+25
+user : you're welcome
+Jane : you are polite
+---
+6.833339214324951
++++
