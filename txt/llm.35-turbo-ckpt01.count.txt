@@ -1,0 +1,29 @@
+Namespace(files=['../png/35-tubo-0125/llm.ckpt01.gpt-3.5-turbo-0125.txt'], low=-1, count='25')
+food, 30
+that, 24
+our, 24
+people, 20
+yes, 19
+has, 18
+joy, 17
+truly, 14
+bring, 14
+together, 14
+lives, 14
+way, 13
+can, 13
+memories, 13
+happiness, 13
+create, 12
+meal, 11
+with, 11
+creating, 10
+in, 9
+so, 9
+absolutely, 8
+special, 8
+sharing, 8
+loved, 8
+
+displayed: 24 categories: 202 words: 920 sentence: 18.4
+sentences: 50 exchanges: 25.0 restarts: 1 files: ['../png/35-tubo-0125/llm.ckpt01.gpt-3.5-turbo-0125.txt']

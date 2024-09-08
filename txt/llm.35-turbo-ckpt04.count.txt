@@ -1,0 +1,29 @@
+Namespace(files=['../png/35-tubo-0125/llm.ckpt04.gpt-3.5-turbo-0125.txt'], low=-1, count='25')
+hello, 25
+hi, 11
+you, 4
+there, 3
+i, 3
+that, 3
+say, 2
+something, 2
+like, 2
+what, 2
+how, 2
+are, 2
+help, 2
+was, 2
+hey, 1
+today, 1
+great, 1
+can, 1
+im, 1
+just, 1
+computer, 1
+dont, 1
+need, 1
+not, 1
+grammatically, 1
+
+displayed: 24 categories: 51 words: 104 sentence: 2.0
+sentences: 52 exchanges: 26.0 restarts: 2 files: ['../png/35-tubo-0125/llm.ckpt04.gpt-3.5-turbo-0125.txt']

@@ -69,7 +69,7 @@ if __name__ == '__main__':
     k = Kernel()
     parser = argparse.ArgumentParser(description="Pi LLM Output File Counter", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('files', default='', nargs='+', help="File names and paths.")
-    parser.add_argument('--low', default=10, help="Threshold for displaying word frequency.")
+    parser.add_argument('--low', default=-1, help="Threshold for displaying word frequency.")
     parser.add_argument('--count', default=-1, help="Highest number of possible output.")
     args = parser.parse_args()
     
