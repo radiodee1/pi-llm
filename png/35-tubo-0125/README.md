@@ -1,6 +1,8 @@
 # Train gpt-3.5-turbo-0125 and plot results
 
-
+- ckpt 1 is the unmodified gpt-3.5-turbo-0125 model before fine-tuning.
+- ckpt 2, and 3 are the checkpoint files from during fine-tuning. 
+- ckpt 4 is the final model file.
 
 | | ckpt 1 | ckpt 2 | ckpt 3 | ckpt 4 |
 |:---:|:---:|:---:|:---:|:---:|
