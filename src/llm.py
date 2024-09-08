@@ -343,7 +343,7 @@ class Kernel:
                     input=synthesis_input, voice=voice, audio_config=audio_config
                 )
 
-            except Error as e:
+            except  Error as e:
                 print('speech to text error', e)
                 return 
 
@@ -477,6 +477,8 @@ class Kernel:
         text = text.replace("'", '')
         text = text.replace("?", '.')
         text = text.replace("!", '.')
+        if '\n' in text:
+            text = text.split('\n')[0]
         if self.truncate:
             old_text = text
             text = old_text.split('.')[0]
