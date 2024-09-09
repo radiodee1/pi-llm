@@ -9,7 +9,7 @@
 | minutes | 10 | 10 | 10 | 10 |
 | descriptive / repeated word | "food" | "goodbye" | "hello" | "hello" |
 | axes | ~ 600*500 | ~ 250*450 | ~ 400*190 | ~ 170*80 |
-| volume | ~300,000 | ~112,500 | ~76,000 | ~13,600 | 
+| area | ~300,000 | ~112,500 | ~76,000 | ~13,600 | 
 | png filename | llm.35-turbo-ckpt01.png | llm.35-turbo-ckpt02.png | llm.35-turbo-ckpt03.png | llm.35-turbo-ckpt04.png |
 
 
