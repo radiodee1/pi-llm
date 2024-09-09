@@ -4,6 +4,12 @@
 - ckpt 2, and 3 are the checkpoint files from during fine-tuning. 
 - ckpt 4 is the final model file.
 
+```
+cd script/
+./plot.py --bin ../../GoogleNews-vectors-negative300.bin --file ../png/35-turbo-0125/llm.count.35-turbo-ckpt01.txt --output ../png/35-turbo-0125/llm.35-turbo-ckpt01 
+## plot for checkpoint 1 ##
+```
+
 | | ckpt 1 | ckpt 2 | ckpt 3 | ckpt 4 |
 |:---:|:---:|:---:|:---:|:---:|
 | minutes | 10 | 10 | 10 | 10 |
