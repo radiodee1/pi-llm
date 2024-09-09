@@ -6,6 +6,9 @@
 
 ```
 cd script/
+./count.py ../png/35-turbo-0125/llm.ckpt01.gpt-3.5-turbo-0125.txt --count 25 --low 10 > ../png/35-turbo-0125/llm.count.35-turbo-ckpt01.txt 
+## count for checkpoint 1 ##
+
 ./plot.py --bin ../../GoogleNews-vectors-negative300.bin --file ../png/35-turbo-0125/llm.count.35-turbo-ckpt01.txt --output ../png/35-turbo-0125/llm.35-turbo-ckpt01 
 ## plot for checkpoint 1 ##
 ```
