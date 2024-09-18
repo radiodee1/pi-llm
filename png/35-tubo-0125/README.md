@@ -4,7 +4,7 @@
 - ckpt 2, and 3 are the checkpoint files from during fine-tuning. 
 - ckpt 4 is the final model file.
 
-```
+```bash
 cd script/
 ./count.py ../png/35-turbo-0125/llm.ckpt01.gpt-3.5-turbo-0125.txt --count 25 --low 10 > ../png/35-turbo-0125/llm.count.35-turbo-ckpt01.txt 
 ## count for checkpoint 1 ##
@@ -17,7 +17,7 @@ cd script/
 |:---:|:---:|:---:|:---:|:---:|
 | minutes | 10 | 10 | 10 | 10 |
 | descriptive / repeated word | "food" | "goodbye" | "hello" | "hello" |
-| axes | ~ 600*500 | ~ 250*450 | ~ 400*190 | ~ 170*80 |
+| axes | `~ 600*500` | `~ 250*450` | `~ 400*190` | `~ 170*80` |
 | area | ~300,000 | ~112,500 | ~76,000 | ~13,600 | 
 | png filename | llm.35-turbo-ckpt01.png | llm.35-turbo-ckpt02.png | llm.35-turbo-ckpt03.png | llm.35-turbo-ckpt04.png |
 
