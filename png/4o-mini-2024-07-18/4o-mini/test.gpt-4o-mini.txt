@@ -1,0 +1,20 @@
+Namespace(files=['llm.gpt-4o-mini_a.txt', 'llm.gpt-4o-mini_b.txt'], low=10, count=-1)
+you, 79
+i, 53
+im, 38
+glad, 37
+am, 35
+very, 33
+thats, 31
+that's, 28
+hear, 27
+that, 22
+happy, 22
+think, 20
+so, 20
+say, 20
+thank, 20
+chat, 17
+
+displayed: 25 categories: 73 words: 884 sentence: 4.556701030927835
+sentences: 194 exchanges: 97.0 restarts: 6 files: ['llm.gpt-4o-mini_a.txt', 'llm.gpt-4o-mini_b.txt']
