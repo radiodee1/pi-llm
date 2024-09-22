@@ -1,4 +1,4 @@
-Namespace(files=['../txt/llm.dialogue.txt'], low=10, count='25')
+Namespace(files=['../txt/llm.dialogue.txt'], low='10', count='25')
 keep, 29
 your, 24
 our, 22
