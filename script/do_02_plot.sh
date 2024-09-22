@@ -7,19 +7,23 @@ if [ $# -eq '1' ]; then
 fi 
 
 echo ""
-echo "the input file is specified as the first"
+echo "The input file is specified as the first"
 echo "argument on the command line."
 
 echo ""
 
-echo "the input file is currently set to " $PLOTINPUT
+echo "The input file is currently set to " $PLOTINPUT
 echo ""
 
-echo "use this script to plot the points from the "
+echo "Use this script to plot the points from the "
 echo "'count.py' stage."
 echo ""
-echo "this uses the GoogleNews data and takes some time."
+echo "This uses the GoogleNews data and takes some time."
 echo ""
+echo "The output of this script is ../png/llm.dialogue.png"
+echo "You will probably want to rename it."
+echo ""
+
 read  -n 1 -p "Continue/Break(Ctl-c):" xinput
 
 echo $xinput
