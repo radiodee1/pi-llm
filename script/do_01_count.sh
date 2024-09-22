@@ -13,7 +13,7 @@ read  -n 1 -p "Continue/Break(Ctl-c):" xinput
 
 echo $xinput
 
-./count.py ../txt/llm.dialogue.txt --count 25 > ../txt/llm.dialogue.count.txt
+./count.py ../txt/llm.dialogue.txt --count 25 --low 10 > ../txt/llm.dialogue.count.txt
 
 
 
