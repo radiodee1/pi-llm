@@ -5,6 +5,6 @@ There are two basic scripts in this folder. One is `count.py` and the other is `
 - Start by downloading the embeddings file. The url for downloading is found in the `do_00_download.sh` script. You can probably download the embeddings anywhere on your computer, then unpack them. Put them in the directory beside the `pi-llm` folder.
 - At some point you must run the llm models against each other. This is the only way to get the recorded log from the conversation.
 - Take the recorded conversation and use the `count.py` script on it. When you do this you will see a list on the screen that shows the most used words. To continue with the next step you must pipe the output into a text file.
-- Take the output file and run it through the `plot.py` script. This will yeald a `png` file.
+- Take the output file and run it through the `plot.py` script. This will yield a `png` file.
 
 
