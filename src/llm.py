@@ -690,6 +690,7 @@ if __name__ == '__main__':
                     k.save_file(0, str(args))
                     k.loop()  # do many times
         else:
+            k.checkpoint_num = 1 
             k.save_file(0, str(args))
             k.loop() # do once
         exit()
