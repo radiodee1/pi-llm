@@ -44,7 +44,6 @@ modules:
       - type: file
         path: ./src/org.llm.LLM.desktop 
     build-commands:
-      - ls /app/bin
       - install -Dm755 org.llm.LLM.desktop /app/share/applications/org.llm.LLM.desktop
   - name: questions.txt
     buildsystem: simple
