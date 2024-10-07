@@ -118,6 +118,9 @@ class Kernel:
         self.memory_ai = []
         self.memory_user = []
         self.y_iter = 0 
+        self.questions = False
+        self.questions_list = []
+        self.questions_num = 0 
 
     def loop(self):
         time.sleep(self.offset)
@@ -161,7 +164,7 @@ class Kernel:
             x += 1
             x = x % len(prompt_txt)
             ### second process ###
-            if self.loop_wait:
+            if self.loop_wait and not self.questions:
                 num = 0 
                 high = 1000
                 start = time.time()
@@ -230,6 +233,11 @@ class Kernel:
             self.save_file(  end - start )
             rr.clear()
 
+            if self.questions:
+                self.questions_num += 1 
+                if self.questions_num >= len(self.questions_list):
+                    return 
+
     def list_microphones(self):
         for k, v in enumerate(sr.Microphone.list_microphone_names()):
             print(k, v)
@@ -248,6 +256,14 @@ class Kernel:
             ret = input("test input here: ")
             ret = ret.strip()
             self.p("+" + ret + "+")
+            for i in ret.split(' '):
+                if i.strip() != "":
+                    self.q.put(i, block=False)
+            return
+
+        if self.questions:
+            ret = self.questions_list[self.questions_num]
+            ret = ret.strip()
             for i in ret.split(' '):
                 if i.strip() != "":
                     self.q.put(i, block=False)
@@ -312,6 +328,9 @@ class Kernel:
     def say_text(self, txt):
         if self.test:
             self.p(txt)
+            return
+        if self.questions:
+            self.p(txt, 'questions mode')
             return
         if len(txt) == 0:
             return
@@ -545,7 +564,19 @@ class Kernel:
             f.close()
             self.file_num += 1
         pass 
-    
+
+    def read_questions(self):
+        if self.questions:
+            f = open('./questions.txt', 'r')
+            c = f.readlines()
+            f.close()
+            for i in c:
+                if i.strip() != "":
+                    self.questions_list.append(i.strip())
+            #print(self.questions_list)
+            # exit()
+        pass 
+
 if __name__ == '__main__':
     k = Kernel()
     parser = argparse.ArgumentParser(description="Pi LLM - containerized LLM for raspberry pi", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -567,6 +598,7 @@ if __name__ == '__main__':
     parser.add_argument('--cloud_tts', action="store_true", help="Google Cloud Text to Speech.")
     parser.add_argument('--json', action="store_true", help="use json for model prompt.")
     parser.add_argument('--voice', type=str, default="en-US-Journey-F", help="Google Cloud TTS Voice Code.") ## en-US-Journey-D en-US-Journey-F
+    parser.add_argument('--questions', action="store_true", help="Simulate two parties with preset question list.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -628,6 +660,12 @@ if __name__ == '__main__':
         k.p(k.mic_timeout, ' mic_timeout ')
 
     k.save_file(0, str(args))
+
+    if args.questions == True:
+        k.questions = args.questions
+        k.read_questions()
+        k.loop()
+        exit()
 
     k.loop()
 
