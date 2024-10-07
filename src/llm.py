@@ -567,7 +567,12 @@ class Kernel:
 
     def read_questions(self):
         if self.questions:
-            f = open('./questions.txt', 'r')
+            try:
+                f = open('./questions.txt', 'r')
+            except:
+                f = open('/app/bin/questions.txt', 'r')
+                self.p('look for questions.txt inside flatpak')
+
             c = f.readlines()
             f.close()
             for i in c:
