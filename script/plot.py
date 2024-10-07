@@ -17,6 +17,8 @@ import numpy as np
 keys = ['Paris', 'Python', 'Sunday', 'Tolstoy', 'Twitter', 'bachelor', 'delivery', 'election', 'expensive',
         'experience', 'financial', 'food', 'iOS', 'peace', 'release', 'war']
 
+show_plot = True 
+
 def tsne_plot_similar_words(title, labels, embedding_clusters, word_clusters, a, filename=None):
     plt.figure(figsize=(16, 9))
     colors = cm.rainbow(np.linspace(0, 1, len(labels)))
@@ -32,7 +34,8 @@ def tsne_plot_similar_words(title, labels, embedding_clusters, word_clusters, a,
     plt.grid(True)
     if filename:
         plt.savefig(filename, format='png', dpi=150, bbox_inches='tight')
-    plt.show()
+    if show_plot:
+        plt.show()
 
 
 if __name__ == '__main__':
@@ -44,6 +47,8 @@ if __name__ == '__main__':
     parser.add_argument('--all', action="store_true", help="plot all words (include test words.)")
     args = parser.parse_args()
  
+    if len(args.files) > 1:
+        show_plot = False
     for i in args.files:
         file = i 
         if file != None and str(file).strip() != "" and file.endswith('.count.txt'):
