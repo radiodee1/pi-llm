@@ -18,6 +18,8 @@ class Kernel:
         self.num_words = 0
         self.num_restarts = 0
         self.count = -1 
+        self.combine = False
+        self.save = False
 
     def open_and_count(self):
         if self.file.strip() != "":
@@ -53,6 +55,7 @@ class Kernel:
                     high = self.dict_words[key]
             if key_record not in blacklist and self.dict_words[key_record] > HIGH_LIMIT:
                 print(key_record + ',', self.dict_words[key_record])
+                self.file_output(key_record + ", " + str(self.dict_words[key_record]))
                 if count >= self.count and self.count != -1:
                     break 
                 count += 1
@@ -65,15 +68,40 @@ class Kernel:
         print('restarts:', self.num_restarts, 'files:', self.file_list)
         pass 
 
+    def file_output(self, line_out):
+        if not self.save:
+            return
+        if self.combine:
+            #print(self.file)
+            name = self.file.split('/')[0:-1]
+            name = '/' + '/'.join(name)
+            name += 'llm.combine'
+        else:
+            name = self.file
+            name = name[:-4]
+
+        name += '.count.txt'
+
+        #print("Name output:", name)
+        f = open(name, 'a')
+        f.write(line_out + "\n")
+        f.close()
+        pass 
+
 if __name__ == '__main__':
     k = Kernel()
     parser = argparse.ArgumentParser(description="Pi LLM Output File Counter", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('files', default='', nargs='+', help="File names and paths.")
     parser.add_argument('--low', default=-1, help="Threshold for displaying word frequency.")
     parser.add_argument('--count', default=-1, help="Highest number of possible output.")
+    parser.add_argument('--combine', action="store_true", help="Singe output option.")
+    parser.add_argument('--save', action="store_true", help="Store output to 'count.txt' file.")
     args = parser.parse_args()
     
     print(args)
+    
+    if args.combine != None:
+        k.combine = args.combine
 
     if args.low != None and int(args.low) >= -1:
         HIGH_LIMIT = int(args.low)
@@ -81,8 +109,26 @@ if __name__ == '__main__':
     if args.count != None and int(args.count) != -1:
         k.count = int(args.count) - 1 
 
+    if args.save != None:
+        k.save = args.save
+
     if args.files != None and len(args.files) > 0:
+        if k.combine:
+            for i in args.files:
+                k.file = i
+                if k.file.endswith(".count.txt"):
+                    continue
+                k.open_and_count()
+            k.print_stats()
+            exit()
+
+    if args.files != None and not args.combine and len(args.files) > 0:
         for i in args.files:
             k.file = i 
+            if k.file.endswith(".count.txt"):
+                continue
             k.open_and_count()
-        k.print_stats()
+            k.print_stats()
+        exit()
+
+
