@@ -5,7 +5,7 @@ import argparse
 blacklist = ['and', 'to', 'the', 'for', 'a', 'is', 'of', 'on', '', ')', '(']
 HIGH_LIMIT = 0 
 
-bad_characters = [ ',', '!', '.', '?' ]
+bad_characters = [ ',', '!', '.', '?', "'", "’" ]
 
 class Kernel:
 
