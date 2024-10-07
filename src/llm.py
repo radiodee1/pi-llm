@@ -59,6 +59,11 @@ except:
     OPENAI_URL="https://api.openai.com/v1/chat/completions"
 
 try:
+    OPENAI_CHECKPOINTS=str(vals['OPENAI_CHECKPOINTS'])
+except:
+    OPENAI_CHECKPOINTS=""
+
+try:
     GOOGLE_SPEECH_RECOGNITION_API_KEY=str(vals['GOOGLE_SPEECH_RECOGNITION_API_KEY'])
 except:
     GOOGLE_SPEECH_RECOGNITION_API_KEY=None
@@ -120,7 +125,8 @@ class Kernel:
         self.y_iter = 0 
         self.questions = False
         self.questions_list = []
-        self.questions_num = 0 
+        self.questions_num = 0
+        self.checkpoint_num = 0 
 
     def loop(self):
         time.sleep(self.offset)
@@ -546,7 +552,11 @@ class Kernel:
 
     def save_file(self,  time, heading=""):
         if self.file:
-            f = open(os.path.expanduser('~') + '/llm.'+ OPENAI_MODEL.strip() +'.txt', 'a')
+            name = '/llm.'
+            if self.questions:
+                num = ('0000' + str(self.checkpoint_num ))[-3:]
+                name += 'CHECKPOINT_' + num + '.'
+            f = open(os.path.expanduser('~') + name + OPENAI_MODEL.strip() +'.txt', 'a')
             if heading.strip() != "":
                 f.write(str(heading) + '\n')
                 f.close()
@@ -664,13 +674,26 @@ if __name__ == '__main__':
         k.mic_timeout = args.mic_timeout
         k.p(k.mic_timeout, ' mic_timeout ')
 
-    k.save_file(0, str(args))
 
     if args.questions == True:
+        k.checkpoint_num = 0 
         k.questions = args.questions
         k.read_questions()
-        k.loop()
+        if OPENAI_CHECKPOINTS.strip() != "":
+            for i in OPENAI_CHECKPOINTS.strip().split(','):
+                if i.strip() != "":
+                    k.memory_ai = []
+                    k.memory_user = []
+                    OPENAI_MODEL = i
+                    k.questions_num = 0 
+                    k.checkpoint_num += 1  
+                    k.save_file(0, str(args))
+                    k.loop()  # do many times
+        else:
+            k.save_file(0, str(args))
+            k.loop() # do once
         exit()
 
+    k.save_file(0, str(args))
     k.loop()
 
