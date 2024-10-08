@@ -71,17 +71,19 @@ class Kernel:
     def file_output(self, line_out):
         if not self.save:
             return
+
+        name = self.file.split('/')[0:-1]
+        n = self.file.split('/')[-1] 
+        n = 'count-' + n[:-4] + '.count.txt'
+        name = '/' + '/'.join(name)
         if self.combine:
             #print(self.file)
-            name = self.file.split('/')[0:-1]
-            name = '/' + '/'.join(name)
-            name += 'llm.combine'
+            name += '/count-llm.combine.count.txt'
         else:
-            name = self.file
-            name = name[:-4]
+            name = name + '/' + n 
+            #name = name[:-4]
 
-        name += '.count.txt'
-
+        #name += '.count.txt'
         #print("Name output:", name)
         f = open(name, 'a')
         f.write(line_out + "\n")

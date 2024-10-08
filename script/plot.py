@@ -80,7 +80,10 @@ if __name__ == '__main__':
                 W2V_BIN = str(args.bin).strip()
 
             file_out = file.split('/')[-1]
-            OUTPUT_FILE = str('pic-' + file_out).strip()[0:-len('.count.txt')] + ".png"
+            if file_out.startswith('count-'):
+                file_out = file_out[len('count-'):]
+
+            OUTPUT_FILE = str('../png/pic-' + file_out).strip()[0:-len('.count.txt')] + ".png"
 
             model = gensim.models.KeyedVectors.load_word2vec_format(W2V_BIN, binary=True)
 
