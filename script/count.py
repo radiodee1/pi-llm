@@ -77,7 +77,6 @@ class Kernel:
     def file_output(self, line_out=""):
         if not self.save:
             return
-
         name = self.file.split('/')[0:-1]
         n = self.file.split('/')[-1] 
         n = 'count-' + n[:-4] + '.count.txt'
@@ -89,8 +88,7 @@ class Kernel:
             name = name + '/' + n 
             #name = name[:-4]
 
-        #name += '.count.txt'
-        print("Name output:", name)
+        #print("Name output:", name)
         f = open(name, 'a')
         f.write(line_out + "\n")
         f.close()
@@ -108,25 +106,28 @@ if __name__ == '__main__':
     
     print(args)
     
-    def setup_args():
-        k = Kernel()
+    def setup_args(ll, ar):
+        ll = Kernel()
 
-        k.combine = args.combine
+        ll.combine = ar.combine
+        ll.save = ar.save
 
-        if args.low != None and int(args.low) >= -1:
-            k.high_limit = int(args.low)
+        if ar.low != None and int(ar.low) >= -1:
+            ll.high_limit = int(ar.low)
 
-        if args.count != None and int(args.count) != -1:
-            k.count = int(args.count) - 1 
+        if ar.count != None and int(ar.count) != -1:
+            ll.count = int(ar.count) - 1 
 
-        if args.save != None:
-            k.save = args.save
+        if ar.save != None:
+            ll.save = ar.save
 
-        print("setupt", args)
+        #print("setup", ar)
+        #print("object", ll)
+        return ll 
 
     if args.files != None and args.combine and len(args.files) > 0:
         if args.combine:
-            setup_args()
+            k = setup_args(k, args)
             for i in args.files:
                 k.file = i
                 if k.file.endswith(".count.txt"):
@@ -137,13 +138,12 @@ if __name__ == '__main__':
 
     if args.files != None and not args.combine and len(args.files) > 0:
         for i in args.files:
-            setup_args()
+            k = setup_args(k, args)
             k.file = i
-            print(k.file, 'i file')
-            if k.file.endswith(".count.txt"):
-                continue
-            k.open_and_count()
-            k.print_stats()
+            #print(k.file, 'i file')
+            if not k.file.endswith(".count.txt"):
+                k.open_and_count()
+                k.print_stats()
         exit()
 
 
