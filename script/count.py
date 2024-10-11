@@ -45,7 +45,6 @@ class Kernel:
         pass 
 
     def print_stats(self):
-        print(self.dict_words)
         high = 0
         key_record = ''
         count = 0
