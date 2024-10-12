@@ -336,7 +336,7 @@ class Kernel:
             self.p(txt)
             return
         if self.questions:
-            self.p(txt, 'questions mode')
+            self.p(txt, '- questions mode')
             return
         if len(txt) == 0:
             return
