@@ -39,7 +39,7 @@ PROJECT_LAUNCH_ARGS=''
 # For Google Cloud Speech...
 GOOGLE_APPLICATION_CREDENTIALS=/path-to-json-file/file.json
 
-OPENAI_CHECKPOINTS=abc,abc,abc
+OPENAI_CHECKPOINTS="abc,abc,abc"
 
 ```
 ## Launch Args 
