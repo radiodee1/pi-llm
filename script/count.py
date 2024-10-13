@@ -21,6 +21,7 @@ class Kernel:
         self.combine = False
         self.save = False
         self.high_limit = 0
+        self.answers_only = False
 
     def open_and_count(self):
         if self.file.strip() != "":
@@ -30,6 +31,10 @@ class Kernel:
             f.close()
             for i in x:
                 if ':' in i:
+                    m = i.strip().split(':')[0].lower()
+                    if self.answers_only and m.startswith('user') :
+                        continue
+ 
                     self.num_sentences += 1
                     for k in bad_characters:
                         i = i.replace(k, '')
@@ -101,6 +106,7 @@ if __name__ == '__main__':
     parser.add_argument('--count', default=-1, help="Highest number of possible output.")
     parser.add_argument('--combine', action="store_true", help="Singe output option.")
     parser.add_argument('--save', action="store_true", help="Store output to 'count.txt' file.")
+    parser.add_argument('--answers_only', action="store_true", help="count only words in model response.")
     args = parser.parse_args()
     
     print(args)
@@ -120,6 +126,8 @@ if __name__ == '__main__':
         if ar.save != None:
             ll.save = ar.save
 
+        if ar.answers_only != None:
+            ll.answers_only = ar.answers_only
         #print("setup", ar)
         #print("object", ll)
         return ll 
