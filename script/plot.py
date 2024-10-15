@@ -110,3 +110,37 @@ if __name__ == '__main__':
             tsne_plot_similar_words('Similar words from Google News', keys, embeddings_en_2d, word_clusters, 0.7,
                                     OUTPUT_FILE)
             print('keys', len(keys))
+            #print(embedding_clusters)
+            print('----')
+            #print(model['being'])
+
+            high = 0 
+            low = 1000
+            high_word = ""
+            low_word = ""
+            for word in keys:
+                embeddings = []
+                words = []
+                #for similar_word, similar_num in model.most_similar(word, topn=1):
+                similar_word = word 
+                n = 1 
+                for i in model[word][:20]:
+                    n = n * i 
+                similar_num = n 
+                
+                #words.append(similar_word)
+                #embeddings.append(model[similar_word])
+                
+                #print(similar_word, similar_num)
+                if similar_num > high:
+                    high = similar_num
+                    high_word = similar_word 
+                if similar_num < low and similar_num != high:
+                    low = similar_num
+                    low_word = similar_word
+            #print('high', high, 'low', low, 'size', high * low )
+            f = open('../png/plot-size.csv', 'a')
+            f_name = file.split('/')[-1]
+            f.write(str(f_name) + ', high, ' + str(high) + ', high_word, ' + high_word + ', low, ' + str(low) + ', low_word, ' + low_word + ', size, ' + str(abs(high - low) ) + ' \n' )
+
+            f.close()

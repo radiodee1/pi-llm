@@ -2,7 +2,7 @@
 
 import argparse
 
-blacklist = ['and', 'to', 'the', 'for', 'a', 'is', 'of', 'on', '', ')', '(', 'i', '&']
+blacklist = ['and', 'to', 'the', 'for', 'a', 'is', 'of', 'on', '', ')', '(', 'i', '&', '51']
 
 
 bad_characters = [ ',', '!', '.', '?', "'", "’" ]
