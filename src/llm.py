@@ -123,7 +123,7 @@ class Kernel:
         self.memory_ai = []
         self.memory_user = []
         self.y_iter = 0 
-        self.questions = False
+        self.questions = -1
         self.questions_list = []
         self.questions_num = 0
         self.checkpoint_num = 0 
@@ -239,9 +239,9 @@ class Kernel:
             self.save_file(  end - start )
             rr.clear()
 
-            if self.questions:
+            if int(self.questions) > -1:
                 self.questions_num += 1 
-                if self.questions_num >= len(self.questions_list):
+                if self.questions_num >= int(self.questions): # len(self.questions_list):
                     return 
 
     def list_microphones(self):
@@ -267,8 +267,8 @@ class Kernel:
                     self.q.put(i, block=False)
             return
 
-        if self.questions:
-            ret = self.questions_list[self.questions_num]
+        if int(self.questions) > -1:
+            ret = self.questions_list[self.questions_num % len(self.questions_list)]
             ret = ret.strip()
             for i in ret.split(' '):
                 if i.strip() != "":
@@ -335,7 +335,7 @@ class Kernel:
         if self.test:
             self.p(txt)
             return
-        if self.questions:
+        if int(self.questions) > -1:
             self.p(txt, '- questions mode')
             return
         if len(txt) == 0:
@@ -553,7 +553,7 @@ class Kernel:
     def save_file(self,  time, heading=""):
         if self.file:
             name = '/llm.'
-            if self.questions:
+            if int(self.questions) > -1:
                 num = ('0000' + str(self.checkpoint_num ))[-3:]
                 name += 'CHECKPOINT_' + num + '.'
             f = open(os.path.expanduser('~') + name + OPENAI_MODEL.strip() +'.txt', 'a')
@@ -576,7 +576,7 @@ class Kernel:
         pass 
 
     def read_questions(self):
-        if self.questions:
+        if int(self.questions) > -1:
             try:
                 f = open('./questions.txt', 'r')
             except:
@@ -613,7 +613,7 @@ if __name__ == '__main__':
     parser.add_argument('--cloud_tts', action="store_true", help="Google Cloud Text to Speech.")
     parser.add_argument('--json', action="store_true", help="use json for model prompt.")
     parser.add_argument('--voice', type=str, default="en-US-Journey-F", help="Google Cloud TTS Voice Code.") ## en-US-Journey-D en-US-Journey-F
-    parser.add_argument('--questions', action="store_true", help="Simulate two parties with preset question list.")
+    parser.add_argument('--questions', type=int, default=-1, help="Simulate two parties with preset question list. Specify number of simulated questions.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -675,7 +675,7 @@ if __name__ == '__main__':
         k.p(k.mic_timeout, ' mic_timeout ')
 
 
-    if args.questions == True:
+    if int(args.questions) != -1:
         k.checkpoint_num = 0 
         k.questions = args.questions
         k.read_questions()
