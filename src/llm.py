@@ -682,6 +682,7 @@ if __name__ == '__main__':
         if OPENAI_CHECKPOINTS.strip() != "":
             for i in OPENAI_CHECKPOINTS.strip().split(','):
                 if i.strip() != "":
+                    k.file_num = 0 
                     k.memory_ai = []
                     k.memory_user = []
                     OPENAI_MODEL = i
