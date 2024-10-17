@@ -56,6 +56,8 @@ PROJECT_LAUNCH_ARGS='--file --loop_wait --verbose --name Bob --offset 20 --timeo
 - Remember that background noise is allways a problem. The microphone will hang if there's too much background noise and the end of input text will not be detected.
 - If you leave the `OPENAI_MODEL` unset, the default will be used, which is "gpt-3.5-turbo".
 - You can choose a male or female voice using the `--voice` flag.
+- You can use the `--questions` flag as noted below.
+
 
 ## `--questions` Flag 
 
