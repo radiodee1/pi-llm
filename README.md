@@ -57,6 +57,25 @@ PROJECT_LAUNCH_ARGS='--file --loop_wait --verbose --name Bob --offset 20 --timeo
 - If you leave the `OPENAI_MODEL` unset, the default will be used, which is "gpt-3.5-turbo".
 - You can choose a male or female voice using the `--voice` flag.
 
+## `--questions` Flag 
+
+There is a `--questions` flag. It takes one argument. You use it to simulate a two person (bot) conversation. You pass the flag and also the number of exchanges between the bot and it's counterpart. This would look like `--questions 20` where '--questions' is the flag on the PROJECT_LAUNCH_ARGS line and '20' is how many exchanges you want. There is a file in the `src` folder of the repository that contains the project source code, but also the file with the preset `--questions` text. You can change these presets before building the flatpak. There are basically two extremes for this file. The long option requires that you make up many fact-based questions. The short option requires that you make up fewer questions but some of the questions are not simple factual answers.
+
+```
+## There may be as many as 40 sentences in this file.
+What is your name?
+How old are you?
+...
+```
+
+The shorter version:
+```
+## There may be only a few examples in this file.
+Say something inspirational about how to spend your time wiseley.
+```
+
+The two `questions.txt` files produce slightly different results. The `--questions` flag must specify a number equal to or greater than the number of lines in the `questions.txt` file.
+
 ## Autostart
 
 - Make a folder on the raspberry pi if one doesn't exist.
