@@ -586,7 +586,7 @@ class Kernel:
             c = f.readlines()
             f.close()
             for i in c:
-                if i.strip() != "":
+                if i.strip() != "" and not i.strip().startswith('#'):
                     self.questions_list.append(i.strip())
             #print(self.questions_list)
             # exit()
