@@ -2,12 +2,6 @@
 
 COUNTINPUT="../txt/llm.dialogue.txt"
 
-if [ $# -eq '1' ]; then
-
-    COUNTINPUT=$1
-fi 
-
-
 echo "Setup two instances of the flatpak on two different computers..."
 echo "Have the instances exchange dialogue for 15 minutes or so."
 echo ""
@@ -19,7 +13,17 @@ echo "command line with this script."
 
 echo ""
 
-echo "The output file is currently called " $COUNTINPUT
+
+if [ $# -gt '0' ]; then
+
+    echo "The output file is currently " $@
+
+else
+    echo "The output file is currently called " $COUNTINPUT
+
+fi 
+
+
 echo ""
 echo "Run the script by pressing any key, or abort by"
 echo "pressing [Ctl-c] ..."
@@ -28,7 +32,14 @@ read  -n 1 -p "Continue/Break(Ctl-c):" xinput
 
 echo $xinput
 
-./count.py $COUNTINPUT --count 25 --low 3 --save --answers_only
+if [ $# -gt '0' ]; then
+
+    ./count.py $@ --count 25 --low 3 --save --answers_only
+
+else
+    ./count.py $COUNTINPUT --count 25 --low 3 --save --answers_only
+fi 
+
 
 
 

@@ -7,6 +7,6 @@ There are two basic scripts in this folder. One is `count.py` and the other is `
 - Take the recorded conversation and use the `count.py` script on it. When you do this you will see a list on the screen that shows the most used words. To continue with the next step you must pipe the output into a text file. You can also use the `--save` option and the `--answers_only` option.
 - Take the output file and run it through the `plot.py` script. This will yield a `png` file. You may set `--p` to 1 and `--topn` to 1 as well. 
 - Output from the `plot.py` program is placed in the project's `png` folder. Output from the `count.py` program is placed in the file that contains the input file.
-- You can run the `plot` program and the `count` program on multiple files specidied with the `*` command line argument.
+- You can run the `plot` program and the `count` program on multiple files specidied with the `*` command line argument. Also, if you are using the numbered scripts, you can specify a single file on the command line as the first argument on the command line.
 
 

@@ -12,7 +12,7 @@ import matplotlib.cm as cm
 import numpy as np 
 from sklearn.manifold import TSNE
 import numpy as np
-
+#import os 
 
 keys = ['Paris', 'Python', 'Sunday', 'Tolstoy', 'Twitter', 'bachelor', 'delivery', 'election', 'expensive',
         'experience', 'financial', 'food', 'iOS', 'peace', 'release', 'war']
@@ -83,7 +83,9 @@ if __name__ == '__main__':
             if file_out.startswith('count-'):
                 file_out = file_out[len('count-'):]
 
-            OUTPUT_FILE = str('../png/pic-' + file_out).strip()[0:-len('.count.txt')] + ".png"
+            out_path = file.split('/')[0:-1] 
+            out_path = '/'.join(out_path)
+            OUTPUT_FILE = str(out_path + '/pic-' + file_out).strip()[0:-len('.count.txt')] + ".png"
 
             model = gensim.models.KeyedVectors.load_word2vec_format(W2V_BIN, binary=True)
 
