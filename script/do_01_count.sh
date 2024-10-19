@@ -1,10 +1,10 @@
 #!/bin/bash 
 
-COUNTOUTPUT="../txt/llm.dialogue.count.txt"
+COUNTINPUT="../txt/llm.dialogue.txt"
 
 if [ $# -eq '1' ]; then
 
-    COUNTOUTPUT=$1
+    COUNTINPUT=$1
 fi 
 
 
@@ -19,7 +19,7 @@ echo "command line with this script."
 
 echo ""
 
-echo "The output file is currently called " $COUNTOUTPUT
+echo "The output file is currently called " $COUNTINPUT
 echo ""
 echo "Run the script by pressing any key, or abort by"
 echo "pressing [Ctl-c] ..."
@@ -28,7 +28,7 @@ read  -n 1 -p "Continue/Break(Ctl-c):" xinput
 
 echo $xinput
 
-./count.py ../txt/llm.dialogue.txt --count 25 --low 10 > $COUNTOUTPUT #../txt/llm.dialogue.count.txt
+./count.py $COUNTINPUT --count 25 --low 3 --save --answers_only
 
 
 

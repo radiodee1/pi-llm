@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-PLOTINPUT="../txt/llm.dialogue.count.txt"
+PLOTINPUT="../txt/count-llm.dialogue.count.txt"
 
 if [ $# -eq '1' ]; then
     PLOTINPUT=$1
@@ -28,5 +28,5 @@ read  -n 1 -p "Continue/Break(Ctl-c):" xinput
 
 echo $xinput
 
-./plot.py --file $PLOTINPUT --bin ../../GoogleNews-vectors-negative300.bin --output ../png/llm.dialogue
+./plot.py $PLOTINPUT --bin ../../GoogleNews-vectors-negative300.bin --p 1 --topn 1
 

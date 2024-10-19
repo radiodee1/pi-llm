@@ -84,7 +84,7 @@ class Kernel:
         name = self.file.split('/')[0:-1]
         n = self.file.split('/')[-1] 
         n = 'count-' + n[:-4] + '.count.txt'
-        name = '/' + '/'.join(name)
+        name =  '/'.join(name)
         if self.combine:
             #print(self.file)
             name += '/count-llm.combine.count.txt'
