@@ -94,9 +94,16 @@ if __name__ == '__main__':
             for word in keys:
                 embeddings = []
                 words = []
-                for similar_word, _ in model.most_similar(word, topn=TOPN):
-                    words.append(similar_word)
-                    embeddings.append(model[similar_word])
+                if word not in model:
+                    print('not in model', word)
+                    continue
+                if TOPN == 1:
+                    words.append(word)
+                    embeddings.append(model[word])
+                else:
+                    for similar_word, _ in model.most_similar(word, topn=TOPN):
+                        words.append(similar_word)
+                        embeddings.append(model[similar_word])
                 embedding_clusters.append(embeddings)
                 word_clusters.append(words)
 
