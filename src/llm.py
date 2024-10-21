@@ -127,6 +127,7 @@ class Kernel:
         self.questions_list = []
         self.questions_num = 0
         self.checkpoint_num = 0 
+        self.pc = False
 
     def loop(self):
         time.sleep(self.offset)
@@ -441,6 +442,7 @@ class Kernel:
     def make_prompt(self):
         ret = ""
         ai = [ { 'role': 'system', 'content': 'You are a ficticious person named ' + identifiers['ai'] + '. Use your imagination to answer all questions.' } ]
+        pc = []
         for i in range(len(prompt_txt) + len(self.memory_ai) - self.window, len(prompt_txt)):
             if i < 0:
                 continue
@@ -449,6 +451,9 @@ class Kernel:
             if self.json:
                 ai += [self.format_json(identifiers['user'], u) ]
                 ai += [self.format_json(identifiers['ai'], a) ]
+                continue
+            if self.pc:
+                pc += [{'prompt': u, 'completion': a}]
                 continue
             ret += identifiers['user'] + ": " + u 
             ret += '\n'
@@ -466,18 +471,26 @@ class Kernel:
                     ai += [self.format_json(identifiers['user'], u) ]
                     ai += [self.format_json(identifiers['ai'], a) ]
                     continue 
+                if self.pc:
+                    pc += [{'prompt': u, 'completion': a}]
+                    continue
                 ret += identifiers['user'] + ": " + u 
                 ret += '\n'
                 ret += identifiers['ai'] + ": " + a 
                 ret += '\n\n'
         if self.json:
             return ai 
+        if self.pc:
+            return pc 
         return ret 
 
     def modify_prompt_before_model(self, tt, rr):
         if self.json:
             self.prompt += [self.format_json(identifiers['user'], rr) ]# + "\n"
             self.prompt += [self.format_json(identifiers['ai'], "") ]
+            return
+        if self.pc:
+            self.prompt += [{'prompt': rr }] #, 'completion': ''}]
             return
         self.prompt += identifiers['user'] + ': ' + rr + "\n" 
         self.prompt += identifiers['ai'] + ': '
@@ -513,6 +526,7 @@ class Kernel:
         return text
 
     def model(self):
+        url = OPENAI_URL
         z_args = {
             "Authorization" : "Bearer " + OPENAI_API_KEY,
             "Content-Type": "application/json"
@@ -532,15 +546,32 @@ class Kernel:
                 "temperature" : self.temp
             }
         
-        r = requests.post(OPENAI_URL, headers=z_args, json=data)
+        if self.pc:
+            model = OPENAI_MODEL
+            if 'chat' in url:
+                url = url.replace('chat/', '')
+            prompt_txt =  json.dumps(self.prompt)
+            prompt_txt = ' '.join( x for x in prompt_txt) #.split('\n') )
+            data = {
+                "model" : model,
+                "prompt": prompt_txt,
+                "temperature" : self.temp
+            }
+
+        r = requests.post(url, headers=z_args, json=data)
 
         self.p(r.text)
         r = json.loads(r.text)
-
+        self.p(r)
         try:
             self.reply = r['choices'][0]['message']['content']
         except:
             self.reply = ""
+        if self.pc:
+            try:
+                self.reply = r['choices'][0]['text']
+            except:
+                self.reply = ""
 
         self.p(self.reply)
         
@@ -620,6 +651,7 @@ if __name__ == '__main__':
     parser.add_argument('--json', action="store_true", help="use json for model prompt.")
     parser.add_argument('--voice', type=str, default="en-US-Journey-F", help="Google Cloud TTS Voice Code.") ## en-US-Journey-D en-US-Journey-F
     parser.add_argument('--questions', type=int, default=-1, help="Simulate two parties with preset question list. Specify number of simulated questions.")
+    parser.add_argument('--pc', action="store_true", help="use prompt-completion for prompt.")
     ## NOTE: local is not implemented!! 
     
     args = parser.parse_args()
@@ -653,6 +685,7 @@ if __name__ == '__main__':
     k.no_check = not args.check
     k.cloud_stt = args.cloud_stt 
     k.cloud_tts = args.cloud_tts
+    k.pc = args.pc 
 
     if args.voice == 'male' or args.voice == 'female':
         args.voice = voice_gender[args.voice]
