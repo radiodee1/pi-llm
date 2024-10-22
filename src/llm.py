@@ -442,7 +442,7 @@ class Kernel:
     def make_prompt(self):
         ret = ""
         ai = [ { 'role': 'system', 'content': 'You are a ficticious person named ' + identifiers['ai'] + '. Use your imagination to answer all questions.' } ]
-        pc = []
+        pc = ""
         for i in range(len(prompt_txt) + len(self.memory_ai) - self.window, len(prompt_txt)):
             if i < 0:
                 continue
@@ -453,7 +453,7 @@ class Kernel:
                 ai += [self.format_json(identifiers['ai'], a) ]
                 continue
             if self.pc:
-                pc += [{'prompt': u, 'completion': a}]
+                pc +=  u + '\n' + a + '\n'
                 continue
             ret += identifiers['user'] + ": " + u 
             ret += '\n'
@@ -472,7 +472,7 @@ class Kernel:
                     ai += [self.format_json(identifiers['ai'], a) ]
                     continue 
                 if self.pc:
-                    pc += [{'prompt': u, 'completion': a}]
+                    pc += u + '\n' + a + '\n'
                     continue
                 ret += identifiers['user'] + ": " + u 
                 ret += '\n'
@@ -490,7 +490,7 @@ class Kernel:
             self.prompt += [self.format_json(identifiers['ai'], "") ]
             return
         if self.pc:
-            self.prompt += [{'prompt': rr }] #, 'completion': ''}]
+            self.prompt +=  rr + '\n'#, 'completion': ''}]
             return
         self.prompt += identifiers['user'] + ': ' + rr + "\n" 
         self.prompt += identifiers['ai'] + ': '
@@ -550,11 +550,11 @@ class Kernel:
             model = OPENAI_MODEL
             if 'chat' in url:
                 url = url.replace('chat/', '')
-            prompt_txt =  json.dumps(self.prompt)
-            prompt_txt = ' '.join( x for x in prompt_txt) #.split('\n') )
+            #prompt_txt =  json.dumps(self.prompt)
+            #prompt_txt = ' '.join( x for x in prompt_txt) #.split('\n') )
             data = {
                 "model" : model,
-                "prompt": prompt_txt,
+                "prompt": self.prompt,
                 "temperature" : self.temp
             }
 
