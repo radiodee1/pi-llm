@@ -54,6 +54,7 @@ class Kernel:
         key_record = ''
         count = 0
         has_written = False
+        repitition_total = 0
         total = len(self.dict_words)
         for _ in range(len(self.dict_words)):
             for key in self.dict_words:
@@ -64,6 +65,7 @@ class Kernel:
                 print(key_record + ',', self.dict_words[key_record])
                 self.file_output(key_record + ", " + str(self.dict_words[key_record]))
                 has_written = True 
+                repitition_total += int(self.dict_words[key_record])
                 if count >= self.count and self.count != -1:
                     break 
                 count += 1
@@ -75,7 +77,12 @@ class Kernel:
         print()
         print('displayed:' , count, 'categories:', total, 'words:', self.num_words ,'sentence:', self.num_words / float(self.num_sentences))
         print('sentences:', self.num_sentences, 'exchanges:', self.num_sentences / 2, end=" ")
-        print('restarts:', self.num_restarts, 'files:', self.file_list)
+        print('restarts:', self.num_restarts, 'repitition_total:', repitition_total ,'files:', self.file_list)
+        
+        self.file_output("")
+        self.file_output('displayed: ' + str(count) + ' categories: ' + str(total) + ' words: ' + str(self.num_words) + ' sentence: ' + str(self.num_words / float(self.num_sentences)))
+        self.file_output('sentences: ' + str(self.num_sentences) + ' exchanges: ' + str(self.num_sentences / 2))
+        self.file_output('restarts: ' + str(self.num_restarts) + ' repitition_total: ' + str(repitition_total) + ' files: ' + str(self.file_list))
         pass 
 
     def file_output(self, line_out=""):
