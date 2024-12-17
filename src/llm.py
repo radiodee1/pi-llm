@@ -16,72 +16,6 @@ import requests
 import json
 #import hashlib
 
-vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
-
-try:
-    TEST_SIX=int(vals['TEST_SIX']) 
-except:
-    TEST_SIX = 8 # 32 
-
-try:
-    TEST_NINE=int(vals['TEST_NINE']) 
-except:
-    TEST_NINE = 16
-
-try:
-    MICROPHONE_INDEX=int(vals['MICROPHONE_INDEX'])
-except:
-    MICROPHONE_INDEX=-1
-
-try:
-    OPENAI_API_KEY=str(vals['OPENAI_API_KEY'])
-except:
-    OPENAI_API_KEY='abc'
-
-try:
-    OPENAI_ORGANIZATION=str(vals['OPENAI_ORGANIZATION'])
-except:
-    OPENAI_ORGANIZATION=""
-
-try:
-    OPENAI_PROJECT_ID=str(vals['OPENAI_PROJECT_ID'])
-except:
-    OPENAI_PROJECT_ID=""
-
-try:
-    OPENAI_MODEL=str(vals['OPENAI_MODEL'])
-except:
-    OPENAI_MODEL="gpt-3.5-turbo"
-
-try:
-    OPENAI_URL=str(vals['OPENAI_URL'])
-except:
-    OPENAI_URL="https://api.openai.com/v1/chat/completions"
-
-try:
-    OPENAI_CHECKPOINTS=str(vals['OPENAI_CHECKPOINTS'])
-except:
-    OPENAI_CHECKPOINTS=""
-
-try:
-    GOOGLE_SPEECH_RECOGNITION_API_KEY=str(vals['GOOGLE_SPEECH_RECOGNITION_API_KEY'])
-except:
-    GOOGLE_SPEECH_RECOGNITION_API_KEY=None
-
-try:
-    PROJECT_LAUNCH_ARGS=str(vals['PROJECT_LAUNCH_ARGS'])
-except:
-    PROJECT_LAUNCH_ARGS='' #'--no_check'
-
-GOOGLE_CLOUD_SPEECH_CREDENTIALS=''
-
-try:
-    GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
-except:
-    GOOGLE_APPLICATION_CREDENTIALS=''
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
-
 prompt_txt = [
         [ 'hi', 'hello' ],
         [ 'what is your last name?', 'my last name is Smith' ],
@@ -94,6 +28,7 @@ prompt_txt = [
 identifiers = { 'user':'user', 'ai':'Jane' }
 
 voice_gender = { 'male': 'en-US-Neural2-D', 'female': 'en-US-Neural2-F' }
+
 
 class Kernel:
 
@@ -128,6 +63,73 @@ class Kernel:
         self.questions_num = 0
         self.checkpoint_num = 0 
         self.pc = False
+
+        vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
+
+        try:
+            self.TEST_SIX=int(vals['TEST_SIX']) 
+        except:
+            self.TEST_SIX = 8 # 32 
+
+        try:
+            self.TEST_NINE=int(vals['TEST_NINE']) 
+        except:
+            self.TEST_NINE = 16
+
+        try:
+            self.MICROPHONE_INDEX=int(vals['MICROPHONE_INDEX'])
+        except:
+            self.MICROPHONE_INDEX=-1
+
+        try:
+            self.OPENAI_API_KEY=str(vals['OPENAI_API_KEY'])
+        except:
+            self.OPENAI_API_KEY='abc'
+
+        try:
+            self.OPENAI_ORGANIZATION=str(vals['OPENAI_ORGANIZATION'])
+        except:
+            self.OPENAI_ORGANIZATION=""
+
+        try:
+            self.OPENAI_PROJECT_ID=str(vals['OPENAI_PROJECT_ID'])
+        except:
+            self.OPENAI_PROJECT_ID=""
+
+        try:
+            self.OPENAI_MODEL=str(vals['OPENAI_MODEL'])
+        except:
+            self.OPENAI_MODEL="gpt-3.5-turbo"
+
+        try:
+            self.OPENAI_URL=str(vals['OPENAI_URL'])
+        except:
+            self.OPENAI_URL="https://api.openai.com/v1/chat/completions"
+
+        try:
+            self.OPENAI_CHECKPOINTS=str(vals['OPENAI_CHECKPOINTS'])
+        except:
+            self.OPENAI_CHECKPOINTS=""
+
+        try:
+            self.GOOGLE_SPEECH_RECOGNITION_API_KEY=str(vals['GOOGLE_SPEECH_RECOGNITION_API_KEY'])
+        except:
+            self.GOOGLE_SPEECH_RECOGNITION_API_KEY=None
+
+        try:
+            self.PROJECT_LAUNCH_ARGS=str(vals['PROJECT_LAUNCH_ARGS'])
+        except:
+            self.PROJECT_LAUNCH_ARGS='' #'--no_check'
+
+        self.GOOGLE_CLOUD_SPEECH_CREDENTIALS=''
+
+        try:
+            self.GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
+        except:
+            self.GOOGLE_APPLICATION_CREDENTIALS=''
+
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = self.GOOGLE_APPLICATION_CREDENTIALS
+
 
     def loop(self):
         time.sleep(self.offset)
@@ -278,8 +280,8 @@ class Kernel:
 
         r = sr.Recognizer()
         
-        if MICROPHONE_INDEX != -1:
-            mic = sr.Microphone(device_index=MICROPHONE_INDEX)
+        if self.MICROPHONE_INDEX != -1:
+            mic = sr.Microphone(device_index=self.MICROPHONE_INDEX)
         else:
             mic = sr.Microphone()
 
@@ -307,7 +309,7 @@ class Kernel:
             if self.cloud_stt == False:
                 ret = r.recognize_google(audio) #,  key=GOOGLE_SPEECH_RECOGNITION_API_KEY)
             elif self.cloud_stt == True:
-                ret = str(r.recognize_google_cloud(audio, GOOGLE_APPLICATION_CREDENTIALS))
+                ret = str(r.recognize_google_cloud(audio, self.GOOGLE_APPLICATION_CREDENTIALS))
 
             self.p("speech recognition: " + ret)
             
@@ -526,28 +528,28 @@ class Kernel:
         return text
 
     def model(self):
-        url = OPENAI_URL
+        url = self.OPENAI_URL
         z_args = {
-            "Authorization" : "Bearer " + OPENAI_API_KEY,
+            "Authorization" : "Bearer " + self.OPENAI_API_KEY,
             "Content-Type": "application/json"
         }
         data = {}
 
         if not self.json:
             data = {
-                "model" : OPENAI_MODEL,
+                "model" : self.OPENAI_MODEL,
                 "messages": [{'role': 'user', 'content': self.prompt }],
                 "temperature": self.temp
             }
         if self.json:
             data = {
-                "model" : OPENAI_MODEL,
+                "model" : self.OPENAI_MODEL,
                 "messages":   self.prompt  ,
                 "temperature" : self.temp
             }
         
         if self.pc:
-            model = OPENAI_MODEL
+            model = self.OPENAI_MODEL
             if 'chat' in url:
                 url = url.replace('chat/', '')
             #prompt_txt =  json.dumps(self.prompt)
@@ -587,7 +589,7 @@ class Kernel:
             if int(self.questions) > -1:
                 num = ('0000' + str(self.checkpoint_num ))[-3:]
                 name += 'CHECKPOINT_' + num + '.'
-            f = open(os.path.expanduser('~') + name + OPENAI_MODEL.strip() +'.txt', 'a')
+            f = open(os.path.expanduser('~') + name + self.OPENAI_MODEL.strip() +'.txt', 'a')
             if heading.strip() != "":
                 f.write(str(heading) + '\n')
                 f.close()
@@ -629,36 +631,12 @@ class Kernel:
             # exit()
         pass 
 
-if __name__ == '__main__':
-    k = Kernel()
-    parser = argparse.ArgumentParser(description="Pi LLM - containerized LLM for raspberry pi", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--local', action="store_true", help="Not implemented")
-    parser.add_argument('--verbose', action="store_true", help="Use verbose mode.")
-    parser.add_argument('--test', action="store_true", help="Use test data and no LLM")
-    parser.add_argument('--truncate', action="store_true", help="truncate model output.")
-    parser.add_argument('--loop_wait', action="store_true", help="loop until input is detected.")
-    parser.add_argument('--check', action="store_true", help="use interruption checking.")
-    parser.add_argument('--name', type=str, help="define new name.")
-    parser.add_argument('--offset', type=float, help="time in seconds to offset on startup.")
-    parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
-    parser.add_argument('--mic_timeout', type=int, help="mic timeout in seconds.")
-    parser.add_argument('--file', action="store_true", help="save statistics in text file.")
-    parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
-    parser.add_argument('--timeout', type=float, default=0.5, help="minutes to timeout.")
-    parser.add_argument('--window', type=int, default=35, help="number of memory units used in input.")
-    parser.add_argument('--cloud_stt', action="store_true", help="Google Cloud Speech Recognition.")
-    parser.add_argument('--cloud_tts', action="store_true", help="Google Cloud Text to Speech.")
-    parser.add_argument('--json', action="store_true", help="use json for model prompt.")
-    parser.add_argument('--voice', type=str, default="en-US-Journey-F", help="Google Cloud TTS Voice Code.") ## en-US-Journey-D en-US-Journey-F
-    parser.add_argument('--questions', type=int, default=-1, help="Simulate two parties with preset question list. Specify number of simulated questions.")
-    parser.add_argument('--pc', action="store_true", help="use prompt-completion for prompt.")
-    ## NOTE: local is not implemented!! 
-    
+def do_args(parser, k):
     args = parser.parse_args()
-    if len(PROJECT_LAUNCH_ARGS.strip()) > 0:
-        print(PROJECT_LAUNCH_ARGS.strip())
+    if len(k.PROJECT_LAUNCH_ARGS.strip()) > 0:
+        print(k.PROJECT_LAUNCH_ARGS.strip())
         launch_args = []
-        for i in PROJECT_LAUNCH_ARGS.strip().split(' '):
+        for i in k.PROJECT_LAUNCH_ARGS.strip().split(' '):
             if len(i.strip()) > 0:
                 launch_args.append(i.strip())
         args = parser.parse_args(launch_args) 
@@ -718,8 +696,8 @@ if __name__ == '__main__':
         k.checkpoint_num = 0 
         k.questions = args.questions
         k.read_questions()
-        if OPENAI_CHECKPOINTS.strip() != "":
-            for i in OPENAI_CHECKPOINTS.strip().split(','):
+        if k.OPENAI_CHECKPOINTS.strip() != "":
+            for i in k.OPENAI_CHECKPOINTS.strip().split(','):
                 if i.strip() != "":
                     k.file_num = 0 
                     k.memory_ai = []
@@ -735,6 +713,38 @@ if __name__ == '__main__':
             k.loop() # do once
         exit()
 
-    k.save_file(0, str(args))
-    k.loop()
+    return args 
+
+
+if __name__ == '__main__':
+    #k = Kernel()
+    parser = argparse.ArgumentParser(description="Pi LLM - containerized LLM for raspberry pi", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--local', action="store_true", help="Not implemented")
+    parser.add_argument('--verbose', action="store_true", help="Use verbose mode.")
+    parser.add_argument('--test', action="store_true", help="Use test data and no LLM")
+    parser.add_argument('--truncate', action="store_true", help="truncate model output.")
+    parser.add_argument('--loop_wait', action="store_true", help="loop until input is detected.")
+    parser.add_argument('--check', action="store_true", help="use interruption checking.")
+    parser.add_argument('--name', type=str, help="define new name.")
+    parser.add_argument('--offset', type=float, help="time in seconds to offset on startup.")
+    parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
+    parser.add_argument('--mic_timeout', type=int, help="mic timeout in seconds.")
+    parser.add_argument('--file', action="store_true", help="save statistics in text file.")
+    parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
+    parser.add_argument('--timeout', type=float, default=0.5, help="minutes to timeout.")
+    parser.add_argument('--window', type=int, default=35, help="number of memory units used in input.")
+    parser.add_argument('--cloud_stt', action="store_true", help="Google Cloud Speech Recognition.")
+    parser.add_argument('--cloud_tts', action="store_true", help="Google Cloud Text to Speech.")
+    parser.add_argument('--json', action="store_true", help="use json for model prompt.")
+    parser.add_argument('--voice', type=str, default="en-US-Journey-F", help="Google Cloud TTS Voice Code.") ## en-US-Journey-D en-US-Journey-F
+    parser.add_argument('--questions', type=int, default=-1, help="Simulate two parties with preset question list. Specify number of simulated questions.")
+    parser.add_argument('--pc', action="store_true", help="use prompt-completion for prompt.")
+    ## NOTE: local is not implemented!! 
+    
+    while True:
+        k = Kernel()
+        args = do_args(parser, k)
+        k.save_file(0, str(args))
+        k.loop()
+        k.p("interrupt here")
 
