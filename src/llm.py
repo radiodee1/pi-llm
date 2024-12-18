@@ -150,6 +150,8 @@ class Kernel:
                 time.sleep(2)
             rr.clear()
             self.say_text(tt)
+            if (self.needs_restart()):
+                return 
             ## try join here!! remove sleep !!
             if not self.no_check:
                 p.join()
