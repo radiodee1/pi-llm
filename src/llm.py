@@ -631,6 +631,19 @@ class Kernel:
             # exit()
         pass 
 
+    def needs_restart(self):
+        out = False
+        file = os.path.expanduser("~") + "/" + ".llm.restart"
+        if os.path.exists(file):
+            out = True
+            os.remove(file)
+            if os.path.exists(file):
+                exit()
+        return out
+        
+
+################### end class ########################################
+
 def do_args(parser, k):
     args = parser.parse_args()
     if len(k.PROJECT_LAUNCH_ARGS.strip()) > 0:
