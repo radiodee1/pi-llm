@@ -12,6 +12,7 @@ import matplotlib.cm as cm
 import numpy as np 
 from sklearn.manifold import TSNE
 import numpy as np
+import math 
 #import os 
 
 keys = ['Paris', 'Python', 'Sunday', 'Tolstoy', 'Twitter', 'bachelor', 'delivery', 'election', 'expensive',
@@ -45,8 +46,14 @@ if __name__ == '__main__':
     parser.add_argument('--p', default=15, help="perplexity value.")
     parser.add_argument('--topn', default=5, help="topn value.")
     parser.add_argument('--all', action="store_true", help="plot all words (include test words.)")
+    parser.add_argument('--single_graph', action="store_true", help="plot all words on single graph.")
     args = parser.parse_args()
- 
+    
+    embedding_clusters = []
+    word_clusters = []
+    filename_clusters = []
+
+
     if len(args.files) > 1:
         show_plot = False
     for i in args.files:
@@ -89,23 +96,31 @@ if __name__ == '__main__':
 
             model = gensim.models.KeyedVectors.load_word2vec_format(W2V_BIN, binary=True)
 
-            embedding_clusters = []
-            word_clusters = []
+            if not args.single_graph:
+                embedding_clusters = []
+                word_clusters = []
+                filename_clusters = []
+
             for word in keys:
                 embeddings = []
                 words = []
+                filenames = []
                 if word not in model:
                     print('not in model', word)
                     continue
                 if TOPN == 1:
                     words.append(word)
                     embeddings.append(model[word])
+                    filenames.append(file_out)
                 else:
                     for similar_word, _ in model.most_similar(word, topn=TOPN):
                         words.append(similar_word)
                         embeddings.append(model[similar_word])
+                        filenames.append(file_out)
+
                 embedding_clusters.append(embeddings)
                 word_clusters.append(words)
+                filename_clusters.append(filenames)
 
 
             #embeddings_en_2d = embedding_clusters
@@ -119,4 +134,25 @@ if __name__ == '__main__':
             tsne_plot_similar_words('Similar words from Google News', keys, embeddings_en_2d, word_clusters, 0.7,
                                     OUTPUT_FILE)
             print('keys', len(keys))
+            #print(embeddings_en_2d)
 
+            oldf = ""
+            dist = 0
+            xold = 0 
+            yold = 0 
+            for embeddings, file in zip(embeddings_en_2d, filename_clusters):
+                x = embeddings[:,0][0]
+                y = embeddings[:,1][0]
+                f = file[0]
+                if oldf == f:
+                    #print('here...')
+                    tempx = x - xold
+                    tempy = y - yold
+                    tempx = tempx * tempx
+                    tempy = tempy * tempy
+                    dist = math.sqrt(tempx + tempy )
+                oldf = f 
+                xold = x 
+                yold = y 
+                print(x,y, f, dist)
+                pass
