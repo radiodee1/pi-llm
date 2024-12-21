@@ -142,7 +142,7 @@ if __name__ == '__main__':
         print('keys', len(keys))
         #exit()
 
-    print(embeddings_en_2d) 
+    #print(embeddings_en_2d) 
     ff = open(out_path + "/distance.csv", 'w')
     oldf = ""
     dist = 0
