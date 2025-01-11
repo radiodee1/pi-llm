@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import string
 from wave import Error
 from dotenv import  dotenv_values 
 import os
@@ -105,6 +106,17 @@ class Kernel:
             self.OPENAI_URL=str(vals['OPENAI_URL'])
         except:
             self.OPENAI_URL="https://api.openai.com/v1/chat/completions"
+
+        try:
+            self.OPENAI_EMBEDDING=str(vals['OPENAI_EMBEDDING'])
+        except:
+            self.OPENAI_EMBEDDING="https://api.openai.com/v1/embeddings"
+
+        try:
+            self.OPENAI_EMBEDDING_NAME=str(vals['OPENAI_EMBEDDING_NAME'])
+        except:
+            self.OPENAI_EMBEDDING_NAME="text-embedding-3-small"
+
 
         try:
             self.OPENAI_CHECKPOINTS=str(vals['OPENAI_CHECKPOINTS'])
@@ -236,8 +248,9 @@ class Kernel:
 
             self.p(tt, "<<<",   "\n====")
             self.p(self.prompt, "\n====")
-            self.p(self.memory_user, '\n---')
-            self.p(self.memory_ai)
+            #self.p("++++", self.count_tokens(self.prompt), self.count_tokens("here is another"), "++++")
+            #self.p(self.memory_user, '\n---')
+            #self.p(self.memory_ai)
 
             self.modify_prompt_after_model(tt, ' '.join(rr))
 
@@ -580,6 +593,28 @@ class Kernel:
         self.p(self.reply)
         
         return self.reply
+
+    def count_tokens(self, txt):
+        if type(txt) != 'str':
+            txt = json.dumps(txt)
+
+        url = self.OPENAI_EMBEDDING 
+        headers = {
+            "Authorization" : "Bearer " + self.OPENAI_API_KEY,
+            "Content-Type": "application/json"
+        }
+        data = {
+            "input" : txt,
+            "model" : self.OPENAI_EMBEDDING_NAME 
+        }
+        # self.p(url, headers, data)
+        r = requests.post(url, headers=headers, json=data)
+        r = json.loads(r.text)
+        # self.p(r)
+        num = r['usage']['total_tokens']
+        num = int(num)
+        return num
+
 
     def p(self, *text):
         if self.verbose:
