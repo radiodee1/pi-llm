@@ -108,14 +108,14 @@ class Kernel:
             self.OPENAI_URL="https://api.openai.com/v1/chat/completions"
 
         try:
-            self.OPENAI_EMBEDDING=str(vals['OPENAI_EMBEDDING'])
+            self.OPENAI_EMBEDDING_URL=str(vals['OPENAI_EMBEDDING_URL'])
         except:
-            self.OPENAI_EMBEDDING="https://api.openai.com/v1/embeddings"
+            self.OPENAI_EMBEDDING_URL="https://api.openai.com/v1/embeddings"
 
         try:
             self.OPENAI_EMBEDDING_NAME=str(vals['OPENAI_EMBEDDING_NAME'])
         except:
-            self.OPENAI_EMBEDDING_NAME="text-embedding-3-small"
+            self.OPENAI_EMBEDDING_NAME="text-embedding-3-large"
 
 
         try:
@@ -248,7 +248,7 @@ class Kernel:
 
             self.p(tt, "<<<",   "\n====")
             self.p(self.prompt, "\n====")
-            #self.p("++++", self.count_tokens(self.prompt), self.count_tokens("here is another"), "++++")
+            self.p("++++", self.count_tokens(self.prompt), "++++")
             #self.p(self.memory_user, '\n---')
             #self.p(self.memory_ai)
 
@@ -595,24 +595,30 @@ class Kernel:
         return self.reply
 
     def count_tokens(self, txt):
-        if type(txt) != 'str':
-            txt = json.dumps(txt)
+        try:
 
-        url = self.OPENAI_EMBEDDING 
-        headers = {
-            "Authorization" : "Bearer " + self.OPENAI_API_KEY,
-            "Content-Type": "application/json"
-        }
-        data = {
-            "input" : txt,
-            "model" : self.OPENAI_EMBEDDING_NAME 
-        }
-        # self.p(url, headers, data)
-        r = requests.post(url, headers=headers, json=data)
-        r = json.loads(r.text)
-        # self.p(r)
-        num = r['usage']['total_tokens']
-        num = int(num)
+            if type(txt) != 'str':
+                txt = json.dumps(txt)
+
+            url = self.OPENAI_EMBEDDING_URL 
+            headers = {
+                "Authorization" : "Bearer " + self.OPENAI_API_KEY,
+                "Content-Type": "application/json"
+            }
+            data = {
+                "input" : txt,
+                "model" : self.OPENAI_EMBEDDING_NAME 
+            }
+            # self.p(url, headers, data)
+            r = requests.post(url, headers=headers, json=data)
+            r = json.loads(r.text)
+            # self.p(r)
+            num = r['usage']['total_tokens']
+            num = int(num)
+        except Exception as e:
+            print(r)
+            print(e)
+            num = -1
         return num
 
 
