@@ -595,8 +595,8 @@ class Kernel:
         return self.reply
 
     def count_tokens(self, txt):
+        r = ""
         try:
-
             if type(txt) != 'str':
                 txt = json.dumps(txt)
 
