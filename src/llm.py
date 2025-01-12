@@ -65,6 +65,7 @@ class Kernel:
         self.checkpoint_num = 0 
         self.pc = False
         self.memory_review = []
+        self.review = False
 
         vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -243,7 +244,7 @@ class Kernel:
             self.prompt = self.make_prompt()
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
-
+            self.find_marked_text(tt)
             #if self.truncate:
             tt = self.prune_input(tt) # + '.'
 
@@ -442,6 +443,42 @@ class Kernel:
         #print(output, '<<<')
         return output
 
+    def find_marked_text(self, text):
+        if self.review == False:
+            return
+        save = ''
+        if '*' in text:
+            if self.truncate == False:
+                for t in text.split('.'):
+                    if "*" in t:
+                        save = t 
+            else:
+                save = text.split('.')[0]
+            save = save.replace("*", '')
+            
+            for i in self.memory_review:
+                j = i.split(' ')
+                k = save.split(" ")
+                j.sort()
+                k.sort()
+                words_match = True
+                for ii in range(len(j)):
+                    if ii < len(k) and j[ii] != k[ii]:
+                        words_match = False
+                if words_match:
+                    return False## <-- we already have one !! 
+            if ":" in save:
+                ## trim name from 'save'
+                s = save.split(":")
+                if s[0].lower().strip() == identifiers['ai'].lower().strip():
+                    save = s[1].lower().strip()
+            if len(save.strip()) > 0 :
+                f = open(os.path.expanduser('~') + "/.llm.review.txt", "a")
+                f.write(save + "\n")
+                f.close()
+            return True
+
+
     def format_json(self, user, text):
         user = user.lower().split(' ')[0]
         user = user.replace('\'', "\"")
@@ -458,6 +495,8 @@ class Kernel:
         return x 
 
     def read_review(self):
+        if self.review == False:
+            return
         self.memory_review = []
         name = ".llm.review.txt"
         path = os.path.expanduser("~") + "/" + name
@@ -470,24 +509,32 @@ class Kernel:
     def _pre_prompt_ai(self, i):
         for j in range(len(self.memory_review)):
             a = self.memory_review[j]
-            a = a.replace(",", "")
+            a = a.replace(";", "")
             i[0]['content'] += " " + a 
             if j < len(self.memory_review) - 1:
-                i[0]['content'] += ","
+                i[0]['content'] += ";"
         return i
 
     def _pre_prompt_ret(self, i):
         for a in self.memory_review:
-            a = a.replace(",", '')
-            i += " " + a + ","
+            a = a.replace(";", '')
+            i += " " + a + ";"
         i = i.strip()
-        i = i.strip(',')
+        i = i.strip(';')
         i += "\n"
         return i 
 
     def make_prompt(self):
         ret = ""
-        ai = [ { 'role': 'system', 'content': 'You are a ficticious person named ' + identifiers['ai'] + '. Use your imagination to answer all questions.' } ]
+        ai = [ 
+            { 'role': 'system', 'content': 'You are a ficticious person named ' + identifiers['ai'] + 
+             '. Use your imagination to answer all questions.' 
+            } 
+        ]
+        if self.review:
+            ai[0]['content'] += ' Say with the * character as a function to save any marked sentence permanently.'
+            ret += ' Say with the * character as a function to save any marked sentence permanently.'
+
         pc = ""
         ret = self._pre_prompt_ret(ret)
         ai  = self._pre_prompt_ai(ai)
@@ -751,6 +798,7 @@ def do_args(parser, k):
     k.cloud_stt = args.cloud_stt 
     k.cloud_tts = args.cloud_tts
     k.pc = args.pc 
+    k.review = args.review
 
     if args.voice == 'male' or args.voice == 'female':
         args.voice = voice_gender[args.voice]
@@ -826,6 +874,7 @@ if __name__ == '__main__':
     parser.add_argument('--voice', type=str, default="en-US-Journey-F", help="Google Cloud TTS Voice Code.") ## en-US-Journey-D en-US-Journey-F
     parser.add_argument('--questions', type=int, default=-1, help="Simulate two parties with preset question list. Specify number of simulated questions.")
     parser.add_argument('--pc', action="store_true", help="use prompt-completion for prompt.")
+    parser.add_argument('--review', action="store_true", help="use review * function.")
     ## NOTE: local is not implemented!! 
     
     while True:
