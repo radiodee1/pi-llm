@@ -64,6 +64,7 @@ class Kernel:
         self.questions_num = 0
         self.checkpoint_num = 0 
         self.pc = False
+        self.memory_review = []
 
         vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -238,7 +239,7 @@ class Kernel:
                     rr = ['say' , 'something,' ]
                     #skip_say_text = True
 
-            self.p("ai here ", rr)
+            self.read_review()
             self.prompt = self.make_prompt()
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
@@ -456,10 +457,40 @@ class Kernel:
         x = { 'role' : t, 'content': user + " : " + text }
         return x 
 
+    def read_review(self):
+        self.memory_review = []
+        name = ".llm.review.txt"
+        path = os.path.expanduser("~") + "/" + name
+        f = open(path, 'r')
+        rev = f.readlines()
+        for i in rev:
+            self.memory_review.append(i.strip())
+        f.close()
+
+    def _pre_prompt_ai(self, i):
+        for j in range(len(self.memory_review)):
+            a = self.memory_review[j]
+            a = a.replace(",", "")
+            i[0]['content'] += " " + a 
+            if j < len(self.memory_review) - 1:
+                i[0]['content'] += ","
+        return i
+
+    def _pre_prompt_ret(self, i):
+        for a in self.memory_review:
+            a = a.replace(",", '')
+            i += " " + a + ","
+        i = i.strip()
+        i = i.strip(',')
+        i += "\n"
+        return i 
+
     def make_prompt(self):
         ret = ""
         ai = [ { 'role': 'system', 'content': 'You are a ficticious person named ' + identifiers['ai'] + '. Use your imagination to answer all questions.' } ]
         pc = ""
+        ret = self._pre_prompt_ret(ret)
+        ai  = self._pre_prompt_ai(ai)
         for i in range(len(prompt_txt) + len(self.memory_ai) - self.window, len(prompt_txt)):
             if i < 0:
                 continue
