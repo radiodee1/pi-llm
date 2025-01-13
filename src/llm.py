@@ -254,11 +254,11 @@ class Kernel:
             if self.review:
                 skip = self.find_marked_text(tt)
                 if self.review_skip <= 0 and skip:
-                    self.review_skip = 4 ## magic number 4 
+                    self.review_skip = 1 ## magic number 4?? 
                 elif not skip:
                     self.review_skip = 0 
                 else:
-                    rr = []
+                    #rr = []
                     self.review_skip -= 1 
 
             #if self.truncate:
@@ -466,7 +466,7 @@ class Kernel:
 
     def find_marked_text(self, text):
         if self.review == False or self.review_skip > 0:
-            return False
+            return True
         save = ''
         if '*' in text:
             if self.truncate == False:
@@ -477,9 +477,21 @@ class Kernel:
                 save = text.split('.')[0]
             save = save.replace("*", '')
             save = save.replace(";", '') 
+
+            if ":" in save:
+                ## trim name from 'save'
+                s = save.split(":")
+                if s[0].lower().strip() == identifiers['ai'].lower().strip():
+                    save = ' '.join( s[1:] ).lower().strip()
+
             for i in self.memory_review:
                 j = i.split(' ')
                 k = save.split(" ")
+                ss = []
+                for kk in k:
+                    if kk.strip() != "":
+                        ss.append(kk)
+                k = ss 
                 j.sort()
                 k.sort()
                 m = min(len(j), len(k))
@@ -491,11 +503,7 @@ class Kernel:
                     #self.p("+++", words_match, k)
                     return False## <-- we already have one !! 
                 #self.p(j, '+++', k, '+++', words_match)
-            if ":" in save:
-                ## trim name from 'save'
-                s = save.split(":")
-                if s[0].lower().strip() == identifiers['ai'].lower().strip():
-                    save = s[1].lower().strip()
+                
             if len(save.strip()) > 0 :
                 f = open(os.path.expanduser('~') + "/" + self.PROJECT_REVIEW_NAME, "a")
                 f.write(save + "\n")
@@ -537,14 +545,14 @@ class Kernel:
             a = self.memory_review[j]
             a = a.replace(";", "")
             i[0]['content'] += " " + a 
-            if j < len(self.memory_review) - 1:
-                i[0]['content'] += ";"
+            if j < len(self.memory_review) - 1 or True:
+                i[0]['content'] += "\n" #";"
         return i
 
     def _pre_prompt_ret(self, i):
         for a in self.memory_review:
             a = a.replace(";", '')
-            i += " " + a + ";"
+            i += " " + a + "\n" # ";"
         i = i.strip()
         i = i.strip(';')
         i += "\n"
@@ -559,7 +567,7 @@ class Kernel:
         ]
         if self.review:
             ai[0]['content'] += ' Say with the * character as a function to save any marked sentence permanently.'
-            ret += ' Say with the * character as a function to save any marked sentence permanently.'
+            ret += ' Say with the * character as a function to save any marked sentence permanently. \n'
 
         pc = ""
         ret = self._pre_prompt_ret(ret)
@@ -617,7 +625,7 @@ class Kernel:
         self.prompt += identifiers['ai'] + ': '
 
     def modify_prompt_after_model(self, tt, rr):
-        if self.review and self.review_skip > 0:
+        if self.review and self.review_skip > 0 and False:
             self.p("skipping modify_prompt_after_model memory append")
             if len(self.memory_ai) == 0:
                 self.memory_user.append("")
