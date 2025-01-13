@@ -66,6 +66,7 @@ class Kernel:
         self.pc = False
         self.memory_review = []
         self.review = False
+        self.review_skip = 0 
 
         vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -158,7 +159,7 @@ class Kernel:
         start = time.time()
         end = time.time()
         tt = "hello."
-        skip_say_text = False
+        # skip_say_text = False
         while z == True:
             self.p("ai here")
             self.empty_queue()
@@ -249,7 +250,16 @@ class Kernel:
             self.prompt = self.make_prompt()
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
-            self.find_marked_text(tt)
+            
+            skip = self.find_marked_text(tt)
+            if self.review_skip <= 0 and skip:
+                self.review_skip = 4 ## magic number 4 
+            elif not skip:
+                self.review_skip = 0 
+            else:
+                rr = []
+                self.review_skip -= 1 
+
             #if self.truncate:
             tt = self.prune_input(tt) # + '.'
 
@@ -365,6 +375,8 @@ class Kernel:
             return
         if len(txt) == 0:
             return
+        if self.review_skip > 0:
+            return 
 
         filename =  '.output.mp3'
 
@@ -449,7 +461,7 @@ class Kernel:
         return output
 
     def find_marked_text(self, text):
-        if self.review == False:
+        if self.review == False or self.review_skip > 0:
             return False
         save = ''
         if '*' in text:
@@ -460,15 +472,16 @@ class Kernel:
             else:
                 save = text.split('.')[0]
             save = save.replace("*", '')
-            
+            save = save.replace(";", '') 
             for i in self.memory_review:
                 j = i.split(' ')
                 k = save.split(" ")
                 j.sort()
                 k.sort()
+                m = min(len(j), len(k))
                 words_match = True
-                for ii in range(len(j)):
-                    if ii < len(k) and j[ii] != k[ii]:
+                for ii in range(m):
+                    if j[ii] != k[ii]:
                         words_match = False
                 if words_match:
                     return False## <-- we already have one !! 
@@ -598,6 +611,12 @@ class Kernel:
         self.prompt += identifiers['ai'] + ': '
 
     def modify_prompt_after_model(self, tt, rr):
+        if self.review and self.review_skip > 0:
+            self.p("skipping modify_prompt_after_model memory append")
+            if len(self.memory_ai) == 0:
+                self.memory_user.append("")
+                self.memory_ai.append("")
+            return
         self.memory_user.append(rr)
         self.memory_ai.append(tt) ## <-- temporary...
         pass 
@@ -617,6 +636,9 @@ class Kernel:
         text = text.replace("'", '')
         text = text.replace("?", '.')
         text = text.replace("!", '.')
+        if self.review:
+            text = text.replace("*", '')
+
         if '\n' in text:
             text = text.split('\n')[0]
         if self.truncate:
