@@ -450,7 +450,7 @@ class Kernel:
 
     def find_marked_text(self, text):
         if self.review == False:
-            return
+            return False
         save = ''
         if '*' in text:
             if self.truncate == False:
@@ -503,8 +503,10 @@ class Kernel:
         if self.review == False:
             return
         self.memory_review = []
-        name = self.PROJECT_REVIEW_NAME #".llm.review.txt"
+        name = self.PROJECT_REVIEW_NAME 
         path = os.path.expanduser("~") + "/" + name
+        if os.path.exists(path) == False:
+            return
         f = open(path, 'r')
         rev = f.readlines()
         for i in rev:
