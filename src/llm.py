@@ -251,14 +251,15 @@ class Kernel:
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
             
-            skip = self.find_marked_text(tt)
-            if self.review_skip <= 0 and skip:
-                self.review_skip = 4 ## magic number 4 
-            elif not skip:
-                self.review_skip = 0 
-            else:
-                rr = []
-                self.review_skip -= 1 
+            if self.review:
+                skip = self.find_marked_text(tt)
+                if self.review_skip <= 0 and skip:
+                    self.review_skip = 4 ## magic number 4 
+                elif not skip:
+                    self.review_skip = 0 
+                else:
+                    rr = []
+                    self.review_skip -= 1 
 
             #if self.truncate:
             tt = self.prune_input(tt) # + '.'
@@ -308,6 +309,9 @@ class Kernel:
             for i in ret.split(' '):
                 if i.strip() != "":
                     self.q.put(i, block=False)
+            return
+
+        if self.review_skip > 0 and self.review:
             return
 
         r = sr.Recognizer()
@@ -375,7 +379,7 @@ class Kernel:
             return
         if len(txt) == 0:
             return
-        if self.review_skip > 0:
+        if self.review_skip > 0 and self.review:
             return 
 
         filename =  '.output.mp3'
@@ -484,7 +488,9 @@ class Kernel:
                     if j[ii] != k[ii]:
                         words_match = False
                 if words_match:
+                    #self.p("+++", words_match, k)
                     return False## <-- we already have one !! 
+                #self.p(j, '+++', k, '+++', words_match)
             if ":" in save:
                 ## trim name from 'save'
                 s = save.split(":")
