@@ -138,6 +138,11 @@ class Kernel:
         self.GOOGLE_CLOUD_SPEECH_CREDENTIALS=''
 
         try:
+            self.PROJECT_REVIEW_NAME=str(vals['PROJECT_REVIEW_NAME'])
+        except:
+            self.PROJECT_REVIEW_NAME='.llm.review.txt'
+
+        try:
             self.GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
         except:
             self.GOOGLE_APPLICATION_CREDENTIALS=''
@@ -473,7 +478,7 @@ class Kernel:
                 if s[0].lower().strip() == identifiers['ai'].lower().strip():
                     save = s[1].lower().strip()
             if len(save.strip()) > 0 :
-                f = open(os.path.expanduser('~') + "/.llm.review.txt", "a")
+                f = open(os.path.expanduser('~') + "/" + self.PROJECT_REVIEW_NAME, "a")
                 f.write(save + "\n")
                 f.close()
             return True
@@ -498,7 +503,7 @@ class Kernel:
         if self.review == False:
             return
         self.memory_review = []
-        name = ".llm.review.txt"
+        name = self.PROJECT_REVIEW_NAME #".llm.review.txt"
         path = os.path.expanduser("~") + "/" + name
         f = open(path, 'r')
         rev = f.readlines()
