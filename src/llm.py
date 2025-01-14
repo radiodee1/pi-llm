@@ -311,8 +311,8 @@ class Kernel:
                     self.q.put(i, block=False)
             return
 
-        if self.review_skip > 0 and self.review:
-            return
+        #if self.review_skip > 0 and self.review:
+        #    return
 
         r = sr.Recognizer()
         
@@ -379,8 +379,8 @@ class Kernel:
             return
         if len(txt) == 0:
             return
-        if self.review_skip > 0 and self.review:
-            return 
+        #if self.review_skip > 0 and self.review:
+        #    return 
 
         filename =  '.output.mp3'
 
@@ -468,6 +468,8 @@ class Kernel:
         if self.review == False or self.review_skip > 0:
             return True
         save = ''
+        if not '*' in text:
+            return False
         if '*' in text:
             if self.truncate == False:
                 for t in text.split('.'):
@@ -482,7 +484,7 @@ class Kernel:
                 ## trim name from 'save'
                 s = save.split(":")
                 if s[0].lower().strip() == identifiers['ai'].lower().strip():
-                    save = ' '.join( s[1:] ).lower().strip()
+                    save = s[1] # ' '.join( s[1:] ).lower().strip()
 
             for i in self.memory_review:
                 j = i.split(' ')
@@ -497,12 +499,11 @@ class Kernel:
                 m = min(len(j), len(k))
                 words_match = True
                 for ii in range(m):
-                    if j[ii] != k[ii]:
+                    if j[ii].lower() != k[ii].lower():
                         words_match = False
+                        break
                 if words_match:
-                    #self.p("+++", words_match, k)
-                    return False## <-- we already have one !! 
-                #self.p(j, '+++', k, '+++', words_match)
+                    return True## <-- we already have one !! 
                 
             if len(save.strip()) > 0 :
                 f = open(os.path.expanduser('~') + "/" + self.PROJECT_REVIEW_NAME, "a")
@@ -639,6 +640,10 @@ class Kernel:
         self.p(text, '<<< unmodified')
         if self.json:
             t = text.strip().split(':')
+            if self.review:
+                if '*' in t[0] and len(t) > 1:
+                    t[0] = t[0].replace('*', '')
+                    t[1] += '*'
             if len(t) > 1:
                 text = ' '.join(t[1:])
             if len(t) == 1 and t[0].strip() in identifiers:
