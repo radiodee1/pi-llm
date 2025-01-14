@@ -67,6 +67,8 @@ class Kernel:
         self.memory_review = []
         self.review = False
         self.review_skip = 0 
+        self.review_skip_high = 1 
+        self.tokens_recent = 0
 
         vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -254,7 +256,7 @@ class Kernel:
             if self.review:
                 skip = self.find_marked_text(tt)
                 if self.review_skip <= 0 and skip:
-                    self.review_skip = 1 ## magic number 4?? 
+                    self.review_skip = self.review_skip_high ## magic number 1?? 
                 elif not skip:
                     self.review_skip = 0 
                 else:
@@ -266,7 +268,7 @@ class Kernel:
 
             self.p(tt, "<<<",   "\n====")
             self.p(self.prompt, "\n====")
-            self.p("++++", self.count_tokens(self.prompt), "++++")
+            self.p("++++", self.count_tokens(self.prompt), self.tokens_recent, "++++")
             #self.p(self.memory_user, '\n---')
             #self.p(self.memory_ai)
 
@@ -311,8 +313,6 @@ class Kernel:
                     self.q.put(i, block=False)
             return
 
-        #if self.review_skip > 0 and self.review:
-        #    return
 
         r = sr.Recognizer()
         
@@ -379,8 +379,6 @@ class Kernel:
             return
         if len(txt) == 0:
             return
-        #if self.review_skip > 0 and self.review:
-        #    return 
 
         filename =  '.output.mp3'
 
@@ -479,6 +477,8 @@ class Kernel:
                 save = text.split('.')[0]
             save = save.replace("*", '')
             save = save.replace(";", '') 
+            save = save.replace("/", '')
+            save = save.replace('\\', '')
 
             if ":" in save:
                 ## trim name from 'save'
@@ -507,7 +507,7 @@ class Kernel:
                 
             if len(save.strip()) > 0 :
                 f = open(os.path.expanduser('~') + "/" + self.PROJECT_REVIEW_NAME, "a")
-                f.write(save + "\n")
+                f.write(save.strip().lower() + "\n")
                 f.close()
             return True
 
@@ -545,9 +545,10 @@ class Kernel:
         for j in range(len(self.memory_review)):
             a = self.memory_review[j]
             a = a.replace(";", "")
-            i[0]['content'] += " " + a 
-            if j < len(self.memory_review) - 1 or True:
-                i[0]['content'] += "\n" #";"
+            #i[0]['content'] += " " + a 
+            #if j < len(self.memory_review) - 1 or True:
+            #    i[0]['content'] += "\n" #";"
+            i += [ self.format_json( identifiers['ai'], a) ]
         return i
 
     def _pre_prompt_ret(self, i):
@@ -567,8 +568,8 @@ class Kernel:
             } 
         ]
         if self.review:
-            ai[0]['content'] += ' Say with the * character as a function to save any marked sentence permanently.'
-            ret += ' Say with the * character as a function to save any marked sentence permanently. \n'
+            ai[0]['content'] += ' Say anything with the * character as a function to save any marked sentence permanently.'
+            ret += ' Say anything with the * character as a function to save any marked sentence permanently. \n'
 
         pc = ""
         ret = self._pre_prompt_ret(ret)
@@ -626,12 +627,6 @@ class Kernel:
         self.prompt += identifiers['ai'] + ': '
 
     def modify_prompt_after_model(self, tt, rr):
-        if self.review and self.review_skip > 0 and False:
-            self.p("skipping modify_prompt_after_model memory append")
-            if len(self.memory_ai) == 0:
-                self.memory_user.append("")
-                self.memory_ai.append("")
-            return
         self.memory_user.append(rr)
         self.memory_ai.append(tt) ## <-- temporary...
         pass 
@@ -710,6 +705,12 @@ class Kernel:
             self.reply = r['choices'][0]['message']['content']
         except:
             self.reply = ""
+        
+        try:
+            self.tokens_recent = r['usage']['total_tokens']
+        except:
+            self.tokens_recent = 0 
+
         if self.pc:
             try:
                 self.reply = r['choices'][0]['text']
