@@ -188,7 +188,6 @@ class Kernel:
                     self.p("say something x.")
                     self.recognize_audio(shadow_say_text)
                     end = time.time()
-                    #self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
                     if self.q.qsize() > 0:
                         break 
                     if (end - start)  > self.timeout * 60 :
@@ -200,8 +199,6 @@ class Kernel:
                         break
                     num += 1 
                 ###############
-                #self.p("len q:", self.q.qsize())
-                #using_thread = not self.no_check
                 while self.q.qsize() > 0:
                     rx = self.q.get(block=True) ## <--
                     if rx.strip() != '':
@@ -209,7 +206,6 @@ class Kernel:
                             wake_word_found = True
                         rr.append(rx.strip())
                 end = time.time()
-                #self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
                 if not wake_word_found and num != 0:
                     self.p('not wake_word_found')
                     #rr.clear()
