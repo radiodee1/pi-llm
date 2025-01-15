@@ -207,7 +207,7 @@ class Kernel:
                     #self.p("say something.")
                     self.recognize_audio(shadow_say_text)
                     end = time.time()
-                    self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
+                    #self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
                     if self.q.qsize() > 0:
                         break 
                     if (end - start)  > self.timeout * 60:
@@ -224,10 +224,10 @@ class Kernel:
                 while self.q.qsize() > 0:
                     rx = self.q.get(block=True) ## <--
                     if rx.strip() != '':
-                        self.p('b-rr', rx)
+                        #self.p('b-rr', rx)
                         rr.append(rx.strip())
                 end = time.time()
-                self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
+                #self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
 
             else:
                 rr.clear()
@@ -240,9 +240,9 @@ class Kernel:
                 while not self.q.empty():
                     rx = self.q.get(block=False)
                     if rx.strip() != '':
-                        self.p('c-rr', rx)
+                        #self.p('c-rr', rx)
                         rr.append(rx.strip())
-                self.p("len q:", self.q.qsize(), 'rr:', len(rr) )
+                #self.p("len q:", self.q.qsize(), 'rr:', len(rr) )
 
                 if len(rr) == 0:
                     rr = ['say' , 'something,' ]
