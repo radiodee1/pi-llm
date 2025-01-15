@@ -26,7 +26,7 @@ prompt_txt = [
         [ 'what is your favorite food', 'I like pizza']
             ]
 
-identifiers = { 'user':'user', 'ai':'Jane' }
+identifiers = { 'user':'user', 'ai':'Jane', 'mem': 'memory' }
 
 voice_gender = { 'male': 'en-US-Neural2-D', 'female': 'en-US-Neural2-F' }
 
@@ -204,7 +204,7 @@ class Kernel:
                 while num < high:
                     rr.clear()
                     shadow_say_text = False
-                    self.p("say something.")
+                    #self.p("say something.")
                     self.recognize_audio(shadow_say_text)
                     end = time.time()
                     self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
@@ -233,7 +233,7 @@ class Kernel:
                 rr.clear()
                 sleep_time_2 = 1.75 
                 shadow_say_text = False
-                self.p("say something.")
+                #self.p("say something.")
                 self.recognize_audio(shadow_say_text)
                 time.sleep(sleep_time_2)   
                 self.p("len q:", self.q.qsize()) 
@@ -263,14 +263,11 @@ class Kernel:
                     #rr = []
                     self.review_skip -= 1 
 
-            #if self.truncate:
             tt = self.prune_input(tt) # + '.'
 
-            self.p(tt, "<<<",   "\n====")
-            self.p(self.prompt, "\n====")
-            self.p("++++", self.count_tokens(self.prompt), self.tokens_recent, "++++")
-            #self.p(self.memory_user, '\n---')
-            #self.p(self.memory_ai)
+            self.p("====\n", self.prompt, "\n====")
+            self.p("++++", self.tokens_recent, "++++")
+            #self.p("++++", self.count_tokens(self.prompt), self.tokens_recent, "++++")
 
             self.modify_prompt_after_model(tt, ' '.join(rr))
 
@@ -485,6 +482,12 @@ class Kernel:
                 s = save.split(":")
                 if s[0].lower().strip() == identifiers['ai'].lower().strip():
                     save = s[1] # ' '.join( s[1:] ).lower().strip()
+                if s[0].lower().strip() == identifiers['mem'].lower().strip():
+                    save = s[1] # ' '.join( s[1:] ).lower().strip()
+                if s[0].lower().strip() == identifiers['user'].lower().strip():
+                    save = s[1] # ' '.join( s[1:] ).lower().strip()
+                if len(s[0].strip().split(' ')) == 1:
+                    save = s[1]
 
             for i in self.memory_review:
                 j = i.split(' ')
@@ -548,13 +551,13 @@ class Kernel:
             #i[0]['content'] += " " + a 
             #if j < len(self.memory_review) - 1 or True:
             #    i[0]['content'] += "\n" #";"
-            i += [ self.format_json( identifiers['ai'], a) ]
+            i += [ self.format_json( identifiers['mem'], a) ]
         return i
 
     def _pre_prompt_ret(self, i):
         for a in self.memory_review:
             a = a.replace(";", '')
-            i += " " + a + "\n" # ";"
+            i += identifiers['mem'] + ": " + a + "\n" # ";"
         i = i.strip()
         i = i.strip(';')
         i += "\n"
@@ -564,7 +567,7 @@ class Kernel:
         ret = ""
         ai = [ 
             { 'role': 'system', 'content': 'You are a ficticious person named ' + identifiers['ai'] + 
-             '. Use your imagination to answer all questions.' 
+             '. Use your imagination to answer all questions in English.' 
             } 
         ]
         if self.review:
