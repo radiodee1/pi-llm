@@ -853,7 +853,7 @@ def do_args(parser, k):
     k.voice = args.voice
 
     if args.name != None and args.name.strip() != "":
-        identifiers['ai'] = args.name.strip()
+        identifiers['ai'] = args.name.strip().lower()
 
     if args.file != None:
         k.file = args.file 
