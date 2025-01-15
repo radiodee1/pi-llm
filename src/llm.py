@@ -644,9 +644,9 @@ class Kernel:
                     t[1] += '*'
             if len(t) > 1:
                 text = ' '.join(t[1:])
-            if len(t) == 1 and t[0].strip() in identifiers:
+            if len(t) == 1 and t[0].strip() in identifiers.values():
                 text = ''
-        text = text.replace(':', ' ')
+        #text = text.replace(':', ' ')
         text = text.replace('-', ' ')
         text = text.replace(';', ' ')
         text = text.replace('"', '')
@@ -655,6 +655,11 @@ class Kernel:
         text = text.replace("!", '.')
         if self.review:
             text = text.replace("*", '')
+        if ':' in text:
+            t = text.strip().split(':')
+            if len(t) == 2 or t[0].strip() in identifiers.values():
+                text = ' '.join(t[1:])
+
 
         if '\n' in text:
             text = text.split('\n')[0]
