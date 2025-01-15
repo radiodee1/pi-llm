@@ -176,10 +176,11 @@ class Kernel:
             x += 1
             x = x % len(prompt_txt)
             ### second process ###
-            if self.loop_wait and not self.questions:
+            if self.loop_wait: # and not self.questions:
                 num = 0 
                 high = 1000
                 start = time.time()
+                #self.recognize_audio(shadow_say_text)
                 wake_word_found = False
                 while num < high:
                     rr.clear()
@@ -209,20 +210,21 @@ class Kernel:
                         rr.append(rx.strip())
                 end = time.time()
                 #self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
-                if not wake_word_found:
+                if not wake_word_found and num != 0:
                     self.p('not wake_word_found')
-                    rr.clear()
+                    #rr.clear()
                     continue
                 else:
                     self.p('wake_word_found')
-            else:
+
+            elif self.questions:
                 rr.clear()
                 sleep_time_2 = 1.75 
                 shadow_say_text = False
                 #self.p("say something.")
                 self.recognize_audio(shadow_say_text)
                 time.sleep(sleep_time_2)   
-                self.p("len q:", self.q.qsize()) 
+                self.p("len q:", self.q.qsize(), 'say something y.') 
                 while not self.q.empty():
                     rx = self.q.get(block=False)
                     if rx.strip() != '':
