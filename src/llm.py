@@ -26,7 +26,7 @@ prompt_txt = [
         [ 'what is your favorite food', 'I like pizza']
             ]
 
-identifiers = { 'user':'user', 'ai':'Jane', 'mem': 'memory' }
+identifiers = { 'user':'user', 'ai':'jane', 'mem': 'memory' }
 
 voice_gender = { 'male': 'en-US-Neural2-D', 'female': 'en-US-Neural2-F' }
 
@@ -166,32 +166,11 @@ class Kernel:
             self.p("ai here")
             self.empty_queue()
             shadow_say_text = True
-            if not self.no_check:
-                p = mp.Process(target=self.recognize_audio, args=(shadow_say_text,))
-                p.start()
-                time.sleep(2)
             rr.clear()
             self.say_text(tt)
             if (self.needs_restart()):
                 return 
             ## try join here!! remove sleep !!
-            if not self.no_check:
-                p.join()
-                while self.q.qsize() > 0:
-                    rx = self.q.get(block=True) ## <-- block = False
-                    if rx.strip() != "":
-                        self.p('a-rr', rx)
-                        rr.append(rx.strip()) 
-                self.p(rr)
-                ## check ##
-                if rr == [] or len(rr) == 0:
-                    self.p('no input!')
-                    
-                if self.is_match(tt.split(' '), rr) or len(rr) == 0:
-                    self.p('no interruption!')
-                else:
-                    self.p('interruption!')
-                    self.save_file(0, '---\ninterruption\n---')
             tt = ""
             self.empty_queue()
             x += 1
@@ -201,20 +180,21 @@ class Kernel:
                 num = 0 
                 high = 1000
                 start = time.time()
+                wake_word_found = False
                 while num < high:
                     rr.clear()
                     shadow_say_text = False
-                    #self.p("say something.")
+                    self.p("say something x.")
                     self.recognize_audio(shadow_say_text)
                     end = time.time()
                     #self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
                     if self.q.qsize() > 0:
                         break 
-                    if (end - start)  > self.timeout * 60:
+                    if (end - start)  > self.timeout * 60 :
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
                         rr = ['say', 'something']
                         break
-                    if num == high - 1 :
+                    if num == high - 1  :
                         rr = [ 'say', 'something' ]
                         break
                     num += 1 
@@ -224,11 +204,17 @@ class Kernel:
                 while self.q.qsize() > 0:
                     rx = self.q.get(block=True) ## <--
                     if rx.strip() != '':
-                        #self.p('b-rr', rx)
+                        if (self.find_wake_word(rx.strip())):
+                            wake_word_found = True
                         rr.append(rx.strip())
                 end = time.time()
                 #self.p("len q:", self.q.qsize(), 'rr:', len(rr), 'num:', num, 'elapsed:', end - start)
-
+                if not wake_word_found:
+                    self.p('not wake_word_found')
+                    rr.clear()
+                    continue
+                else:
+                    self.p('wake_word_found')
             else:
                 rr.clear()
                 sleep_time_2 = 1.75 
@@ -325,7 +311,7 @@ class Kernel:
             if self.mic_timeout != -1:
                 try:
                     audio = r.listen(source , timeout=timeout , phrase_time_limit=phrase_time_limit)
-                
+                    self.p("processing with timeout") 
                 except Exception as e:
                     self.p("an exception occured")
                     if e == KeyboardInterrupt:
@@ -458,6 +444,13 @@ class Kernel:
                 output.append(speech[i])
         #print(output, '<<<')
         return output
+
+    def find_wake_word(self, text):
+        text = text.strip().lower()
+        if text in identifiers.values():
+            return True
+        else:
+            return False
 
     def find_marked_text(self, text):
         if self.review == False or self.review_skip > 0:
