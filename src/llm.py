@@ -467,6 +467,7 @@ class Kernel:
             save = save.replace(";", '') 
             save = save.replace("/", '')
             save = save.replace('\\', '')
+            save = save.replace('!', '')
 
             if ":" in save:
                 ## trim name from 'save'
