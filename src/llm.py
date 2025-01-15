@@ -185,7 +185,7 @@ class Kernel:
                 while num < high:
                     rr.clear()
                     shadow_say_text = False
-                    self.p("say something x.")
+                    self.p("say something in loop-wait.")
                     self.recognize_audio(shadow_say_text)
                     end = time.time()
                     if self.q.qsize() > 0:
@@ -207,11 +207,11 @@ class Kernel:
                         rr.append(rx.strip())
                 end = time.time()
                 if not wake_word_found and num != 0:
-                    self.p('not wake_word_found')
+                    self.p('not wake_word_found in loop-wait')
                     #rr.clear()
                     continue
                 else:
-                    self.p('wake_word_found')
+                    self.p('wake_word_found in loop-wait')
 
             else : #if self.questions:
                 rr.clear()
@@ -220,7 +220,7 @@ class Kernel:
                 #self.p("say something.")
                 self.recognize_audio(shadow_say_text)
                 time.sleep(sleep_time_2)   
-                self.p("len q:", self.q.qsize(), 'say something y.') 
+                self.p("len q:", self.q.qsize(), 'say something outside loop-wait.') 
                 while not self.q.empty():
                     rx = self.q.get(block=False)
                     if rx.strip() != '':
