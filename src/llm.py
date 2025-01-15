@@ -219,7 +219,7 @@ class Kernel:
                         break
                     num += 1 
                 ###############
-                self.p("len q:", self.q.qsize())
+                #self.p("len q:", self.q.qsize())
                 #using_thread = not self.no_check
                 while self.q.qsize() > 0:
                     rx = self.q.get(block=True) ## <--
@@ -469,7 +469,8 @@ class Kernel:
             if self.truncate == False:
                 for t in text.split('.'):
                     if "*" in t:
-                        save = t 
+                        save = t
+                        break 
             else:
                 save = text.split('.')[0]
             save = save.replace("*", '')
@@ -486,7 +487,7 @@ class Kernel:
                     save = s[1] # ' '.join( s[1:] ).lower().strip()
                 if s[0].lower().strip() == identifiers['user'].lower().strip():
                     save = s[1] # ' '.join( s[1:] ).lower().strip()
-                if len(s[0].strip().split(' ')) == 1:
+                if len(s[0].strip().split(' ')) == 1 or s[0].strip() in identifiers.values():
                     save = s[1]
 
             for i in self.memory_review:
@@ -572,7 +573,7 @@ class Kernel:
         ]
         if self.review:
             ai[0]['content'] += ' Say anything with the * character as a function to save any marked sentence permanently.'
-            ret += ' Say anything with the * character as a function to save any marked sentence permanently. \n'
+            ret += 'Say anything with the * character as a function to save any marked sentence permanently. Use your intuition to mark sentences. \n'
 
         pc = ""
         ret = self._pre_prompt_ret(ret)
