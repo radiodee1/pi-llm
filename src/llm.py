@@ -176,7 +176,7 @@ class Kernel:
             x += 1
             x = x % len(prompt_txt)
             ### second process ###
-            if self.loop_wait: # and not self.questions:
+            if self.loop_wait: # or not self.questions:
                 num = 0 
                 high = 1000
                 start = time.time()
@@ -213,7 +213,7 @@ class Kernel:
                 else:
                     self.p('wake_word_found')
 
-            elif self.questions:
+            else : #if self.questions:
                 rr.clear()
                 sleep_time_2 = 1.75 
                 shadow_say_text = False
@@ -226,7 +226,6 @@ class Kernel:
                     if rx.strip() != '':
                         #self.p('c-rr', rx)
                         rr.append(rx.strip())
-                #self.p("len q:", self.q.qsize(), 'rr:', len(rr) )
 
                 if len(rr) == 0:
                     rr = ['say' , 'something,' ]
@@ -921,7 +920,7 @@ if __name__ == '__main__':
     parser.add_argument('--cloud_tts', action="store_true", help="Google Cloud Text to Speech.")
     parser.add_argument('--json', action="store_true", help="use json for model prompt.")
     parser.add_argument('--voice', type=str, default="en-US-Journey-F", help="Google Cloud TTS Voice Code.") ## en-US-Journey-D en-US-Journey-F
-    parser.add_argument('--questions', type=int, default=-1, help="Simulate two parties with preset question list. Specify number of simulated questions.")
+    parser.add_argument('--questions', type=int, default=-1, help="Simulate two parties with preset question list. Specify number of simulated questions. Must disable loop_wait.")
     parser.add_argument('--pc', action="store_true", help="use prompt-completion for prompt.")
     parser.add_argument('--review', action="store_true", help="use review * function.")
     ## NOTE: local is not implemented!! 
