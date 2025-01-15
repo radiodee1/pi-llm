@@ -176,7 +176,7 @@ class Kernel:
             x += 1
             x = x % len(prompt_txt)
             ### second process ###
-            if self.loop_wait: # or not self.questions:
+            if self.loop_wait and self.questions == -1 :
                 num = 0 
                 high = 1000
                 start = time.time()
