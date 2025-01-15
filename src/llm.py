@@ -911,7 +911,7 @@ if __name__ == '__main__':
     parser.add_argument('--name', type=str, help="define new name.")
     parser.add_argument('--offset', type=float, help="time in seconds to offset on startup.")
     parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
-    parser.add_argument('--mic_timeout', type=int, help="mic timeout in seconds.")
+    parser.add_argument('--mic_timeout', type=int, default=20, help="mic timeout in seconds.")
     parser.add_argument('--file', action="store_true", help="save statistics in text file.")
     parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
     parser.add_argument('--timeout', type=float, default=0.5, help="minutes to timeout.")
