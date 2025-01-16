@@ -24,8 +24,8 @@ def get_weight(text_comparison, text_surprise):
         text_comparison = k 
         ## allow list input
     w = len(text_comparison.split("\n")) ## number of lines in comparison text.
-    weight["a"] = weigh(text_comparison)
-    weight["b"] = weigh(text_surprise)
+    weight["a"] = _weigh(text_comparison)
+    weight["b"] = _weigh(text_surprise)
     len_a = len(text_comparison.strip().split(' '))
     len_b = len(text_surprise.strip().split(' '))
     score["a"] = len_a
@@ -49,7 +49,7 @@ def get_weight(text_comparison, text_surprise):
     else:
         return False
 
-def weigh(text):
+def _weigh(text):
     dict_out = {}
     tt = []
     t = text.strip().split()
