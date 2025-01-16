@@ -16,12 +16,18 @@ notsimilar = {
     "b": 0 
 }
 
-def get_weight(text_a, text_b):
-
-    weight["a"] = weigh(text_a)
-    weight["b"] = weigh(text_b)
-    len_a = len(text_a.strip().split(' '))
-    len_b = len(text_b.strip().split(' '))
+def get_weight(text_comparison, text_surprise):
+    if isinstance(text_comparison, list):  
+        k = ''
+        for i in text_comparison:
+            k += "\n " + i
+        text_comparison = k 
+        ## allow list input
+    w = len(text_comparison.split("\n")) ## number of lines in comparison text.
+    weight["a"] = weigh(text_comparison)
+    weight["b"] = weigh(text_surprise)
+    len_a = len(text_comparison.strip().split(' '))
+    len_b = len(text_surprise.strip().split(' '))
     score["a"] = len_a
     score["b"] = len_b
     j = {}
@@ -38,7 +44,7 @@ def get_weight(text_a, text_b):
             m[i] = weight["a"][i]
             notsimilar["a"] += weight["a"][i]
     print(m, notsimilar["a"] )
-    if notsimilar["b"] > notsimilar["a"]:
+    if notsimilar["b"] > notsimilar["a"] / w:
         return True
     else:
         return False
@@ -63,4 +69,7 @@ if __name__ == '__main__':
     print(score)
     print("---")
     g = get_weight("a b c d e f g h i j k l m n o p q r s t u v w x y z", "some other text that returns false.")
+    print(g)
+    print(type([]))
+    g = get_weight(['here', 'and here'], 'something surprising')
     print(g)
