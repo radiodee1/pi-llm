@@ -38,6 +38,13 @@ modules:
     sources:
       - type: file
         path: src/llm.py
+  - name: review
+    buildsystem: simple
+    build-commands:
+      - install -D review.py /app/bin/review.py 
+    sources:
+      - type: file
+        path: src/review.py 
   - name: org.llm.LLM.desktop
     buildsystem: simple
     sources:
