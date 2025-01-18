@@ -66,7 +66,6 @@ class Kernel:
         self.questions_num = 0
         self.checkpoint_num = 0 
         self.pc = False
-        #self.memory_review = []
         self.review = False
         self.review_skip = 0 
         self.review_skip_high = 1 
@@ -240,7 +239,6 @@ class Kernel:
             
             if self.review:
                 skip = review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
-                #skip = self.find_marked_text(tt)
                 if self.review_skip <= 0 and skip:
                     self.review_skip = self.review_skip_high ## magic number 1?? 
                 elif not skip:
@@ -401,9 +399,6 @@ class Kernel:
 
             pass 
 
-        #m = hashlib.sha256()
-        #f = m.hexdigest()
-        #tts.save(filename)
         playsound(filename)
         self.p('say this: ', txt)
         pass 
