@@ -36,6 +36,8 @@ def is_weight_surprise(text_comparison, text_surprise):
         text_comparison = k.strip() 
         ## allow list input
     w = len(text_comparison.split("\n")) ## number of lines in comparison text.
+    if w < 2:
+        return False
     weight["a"] = _weigh(text_comparison)
     weight["b"] = _weigh(text_surprise)
     len_a = len(text_comparison.strip().split(' '))

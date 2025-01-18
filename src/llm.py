@@ -17,6 +17,8 @@ import requests
 import json
 #import hashlib
 
+import review
+
 prompt_txt = [
         [ 'hi', 'hello' ],
         [ 'what is your last name?', 'my last name is Smith' ],
@@ -64,7 +66,7 @@ class Kernel:
         self.questions_num = 0
         self.checkpoint_num = 0 
         self.pc = False
-        self.memory_review = []
+        #self.memory_review = []
         self.review = False
         self.review_skip = 0 
         self.review_skip_high = 1 
@@ -231,13 +233,14 @@ class Kernel:
                     rr = ['say' , 'something,' ]
                     #skip_say_text = True
 
-            self.read_review()
+            review.read_review()
             self.prompt = self.make_prompt()
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
             
             if self.review:
-                skip = self.find_marked_text(tt)
+                skip = review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
+                #skip = self.find_marked_text(tt)
                 if self.review_skip <= 0 and skip:
                     self.review_skip = self.review_skip_high ## magic number 1?? 
                 elif not skip:
@@ -449,63 +452,6 @@ class Kernel:
         else:
             return False
 
-    def find_marked_text(self, text):
-        if self.review == False or self.review_skip > 0:
-            return True
-        save = ''
-        if not '*' in text:
-            return False
-        if '*' in text:
-            if self.truncate == False:
-                for t in text.split('.'):
-                    if "*" in t:
-                        save = t
-                        break 
-            else:
-                save = text.split('.')[0]
-            save = save.replace("*", '')
-            save = save.replace(";", '') 
-            save = save.replace("/", '')
-            save = save.replace('\\', '')
-            save = save.replace('!', '')
-
-            if ":" in save:
-                ## trim name from 'save'
-                s = save.split(":")
-                if s[0].lower().strip() == identifiers['ai'].lower().strip():
-                    save = s[1] # ' '.join( s[1:] ).lower().strip()
-                if s[0].lower().strip() == identifiers['mem'].lower().strip():
-                    save = s[1] # ' '.join( s[1:] ).lower().strip()
-                if s[0].lower().strip() == identifiers['user'].lower().strip():
-                    save = s[1] # ' '.join( s[1:] ).lower().strip()
-                if len(s[0].strip().split(' ')) == 1 or s[0].strip() in identifiers.values():
-                    save = s[1]
-
-            for i in self.memory_review:
-                j = i.split(' ')
-                k = save.split(" ")
-                ss = []
-                for kk in k:
-                    if kk.strip() != "":
-                        ss.append(kk)
-                k = ss 
-                j.sort()
-                k.sort()
-                m = min(len(j), len(k))
-                words_match = True
-                for ii in range(m):
-                    if j[ii].lower() != k[ii].lower():
-                        words_match = False
-                        break
-                if words_match:
-                    return True## <-- we already have one !! 
-                
-            if len(save.strip()) > 0 :
-                f = open(os.path.expanduser('~') + "/" + self.PROJECT_REVIEW_NAME, "a")
-                f.write(save.strip().lower() + "\n")
-                f.close()
-            return True
-
 
     def format_json(self, user, text):
         user = user.lower().split(' ')[0]
@@ -522,23 +468,11 @@ class Kernel:
         x = { 'role' : t, 'content': user + " : " + text }
         return x 
 
-    def read_review(self):
-        if self.review == False:
-            return
-        self.memory_review = []
-        name = self.PROJECT_REVIEW_NAME 
-        path = os.path.expanduser("~") + "/" + name
-        if os.path.exists(path) == False:
-            return
-        f = open(path, 'r')
-        rev = f.readlines()
-        for i in rev:
-            self.memory_review.append(i.strip())
-        f.close()
+
 
     def _pre_prompt_ai(self, i):
-        for j in range(len(self.memory_review)):
-            a = self.memory_review[j]
+        for j in range(len(review.memory_review)):
+            a = review.memory_review[j]
             a = a.replace(";", "")
             #i[0]['content'] += " " + a 
             #if j < len(self.memory_review) - 1 or True:
@@ -547,7 +481,7 @@ class Kernel:
         return i
 
     def _pre_prompt_ret(self, i):
-        for a in self.memory_review:
+        for a in review.memory_review:
             a = a.replace(";", '')
             i += identifiers['mem'] + ": " + a + "\n" # ";"
         i = i.strip()
