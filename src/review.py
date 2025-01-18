@@ -108,7 +108,7 @@ def read_review():
 
 def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     global memory_review
-    read_review()
+    #read_review()
     listx = _last_entries(user_list, ai_list, 2)
     save = ''
     if not '*' in text:
