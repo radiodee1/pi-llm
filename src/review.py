@@ -50,14 +50,14 @@ def is_weight_surprise(text_comparison, text_surprise):
         if i not in weight["a"]:
             j[i] = weight["b"][i] ## <-- weight from surprising text??
             notsimilar["b"] += weight["b"][i]
-    print(j, notsimilar["b"] )
+    #print(j, notsimilar["b"] )
     m = {}
     notsimilar["a"] = 0
     for i in weight["a"]:
         if i not in weight["b"]:
             m[i] = weight["a"][i]
             notsimilar["a"] += weight["a"][i]
-    print(m, notsimilar["a"] )
+    #print(m, notsimilar["a"] )
     if notsimilar["b"] > notsimilar["a"] / w:
         return True
     else:
@@ -83,12 +83,12 @@ def _last_entries(user_list, ai_list, num = 4):
     if len(user_list) == len(ai_list):
         for i in range(num):
             ii = num - (i  )
-            print(len(user_list) - ii)
+            #print(len(user_list) - ii)
             u_line = user_list[len(user_list) - ii]
             a_line = ai_list[len(ai_list) - ii]
             last.append(u_line)
             last.append(a_line)
-    print(last)
+    #print(last)
     return last 
 
 def read_review():
@@ -96,13 +96,13 @@ def read_review():
     memory_review = []
     name = PROJECT_REVIEW_NAME 
     path = os.path.expanduser("~") + "/" + name
-    print(path)
+    #print(path)
     if os.path.exists(path) == False:
         return
     f = open(path, 'r')
     rev = f.readlines()
     for i in rev:
-        print(i)
+        #print(i)
         memory_review.append(i.strip())
     f.close()
 
