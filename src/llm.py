@@ -494,10 +494,14 @@ class Kernel:
         if self.review:
             ai[0]['content'] += ' Say anything with the * character as a function to save any marked sentence permanently.'
             ret += 'Say anything with the * character as a function to save any marked sentence permanently. Use your intuition to mark sentences. \n'
+            
+            if not self.json:
+                ret = self._pre_prompt_ret(ret)
+            if self.json:
+                ai  = self._pre_prompt_ai(ai)
 
         pc = ""
-        ret = self._pre_prompt_ret(ret)
-        ai  = self._pre_prompt_ai(ai)
+        if self.review:
         for i in range(len(prompt_txt) + len(self.memory_ai) - self.window, len(prompt_txt)):
             if i < 0:
                 continue
