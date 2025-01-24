@@ -49,6 +49,7 @@ class Kernel:
         self.temp = 0.001
         self.timeout = 3.0 
         self.window = 35
+        self.window_line_count = 0 
         self.cloud_stt = False
         self.cloud_tts = False
         self.json = False
@@ -250,7 +251,7 @@ class Kernel:
             tt = self.prune_input(tt) # + '.'
 
             self.p("====\n", self.prompt, "\n====")
-            self.p("++++", self.tokens_recent, "++++")
+            self.p("++++", self.tokens_recent, self.window_line_count , "++++")
             #self.p("++++", self.count_tokens(self.prompt), self.tokens_recent, "++++")
 
             self.modify_prompt_after_model(tt, ' '.join(rr))
@@ -473,12 +474,14 @@ class Kernel:
             #if j < len(self.memory_review) - 1 or True:
             #    i[0]['content'] += "\n" #";"
             i += [ self.format_json( identifiers['mem'], a) ]
+            self.window_line_count += 1 
         return i
 
     def _pre_prompt_ret(self, i):
         for a in review.memory_review:
             a = a.replace(";", '')
             i += identifiers['mem'] + ": " + a + "\n" # ";"
+            self.window_line_count += 1 
         i = i.strip()
         i = i.strip(';')
         i += "\n"
@@ -501,12 +504,12 @@ class Kernel:
                 ai  = self._pre_prompt_ai(ai)
 
         pc = ""
-        if self.review:
         for i in range(len(prompt_txt) + len(self.memory_ai) - self.window, len(prompt_txt)):
             if i < 0:
                 continue
             u = prompt_txt[i][0]
             a = prompt_txt[i][1]
+            self.window_line_count += 1 
             if self.json:
                 ai += [self.format_json(identifiers['user'], u) ]
                 ai += [self.format_json(identifiers['ai'], a) ]
@@ -524,6 +527,7 @@ class Kernel:
                     continue
                 a = self.memory_ai[i]
                 u = self.memory_user[i]
+                self.window_line_count += 1 
                 if len(a) == 0 or len(u) == 0:
                     continue
                 if self.json:
