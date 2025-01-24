@@ -509,7 +509,7 @@ class Kernel:
                 continue
             u = prompt_txt[i][0]
             a = prompt_txt[i][1]
-            self.window_line_count += 1 
+            self.window_line_count += 2 
             if self.json:
                 ai += [self.format_json(identifiers['user'], u) ]
                 ai += [self.format_json(identifiers['ai'], a) ]
@@ -527,7 +527,7 @@ class Kernel:
                     continue
                 a = self.memory_ai[i]
                 u = self.memory_user[i]
-                self.window_line_count += 1 
+                self.window_line_count += 2 
                 if len(a) == 0 or len(u) == 0:
                     continue
                 if self.json:
