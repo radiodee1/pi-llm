@@ -488,6 +488,7 @@ class Kernel:
         return i 
 
     def make_prompt(self):
+        self.window_line_count = 0 
         ret = ""
         ai = [ 
             { 'role': 'system', 'content': 'You are a ficticious person named ' + identifiers['ai'] + 
