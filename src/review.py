@@ -2,7 +2,7 @@
 
 import os
 from dotenv import  dotenv_values 
-
+import random
 
 vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -12,6 +12,10 @@ except:
     PROJECT_REVIEW_NAME='.llm.review.txt'
 
 memory_review = []
+sub_review = []
+index_review = []
+memory_final_index = []
+
 
 weight = {
     "a": {},
@@ -91,9 +95,16 @@ def _last_entries(user_list, ai_list, num = 4):
     #print(last)
     return last 
 
-def read_review():
+def read_review( selection ):
     global memory_review 
+    global sub_review 
+    global index_review
+    global memory_final_index 
     memory_review = []
+    sub_review = []
+    index_review = []
+    memory_final_index = []
+
     name = PROJECT_REVIEW_NAME 
     path = os.path.expanduser("~") + "/" + name
     #print(path)
@@ -101,10 +112,25 @@ def read_review():
         return
     f = open(path, 'r')
     rev = f.readlines()
+    num = 0 
     for i in rev:
         #print(i)
-        memory_review.append(i.strip())
+        sub_review.append(i.strip())
+        index_review.append(num)
+        num += 1 
     f.close()
+    if selection >= len(sub_review) :
+        memory_review = sub_review
+        return
+    for i in range( selection ):
+        x = random.randint(0, len(index_review) - 1)
+        memory_final_index.append(index_review[x])
+        #print(i, x, memory_final_index, index_review)
+        del index_review[x]
+        pass 
+    memory_final_index.sort()
+    for i in memory_final_index:
+        memory_review.append(sub_review[i])
 
 def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     global memory_review
@@ -127,6 +153,8 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         save = save.replace("/", '')
         save = save.replace('\\', '')
         save = save.replace('!', '')
+        save = save.replace(')', '')
+        save = save.replace('(', '')
 
         if ":" in save:
             ## trim name from 'save'
@@ -163,9 +191,6 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
 
 
 if __name__ == '__main__':
-    list_first =  ['here is some text', 'here is some more', 'finally here']
-    list_second =  ['some things', 'some more', 'also things']
-    surprise = "exactly the text x is the word"
-    g = find_marked_text(list_first, list_second, surprise)
-    print(g, 'g')
+    read_review(5)
+    print(memory_review)
 

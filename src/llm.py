@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+from math import floor
 import string
 from wave import Error
 from dotenv import  dotenv_values 
@@ -49,6 +50,9 @@ class Kernel:
         self.temp = 0.001
         self.timeout = 3.0 
         self.window = 35
+        self.window_mem = 0 
+        self.window_chat = 0 
+        self.window_ratio = 1.0 / 2.0 
         self.window_line_count = 0 
         self.cloud_stt = False
         self.cloud_tts = False
@@ -233,7 +237,7 @@ class Kernel:
                     rr = ['say' , 'something,' ]
                     #skip_say_text = True
 
-            review.read_review()
+            review.read_review(self.window_mem)
             self.prompt = self.make_prompt()
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
@@ -505,7 +509,7 @@ class Kernel:
                 ai  = self._pre_prompt_ai(ai)
 
         pc = ""
-        for i in range(len(prompt_txt) + len(self.memory_ai) - self.window, len(prompt_txt)):
+        for i in range(len(prompt_txt) + len(self.memory_ai) - self.window_chat, len(prompt_txt)):
             if i < 0:
                 continue
             u = prompt_txt[i][0]
@@ -523,7 +527,7 @@ class Kernel:
             ret += identifiers['ai'] + ": " + a 
             ret += '\n\n'
         if len(self.memory_ai) == len(self.memory_user):
-            for i in range(len(self.memory_ai) - self.window ,len(self.memory_ai)):
+            for i in range(len(self.memory_ai) - self.window_chat ,len(self.memory_ai)):
                 if i < 0:
                     continue
                 a = self.memory_ai[i]
@@ -550,14 +554,17 @@ class Kernel:
 
     def modify_prompt_before_model(self, tt, rr):
         if self.json:
+            self.window_line_count += 2 
             self.prompt += [self.format_json(identifiers['user'], rr) ]# + "\n"
             self.prompt += [self.format_json(identifiers['ai'], "") ]
             return
         if self.pc:
+            self.window_line_count += 1 
             self.prompt +=  rr + '\n'#, 'completion': ''}]
             return
         self.prompt += identifiers['user'] + ': ' + rr + "\n" 
         self.prompt += identifiers['ai'] + ': '
+        self.window_line_count += 2 
 
     def modify_prompt_after_model(self, tt, rr):
         self.memory_user.append(rr)
@@ -805,6 +812,9 @@ def do_args(parser, k):
     
     if args.window != 0:
         k.window = args.window
+    k.window_mem = floor(k.window * k.window_ratio )
+    k.window_chat = k.window - k.window_mem 
+    #k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
 
     if args.json != None and args.json == True:
         k.json = args.json
