@@ -37,7 +37,7 @@ notsimilar = {
     "b": 0 
 }
 
-def is_weight_surprise(text_comparison, text_surprise):
+def _is_weight_surprise(text_comparison, text_surprise):
     if isinstance(text_comparison, list):  
         k = ''
         for i in text_comparison:
@@ -145,7 +145,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     listx = _last_entries(user_list, ai_list, 2)
     save = ''
     if not ADD_TEXT in text:
-        mark = is_weight_surprise(listx, text)
+        mark = _is_weight_surprise(listx, text)
         if mark:
             text += ADD_AUTO #" **"
         if not mark:
