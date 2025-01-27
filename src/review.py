@@ -144,6 +144,18 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     #read_review()
     listx = _last_entries(user_list, ai_list, 2)
     save = ''
+    if REM_TEXT in text:
+        for t in text.split('.'):
+            if REM_TEXT in t:
+                save = t
+                break 
+        save = _remove_bad_chars(save)
+        save = save.replace(REM_TEXT, '')
+        save = _return_without_name(save)
+        _rem_matching_sentence(sub_review , save)
+            # save all memory_review here and return
+        return True 
+        
     if not ADD_TEXT in text:
         mark = _is_weight_surprise(listx, text)
         if mark:
@@ -155,14 +167,8 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
             if "*" in t:
                 save = t
                 break 
-        save = save.replace("*", '')
-        save = save.replace(";", '') 
-        save = save.replace("/", '')
-        save = save.replace('\\', '')
-        save = save.replace('!', '')
-        save = save.replace(')', '')
-        save = save.replace('(', '')
-
+        save = _remove_bad_chars(save)
+        save = save.replace(ADD_TEXT, '')
         save = _return_without_name(save)
 
         do_match = _check_words_do_match(memory_review, save)
@@ -204,6 +210,41 @@ def _check_words_do_match(memory, save):
     ## <-- we already have one !! 
     return words_match
 
+def _rem_matching_sentence(memory, save):
+    words_match = False            
+    if os.path.exists(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak"):
+        os.remove(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak")
+    f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak", "a")
+
+    for i in memory:
+        j = i.split(' ')
+        k = save.split(" ")
+        ss = []
+        for kk in k:
+            if kk.strip() != "":
+                ss.append(kk)
+        k = ss 
+        j.sort()
+        k.sort()
+        m = min(len(j), len(k))
+        #words_match = True
+        for ii in range(m):
+            if j[ii].lower() == k[ii].lower():
+                words_match = True
+        if not words_match:
+            f.write(i + "\n")
+    f.close()
+    if os.path.exists(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak"):
+        os.rename(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak", os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME )
+
+def _remove_bad_chars(save):
+    save = save.replace(";", '') 
+    save = save.replace("/", '')
+    save = save.replace('\\', '')
+    save = save.replace('!', '')
+    save = save.replace(')', '')
+    save = save.replace('(', '')
+    return save
 
 if __name__ == '__main__':
     read_review(5)
