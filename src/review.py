@@ -11,11 +11,16 @@ try:
 except:
     PROJECT_REVIEW_NAME='.llm.review.txt'
 
+ADD_TEXT = "*"
+REM_TEXT = "*del"
+ADD_AUTO = " **"
+
 memory_review = []
 sub_review = []
 index_review = []
 memory_final_index = []
 
+identifiers_dict={'ai': 'jane'}
 
 weight = {
     "a": {},
@@ -134,16 +139,18 @@ def read_review( selection ):
 
 def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     global memory_review
+    global identifiers_dict 
+    identifiers_dict = identifiers
     #read_review()
     listx = _last_entries(user_list, ai_list, 2)
     save = ''
-    if not '*' in text:
+    if not ADD_TEXT in text:
         mark = is_weight_surprise(listx, text)
         if mark:
-            text += " **"
+            text += ADD_AUTO #" **"
         if not mark:
             return False
-    if '*' in text:
+    if ADD_TEXT in text:
         for t in text.split('.'):
             if "*" in t:
                 save = t
@@ -156,30 +163,11 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         save = save.replace(')', '')
         save = save.replace('(', '')
 
-        if ":" in save:
-            ## trim name from 'save'
-            s = save.split(":")
-            if len(s[0].strip().split(' ')) == 1 or s[0].strip() in identifiers.values():
-                save = s[1]
+        save = _return_without_name(save)
 
-        for i in memory_review:
-            j = i.split(' ')
-            k = save.split(" ")
-            ss = []
-            for kk in k:
-                if kk.strip() != "":
-                    ss.append(kk)
-            k = ss 
-            j.sort()
-            k.sort()
-            m = min(len(j), len(k))
-            words_match = True
-            for ii in range(m):
-                if j[ii].lower() != k[ii].lower():
-                    words_match = False
-                    break
-            if words_match:
-                return True## <-- we already have one !! 
+        do_match = _check_words_do_match(memory_review, save)
+        if do_match:
+            return True## <-- we already have one !! 
             
         if len(save.strip()) > 0 :
             f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME, "a")
@@ -187,7 +175,34 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
             f.close()
         return True
 
+def _return_without_name(save):
+    global identifiers_dict
+    if ":" in save:
+        ## trim name from 'save'
+        s = save.split(":")
+        if len(s[0].strip().split(' ')) == 1 or s[0].strip() in identifiers_dict.values():
+            save = s[1]
+    return save
 
+def _check_words_do_match(memory, save):
+    words_match = False
+    for i in memory:
+        j = i.split(' ')
+        k = save.split(" ")
+        ss = []
+        for kk in k:
+            if kk.strip() != "":
+                ss.append(kk)
+        k = ss 
+        j.sort()
+        k.sort()
+        m = min(len(j), len(k))
+        #words_match = True
+        for ii in range(m):
+            if j[ii].lower() == k[ii].lower():
+                words_match = True
+    ## <-- we already have one !! 
+    return words_match
 
 
 if __name__ == '__main__':
