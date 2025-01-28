@@ -85,7 +85,7 @@ def _weigh(text):
         dict_out[ i[0] ] += len(i) - 1
     return dict_out
 
-def _last_entries(user_list, ai_list, num = 4):
+def _last_entries(user_list, ai_list, num = 4, remove_ai=True):
     last = []
     if num > len(user_list):
         num = len(user_list) 
@@ -96,7 +96,8 @@ def _last_entries(user_list, ai_list, num = 4):
             u_line = user_list[len(user_list) - ii]
             a_line = ai_list[len(ai_list) - ii]
             last.append(u_line)
-            last.append(a_line)
+            if not remove_ai:
+                last.append(a_line)
     #print(last)
     return last 
 
