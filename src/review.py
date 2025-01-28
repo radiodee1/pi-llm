@@ -154,7 +154,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         save = save.replace(REM_TEXT, '')
         save = _return_without_name(save)
         _rem_matching_sentence(sub_review , save)
-            # save all memory_review here and return
+        # save all memory_review here and return
         return True 
         
     if not ADD_TEXT in text:
