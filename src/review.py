@@ -37,8 +37,10 @@ notsimilar = {
     "b": 0 
 }
 
+## set these outside module ##
 remove_ai = True 
-sample_len = 2  
+sample_len = 2 
+add_auto = True 
 
 def _is_weight_surprise(text_comparison, text_surprise):
     if isinstance(text_comparison, list):  
@@ -50,8 +52,16 @@ def _is_weight_surprise(text_comparison, text_surprise):
     w = len(text_comparison.split("\n")) ## number of lines in comparison text.
     if w < 2:
         return False
+    weight["a"].clear()
+    weight["b"].clear()
+    score["a"] = 0
+    score["b"] = 0
+    notsimilar["a"] = 0 
+    notsimilar["b"] = 0
+
     weight["a"] = _weigh(text_comparison)
     weight["b"] = _weigh(text_surprise)
+
     len_a = len(text_comparison.strip().split(' '))
     len_b = len(text_surprise.strip().split(' '))
     score["a"] = len_a
@@ -83,9 +93,9 @@ def _weigh(text):
         if i.strip() != "":
             tt.append(i.strip())
     for i in tt:
-        if i[0] not in dict_out:
-            dict_out[ i[0] ] = 1
-        dict_out[ i[0] ] += len(i) - 1
+        if i[:2] not in dict_out:
+            dict_out[ i[:2] ] = 1
+        dict_out[ i[:2] ] += len(i) - 1
     return dict_out
 
 def _last_entries(user_list, ai_list):
@@ -162,7 +172,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         # save all memory_review here and return
         return True 
         
-    if not ADD_TEXT in text:
+    if not ADD_TEXT in text and add_auto:
         mark = _is_weight_surprise(listx, text)
         if mark:
             text += ADD_AUTO #" **"
@@ -209,10 +219,12 @@ def _check_words_do_match(memory, save):
         j.sort()
         k.sort()
         m = min(len(j), len(k))
-        #words_match = True
+        words_match = True
         for ii in range(m):
-            if j[ii].lower() == k[ii].lower():
-                words_match = True
+            if j[ii].lower() != k[ii].lower():
+                words_match = False
+        if words_match:
+            return True
     ## <-- we already have one !! 
     return words_match
 
@@ -239,6 +251,7 @@ def _rem_matching_sentence(memory, save):
                 words_match = True
         if not words_match:
             f.write(i + "\n")
+
     f.close()
     if os.path.exists(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak"):
         os.rename(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak", os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME )
@@ -253,6 +266,12 @@ def _remove_bad_chars(save):
     return save
 
 if __name__ == '__main__':
-    read_review(5)
-    print(memory_review)
-
+    read_review(50)
+    #print(memory_review)
+    #print(_weigh('some text me, you, i'))
+    ## test find_marked_text() ##
+    add_auto = True
+    ai_list_test = ['hi', 'how are you?', 'that is good.']
+    user_list_test = ['hello.', 'i am well.', 'thanks. I agree.']
+    ai_text = "y z t q something amazing just happened * " 
+    find_marked_text(user_list_test, ai_list_test, ai_text)
