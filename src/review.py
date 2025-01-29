@@ -37,6 +37,9 @@ notsimilar = {
     "b": 0 
 }
 
+remove_ai = True 
+sample_len = 2  
+
 def _is_weight_surprise(text_comparison, text_surprise):
     if isinstance(text_comparison, list):  
         k = ''
@@ -85,7 +88,10 @@ def _weigh(text):
         dict_out[ i[0] ] += len(i) - 1
     return dict_out
 
-def _last_entries(user_list, ai_list, num = 4, remove_ai=True):
+def _last_entries(user_list, ai_list):
+    global remove_ai 
+    global sample_len 
+    num = sample_len
     last = []
     if num > len(user_list):
         num = len(user_list) 
@@ -142,8 +148,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     global memory_review
     global identifiers_dict 
     identifiers_dict = identifiers
-    #read_review()
-    listx = _last_entries(user_list, ai_list, 2)
+    listx = _last_entries(user_list, ai_list )
     save = ''
     if REM_TEXT in text:
         for t in text.split('.'):
