@@ -43,6 +43,7 @@ class Kernel:
         self.test = False
         self.truncate = False
         self.loop_wait = False
+        self.loop_wait_saved = False
         self.no_check = False
         self.offset = 0.0
         self.file = False
@@ -73,7 +74,7 @@ class Kernel:
         self.pc = False
         self.review = False
         self.review_skip = 0 
-        self.review_skip_high = 1 
+        self.review_skip_high = 3  
         self.tokens_recent = 0
 
         vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
@@ -246,11 +247,14 @@ class Kernel:
                 skip = review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
                 if self.review_skip <= 0 and skip:
                     self.review_skip = self.review_skip_high ## magic number 1?? 
+                    self.loop_wait = False
                 elif not skip:
-                    self.review_skip = 0 
+                    self.review_skip = 0
+                    self.loop_wait = self.loop_wait_saved
                 else:
-                    #rr = []
-                    self.review_skip -= 1 
+                    self.review_skip -= 1
+                    self.p("review here ..." , self.review_skip)
+
 
             tt = self.prune_input(tt) # + '.'
 
@@ -298,7 +302,9 @@ class Kernel:
                 if i.strip() != "":
                     self.q.put(i, block=False)
             return
-
+        
+        if self.review and self.review_skip > 0:
+            return
 
         r = sr.Recognizer()
         
@@ -364,6 +370,8 @@ class Kernel:
             self.p(txt, '- questions mode')
             return
         if len(txt) == 0:
+            return
+        if self.review and self.review_skip > 0:
             return
 
         filename =  '.output.mp3'
@@ -500,8 +508,10 @@ class Kernel:
             } 
         ]
         if self.review:
-            ai[0]['content'] += ' Say anything with the * character as a function to save any marked sentence permanently.'
-            ret += 'Say anything with the * character as a function to save any marked sentence permanently. Use your intuition to mark sentences. \n'
+            instructions = str(' Say anything with the * character as a function to save any marked sentence permanently. Use your intuition to mark sentences. ' +
+                ' Say anything with the "*del" characters as a function to delete any marked sentence from the memory list permanently.')
+            ai[0]['content'] += instructions 
+            ret += instructions + '\n'
             
             if not self.json:
                 ret = self._pre_prompt_ret(ret)
@@ -567,8 +577,10 @@ class Kernel:
         self.window_line_count += 2 
 
     def modify_prompt_after_model(self, tt, rr):
+        if self.review and self.review_skip > 0:
+            return
         self.memory_user.append(rr)
-        self.memory_ai.append(tt) ## <-- temporary...
+        self.memory_ai.append(tt) 
         pass 
 
     def prune_input(self, text):
@@ -700,6 +712,10 @@ class Kernel:
 
     def save_file(self,  time, heading=""):
         if self.file:
+
+            if self.review and self.review_skip > 0:
+                return
+
             name = '/llm.'
             if int(self.questions) > -1:
                 num = ('0000' + str(self.checkpoint_num ))[-3:]
@@ -788,6 +804,7 @@ def do_args(parser, k):
     k.test = args.test
     k.verbose = args.verbose
     k.loop_wait = args.loop_wait
+    k.loop_wait_saved = args.loop_wait
     k.no_check = not args.check
     k.cloud_stt = args.cloud_stt 
     k.cloud_tts = args.cloud_tts
