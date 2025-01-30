@@ -173,7 +173,8 @@ class Kernel:
             self.p("ai here")
             self.empty_queue()
             shadow_say_text = True
-            rr.clear()
+            if not self.review_skip > 0:
+                rr.clear()
             self.say_text(tt)
             if (self.needs_restart()):
                 return 
@@ -221,14 +222,15 @@ class Kernel:
                     self.p('wake_word_found in loop-wait')
 
             else : #if self.questions:
-                rr.clear()
+                if not self.review_skip > 0:
+                    rr.clear()
                 sleep_time_2 = 1.75 
                 shadow_say_text = False
                 #self.p("say something.")
                 self.recognize_audio(shadow_say_text)
                 time.sleep(sleep_time_2)   
                 self.p("len q:", self.q.qsize(), 'say something outside loop-wait.') 
-                while not self.q.empty():
+                while (not self.q.empty()) and (not self.review_skip > 0):
                     rx = self.q.get(block=False)
                     if rx.strip() != '':
                         #self.p('c-rr', rx)
@@ -248,13 +250,12 @@ class Kernel:
                 if self.review_skip <= 0 and skip:
                     self.review_skip = self.review_skip_high ## magic number 1?? 
                     self.loop_wait = False
-                elif not skip:
+                if not skip:
                     self.review_skip = 0
                     self.loop_wait = self.loop_wait_saved
-                else:
+                if self.review_skip > 0:
                     self.review_skip -= 1
                     self.p("review here ..." , self.review_skip)
-
 
             tt = self.prune_input(tt) # + '.'
 
@@ -265,7 +266,8 @@ class Kernel:
             self.modify_prompt_after_model(tt, ' '.join(rr))
 
             self.save_file(  end - start )
-            rr.clear()
+            if not self.review_skip > 0:
+                rr.clear()
 
             if int(self.questions) > -1:
                 self.questions_num += 1 
