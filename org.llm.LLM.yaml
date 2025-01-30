@@ -49,14 +49,14 @@ modules:
     buildsystem: simple
     sources:
       - type: file
-        path: ./src/org.llm.LLM.desktop 
+        path: ./files/org.llm.LLM.desktop 
     build-commands:
       - install -Dm755 org.llm.LLM.desktop /app/share/applications/org.llm.LLM.desktop
   - name: questions.txt
     buildsystem: simple
     sources:
       - type: file
-        path: src/questions.txt
+        path: files/questions.txt
     build-commands:
       - install -D questions.txt /app/bin/questions.txt
 

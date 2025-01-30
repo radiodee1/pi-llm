@@ -744,7 +744,7 @@ class Kernel:
     def read_questions(self):
         if int(self.questions) > -1:
             try:
-                f = open('./questions.txt', 'r')
+                f = open('../files/questions.txt', 'r')
             except:
                 f = open('/app/bin/questions.txt', 'r')
                 self.p('look for questions.txt inside flatpak')
