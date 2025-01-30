@@ -209,15 +209,15 @@ def _return_without_name(save):
 def _check_words_do_match(memory, save):
     words_match = False
     for i in memory:
-        j = i.split(' ')
-        k = save.split(" ")
+        j = i.lower().split(' ')
+        k = save.lower().split(" ")
         ss = []
         for kk in k:
             if kk.strip() != "":
                 ss.append(kk)
         k = ss 
-        j.sort()
-        k.sort()
+        #j.sort()
+        #k.sort()
         m = min(len(j), len(k))
         words_match = True
         for ii in range(m):
@@ -229,28 +229,33 @@ def _check_words_do_match(memory, save):
     return words_match
 
 def _rem_matching_sentence(memory, save):
-    words_match = False            
+    words_match = False 
+    line_skipped = False
     if os.path.exists(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak"):
         os.remove(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak")
     f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak", "a")
 
     for i in memory:
-        j = i.split(' ')
-        k = save.split(" ")
+        j = i.lower().split(' ')
+        k = save.lower().split(" ")
         ss = []
         for kk in k:
             if kk.strip() != "":
                 ss.append(kk)
         k = ss 
-        j.sort()
-        k.sort()
+        #j.sort()
+        #k.sort()
         m = min(len(j), len(k))
         #words_match = True
         for ii in range(m):
             if j[ii].lower() == k[ii].lower():
                 words_match = True
-        if not words_match:
+            if not words_match:
+                break 
+        if (not words_match) or line_skipped:
             f.write(i + "\n")
+        else:
+            line_skipped = True
 
     f.close()
     if os.path.exists(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak"):
@@ -273,5 +278,5 @@ if __name__ == '__main__':
     add_auto = True
     ai_list_test = ['hi', 'how are you?', 'that is good.']
     user_list_test = ['hello.', 'i am well.', 'thanks. I agree.']
-    ai_text = "y z t q something amazing just happened * " 
+    ai_text = " i'm  *del " 
     find_marked_text(user_list_test, ai_list_test, ai_text)
