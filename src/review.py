@@ -12,7 +12,7 @@ except:
     PROJECT_REVIEW_NAME='.llm.review.txt'
 
 ADD_TEXT = "*"
-REM_TEXT = "*del"
+REM_TEXT = "--"
 ADD_AUTO = " **"
 
 memory_review = []
@@ -274,6 +274,7 @@ def _remove_bad_chars(save):
     save = save.replace('(', '')
     save = save.replace('"', '')
     save = save.replace("'", '')
+    save = save.replace(",", '')
     return save
 
 if __name__ == '__main__':

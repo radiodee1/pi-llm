@@ -51,6 +51,7 @@ class Kernel:
         self.temp = 0.001
         self.timeout = 3.0 
         self.window = 35
+        self.acceptable_pause = 5 
         self.window_mem = 0 
         self.window_chat = 0 
         self.window_ratio = 1.0 / 2.0 
@@ -214,12 +215,12 @@ class Kernel:
                             wake_word_found = True
                         rr.append(rx.strip())
                 end = time.time()
-                if not wake_word_found and num != 0:
-                    self.p('not wake_word_found in loop-wait')
+                if not wake_word_found and num > self.acceptable_pause:
+                    self.p('not wake_word_found in loop-wait', num )
                     #rr.clear()
                     continue
                 else:
-                    self.p('wake_word_found in loop-wait')
+                    self.p('wake_word_found in loop-wait', num)
 
             else : #if self.questions:
                 if not self.review_skip > 0:
@@ -247,6 +248,7 @@ class Kernel:
             
             if self.review:
                 skip = review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
+                skip = (skip and review.REM_TEXT in tt)
                 if self.review_skip <= 0 and skip:
                     self.review_skip = self.review_skip_high ## magic number 1?? 
                     self.loop_wait = False
@@ -266,7 +268,7 @@ class Kernel:
             self.modify_prompt_after_model(tt, ' '.join(rr))
 
             self.save_file(  end - start )
-            if not self.review_skip > 0:
+            if (not self.review_skip > 0) :
                 rr.clear()
 
             if int(self.questions) > -1:
@@ -374,7 +376,10 @@ class Kernel:
         if len(txt) == 0:
             return
         if self.review and self.review_skip > 0:
-            return
+            if  review.REM_TEXT in txt:
+                return
+            #return
+            pass 
 
         filename =  '.output.mp3'
 
@@ -510,8 +515,8 @@ class Kernel:
             } 
         ]
         if self.review:
-            instructions = str(' Say anything with the "*" character as a function to save any marked sentence permanently. Use your intuition to mark sentences. ' +
-                ' Say anything with the "()*del" characters as a function to delete any marked sentence from the memory list permanently.')
+            instructions = str(' Say anything with the "*" character as a flag to save any marked sentence permanently. Use your intuition to mark sentences. ' +
+                ' Repeat anything out loud with the "' + review.REM_TEXT + '" characters as a flag to delete any marked sentence from the memory list permanently.')
             ai[0]['content'] += instructions 
             ret += instructions + '\n'
             
@@ -598,14 +603,15 @@ class Kernel:
             if len(t) == 1 and t[0].strip() in identifiers.values():
                 text = ''
         #text = text.replace(':', ' ')
-        text = text.replace('-', ' ')
+        #text = text.replace('-', ' ')
         text = text.replace(';', ' ')
         text = text.replace('"', '')
         text = text.replace("'", '')
         text = text.replace("?", '.')
         text = text.replace("!", '.')
         if self.review:
-            text = text.replace("*", '')
+            text = text.replace(review.ADD_TEXT, '')
+            #text = text.replace(review.REM_TEXT, '')
         if ':' in text:
             t = text.strip().split(':')
             if len(t) == 2 or t[0].strip() in identifiers.values():
