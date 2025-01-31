@@ -511,7 +511,7 @@ class Kernel:
         ]
         if self.review:
             instructions = str(' Say anything with the "*" character as a function to save any marked sentence permanently. Use your intuition to mark sentences. ' +
-                ' Say anything with the "*del" characters as a function to delete any marked sentence from the memory list permanently.')
+                ' Say anything with the "()*del" characters as a function to delete any marked sentence from the memory list permanently.')
             ai[0]['content'] += instructions 
             ret += instructions + '\n'
             

@@ -210,6 +210,7 @@ def _return_without_name(save):
 def _check_words_do_match(memory, save):
     words_match = False
     for i in memory:
+        i = _remove_bad_chars(i)
         j = i.lower().split(' ')
         k = save.lower().split(" ")
         ss = []
@@ -237,6 +238,7 @@ def _rem_matching_sentence(memory, save):
     f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak", "a")
 
     for i in memory:
+        i = _remove_bad_chars(i)
         j = i.lower().split(' ')
         k = save.lower().split(" ")
         ss = []
