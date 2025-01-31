@@ -270,6 +270,8 @@ def _remove_bad_chars(save):
     save = save.replace('!', '')
     save = save.replace(')', '')
     save = save.replace('(', '')
+    save = save.replace('"', '')
+    save = save.replace("'", '')
     return save
 
 if __name__ == '__main__':
