@@ -835,11 +835,14 @@ def do_args(parser, k):
     if args.timeout != 0:
         k.timeout = args.timeout
     
+    if not k.review:
+        k.window_ratio = 1 
+
     if args.window != 0:
         k.window = args.window
-    k.window_mem = floor(k.window * k.window_ratio )
-    k.window_chat = k.window - k.window_mem 
-    #k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
+    k.window_chat = floor(k.window * k.window_ratio )
+    k.window_mem = k.window - k.window_chat 
+    k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
 
     if args.json != None and args.json == True:
         k.json = args.json
