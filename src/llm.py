@@ -842,14 +842,14 @@ def do_args(parser, k):
         k.window = args.window
     k.window_chat = floor(k.window * k.window_ratio )
     k.window_mem = k.window - k.window_chat 
-    k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
+    #k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
 
     if args.json != None and args.json == True:
         k.json = args.json
 
     if args.mic_timeout != None and args.mic_timeout > -1:
         k.mic_timeout = args.mic_timeout
-        k.p(k.mic_timeout, ' mic_timeout ')
+        #k.p(k.mic_timeout, ' mic_timeout ')
 
 
     if int(args.questions) != -1:
