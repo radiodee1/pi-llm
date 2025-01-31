@@ -157,6 +157,7 @@ def read_review( selection ):
 def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     global memory_review
     global identifiers_dict 
+    global sub_review 
     identifiers_dict = identifiers
     listx = _last_entries(user_list, ai_list )
     save = ''
@@ -187,7 +188,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         save = save.replace(ADD_TEXT, '')
         save = _return_without_name(save)
 
-        do_match = _check_words_do_match(memory_review, save)
+        do_match = _check_words_do_match(sub_review, save)
         if do_match:
             return True## <-- we already have one !! 
             
@@ -253,7 +254,8 @@ def _rem_matching_sentence(memory, save):
             if not words_match:
                 break 
         if (not words_match) or line_skipped:
-            f.write(i + "\n")
+            if len(i.strip()) > 0:
+                f.write(i + "\n")
         else:
             line_skipped = True
 

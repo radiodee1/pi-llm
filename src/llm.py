@@ -898,5 +898,7 @@ if __name__ == '__main__':
         args = do_args(parser, k)
         k.save_file(0, str(args))
         k.loop()
+        if int(k.questions) > -1:
+            break 
         k.p("interrupt here")
 
