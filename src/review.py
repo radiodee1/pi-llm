@@ -40,7 +40,8 @@ notsimilar = {
 ## set these outside module ##
 remove_ai = True 
 sample_len = 2 
-add_auto = True 
+add_auto = True
+similarity_ratio = 0.8 
 
 def _is_weight_surprise(text_comparison, text_surprise):
     if isinstance(text_comparison, list):  
@@ -221,11 +222,14 @@ def _check_words_do_match(memory, save):
         #j.sort()
         #k.sort()
         m = min(len(j), len(k))
+        num_matching_words = 0 
         words_match = True
         for ii in range(m):
             if j[ii].lower() != k[ii].lower():
                 words_match = False
-        if words_match:
+            else:
+                num_matching_words += 1 
+        if words_match or num_matching_words / float(m) >= similarity_ratio:
             return True
     ## <-- we already have one !! 
     return words_match
@@ -250,16 +254,19 @@ def _rem_matching_sentence(memory, save):
         #k.sort()
         m = min(len(j), len(k))
         #words_match = True
+        num_matching_words = 0 
         for ii in range(m):
             if j[ii].lower() == k[ii].lower():
                 words_match = True
-            if not words_match:
-                break 
-        if (not words_match) or line_skipped:
+                num_matching_words += 1 
+            #if not words_match:
+            #    break 
+        if (not words_match and num_matching_words / float(m) <= similarity_ratio) or line_skipped:
             if len(i.strip()) > 0:
                 f.write(i + "\n")
         else:
             line_skipped = True
+        #print(num_matching_words, m,  num_matching_words / float(m), similarity_ratio)
 
     f.close()
     if os.path.exists(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak"):
@@ -285,5 +292,5 @@ if __name__ == '__main__':
     add_auto = True
     ai_list_test = ['hi', 'how are you?', 'that is good.']
     user_list_test = ['hello.', 'i am well.', 'thanks. I agree.']
-    ai_text = " i'm  *del " 
+    ai_text = " hi how are you doing  ** " 
     find_marked_text(user_list_test, ai_list_test, ai_text)
