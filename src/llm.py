@@ -510,10 +510,13 @@ class Kernel:
         self.window_line_count = 0 
         ret = ""
         ai = [ 
-            { 'role': 'system', 'content': 'You are a ficticious person named ' + identifiers['ai'] + 
+            { 'role': 'user', 'content': 'You are a ficticious person named ' + identifiers['ai'] + 
              '. Use your imagination to answer all questions in English.' 
             } 
         ]
+        #ai = [{ 'content': 'You are a ficticious person named ' + identifiers['ai'] + 
+        #     '. Use your imagination to answer all questions in English.' 
+        #}]
         if self.review:
             instructions = str(' Say anything with the "*" character as a flag to save any marked sentence permanently. Use your intuition to mark sentences. ' +
                 ' Repeat anything out loud with the "' + review.REM_TEXT + '" characters as a flag to delete any marked sentence from the memory list permanently.')
@@ -831,6 +834,8 @@ def do_args(parser, k):
 
     if args.temp != 0:
         k.temp = args.temp
+        if k.OPENAI_MODEL.startswith('o'):
+            k.temp = 1 
 
     if args.timeout != 0:
         k.timeout = args.timeout
