@@ -162,6 +162,8 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     identifiers_dict = identifiers
     listx = _last_entries(user_list, ai_list )
     save = ''
+    if REM_TEXT in text and ADD_TEXT in text:
+        return False
     if REM_TEXT in text:
         for t in text.split('.'):
             if REM_TEXT in t:
@@ -198,6 +200,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
             f.write(save.strip().lower() + "\n")
             f.close()
         return True
+    return False
 
 def _return_without_name(save):
     global identifiers_dict
