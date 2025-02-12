@@ -40,7 +40,7 @@ notsimilar = {
 ## set these outside module ##
 remove_ai = True 
 sample_len = 2 
-add_auto = True
+add_auto = False
 similarity_ratio = 0.8 
 
 def _is_weight_surprise(text_comparison, text_surprise):
