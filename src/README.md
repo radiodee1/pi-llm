@@ -9,7 +9,7 @@ This file handles all the methods necessary for a chatbot that can perform headl
 
 I was reading about methods employed to enhance gpt models. One concern was the ability of the models to recall important information. This was related to the context size. The other concern was for problem solving. Problem solving seems to demand an inner monologue. Sometimes this monologue is achieved through token manipulation, and sometimes it seems to be achieved through a recurrent mechanism like that used in RNNs. I had some ideas concerning what I was reading, especially the Long Term Memories, and I tried to implement them in the `review` code.
 
-- Long Term Memory - asking the model to curate its own set of facts or phrases that it can go back to later.
+- Long Term Memory - asking the model to curate its own set of facts or phrases that it can go back to later. This would all happen at test time.
 
 - Saved Memories - curated phrases are saved in a simple text file and are reloaded every time the prompt is generated. I'm calling the list the 'Review List'. It's saved in the user's `/home` directory.
 
@@ -17,7 +17,7 @@ I was reading about methods employed to enhance gpt models. One concern was the 
 
 - Add and Remove - the model is supplied with functions for adding a phrase and similarly for removing a phrase. These are very simple functions that the gpt model can call on to curate the review list.
 
-- Problem Solving - we have no special mechanism for enhancing the problem solving abilities of these gpt models.
+- Problem Solving - we have no special mechanism for enhancing the problem solving abilities of these gpt models. Most Problem Solving ideas are implemented in the gpt architecture, and are not issues at test time. 
 
 
 
