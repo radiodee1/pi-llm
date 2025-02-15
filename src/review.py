@@ -175,8 +175,8 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         _rem_matching_sentence(sub_review , save)
         # save all memory_review here and return
         return True 
-        
-    if not ADD_TEXT in text and add_auto:
+    ## This does not take into account multiple sentences on one line.   
+    if not ADD_TEXT in text and add_auto: 
         mark = _is_weight_surprise(listx, text)
         if mark:
             text += ADD_AUTO #" **"
@@ -184,7 +184,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
             return False
     if ADD_TEXT in text:
         for t in text.split('.'):
-            if "*" in t:
+            if ADD_TEXT in t:
                 save = t
                 break 
         save = _remove_bad_chars(save)
