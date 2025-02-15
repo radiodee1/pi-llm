@@ -1,4 +1,4 @@
-# source files
+# source files - `src`
 
 All the methods needed for basic operation of the program are found in the `llm.py` file. Everything associated with the `review` functionality can be found in the `review.py` file. If you don't need the `review` methods the entire `review.py` file can be omitted. Review code is largely untested.
 
