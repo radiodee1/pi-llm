@@ -75,7 +75,7 @@ class Kernel:
         self.pc = False
         self.review = False
         self.review_skip = 0 
-        self.review_skip_high = 3  
+        self.review_skip_high = 1  
         self.tokens_recent = 0
 
         vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")

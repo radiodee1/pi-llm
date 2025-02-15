@@ -175,11 +175,16 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         _rem_matching_sentence(sub_review , save)
         # save all memory_review here and return
         return True 
-    ## This does not take into account multiple sentences on one line.   
-    if not ADD_TEXT in text and add_auto: 
-        mark = _is_weight_surprise(listx, text)
-        if mark:
-            text += ADD_AUTO #" **"
+    ## does this take into account multiple sentences on one line?
+    if not ADD_TEXT in text and add_auto:
+        mark = False
+        for t in text.split('.'):
+            m = _is_weight_surprise(listx, t)
+            #mark = _is_weight_surprise(listx, text)
+            if m:
+                text = t + ADD_AUTO 
+                mark = True
+                break
         if not mark:
             return False
     if ADD_TEXT in text:
