@@ -2,10 +2,10 @@
 
 All the methods needed for basic operation of the program are found in the `llm.py` file. Everything associated with the `review` functionality can be found in the `review.py` file. If you don't need the `review` methods the entire `review.py` file can be omitted. Review code is largely untested.
 
-## llm.py
+## `llm.py`
 This file handles all the methods necessary for a chatbot that can perform headlessly and use Speech-to-text and Text-to-speach. This method also handles all input argument parsing.
 
-## review.py
+## `review.py`
 
 I was reading about methods employed to enhance gpt models. One concern was the ability of the models to recall important information. This was related to the context size. The other concern was for problem solving. Problem solving seems to demand an inner monologue. Sometimes this monologue is achieved through token manipulation, and sometimes it seems to be achieved through a recurrent mechanism like that used in RNNs. I had some ideas concerning what I was reading, especially the Long Term Memories, and I tried to implement them in the `review` code.
 
