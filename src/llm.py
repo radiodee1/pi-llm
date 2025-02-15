@@ -241,7 +241,8 @@ class Kernel:
                     rr = ['say' , 'something,' ]
                     #skip_say_text = True
 
-            review.read_review(self.window_mem)
+            if self.review:
+                review.read_review(self.window_mem)
             self.prompt = self.make_prompt()
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
