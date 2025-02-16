@@ -304,5 +304,6 @@ if __name__ == '__main__':
     add_auto = True
     ai_list_test = ['hi', 'how are you?', 'that is good.']
     user_list_test = ['hello.', 'i am well.', 'thanks. I agree.']
-    ai_text = " hi how are you doing  ** " 
-    find_marked_text(user_list_test, ai_list_test, ai_text)
+    ai_text = " hi how are you " 
+    m = find_marked_text(user_list_test, ai_list_test, ai_text)
+    print(m, 'is marked')
