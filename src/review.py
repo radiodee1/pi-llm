@@ -306,4 +306,4 @@ if __name__ == '__main__':
     user_list_test = ['hello.', 'i am well.', 'thanks. I agree.']
     ai_text = " hi how are you " 
     m = find_marked_text(user_list_test, ai_list_test, ai_text)
-    print(m, 'is marked')
+    print(m, 'is marked:', ai_text)
