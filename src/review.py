@@ -162,6 +162,8 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     identifiers_dict = identifiers
     listx = _last_entries(user_list, ai_list )
     save = ''
+    text = _prepare_for_segmenting(text)
+
     if REM_TEXT in text and ADD_TEXT in text:
         return False
     if REM_TEXT in text:
@@ -284,12 +286,17 @@ def _remove_bad_chars(save):
     save = save.replace(";", '') 
     save = save.replace("/", '')
     save = save.replace('\\', '')
-    save = save.replace('!', '')
+    #save = save.replace('!', '')
     save = save.replace(')', '')
     save = save.replace('(', '')
     save = save.replace('"', '')
     save = save.replace("'", '')
     save = save.replace(",", '')
+    return save
+
+def _prepare_for_segmenting(save):
+    save = save.replace('!', '.')
+    save = save.replace("?", '.')
     return save
 
 if __name__ == '__main__':
