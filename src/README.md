@@ -1,6 +1,6 @@
 # source files - `src`
 
-All the methods needed for basic operation of the program are found in the `llm.py` file. Everything associated with the `review` functionality can be found in the `review.py` file. If you don't need the `review` methods the entire `review.py` file can be omitted. Review code is largely untested.
+All the methods needed for basic operation of the program are found in the `llm.py` file. Everything associated with the `review` functionality can be found in the `review.py` file. If you don't need the `review` methods the entire `review.py` file can be omitted. If you want to do this, do not enable `--review` in the launch arguments, and comment out the `import review` line in the `llm.py` file. Review code is largely untested.
 
 ## `llm.py`
 This file handles all the methods necessary for a chatbot that can perform headlessly and use Speech-to-text and Text-to-speach. This file also handles all input argument parsing.
