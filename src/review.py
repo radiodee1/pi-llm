@@ -50,13 +50,6 @@ def _is_weight_surprise(text_comparison, text_surprise):
         "a": 0,
         "b": 0 
     }
-    weight["a"].clear()
-    weight["b"].clear()
-    score["a"] = 0
-    score["b"] = 0
-    notsimilar["a"] = 0 
-    notsimilar["b"] = 0
-
     weight["a"] = _weigh(text_comparison)
     weight["b"] = _weigh(text_surprise)
 
@@ -304,6 +297,9 @@ if __name__ == '__main__':
     add_auto = True
     ai_list_test = ['hi', 'how are you?', 'that is good.']
     user_list_test = ['hello.', 'i am well.', 'thanks. I agree.']
+    ai_text = " hi how are you xyz " 
+    m = find_marked_text(user_list_test, ai_list_test, ai_text)
+    print(m, 'is marked:', ai_text)
     ai_text = " hi how are you " 
     m = find_marked_text(user_list_test, ai_list_test, ai_text)
     print(m, 'is marked:', ai_text)
