@@ -22,21 +22,6 @@ memory_final_index = []
 
 identifiers_dict={'ai': 'jane'}
 
-weight = {
-    "a": {},
-    "b": {}
-}
-
-score = {
-    "a": 0,
-    "b": 0
-}
-
-notsimilar = {
-    "a": 0,
-    "b": 0 
-}
-
 ## set these outside module ##
 remove_ai = True 
 sample_len = 2 
@@ -53,6 +38,18 @@ def _is_weight_surprise(text_comparison, text_surprise):
     w = len(text_comparison.split("\n")) ## number of lines in comparison text.
     if w < 2:
         return False
+    weight = {
+        "a": {},
+        "b": {}
+    }
+    score = {
+        "a": 0,
+        "b": 0
+    }
+    notsimilar = {
+        "a": 0,
+        "b": 0 
+    }
     weight["a"].clear()
     weight["b"].clear()
     score["a"] = 0
