@@ -160,8 +160,11 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     listx = _last_entries(user_list, ai_list )
     save = ''
     text = _prepare_for_segmenting(text)
-
-    if REM_TEXT in text and ADD_TEXT in text:
+    for t in _segment_text(text):
+        if REM_TEXT in t and ADD_TEXT in t:
+            continue
+        text = t 
+    if text.strip() == '':
         return False
     if REM_TEXT in text:
         for t in _segment_text(text): #  text.split('.'):
@@ -191,9 +194,8 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
             return False
     if ADD_TEXT in text or identifiers_dict['mem'] in text.split(':')[0]:
         for t in _segment_text(text): # text.split('.'):
-            if ADD_TEXT in t:
-                save = t
-                break 
+            if ADD_TEXT in t or identifiers_dict['mem'] in t.split(':')[0]:
+                save = t ## go to last t 
         save = _remove_bad_chars(save)
         save = save.replace(ADD_TEXT, '')
         save = _return_without_name(save)
@@ -216,7 +218,7 @@ def is_skipable(text, identifiers):
         return True
     name = text.split(':')[0].strip()
     name = _remove_bad_chars(name)
-    if identifiers_dict['mem'] in name:
+    if identifiers_dict['mem'] in name or identifiers_dict['user'] in name:
         return True
     return False
 

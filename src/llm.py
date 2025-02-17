@@ -259,7 +259,7 @@ class Kernel:
                 if self.review_skip <= 0 and skip:
                     self.review_skip = self.review_skip_high ## magic number 1?? 
                     self.loop_wait = False
-                if not skip and False:
+                if not skip or self.review_skip <= 0:
                     self.review_skip = 0
                     self.loop_wait = self.loop_wait_saved
                 if self.review_skip >= 0:
@@ -383,10 +383,9 @@ class Kernel:
         if len(txt) == 0:
             return
         if self.review and self.review_skip > 0:
-            if  review.REM_TEXT in txt:
-                return
+            #if  review.REM_TEXT in txt:
+            return
             #return
-            pass 
 
         filename =  '.output.mp3'
 
