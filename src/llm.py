@@ -424,42 +424,12 @@ class Kernel:
         self.p('say this: ', txt)
         pass 
 
-    def is_match(self, text, speech):
-        if abs(len(text) - len(speech)) >= 2:
-            self.p('len is off:', text, speech)
-            return False
-        for i in range(len(text)):
-            if i < len(text) and i < len(speech):
-                t = text[i].lower()[0:2]
-                s = speech[i].lower()[0:2]
-                #print(t, text[i], s, speech[i])
-                if t != s:
-                    self.p('individual words dont compare...')
-                    return False
-        return True
 
     def empty_queue(self):
         while not self.q.empty():
             #self.q.get_nowait()
             self.q.get(block=True)
 
-    def prune_interrupted(self, text, speech):
-        output = []
-        found = False
-        for i in range(len(speech)):
-            #print (speech[i])
-            found = False
-            for ii in range(len(text)):
-                #print(text[ii])
-                if text[ii] == speech[i]:
-                    found = True
-                    continue
-            if found:
-                continue
-            else:
-                output.append(speech[i])
-        #print(output, '<<<')
-        return output
 
     def find_wake_word(self, text):
         text = text.strip().lower()
