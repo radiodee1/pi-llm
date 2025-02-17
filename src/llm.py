@@ -173,7 +173,7 @@ class Kernel:
         while z == True:
             self.p("ai here")
             self.empty_queue()
-            shadow_say_text = True
+            #shadow_say_text = True
             if not self.review_skip > 0:
                 rr.clear()
             self.say_text(tt)
