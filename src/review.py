@@ -202,6 +202,17 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         return True
     return False
 
+def is_skipable(text, identifiers):
+    global identifiers_dict 
+    identifiers_dict = identifiers 
+    if REM_TEXT in text:
+        return True
+    name = text.split(':')[0].strip()
+    name = _remove_bad_chars(name)
+    if identifiers_dict['mem'] in name:
+        return True
+    return False
+
 def _return_without_name(save):
     global identifiers_dict
     if ":" in save:
