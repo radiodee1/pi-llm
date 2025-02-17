@@ -201,10 +201,12 @@ class Kernel:
                         break 
                     if (end - start)  > self.timeout * 60 :
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
-                        rr = ['say', 'something']
+                        #rr = ['say', 'something']
+                        rr = self.long_pause_statement(not self.questions, (end - start))
                         break
                     if num == high - 1  :
-                        rr = [ 'say', 'something' ]
+                        #rr = [ 'say', 'something' ]
+                        rr = self.long_pause_statement(not self.questions, (end - start))
                         break
                     num += 1 
                 ###############
@@ -238,7 +240,9 @@ class Kernel:
                         rr.append(rx.strip())
 
                 if len(rr) == 0:
-                    rr = ['say' , 'something,' ]
+                    #rr = ['say' , 'something' ]
+                    end = time.time()
+                    rr = self.long_pause_statement(not self.questions, (end - start))
                     #skip_say_text = True
 
             if self.review:
@@ -438,6 +442,12 @@ class Kernel:
         else:
             return False
 
+    def long_pause_statement(self, show, time):
+        a = [ 'say', 'something' ]
+        b = [ 'long', 'pause', str(time) , 'sec' ]
+        if show and time > 0 :
+            return b
+        return a 
 
     def format_json(self, user, text):
         user = user.lower().split(' ')[0]
