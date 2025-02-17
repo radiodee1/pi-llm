@@ -223,6 +223,7 @@ class Kernel:
                     continue
                 else:
                     self.p('wake_word_found in loop-wait', num)
+                    num = 0 
 
             else : #if self.questions:
                 if not self.review_skip > 0:
