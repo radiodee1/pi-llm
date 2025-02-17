@@ -40,7 +40,7 @@ class Kernel:
                         i = i.replace(k, '')
                     ii = i.split(':')[1].strip()
                     #print(ii)
-                    if ii == 'say something':
+                    if ii == 'say something' or 'long pause' in ii:
                         self.num_restarts += 1
                     for j in ii.split(' '):
                         self.num_words += 1
