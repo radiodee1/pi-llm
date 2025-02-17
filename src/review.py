@@ -108,6 +108,13 @@ def _last_entries(user_list, ai_list):
     #print(last)
     return last 
 
+def _segment_text(txt):
+    a = []
+    for x in txt.split('\n'):
+        for y in x.split('.'):
+            a.append(y)
+    return a 
+
 def read_review( selection ):
     global memory_review 
     global sub_review 
@@ -157,7 +164,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     if REM_TEXT in text and ADD_TEXT in text:
         return False
     if REM_TEXT in text:
-        for t in text.split('.'):
+        for t in _segment_text(text): #  text.split('.'):
             if REM_TEXT in t:
                 save = t
                 break 
@@ -173,7 +180,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     ## does this take into account multiple sentences on one line?
     if not ADD_TEXT in text and add_auto:
         mark = False
-        for t in text.split('.'):
+        for t in _segment_text(text): # text.split('.'):
             m = _is_weight_surprise(listx, t)
             #mark = _is_weight_surprise(listx, text)
             if m:
@@ -183,7 +190,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         if not mark:
             return False
     if ADD_TEXT in text or identifiers_dict['mem'] in text.split(':')[0]:
-        for t in text.split('.'):
+        for t in _segment_text(text): # text.split('.'):
             if ADD_TEXT in t:
                 save = t
                 break 
@@ -322,3 +329,5 @@ if __name__ == '__main__':
     ai_text = " hi how are you " 
     m = find_marked_text(user_list_test, ai_list_test, ai_text)
     print(m, 'is marked:', ai_text)
+    ai_text = '-- memory: my name is jane'
+    print('is_skipable', is_skipable(ai_text, {'mem':'memory'}))
