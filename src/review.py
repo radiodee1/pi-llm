@@ -182,7 +182,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
                 break
         if not mark:
             return False
-    if ADD_TEXT in text or identifiers_dict['mem'] in text:
+    if ADD_TEXT in text or identifiers_dict['mem'] in text.split(':')[0]:
         for t in text.split('.'):
             if ADD_TEXT in t:
                 save = t
