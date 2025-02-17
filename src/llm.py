@@ -240,10 +240,10 @@ class Kernel:
                         #self.p('c-rr', rx)
                         rr.append(rx.strip())
 
-                if len(rr) == 0:
+                if len(rr) == 0 :
                     #rr = ['say' , 'something' ]
                     end = time.time()
-                    rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
+                    rr = self.long_pause_statement(False, (end - start))
                     #skip_say_text = True
 
             if self.review:
@@ -255,6 +255,7 @@ class Kernel:
             if self.review:
                 skip = review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
                 skip = (skip and review.REM_TEXT in tt)
+                print(review.REM_TEXT, tt)
                 if self.review_skip <= 0 and skip:
                     self.review_skip = self.review_skip_high ## magic number 1?? 
                     self.loop_wait = False
@@ -263,7 +264,7 @@ class Kernel:
                     self.loop_wait = self.loop_wait_saved
                 if self.review_skip > 0:
                     self.review_skip -= 1
-                    #self.p("review here ..." , self.review_skip)
+                    self.p("review here ..." , self.review_skip)
 
             tt = self.prune_input(tt) # + '.'
 
@@ -274,8 +275,8 @@ class Kernel:
             self.modify_prompt_after_model(tt, ' '.join(rr))
 
             self.save_file(  end - start )
-            if (not self.review_skip > 0) :
-                rr.clear()
+            if (not self.review_skip > 0) and False:
+                rr.clear() ## <-- don't do this, especially at first
 
             if int(self.questions) > -1:
                 self.questions_num += 1 
@@ -444,6 +445,7 @@ class Kernel:
             return False
 
     def long_pause_statement(self, show, time):
+        time = floor(time)
         a = [ 'say', 'something' ]
         b = [ 'long', 'pause', str(time) , 'sec' ]
         if show and time > 0 :
@@ -580,13 +582,17 @@ class Kernel:
         if self.json:
             t = text.strip().split(':')
             if self.review:
-                if '*' in t[0] and len(t) > 1:
-                    t[0] = t[0].replace('*', '')
-                    t[1] += '*'
+                if review.ADD_TEXT in t[0] and len(t) > 1:
+                    t[0] = t[0].replace(review.ADD_TEXT, '')
+                    t[1] += review.ADD_TEXT
+                if review.REM_TEXT in t[0] and len(t) > 1:
+                    t[0] = t[0].replace(review.REM_TEXT, '')
+                    t[1] += review.REM_TEXT
+
             if len(t) > 1:
                 text = ' '.join(t[1:])
             if len(t) == 1 and t[0].strip() in identifiers.values():
-                text = ''
+                text = 'pause'
         #text = text.replace(':', ' ')
         #text = text.replace('-', ' ')
         text = text.replace(';', ' ')
@@ -594,12 +600,16 @@ class Kernel:
         text = text.replace("'", '')
         text = text.replace("?", '.')
         text = text.replace("!", '.')
+        text = text.replace("\n", '')
         if self.review:
-            text = text.replace(review.ADD_TEXT, '')
+            #text = text.replace(review.ADD_TEXT, '')
             #text = text.replace(review.REM_TEXT, '')
+            pass 
         if ':' in text:
             t = text.strip().split(':')
-            if len(t) == 2 or t[0].strip() in identifiers.values():
+            if (len(t) == 2 or t[0].strip() in [identifiers['mem']]) and self.review:
+                text += review.REM_TEXT #' '.join(t[1:])
+            elif len(t) == 2 or t[0].strip() in identifiers.values():
                 text = ' '.join(t[1:])
 
 

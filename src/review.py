@@ -164,9 +164,12 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         save = _remove_bad_chars(save)
         save = save.replace(REM_TEXT, '')
         save = _return_without_name(save)
-        _rem_matching_sentence(sub_review , save)
-        # save all memory_review here and return
-        return True 
+        line_found = _rem_matching_sentence(sub_review , save)
+        if not line_found:
+            ## save line if not already saved!!
+            save = save + ADD_TEXT
+        else:
+            return True 
     ## does this take into account multiple sentences on one line?
     if not ADD_TEXT in text and add_auto:
         mark = False
@@ -179,7 +182,7 @@ def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
                 break
         if not mark:
             return False
-    if ADD_TEXT in text:
+    if ADD_TEXT in text or identifiers_dict['mem'] in text:
         for t in text.split('.'):
             if ADD_TEXT in t:
                 save = t
@@ -204,8 +207,9 @@ def _return_without_name(save):
     if ":" in save:
         ## trim name from 'save'
         s = save.split(":")
-        if len(s[0].strip().split(' ')) == 1 or s[0].strip() in identifiers_dict.values():
+        if s[0].strip() in [identifiers_dict['mem']]:
             save = s[1]
+    
     return save
 
 def _check_words_do_match(memory, save):
@@ -237,6 +241,7 @@ def _check_words_do_match(memory, save):
 def _rem_matching_sentence(memory, save):
     words_match = False 
     line_skipped = False
+    line_found = False
     if os.path.exists(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak"):
         os.remove(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak")
     f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak", "a")
@@ -261,16 +266,18 @@ def _rem_matching_sentence(memory, save):
                 num_matching_words += 1 
             #if not words_match:
             #    break 
+        if m == 0:
+            m = 1
         if (not words_match and num_matching_words / float(m) <= similarity_ratio) or line_skipped:
             if len(i.strip()) > 0:
                 f.write(i + "\n")
         else:
             line_skipped = True
-        #print(num_matching_words, m,  num_matching_words / float(m), similarity_ratio)
-
+            line_found = True
     f.close()
     if os.path.exists(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak"):
         os.rename(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak", os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME )
+    return line_found
 
 def _remove_bad_chars(save):
     save = save.replace(";", '') 
@@ -287,6 +294,7 @@ def _remove_bad_chars(save):
 def _prepare_for_segmenting(save):
     save = save.replace('!', '.')
     save = save.replace("?", '.')
+
     return save
 
 if __name__ == '__main__':
