@@ -207,7 +207,7 @@ def _return_without_name(save):
     if ":" in save:
         ## trim name from 'save'
         s = save.split(":")
-        if s[0].strip() in [identifiers_dict['mem']]:
+        if s[0].strip() in identifiers_dict.values():
             save = s[1]
     
     return save
