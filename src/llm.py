@@ -202,11 +202,11 @@ class Kernel:
                     if (end - start)  > self.timeout * 60 :
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
                         #rr = ['say', 'something']
-                        rr = self.long_pause_statement(not self.questions, (end - start))
+                        rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
                         break
                     if num == high - 1  :
                         #rr = [ 'say', 'something' ]
-                        rr = self.long_pause_statement(not self.questions, (end - start))
+                        rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
                         break
                     num += 1 
                 ###############
@@ -243,7 +243,7 @@ class Kernel:
                 if len(rr) == 0:
                     #rr = ['say' , 'something' ]
                     end = time.time()
-                    rr = self.long_pause_statement(not self.questions, (end - start))
+                    rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
                     #skip_say_text = True
 
             if self.review:
