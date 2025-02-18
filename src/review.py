@@ -152,7 +152,15 @@ def read_review( selection ):
     for i in memory_final_index:
         memory_review.append(sub_review[i])
 
-def find_marked_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
+def find_marked_text( user_list, ai_list, text, identifiers={'ai':'jane'} ):
+    marked = False
+    for t in text.split('\n'):
+        x = _proc_text(user_list, ai_list, t, identifiers)
+        if x == True:
+            marked = True
+    return marked
+
+def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     global memory_review
     global identifiers_dict 
     global sub_review 
@@ -229,7 +237,8 @@ def _return_without_name(save):
         s = save.split(":")
         if s[0].strip() in identifiers_dict.values():
             save = s[1]
-    
+        if len(s) > 1 and identifiers_dict['mem'] in s[0]:
+            save = s[1]
     return save
 
 def _check_words_do_match(memory, save):
@@ -331,5 +340,6 @@ if __name__ == '__main__':
     ai_text = " hi how are you " 
     m = find_marked_text(user_list_test, ai_list_test, ai_text)
     print(m, 'is marked:', ai_text)
-    ai_text = '-- memory: my name is jane'
+    ai_text = '-- memory: my name is jane \n memory: x is the word y is the word'
     print('is_skipable', is_skipable(ai_text, {'mem':'memory'}))
+    print('find_marked_text', ai_text, find_marked_text(user_list_test, ai_list_test, ai_text, {'mem':'memory'}))
