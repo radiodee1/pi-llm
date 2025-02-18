@@ -5,7 +5,8 @@ All the methods needed for basic operation of the program are found in the `llm.
 The concept for the review code is the implementation of a system where the AI tends to its own memory. Since it is a concept that has not been tested, the code for the functionality is put together in a haphazard way. It is a work in progress and is more or less scraped together. If the concept can be shown to work, then the review code could be - might be - rewritten more succinctly. As things are at the time of this writing, the review code is disorganized and not streamlined. 
 
 ## `llm.py`
-This file handles all the methods necessary for a chatbot that can perform headlessly and use Speech-to-text and Text-to-speach. This file also handles all input argument parsing.
+
+This file handles all the methods necessary for a chatbot that can perform headlessly and use Speech-to-text and Text-to-speach. This file also handles all input argument parsing. It contains the main loop of the program, and the part of the code that connects to or makes requests of other online services.
 
 ## `review.py`
 
