@@ -2,6 +2,8 @@
 
 All the methods needed for basic operation of the program are found in the `llm.py` file. Everything associated with the `review` functionality can be found in the `review.py` file. If you don't need the `review` methods the entire `review.py` file can be omitted. If you want to do this, do not enable `--review` in the launch arguments, and comment out the `import review` line in the `llm.py` file. Review code is largely untested.
 
+The concept for the review code is the implementation of a system where the AI tends to its own memory. Since it is a concept that has not been tested, the code for the functionality is put together in a haphazard way. If the concept can be shown to work, then the review code could be rewritten more succinctly. As things are at the time of this writing, the review code is disorganized and not streamlined. 
+
 ## `llm.py`
 This file handles all the methods necessary for a chatbot that can perform headlessly and use Speech-to-text and Text-to-speach. This file also handles all input argument parsing.
 
