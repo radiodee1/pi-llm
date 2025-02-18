@@ -174,40 +174,34 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         text = t 
     if text.strip() == '':
         return False
-    if REM_TEXT in text:
-        for t in _segment_text(text): #  text.split('.'):
-            if REM_TEXT in t:
-                save = t
-                break 
-        save = _remove_bad_chars(save)
+    if REM_TEXT in text or identifiers_dict['mem'] in text.split(':')[0]:
+        save = _remove_bad_chars(text)
         save = save.replace(REM_TEXT, '')
         save = _return_without_name(save)
         line_found = _rem_matching_sentence(sub_review , save)
         if not line_found:
             ## save line if not already saved!!
             save = save + ADD_TEXT
+            print('-->>', save)
         else:
             return True 
     ## does this take into account multiple sentences on one line?
-    if not ADD_TEXT in text and add_auto:
+    if (not ADD_TEXT in text) and add_auto:
         mark = False
-        for t in _segment_text(text): # text.split('.'):
-            m = _is_weight_surprise(listx, t)
-            #mark = _is_weight_surprise(listx, text)
-            if m:
-                text = t + ADD_AUTO 
-                mark = True
-                break
+        #for t in _segment_text(text): # text.split('.'):
+        m = _is_weight_surprise(listx, text)
+        #mark = _is_weight_surprise(listx, text)
+        if m:
+            text = text + ADD_AUTO 
+            mark = True
         if not mark:
             return False
     if ADD_TEXT in text or identifiers_dict['mem'] in text.split(':')[0]:
-        for t in _segment_text(text): # text.split('.'):
-            if ADD_TEXT in t or identifiers_dict['mem'] in t.split(':')[0]:
-                save = t ## go to last t 
-        save = _remove_bad_chars(save)
+        save = _remove_bad_chars(text)
         save = save.replace(ADD_TEXT, '')
         save = _return_without_name(save)
-
+        print('###>>', save)
+        print('---', sub_review, '---')
         do_match = _check_words_do_match(sub_review, save)
         if do_match:
             return True## <-- we already have one !! 
@@ -331,15 +325,16 @@ if __name__ == '__main__':
     #print(memory_review)
     #print(_weigh('some text me, you, i'))
     ## test find_marked_text() ##
+    d = {'mem': 'memory'}
     add_auto = True
     ai_list_test = ['hi', 'how are you?', 'that is good.']
     user_list_test = ['hello.', 'i am well.', 'thanks. I agree.']
     ai_text = " hi how are you xyz " 
-    m = find_marked_text(user_list_test, ai_list_test, ai_text)
+    m = find_marked_text(user_list_test, ai_list_test, ai_text, d)
     print(m, 'is marked:', ai_text)
     ai_text = " hi how are you " 
-    m = find_marked_text(user_list_test, ai_list_test, ai_text)
+    m = find_marked_text(user_list_test, ai_list_test, ai_text, d)
     print(m, 'is marked:', ai_text)
-    ai_text = '-- memory: my name is jane \n memory: x is the word y is the word --'
-    print('is_skipable', is_skipable(ai_text, {'mem':'memory'}))
-    print('find_marked_text', ai_text, find_marked_text(user_list_test, ai_list_test, ai_text, {'mem':'memory'}))
+    ai_text = '-- memory: my name is jane \n memory: x is the word y is the word '
+    print('is_skipable', is_skipable(ai_text, d))
+    print('find_marked_text', ai_text, find_marked_text(user_list_test, ai_list_test, ai_text, d))
