@@ -340,6 +340,6 @@ if __name__ == '__main__':
     ai_text = " hi how are you " 
     m = find_marked_text(user_list_test, ai_list_test, ai_text)
     print(m, 'is marked:', ai_text)
-    ai_text = '-- memory: my name is jane \n memory: x is the word y is the word'
+    ai_text = '-- memory: my name is jane \n memory: x is the word y is the word --'
     print('is_skipable', is_skipable(ai_text, {'mem':'memory'}))
     print('find_marked_text', ai_text, find_marked_text(user_list_test, ai_list_test, ai_text, {'mem':'memory'}))
