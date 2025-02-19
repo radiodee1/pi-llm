@@ -320,19 +320,10 @@ def _prepare_for_segmenting(save):
 
 if __name__ == '__main__':
     read_review(50)
-    #print(memory_review)
-    #print(_weigh('some text me, you, i'))
-    ## test find_marked_text() ##
     d = {'mem': 'memory'}
     #add_auto = True
     ai_list_test = ['hi', 'how are you?', 'that is good.']
     user_list_test = ['hello.', 'i am well.', 'thanks. I agree.']
-    #ai_text = " hi how are you xyz " 
-    #m = find_marked_text(user_list_test, ai_list_test, ai_text, d)
-    #print(m, 'is marked:', ai_text)
-    #ai_text = " hi how are you " 
-    #m = find_marked_text(user_list_test, ai_list_test, ai_text, d)
-    #print(m, 'is marked:', ai_text)
     ai_text = '* memory: my name is jane with exclamation point \n  x is the word y is the word * '
     print('is_skipable', is_skipable(ai_text, d))
     print('find_marked_text', ai_text, find_marked_text(user_list_test, ai_list_test, ai_text, d))
