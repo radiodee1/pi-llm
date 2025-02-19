@@ -201,16 +201,16 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         save = _remove_bad_chars(text)
         save = save.replace(ADD_TEXT, '')
         save = _return_without_name(save)
-        print('[' , save, ']')
+        #print('[' , save, ']')
         #print('###>>', save)
         #print('---', sub_review, '---')
         do_match = _check_words_do_match(sub_review, save)
         if do_match:
-            print('already have one', save)
+            #print('already have one', save)
             return True## <-- we already have one !! 
             
         if len(save.strip()) > 0 :
-            print('???', save)
+            #print('???', save)
             f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME, "a")# as f:
             f.write(save.strip().lower() + "\n")
             f.flush()
@@ -253,10 +253,10 @@ def _check_words_do_match(memory, save):
         #j.sort()
         #k.sort()
         if ' '.join(j) == ' '.join(k):
-            print('match', j)
+            #print('match', j)
             return True
         ## ditch the rest!!
-    print('no-match', save)
+    #print('no-match', save)
     return False
 
 def _rem_matching_sentence(memory, save):
