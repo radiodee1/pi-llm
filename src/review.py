@@ -154,7 +154,9 @@ def read_review( selection ):
 
 def find_marked_text( user_list, ai_list, text, identifiers={'ai':'jane'} ):
     marked = False
+
     for t in text.split('\n'):
+        print('?',t)
         x = _proc_text(user_list, ai_list, t, identifiers)
         if x == True:
             marked = True
@@ -168,21 +170,22 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     listx = _last_entries(user_list, ai_list )
     save = ''
     text = _prepare_for_segmenting(text)
-    for t in _segment_text(text):
-        if REM_TEXT in t and ADD_TEXT in t:
-            continue
-        text = t 
+    #for t in _segment_text(text):
+    #    if REM_TEXT in t and ADD_TEXT in t:
+    #        continue
+    #    text = t 
     if text.strip() == '':
         return False
     if REM_TEXT in text or identifiers_dict['mem'] in text.split(':')[0]:
         save = _remove_bad_chars(text)
         save = save.replace(REM_TEXT, '')
         save = _return_without_name(save)
+        #save = save + REM_TEXT
         line_found = _rem_matching_sentence(sub_review , save)
         if not line_found:
             ## save line if not already saved!!
             save = save + ADD_TEXT
-            print('-->>', save)
+            #print('-->>', save)
         else:
             return True 
     ## does this take into account multiple sentences on one line?
@@ -200,10 +203,12 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         save = _remove_bad_chars(text)
         save = save.replace(ADD_TEXT, '')
         save = _return_without_name(save)
-        print('###>>', save)
-        print('---', sub_review, '---')
+        print('[' , save, ']')
+        #print('###>>', save)
+        #print('---', sub_review, '---')
         do_match = _check_words_do_match(sub_review, save)
         if do_match:
+            print('already have one', save)
             return True## <-- we already have one !! 
             
         if len(save.strip()) > 0 :
@@ -236,7 +241,6 @@ def _return_without_name(save):
     return save
 
 def _check_words_do_match(memory, save):
-    words_match = False
     for i in memory:
         i = _remove_bad_chars(i)
         j = i.lower().split(' ')
@@ -248,18 +252,12 @@ def _check_words_do_match(memory, save):
         k = ss 
         #j.sort()
         #k.sort()
-        m = min(len(j), len(k))
-        num_matching_words = 0 
-        words_match = True
-        for ii in range(m):
-            if j[ii].lower() != k[ii].lower():
-                words_match = False
-            else:
-                num_matching_words += 1 
-        if words_match or num_matching_words / float(m) >= similarity_ratio:
+        if ' '.join(j) == ' '.join(k):
+            print('match', j)
             return True
-    ## <-- we already have one !! 
-    return words_match
+        ## ditch the rest!!
+    print('no match', save)
+    return False
 
 def _rem_matching_sentence(memory, save):
     words_match = False 
@@ -326,15 +324,19 @@ if __name__ == '__main__':
     #print(_weigh('some text me, you, i'))
     ## test find_marked_text() ##
     d = {'mem': 'memory'}
-    add_auto = True
+    #add_auto = True
     ai_list_test = ['hi', 'how are you?', 'that is good.']
     user_list_test = ['hello.', 'i am well.', 'thanks. I agree.']
-    ai_text = " hi how are you xyz " 
-    m = find_marked_text(user_list_test, ai_list_test, ai_text, d)
-    print(m, 'is marked:', ai_text)
-    ai_text = " hi how are you " 
-    m = find_marked_text(user_list_test, ai_list_test, ai_text, d)
-    print(m, 'is marked:', ai_text)
-    ai_text = '-- memory: my name is jane \n memory: x is the word y is the word '
+    #ai_text = " hi how are you xyz " 
+    #m = find_marked_text(user_list_test, ai_list_test, ai_text, d)
+    #print(m, 'is marked:', ai_text)
+    #ai_text = " hi how are you " 
+    #m = find_marked_text(user_list_test, ai_list_test, ai_text, d)
+    #print(m, 'is marked:', ai_text)
+    ai_text = '-- memory: my name is jane with exclamation point \n memory: x is the word y is the word '
     print('is_skipable', is_skipable(ai_text, d))
     print('find_marked_text', ai_text, find_marked_text(user_list_test, ai_list_test, ai_text, d))
+    print("--")
+    for i in sub_review:
+        print(i)
+    print("--")
