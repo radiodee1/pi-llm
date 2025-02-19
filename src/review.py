@@ -156,7 +156,7 @@ def find_marked_text( user_list, ai_list, text, identifiers={'ai':'jane'} ):
     marked = False
 
     for t in text.split('\n'):
-        print('?',t)
+        #print('?',t)
         x = _proc_text(user_list, ai_list, t, identifiers)
         if x == True:
             marked = True
@@ -170,10 +170,8 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     listx = _last_entries(user_list, ai_list )
     save = ''
     text = _prepare_for_segmenting(text)
-    #for t in _segment_text(text):
-    #    if REM_TEXT in t and ADD_TEXT in t:
-    #        continue
-    #    text = t 
+    if (REM_TEXT in text and ADD_TEXT in text) or identifiers_dict['mem'] in text.split(':')[0]:
+            return False
     if text.strip() == '':
         return False
     if REM_TEXT in text or identifiers_dict['mem'] in text.split(':')[0]:
@@ -185,7 +183,7 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         if not line_found:
             ## save line if not already saved!!
             save = save + ADD_TEXT
-            #print('-->>', save)
+            pass 
         else:
             return True 
     ## does this take into account multiple sentences on one line?
@@ -212,8 +210,10 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
             return True## <-- we already have one !! 
             
         if len(save.strip()) > 0 :
-            f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME, "a")
+            print('???', save)
+            f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME, "a")# as f:
             f.write(save.strip().lower() + "\n")
+            f.flush()
             f.close()
         return True
     return False
@@ -256,7 +256,7 @@ def _check_words_do_match(memory, save):
             print('match', j)
             return True
         ## ditch the rest!!
-    print('no match', save)
+    print('no-match', save)
     return False
 
 def _rem_matching_sentence(memory, save):
@@ -333,7 +333,7 @@ if __name__ == '__main__':
     #ai_text = " hi how are you " 
     #m = find_marked_text(user_list_test, ai_list_test, ai_text, d)
     #print(m, 'is marked:', ai_text)
-    ai_text = '-- memory: my name is jane with exclamation point \n memory: x is the word y is the word '
+    ai_text = '* memory: my name is jane with exclamation point \n  x is the word y is the word * '
     print('is_skipable', is_skipable(ai_text, d))
     print('find_marked_text', ai_text, find_marked_text(user_list_test, ai_list_test, ai_text, d))
     print("--")
