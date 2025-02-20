@@ -163,7 +163,7 @@ def find_marked_text( user_list, ai_list, text, identifiers={'ai':'jane'} ):
     return marked
 
 def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
-    global memory_review
+    global memory_review ## <<-- not needed here??
     global identifiers_dict 
     global sub_review 
     identifiers_dict = identifiers
@@ -211,6 +211,7 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
             
         if len(save.strip()) > 0 :
             #print('???', save)
+            sub_review.append(save.strip().lower())
             f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME, "a")# as f:
             f.write(save.strip().lower() + "\n")
             f.flush()
@@ -249,14 +250,14 @@ def _check_words_do_match(memory, save):
         for kk in k:
             if kk.strip() != "":
                 ss.append(kk)
-        k = ss 
-        #j.sort()
-        #k.sort()
+        k = ss
+        tt = []
+        for jj in j:
+            if jj.strip() != "":
+                tt.append(jj)
+        j = tt 
         if ' '.join(j) == ' '.join(k):
-            #print('match', j)
             return True
-        ## ditch the rest!!
-    #print('no-match', save)
     return False
 
 def _rem_matching_sentence(memory, save):
