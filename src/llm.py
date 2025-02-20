@@ -255,7 +255,7 @@ class Kernel:
             if self.review:
                 skip = review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
                 skip = (skip or review.is_skipable(tt, identifiers))
-                print(review.REM_TEXT, tt, skip)
+                self.p(review.REM_TEXT, tt, skip)
                 if self.review_skip <= 0 and skip:
                     self.review_skip = self.review_skip_high ## magic number 1?? 
                     self.loop_wait = False
