@@ -220,14 +220,17 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     return False
 
 def is_skipable(text, identifiers):
-    global identifiers_dict 
-    identifiers_dict = identifiers 
-    if REM_TEXT in text:
-        return True
-    name = text.split(':')[0].strip()
-    name = _remove_bad_chars(name)
-    if identifiers_dict['mem'] in name or identifiers_dict['user'] in name:
-        return True
+    global identifiers_dict
+    identifiers_dict = identifiers
+    for i in text.split('\n'):
+        text = i.strip().lower() 
+
+        if REM_TEXT in text:
+            return True
+        name = text.split(':')[0].strip()
+        name = _remove_bad_chars(name)
+        if identifiers_dict['mem'] in name or identifiers_dict['user'] in name:
+            return True
     return False
 
 def _return_without_name(save):

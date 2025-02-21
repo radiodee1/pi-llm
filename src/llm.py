@@ -76,6 +76,7 @@ class Kernel:
         self.review = False
         self.review_skip = 0 
         self.review_skip_high = 1 
+        self.review_just_skipped = False
         self.tokens_recent = 0
 
         vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
@@ -255,16 +256,21 @@ class Kernel:
             if self.review:
                 skip = review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
                 skip = (skip or review.is_skipable(tt, identifiers))
-                self.p(review.REM_TEXT, tt, skip)
-                if self.review_skip <= 0 and skip:
-                    self.review_skip = self.review_skip_high ## magic number 1?? 
-                    self.loop_wait = False
-                if not skip or self.review_skip <= 0:
+                self.p('1>>>', review.REM_TEXT, tt, skip, self.review_skip)
+                if not skip or self.review_skip <= 0 or self.review_just_skipped:
                     self.review_skip = 0
                     self.loop_wait = self.loop_wait_saved
-                if self.review_skip >= 0:
+                    tt = review._return_without_name(tt)
+                    self.review_just_skipped = False
+                elif self.review_skip > 0:
                     self.review_skip -= 1
                     self.p("review here ..." , self.review_skip)
+                elif (self.review_skip <= 0 and skip) or (not self.review_just_skipped):
+                    self.review_skip = self.review_skip_high ## magic number 1?? 
+                    self.loop_wait = False
+                    self.review_just_skipped = True
+                    #tt = review._return_without_name(tt)
+                    self.p('2>>>', review.REM_TEXT, tt, skip, self.review_skip)
 
             tt = self.prune_input(tt) # + '.'
 
