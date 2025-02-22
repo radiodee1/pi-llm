@@ -189,6 +189,7 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     ## does this take into account multiple sentences on one line?
     if (not ADD_TEXT in text) and add_auto:
         mark = False
+        text = _remove_bad_chars(text)
         #for t in _segment_text(text): # text.split('.'):
         m = _is_weight_surprise(listx, text)
         #mark = _is_weight_surprise(listx, text)
