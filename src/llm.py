@@ -271,6 +271,9 @@ class Kernel:
                     self.review_skip = self.review_skip_high ## magic number 1?? 
                     self.loop_wait = False
                     self.review_just_skipped = False
+                else:
+                    self.review_just_skipped = False
+
                 self.p('2>>>', review.REM_TEXT, tt, skip, self.review_skip)
 
             tt = self.prune_input(tt) # + '.'
