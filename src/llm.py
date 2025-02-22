@@ -254,22 +254,23 @@ class Kernel:
             tt = self.model()
             
             if self.review:
-                skip = review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
-                skip = (skip or review.is_skipable(tt, identifiers))
+                review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
+                skip = review.is_skipable(tt, identifiers)
+                tt = review._return_without_name(tt)
                 self.p('1>>>', review.REM_TEXT, tt, skip, self.review_skip)
-                if not skip or self.review_skip <= 0 or self.review_just_skipped:
+                ## back to normal
+                if (not skip) or self.review_skip <= 0: # or self.review_just_skipped:
                     self.review_skip = 0
                     self.loop_wait = self.loop_wait_saved
-                    tt = review._return_without_name(tt)
-                    self.review_just_skipped = False
-                elif self.review_skip > 0:
+                    self.review_just_skipped = False 
+                elif self.review_skip > 0: ## countdown maintenence
                     self.review_skip -= 1
+                    self.review_just_skipped = True
                     self.p("review here ..." , self.review_skip)
-                elif (self.review_skip <= 0 and skip) or (not self.review_just_skipped):
+                elif (self.review_skip <= 0 and skip) and (not self.review_just_skipped): ## start skipping 
                     self.review_skip = self.review_skip_high ## magic number 1?? 
                     self.loop_wait = False
-                    self.review_just_skipped = True
-                    #tt = review._return_without_name(tt)
+                    self.review_just_skipped = False
                 self.p('2>>>', review.REM_TEXT, tt, skip, self.review_skip)
 
             tt = self.prune_input(tt) # + '.'
