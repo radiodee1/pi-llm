@@ -270,7 +270,7 @@ class Kernel:
                     self.loop_wait = False
                     self.review_just_skipped = True
                     #tt = review._return_without_name(tt)
-                    self.p('2>>>', review.REM_TEXT, tt, skip, self.review_skip)
+                self.p('2>>>', review.REM_TEXT, tt, skip, self.review_skip)
 
             tt = self.prune_input(tt) # + '.'
 
