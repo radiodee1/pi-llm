@@ -182,7 +182,7 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         line_found = _rem_matching_sentence(sub_review , save)
         if not line_found:
             ## save line if not already saved!!
-            save = save + ADD_TEXT
+            text = save + ADD_TEXT
             pass 
         else:
             return True 
