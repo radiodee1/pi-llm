@@ -155,7 +155,7 @@ def read_review( selection ):
 def find_marked_text( user_list, ai_list, text, identifiers={'ai':'jane'} ):
     marked = False
 
-    for t in text.split('\n'):
+    for t in _segment_text(text): # text.split('\n'):
         #print('?',t)
         x = _proc_text(user_list, ai_list, t, identifiers)
         if x == True:
@@ -170,7 +170,7 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     listx = _last_entries(user_list, ai_list )
     save = ''
     text = _prepare_for_segmenting(text)
-    if (REM_TEXT in text and ADD_TEXT in text) or identifiers_dict['mem'] in text.split(':')[0]:
+    if (REM_TEXT in text and ADD_TEXT in text): # or identifiers_dict['mem'] in text.split(':')[0]:
             return False
     if text.strip() == '':
         return False
@@ -198,9 +198,10 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
             mark = True
         if not mark:
             return False
-    if ADD_TEXT in text or identifiers_dict['mem'] in text.split(':')[0]:
+    if ADD_TEXT in text: # or identifiers_dict['mem'] in text.split(':')[0]:
         save = _remove_bad_chars(text)
         save = save.replace(ADD_TEXT, '')
+        
         save = _return_without_name(save)
         #print('[' , save, ']')
         #print('###>>', save)
@@ -239,10 +240,11 @@ def _return_without_name(save):
     if ":" in save:
         ## trim name from 'save'
         s = save.split(":")
+        print(s, 'list of input')
         if s[0].strip() in identifiers_dict.values():
-            save = s[1]
+            save = s[1].strip()
         if len(s) > 1 and identifiers_dict['mem'] in s[0]:
-            save = s[1]
+            save = s[1].strip()
     return save
 
 def _check_words_do_match(memory, save):
