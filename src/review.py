@@ -226,7 +226,7 @@ def is_skipable(text, identifiers):
     for i in text.split('\n'):
         text = i.strip().lower() 
 
-        if REM_TEXT in text:
+        if REM_TEXT in text or ADD_TEXT in text:
             return True
         name = text.split(':')[0].strip()
         name = _remove_bad_chars(name)
