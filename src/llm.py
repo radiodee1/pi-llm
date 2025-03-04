@@ -511,7 +511,7 @@ class Kernel:
         #     '. Use your imagination to answer all questions in English.' 
         #}]
         if self.review:
-            instructions = str(' Say anything with the "*" character as a flag to save any marked sentence permanently. Use your intuition to mark sentences. ' +
+            instructions = str(' Say anything with the "' + review.ADD_TEXT + '" characters as a flag to save any marked sentence permanently. Use your intuition to mark sentences. ' +
                 ' Repeat anything out loud with the "' + review.REM_TEXT + '" characters as a flag to delete any marked sentence from the memory list permanently.')
             ai[0]['content'] += instructions 
             ret += instructions + '\n'
