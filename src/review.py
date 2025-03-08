@@ -11,7 +11,7 @@ try:
 except:
     PROJECT_REVIEW_NAME='.llm.review.txt'
 
-ADD_TEXT = "**"
+ADD_TEXT = "++"
 REM_TEXT = "--"
 ADD_AUTO = " **"
 
