@@ -13,7 +13,7 @@ except:
 
 ADD_TEXT = "++"
 REM_TEXT = "--"
-ADD_AUTO = " **"
+ADD_AUTO = " ++"
 
 memory_review = []
 sub_review = []
