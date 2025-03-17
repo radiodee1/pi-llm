@@ -266,7 +266,9 @@ class Kernel:
                 review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
                 skip = review.is_skipable(tt, identifiers)
                 tt = review._return_without_name(tt)
+
                 self.p('1>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
+                
                 ## back to normal
                 if (not skip) and self.review_skip <= 0: # or self.review_just_skipped:
                     self.review_skip = -1 
@@ -284,7 +286,6 @@ class Kernel:
                     self.p('<<<3')
                     #self.review_just_skipped = False
 
-                #self.p('2>>>', self.review_just_skipped, tt, skip, self.review_skip)
                 self.p('2>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
 
             tt = self.prune_input(tt) # + '.'
