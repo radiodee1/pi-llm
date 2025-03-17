@@ -283,10 +283,6 @@ class Kernel:
                     self.loop_wait = False
                     self.p('<<<3')
                     #self.review_just_skipped = False
-                else:
-                    #self.review_just_skipped = False
-                    self.p('<<<4', self.review_skip)
-                    pass 
 
                 #self.p('2>>>', self.review_just_skipped, tt, skip, self.review_skip)
                 self.p('2>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
