@@ -77,6 +77,7 @@ class Kernel:
         self.review_skip = 0 
         self.review_skip_high = 1 
         self.review_just_skipped = False
+        self.test_review = -1
         self.tokens_recent = 0
 
         vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
@@ -822,6 +823,7 @@ def do_args(parser, k):
     k.cloud_tts = args.cloud_tts
     k.pc = args.pc 
     k.review = args.review
+    k.test_review = args.test_review
 
     if args.voice == 'male' or args.voice == 'female':
         args.voice = voice_gender[args.voice]
@@ -906,6 +908,7 @@ if __name__ == '__main__':
     parser.add_argument('--questions', type=int, default=-1, help="Simulate two parties with preset question list. Specify number of simulated questions. Must disable loop_wait.")
     parser.add_argument('--pc', action="store_true", help="use prompt-completion for prompt.")
     parser.add_argument('--review', action="store_true", help="use review * function.")
+    parser.add_argument('--test_review', type=int, default=-1, help="test review fn at different indexes.")
     ## NOTE: local is not implemented!! 
     
     while True:
