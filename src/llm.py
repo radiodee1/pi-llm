@@ -273,7 +273,7 @@ class Kernel:
                     self.loop_wait = self.loop_wait_saved
                     self.p('<<<1')
                     #self.review_just_skipped = False 
-                elif self.review_skip > 0: ## countdown maintenence
+                elif self.review_skip >= 0: ## countdown maintenence
                     self.review_skip -= 1
                     self.p('<<<2')
                     #self.review_just_skipped = True
