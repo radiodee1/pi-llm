@@ -255,6 +255,12 @@ class Kernel:
             tt = self.model()
             
             if self.review:
+                if int(self.test_review) != -1:
+                    if self.questions_num == int(self.test_review):
+                        tt = tt + " " + review.ADD_TEXT 
+                    if self.questions_num != int(self.test_review):
+                        tt = tt.replace(review.ADD_TEXT, '')
+                        tt = tt.replace(review.REM_TEXT, '')
                 review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
                 skip = review.is_skipable(tt, identifiers)
                 tt = review._return_without_name(tt)
