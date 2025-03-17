@@ -74,7 +74,7 @@ class Kernel:
         self.checkpoint_num = 0 
         self.pc = False
         self.review = False
-        self.review_skip = 0 
+        self.review_skip = -1 
         self.review_skip_high = 1 
         self.review_just_skipped = False
         self.test_review = -1
@@ -194,7 +194,9 @@ class Kernel:
                 #self.recognize_audio(shadow_say_text)
                 wake_word_found = False
                 while num < high:
-                    rr.clear()
+                    if int(self.review_skip) < 0:
+                        #pass 
+                        rr.clear()
                     #shadow_say_text = False
                     self.p("say something in loop-wait.")
                     self.recognize_audio()
@@ -256,32 +258,38 @@ class Kernel:
             
             if self.review:
                 if int(self.test_review) != -1:
+                    tt = tt.replace(review.ADD_TEXT, '')
+                    tt = tt.replace(review.REM_TEXT, '')
                     if self.questions_num == int(self.test_review):
                         tt = tt + " " + review.ADD_TEXT 
-                    if self.questions_num != int(self.test_review):
-                        tt = tt.replace(review.ADD_TEXT, '')
-                        tt = tt.replace(review.REM_TEXT, '')
+                    self.p(tt)
                 review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
                 skip = review.is_skipable(tt, identifiers)
                 tt = review._return_without_name(tt)
-                self.p('1>>>', self.review_just_skipped, tt, skip, self.review_skip)
+                self.p('1>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
                 ## back to normal
-                if (not skip) or self.review_skip <= 0: # or self.review_just_skipped:
-                    self.review_skip = 0
+                if (not skip) and self.review_skip <= 0: # or self.review_just_skipped:
+                    self.review_skip = -1 
                     self.loop_wait = self.loop_wait_saved
-                    self.review_just_skipped = False 
+                    self.p('<<<1')
+                    #self.review_just_skipped = False 
                 elif self.review_skip > 0: ## countdown maintenence
                     self.review_skip -= 1
-                    self.review_just_skipped = True
+                    self.p('<<<2')
+                    #self.review_just_skipped = True
                     #self.p("review here ..." , self.review_skip)
-                elif (self.review_skip <= 0 and skip) and (not self.review_just_skipped): ## start skipping 
+                elif (self.review_skip <= 0 and skip): # and (not self.review_just_skipped): ## start skipping 
                     self.review_skip = self.review_skip_high ## magic number 1?? 
                     self.loop_wait = False
-                    self.review_just_skipped = False
+                    self.p('<<<3')
+                    #self.review_just_skipped = False
                 else:
-                    self.review_just_skipped = False
+                    #self.review_just_skipped = False
+                    self.p('<<<4', self.review_skip)
+                    pass 
 
-                self.p('2>>>', self.review_just_skipped, tt, skip, self.review_skip)
+                #self.p('2>>>', self.review_just_skipped, tt, skip, self.review_skip)
+                self.p('2>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
 
             tt = self.prune_input(tt) # + '.'
 
