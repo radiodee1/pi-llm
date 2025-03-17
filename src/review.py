@@ -237,15 +237,21 @@ def is_skipable(text, identifiers):
 
 def _return_without_name(save):
     global identifiers_dict
+    save_out = save
     if ":" in save:
         ## trim name from 'save'
         s = save.split(":")
         print(s, 'list of input')
         if s[0].strip() in identifiers_dict.values():
-            save = s[1].strip()
+            save = s[1:]#.strip()
         if len(s) > 1 and identifiers_dict['mem'] in s[0]:
-            save = s[1].strip()
-    return save
+            save = s[1:]#.strip()
+        save_out = s[1].strip()
+        for t in save:
+            if len(t.strip()) > 0:
+                save_out = t.strip()
+                break 
+    return save_out
 
 def _check_words_do_match(memory, save):
     for i in memory:

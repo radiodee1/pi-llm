@@ -230,7 +230,7 @@ class Kernel:
                     num = 0 
 
             else : #if self.questions:
-                if not self.review_skip > 0:
+                if not self.review_skip >= 0:
                     rr.clear()
                 #sleep_time_2 = 0 #1.75 
                 #shadow_say_text = False
@@ -260,6 +260,8 @@ class Kernel:
                 if int(self.test_review) != -1:
                     tt = tt.replace(review.ADD_TEXT, '')
                     tt = tt.replace(review.REM_TEXT, '')
+                    for i in identifiers.values():
+                        tt = tt.replace(i, '')
                     if self.questions_num == int(self.test_review):
                         tt = tt + " " + review.ADD_TEXT 
                     self.p(tt)
@@ -578,6 +580,8 @@ class Kernel:
         return ret 
 
     def modify_prompt_before_model(self, tt, rr):
+        if self.review and self.review_skip > 0:
+            pass ## do nothing
         if self.json:
             self.window_line_count += 2 
             self.prompt += [self.format_json(identifiers['user'], rr) ]# + "\n"
@@ -593,7 +597,7 @@ class Kernel:
 
     def modify_prompt_after_model(self, tt, rr):
         if self.review and self.review_skip > 0:
-            return
+            pass ## do nothing
         self.memory_user.append(rr)
         self.memory_ai.append(tt) 
         pass 
