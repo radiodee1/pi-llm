@@ -574,6 +574,7 @@ class Kernel:
             return 
         if self.json:
             self.window_line_count += 2 
+
             self.prompt += [self.format_json(identifiers['user'], rr) ]# + "\n"
             self.prompt += [self.format_json(identifiers['ai'], "") ]
             return
@@ -639,6 +640,11 @@ class Kernel:
         return text
 
     def model(self):
+
+        if self.test:
+            self.reply = 'reply to question ' + str(self.questions_num)
+            return self.reply
+
         url = self.OPENAI_URL
         z_args = {
             "Authorization" : "Bearer " + self.OPENAI_API_KEY,
@@ -691,9 +697,6 @@ class Kernel:
                 self.reply = r['choices'][0]['text']
             except:
                 self.reply = ""
-
-        if self.test:
-            self.reply = 'reply to question ' + str(self.questions_num)
 
         self.p(self.reply)
         
