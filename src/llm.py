@@ -256,6 +256,8 @@ class Kernel:
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
             
+            if self.test:
+                tt = 'question ' + str(self.questions_num)
             if self.review:
                 if int(self.test_review) != -1:
                     tt = tt.replace(review.ADD_TEXT, '')
@@ -319,20 +321,11 @@ class Kernel:
         print(MICROPHONE_INDEX)
         '''
     def recognize_audio(self, shadow_say_text=False):
-        if self.test:
-            if shadow_say_text:
-                return
-            ret = input("test input here: ")
-            ret = ret.strip()
-            self.p("+" + ret + "+")
-            for i in ret.split(' '):
-                if i.strip() != "":
-                    self.q.put(i, block=False)
-            return
 
         if int(self.questions) > -1:
             ret = self.questions_list[self.questions_num % len(self.questions_list)]
             ret = ret.strip()
+            self.p(ret, '<---', self.questions, self.questions_num)
             for i in ret.split(' '):
                 if i.strip() != "":
                     self.q.put(i, block=False)
@@ -398,9 +391,7 @@ class Kernel:
         return
 
     def say_text(self, txt):
-        if self.test:
-            self.p(txt)
-            return
+
         if int(self.questions) > -1:
             self.p(txt, '- questions mode')
             return
@@ -785,9 +776,9 @@ class Kernel:
                             ii += j 
                         else:
                             break
-                    ii = self.prune_input(ii)
+                    #ii = self.prune_input(ii)
                     self.questions_list.append(ii.strip())
-            #print(self.questions_list)
+            print(self.questions_list)
             # exit()
         pass 
 
