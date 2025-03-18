@@ -778,7 +778,7 @@ class Kernel:
                             ii += j 
                         else:
                             break
-                    #ii = self.prune_input(ii)
+                    ii = self.prune_input(ii)
                     self.questions_list.append(ii.strip())
             print(self.questions_list)
             # exit()
