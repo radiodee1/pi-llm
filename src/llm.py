@@ -588,7 +588,7 @@ class Kernel:
 
     def modify_prompt_after_model(self, tt, rr):
         if self.review and self.review_skip > 0:
-            pass ## do nothing
+            return
         self.memory_user.append(rr)
         self.memory_ai.append(tt) 
         pass 
