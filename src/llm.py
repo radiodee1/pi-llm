@@ -191,7 +191,6 @@ class Kernel:
                 num = 0 
                 high = 1000
                 start = time.time()
-                #self.recognize_audio(shadow_say_text)
                 wake_word_found = False
                 while num < high:
                     if int(self.review_skip) < 0:
@@ -230,21 +229,20 @@ class Kernel:
                     num = 0 
 
             else : #if self.questions:
-                if not self.review_skip > 0:
-                    rr.clear()
-                #sleep_time_2 = 0 #1.75 
-                #shadow_say_text = False
-                #self.p("say something.")
+                if not self.review_skip > 0 and self.questions == -1:
+                    rr.clear() ## DO THIS??
+                    pass 
+
                 self.recognize_audio()
                 #time.sleep(0) ## sleep_time_2)   
                 self.p("len q:", self.q.qsize(), 'say something outside loop-wait.') 
-                while (not self.q.empty()) and (not self.review_skip > 0):
+                while (not self.q.empty()): # and (not self.review_skip > 0):
                     rx = self.q.get(block=False)
                     if rx.strip() != '':
                         #self.p('c-rr', rx)
                         rr.append(rx.strip())
 
-                if len(rr) == 0 :
+                if len(rr) == 0 and self.questions == -1:
                     #rr = ['say' , 'something' ]
                     end = time.time()
                     rr = self.long_pause_statement(False, (end - start))
