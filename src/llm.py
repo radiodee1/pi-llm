@@ -256,40 +256,7 @@ class Kernel:
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
             
-            if self.review:
-
-                if int(self.test_review) != -1:
-                    tt = tt.replace(review.ADD_TEXT, '')
-                    tt = tt.replace(review.REM_TEXT, '')
-                    for i in identifiers.values():
-                        tt = tt.replace(i, '')
-                    if self.questions_num == int(self.test_review):
-                        tt = tt + " " + review.ADD_TEXT 
-                    self.p(tt)
-                review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
-                skip = review.is_skipable(tt, identifiers)
-                tt = review._return_without_name(tt)
-
-                self.p('1>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
-                
-                ## back to normal
-                if (not skip) and self.review_skip <= 0: # or self.review_just_skipped:
-                    self.review_skip = -1 
-                    self.loop_wait = self.loop_wait_saved
-                    self.p('<<<1')
-                    #self.review_just_skipped = False 
-                elif self.review_skip >= 0: ## countdown maintenence
-                    self.review_skip -= 1
-                    self.p('<<<2')
-                    #self.review_just_skipped = True
-                    #self.p("review here ..." , self.review_skip)
-                elif (self.review_skip <= 0 and skip): # and (not self.review_just_skipped): ## start skipping 
-                    self.review_skip = self.review_skip_high ## magic number 1?? 
-                    self.loop_wait = False
-                    self.p('<<<3')
-                    #self.review_just_skipped = False
-
-                self.p('2>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
+            tt = self.review_vars(tt)
 
             tt = self.prune_input(tt) # + '.'
 
@@ -307,6 +274,43 @@ class Kernel:
                 self.questions_num += 1 
                 if self.questions_num >= int(self.questions): # len(self.questions_list):
                     return 
+
+    def review_vars(self, tt):
+        if self.review:
+
+            if int(self.test_review) != -1:
+                tt = tt.replace(review.ADD_TEXT, '')
+                tt = tt.replace(review.REM_TEXT, '')
+                for i in identifiers.values():
+                    tt = tt.replace(i, '')
+                if self.questions_num == int(self.test_review):
+                    tt = tt + " " + review.ADD_TEXT 
+                self.p(tt)
+            review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
+            skip = review.is_skipable(tt, identifiers)
+            tt = review._return_without_name(tt)
+
+            self.p('1>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
+            
+            ## back to normal
+            if (not skip) and self.review_skip <= 0: # or self.review_just_skipped:
+                self.review_skip = -1 
+                self.loop_wait = self.loop_wait_saved
+                self.p('<<<1')
+                #self.review_just_skipped = False 
+            elif self.review_skip >= 0: ## countdown maintenence
+                self.review_skip -= 1
+                self.p('<<<2')
+                #self.review_just_skipped = True
+                #self.p("review here ..." , self.review_skip)
+            elif (self.review_skip <= 0 and skip): # and (not self.review_just_skipped): ## start skipping 
+                self.review_skip = self.review_skip_high ## magic number 1?? 
+                self.loop_wait = False
+                self.p('<<<3')
+                #self.review_just_skipped = False
+
+            self.p('2>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
+        return tt 
 
     def list_microphones(self):
         for k, v in enumerate(sr.Microphone.list_microphone_names()):
