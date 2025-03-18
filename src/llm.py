@@ -230,7 +230,7 @@ class Kernel:
                     num = 0 
 
             else : #if self.questions:
-                if not self.review_skip >= 0:
+                if not self.review_skip > 0:
                     rr.clear()
                 #sleep_time_2 = 0 #1.75 
                 #shadow_say_text = False
