@@ -256,9 +256,8 @@ class Kernel:
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
             
-            if self.test:
-                tt = 'question ' + str(self.questions_num)
             if self.review:
+
                 if int(self.test_review) != -1:
                     tt = tt.replace(review.ADD_TEXT, '')
                     tt = tt.replace(review.REM_TEXT, '')
@@ -572,7 +571,7 @@ class Kernel:
 
     def modify_prompt_before_model(self, tt, rr):
         if self.review and self.review_skip > 0:
-            pass ## do nothing
+            return 
         if self.json:
             self.window_line_count += 2 
             self.prompt += [self.format_json(identifiers['user'], rr) ]# + "\n"
@@ -692,6 +691,9 @@ class Kernel:
                 self.reply = r['choices'][0]['text']
             except:
                 self.reply = ""
+
+        if self.test:
+            self.reply = 'reply to question ' + str(self.questions_num)
 
         self.p(self.reply)
         
