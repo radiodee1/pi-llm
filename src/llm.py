@@ -251,6 +251,7 @@ class Kernel:
             if self.review:
                 review.read_review(self.window_mem)
             self.prompt = self.make_prompt()
+
             self.modify_prompt_before_model("", ' '.join(rr) )
             tt = self.model()
             
@@ -274,6 +275,9 @@ class Kernel:
                     return 
 
     def review_vars(self, tt):
+        if self.test:
+            tt = 'reply to question ' + str(self.questions_num)
+            
         if self.review:
 
             if int(self.test_review) != -1:
@@ -291,7 +295,7 @@ class Kernel:
             self.p('1>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
             
             ## back to normal
-            if (not skip) and self.review_skip <= 0: # or self.review_just_skipped:
+            if (not skip) and self.review_skip < 0: # or self.review_just_skipped:
                 self.review_skip = -1 
                 self.loop_wait = self.loop_wait_saved
                 self.p('<<<1')
@@ -301,7 +305,7 @@ class Kernel:
                 self.p('<<<2')
                 #self.review_just_skipped = True
                 #self.p("review here ..." , self.review_skip)
-            elif (self.review_skip <= 0 and skip): # and (not self.review_just_skipped): ## start skipping 
+            elif (self.review_skip < 0 and skip): # and (not self.review_just_skipped): ## start skipping 
                 self.review_skip = self.review_skip_high ## magic number 1?? 
                 self.loop_wait = False
                 self.p('<<<3')
@@ -596,6 +600,9 @@ class Kernel:
         pass 
 
     def prune_input(self, text):
+        if self.test:
+            return text
+
         self.p(text, '<<< unmodified')
         if self.json:
             t = text.strip().split(':')
@@ -783,9 +790,8 @@ class Kernel:
                             ii += j 
                         else:
                             break
-                    ii = self.prune_input(ii)
                     self.questions_list.append(ii.strip())
-            print(self.questions_list)
+            self.p(self.questions_list)
             # exit()
         pass 
 
