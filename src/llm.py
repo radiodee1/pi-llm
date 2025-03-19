@@ -220,7 +220,7 @@ class Kernel:
                             wake_word_found = True
                         rr.append(rx.strip())
                 end = time.time()
-                if not wake_word_found and num > self.acceptable_pause:
+                if not wake_word_found and (end - start) > self.acceptable_pause:
                     self.p('not wake_word_found in loop-wait', num )
                     #rr.clear()
                     continue
@@ -295,21 +295,17 @@ class Kernel:
             self.p('1>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
             
             ## back to normal
-            if (not skip) and self.review_skip < 0: # or self.review_just_skipped:
+            if (not skip) and self.review_skip < 0: 
                 self.review_skip = -1 
                 self.loop_wait = self.loop_wait_saved
                 self.p('<<<1')
-                #self.review_just_skipped = False 
             elif self.review_skip >= 0: ## countdown maintenence
-                self.review_skip -= self.review_skip_high #1
+                self.review_skip = -1 #  -= 1
                 self.p('<<<2')
-                #self.review_just_skipped = True
-                #self.p("review here ..." , self.review_skip)
-            elif (self.review_skip < 0 and skip): # and (not self.review_just_skipped): ## start skipping 
+            elif (self.review_skip < 0 and skip): #  start skipping 
                 self.review_skip = self.review_skip_high ## magic number 1?? 
                 self.loop_wait = False
                 self.p('<<<3')
-                #self.review_just_skipped = False
 
             self.p('2>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
         return tt 
@@ -331,6 +327,7 @@ class Kernel:
             ret = self.questions_list[self.questions_num % len(self.questions_list)]
             ret = ret.strip()
             self.p(ret, '<---', self.questions, self.questions_num)
+            self.empty_queue()
             for i in ret.split(' '):
                 if i.strip() != "":
                     self.q.put(i, block=False)
