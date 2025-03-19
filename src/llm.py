@@ -301,7 +301,7 @@ class Kernel:
                 self.p('<<<1')
                 #self.review_just_skipped = False 
             elif self.review_skip >= 0: ## countdown maintenence
-                self.review_skip -= 1
+                self.review_skip -= self.review_skip_high #1
                 self.p('<<<2')
                 #self.review_just_skipped = True
                 #self.p("review here ..." , self.review_skip)
