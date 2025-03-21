@@ -27,6 +27,8 @@ pip3 install -r ./requirements.not-flatpak.txt
 You must install all the dev components for sqlite3. At the time of this writing it is done with the package `libsqlite3-dev`. These instructions are for debian/ubuntu.
 
 ```
+## remember the do_install_apt_pkg.sh script above ##
+
 ## move to some location on the system where you can work. ##
 cd ~/workspace
 

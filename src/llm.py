@@ -238,7 +238,7 @@ class Kernel:
                 self.recognize_audio()
                    
                 self.p("len q:", self.q.qsize(), 'say something outside loop-wait.')
-                use_block = self.questions > -1 
+                use_block =  self.questions > -1 
                 while (not self.q.empty()): # and (not self.review_skip > 0):
                     rx = self.q.get(block=use_block) ## False for recognize_audio !!
                     if rx.strip() != '':
@@ -311,7 +311,8 @@ class Kernel:
 
     def list_microphones(self):
         for k, v in enumerate(sr.Microphone.list_microphone_names()):
-            print(k, v)
+            if k - 1 >= 0:
+                print(k - 1, v)
         print("---")
         return
         '''
