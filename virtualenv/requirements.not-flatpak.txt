@@ -12,7 +12,7 @@ playsound==1.2.2
 pygobject==3.42.2
 #pyttsx3==2.90
 PyAudio==0.2.14
-SpeechRecognition==3.10.4
+SpeechRecognition==3.14.1
 
 requests==2.32.3
 google-cloud-speech==2.27.0
