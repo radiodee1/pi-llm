@@ -176,7 +176,7 @@ class Kernel:
             self.p("ai here")
             self.empty_queue()
             #shadow_say_text = True
-            if not self.review_skip > 0:
+            if (not self.review_skip >= 0) and (self.questions == -1):
                 rr.clear()
             self.say_text(tt)
             if (self.needs_restart()):
@@ -193,8 +193,8 @@ class Kernel:
                 start = time.time()
                 wake_word_found = False
                 while num < high:
-                    if int(self.review_skip) < 0:
-                        #pass 
+                    if int(self.review_skip) < 0 and (not self.test):
+                        pass 
                         rr.clear()
                     #shadow_say_text = False
                     self.p("say something in loop-wait.")
@@ -229,15 +229,18 @@ class Kernel:
                     num = 0 
 
             else : #if self.questions:
-                if not self.review_skip > 0 and self.questions == -1:
+                if (not self.review_skip >= 0): # or self.questions == -1:
                     rr.clear() ## DO THIS??
                     pass 
-
+                if self.questions > -1:
+                    self.empty_queue()
+                    #rr.clear()
                 self.recognize_audio()
-                #time.sleep(0) ## sleep_time_2)   
-                self.p("len q:", self.q.qsize(), 'say something outside loop-wait.') 
+                   
+                self.p("len q:", self.q.qsize(), 'say something outside loop-wait.')
+                use_block = self.questions > -1 
                 while (not self.q.empty()): # and (not self.review_skip > 0):
-                    rx = self.q.get(block=False)
+                    rx = self.q.get(block=use_block) ## False for recognize_audio !!
                     if rx.strip() != '':
                         #self.p('c-rr', rx)
                         rr.append(rx.strip())
@@ -266,8 +269,8 @@ class Kernel:
             self.modify_prompt_after_model(tt, ' '.join(rr))
 
             self.save_file(  end - start )
-            if (not self.review_skip > 0) and False:
-                rr.clear() ## <-- don't do this, especially at first
+            #if (not self.review_skip > 0) and False:
+            #    rr.clear() ## <-- don't do this, especially at first
 
             if int(self.questions) > -1:
                 self.questions_num += 1 
@@ -294,18 +297,14 @@ class Kernel:
 
             self.p('1>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
             
-            ## back to normal
-            if (not skip) and self.review_skip < 0: 
-                self.review_skip = -1 
+            if self.review_skip >= 0: ## countdown maintenence
+                self.review_skip = -1 #  -= 1
                 self.loop_wait = self.loop_wait_saved
                 self.p('<<<1')
-            elif self.review_skip >= 0: ## countdown maintenence
-                self.review_skip = -1 #  -= 1
-                self.p('<<<2')
             elif (self.review_skip < 0 and skip): #  start skipping 
                 self.review_skip = self.review_skip_high ## magic number 1?? 
                 self.loop_wait = False
-                self.p('<<<3')
+                self.p('<<<2')
 
             self.p('2>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
         return tt 
@@ -324,13 +323,15 @@ class Kernel:
     def recognize_audio(self, shadow_say_text=False):
 
         if int(self.questions) > -1:
+            self.p(self.questions_num, self.questions_num % len(self.questions_list), len(self.questions_list))
             ret = self.questions_list[self.questions_num % len(self.questions_list)]
             ret = ret.strip()
             self.p(ret, '<---', self.questions, self.questions_num)
             self.empty_queue()
             for i in ret.split(' '):
                 if i.strip() != "":
-                    self.q.put(i, block=False)
+                    self.q.put(i, block=True)
+            time.sleep(2)
             return
         
         if self.review and self.review_skip > 0:
@@ -399,7 +400,7 @@ class Kernel:
             return
         if len(txt) == 0:
             return
-        if self.review and self.review_skip > 0:
+        if self.review and self.review_skip >= 0:
             #if  review.REM_TEXT in txt:
             return
             #return
@@ -573,8 +574,9 @@ class Kernel:
         return ret 
 
     def modify_prompt_before_model(self, tt, rr):
-        if self.review and self.review_skip > 0:
-            return 
+        if self.review and self.review_skip >= 0:
+            return
+            pass 
         if self.json:
             self.window_line_count += 2 
 
@@ -590,8 +592,9 @@ class Kernel:
         self.window_line_count += 2 
 
     def modify_prompt_after_model(self, tt, rr):
-        if self.review and self.review_skip > 0:
+        if self.review and self.review_skip >= 0:
             return
+            pass 
         self.memory_user.append(rr)
         self.memory_ai.append(tt) 
         pass 
@@ -779,6 +782,7 @@ class Kernel:
 
             c = f.readlines()
             f.close()
+            self.questions_list.clear()
             for i in c:
                 ii = ""
                 if i.strip() != "" and not i.strip().startswith('#'):
