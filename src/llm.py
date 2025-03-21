@@ -3,6 +3,7 @@
 import argparse
 from math import floor
 import string
+from types import NoneType
 from wave import Error
 from dotenv import  dotenv_values 
 import os
@@ -344,6 +345,7 @@ class Kernel:
             mic = sr.Microphone(device_index=self.MICROPHONE_INDEX)
         else:
             mic = sr.Microphone()
+        
 
         with mic as source:
             timeout = self.mic_timeout 
