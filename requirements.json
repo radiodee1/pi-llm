@@ -179,7 +179,7 @@
             "name": "python3-google-cloud-speech",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"google-cloud-speech==2.27.0\" --no-build-isolation"
+                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"google-cloud-speech==2.31.1\" --no-build-isolation"
             ],
             "sources": [
                 {
@@ -209,8 +209,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/3e/de/fbe0ce0cb02ab9cfa0ad0dada9d566fc51843a52712ee49c4fb53610ca8f/google_cloud_speech-2.27.0-py2.py3-none-any.whl",
-                    "sha256": "993b6e71e8ff91f614edc909d08df4638a19a58834725dd84553bfc024204b69"
+                    "url": "https://files.pythonhosted.org/packages/03/f2/65cc7bc25768d0075cdb78fd22b3136620059d0674230abc628f71fab77e/google_cloud_speech-2.31.1-py3-none-any.whl",
+                    "sha256": "bb10defc51570881156893556ee3dc6a481f21ce39196ebd0b3e011dc61a6533"
                 },
                 {
                     "type": "file",
