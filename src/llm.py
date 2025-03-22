@@ -80,6 +80,7 @@ class Kernel:
         self.review_just_skipped = False
         self.test_review = -1
         self.tokens_recent = 0
+        self.recognize_audio_error = False
 
         vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -201,7 +202,7 @@ class Kernel:
                     self.p("say something in loop-wait.")
                     self.recognize_audio()
                     end = time.time()
-                    if self.q.qsize() > 0:
+                    if self.q.qsize() > 0 or self.recognize_audio_error:
                         break 
                     if (end - start)  > self.timeout * 60 :
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
@@ -323,7 +324,7 @@ class Kernel:
         print(MICROPHONE_INDEX)
         '''
     def recognize_audio(self, shadow_say_text=False):
-
+        self.recognize_audio_error = False
         if int(self.questions) > -1:
             self.p(self.questions_num, self.questions_num % len(self.questions_list), len(self.questions_list))
             ret = self.questions_list[self.questions_num % len(self.questions_list)]
@@ -346,24 +347,33 @@ class Kernel:
         else:
             mic = sr.Microphone()
         
+        
+        try:
+            with mic as source:
+                timeout = self.mic_timeout 
+                phrase_time_limit = self.mic_timeout
+                #r = sr.Recognizer()
+                if self.mic_timeout != -1:
+                    try:
+                        audio = r.listen(source , timeout=timeout , phrase_time_limit=phrase_time_limit)
+                        self.p("processing with timeout") 
+                    except Exception as e:
+                        self.p("an exception occured")
+                        if e == KeyboardInterrupt:
+                            exit()
+                        return
+                        
+                else:
+                    audio = r.listen(source)
+                self.p("processing.")
 
-        with mic as source:
-            timeout = self.mic_timeout 
-            phrase_time_limit = self.mic_timeout
-            #r = sr.Recognizer()
-            if self.mic_timeout != -1:
-                try:
-                    audio = r.listen(source , timeout=timeout , phrase_time_limit=phrase_time_limit)
-                    self.p("processing with timeout") 
-                except Exception as e:
-                    self.p("an exception occured")
-                    if e == KeyboardInterrupt:
-                        exit()
-                    return
-                    
-            else:
-                audio = r.listen(source)
-            self.p("processing.")
+        except AttributeError:
+            self.p('attribute error - mic is NoneType??')
+            self.empty_queue()
+            self.recognize_audio_error = True
+            self.x_iter += 1 
+            return
+        
 
         try:
             ret = ''
