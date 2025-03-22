@@ -215,7 +215,7 @@ class Kernel:
                         break
                     num += 1 
                 ###############
-                while self.q.qsize() > 0:
+                while self.q.qsize() > 0 and self.review_skip < 0:
                     rx = self.q.get(block=True) ## <--
                     if rx.strip() != '':
                         if (self.find_wake_word(rx.strip())):
@@ -233,19 +233,23 @@ class Kernel:
             else : #if self.questions:
                 if (not self.review_skip >= 0): # or self.questions == -1:
                     rr.clear() ## DO THIS??
+                    #self.p('clear here...')
                     pass 
                 if self.questions > -1:
                     self.empty_queue()
                     #rr.clear()
-                self.recognize_audio()
+                #self.recognize_audio()
                    
                 self.p("len q:", self.q.qsize(), 'say something outside loop-wait.')
+
                 use_block =  self.questions > -1 
-                while (not self.q.empty()): # and (not self.review_skip > 0):
-                    rx = self.q.get(block=use_block) ## False usually !!
-                    if rx.strip() != '':
-                        #self.p('c-rr', rx)
-                        rr.append(rx.strip())
+                if self.review_skip < 0:
+                    self.recognize_audio()
+                    while (not self.q.empty()): # and (not self.review_skip > 0):
+                        rx = self.q.get(block=use_block) ## False usually !!
+                        if rx.strip() != '':
+                            #self.p('c-rr', rx)
+                            rr.append(rx.strip())
 
                 if len(rr) == 0 and self.questions == -1:
                     #rr = ['say' , 'something' ]
@@ -255,9 +259,11 @@ class Kernel:
 
             if self.review:
                 review.read_review(self.window_mem)
+
             self.prompt = self.make_prompt()
 
             self.modify_prompt_before_model("", ' '.join(rr) )
+            
             tt = self.model()
             
             tt = self.review_vars(tt)
@@ -280,7 +286,7 @@ class Kernel:
                     return 
 
     def review_vars(self, tt):
-        if self.test:
+        if self.test and self.review_skip == -1:
             tt = 'reply to question ' + str(self.questions_num)
             
         if self.review:
@@ -300,8 +306,9 @@ class Kernel:
             self.p('1>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
             
             if self.review_skip >= 0: ## countdown maintenence
-                self.review_skip = -1 #  -= 1
-                self.loop_wait = self.loop_wait_saved
+                self.review_skip = -1 # -= 1 #  -= 1
+                if self.review_skip == -1:
+                    self.loop_wait = self.loop_wait_saved
                 self.p('<<<1')
             elif (self.review_skip < 0 and skip): #  start skipping 
                 self.review_skip = self.review_skip_high ## magic number 1?? 
@@ -319,8 +326,12 @@ class Kernel:
         return
 
     def recognize_audio(self ):
+        
+        if self.review and self.review_skip >= 0:
+            return
 
         self.recognize_audio_error = False
+
         if int(self.questions) > -1:
             self.p(self.questions_num, self.questions_num % len(self.questions_list), len(self.questions_list))
             ret = self.questions_list[self.questions_num % len(self.questions_list)]
@@ -331,9 +342,6 @@ class Kernel:
                 if i.strip() != "":
                     self.q.put(i, block=True)
             time.sleep(2)
-            return
-        
-        if self.review and self.review_skip > 0:
             return
 
         r = sr.Recognizer()
@@ -584,7 +592,7 @@ class Kernel:
 
     def modify_prompt_before_model(self, tt, rr):
         if self.review and self.review_skip >= 0:
-            return
+            #return
             pass 
         if self.json:
             self.window_line_count += 2 
