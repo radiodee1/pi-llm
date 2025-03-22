@@ -666,7 +666,9 @@ class Kernel:
         return text
 
     def model(self):
-
+        if self.review_skip > -1 and not self.test:
+            return ''
+            pass 
         if self.test:
             self.reply = 'reply to question ' + str(self.questions_num)
             return self.reply
@@ -764,7 +766,7 @@ class Kernel:
         if self.file:
 
             if self.review and self.review_skip >= 0:
-                #return
+                return
                 pass 
             name = '/llm.'
             if int(self.questions) > -1:
