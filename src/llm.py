@@ -756,8 +756,8 @@ class Kernel:
         if self.file:
 
             if self.review and self.review_skip >= 0:
-                return
-
+                #return
+                pass 
             name = '/llm.'
             if int(self.questions) > -1:
                 num = ('0000' + str(self.checkpoint_num ))[-3:]
