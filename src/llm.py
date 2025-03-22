@@ -527,7 +527,7 @@ class Kernel:
         #ai = [{ 'content': 'You are a ficticious person named ' + identifiers['ai'] + 
         #     '. Use your imagination to answer all questions in English.' 
         #}]
-        if self.review:
+        if self.review and self.review_skip == -1:
             instructions = str(' Say anything with the "' + review.ADD_TEXT + '" characters as a flag to save any marked sentence permanently. Use your intuition to mark sentences. ' +
                 ' Repeat anything out loud with the "' + review.REM_TEXT + '" characters as a flag to delete any marked sentence from the memory list permanently.')
             ai[0]['content'] += instructions 
@@ -755,7 +755,7 @@ class Kernel:
     def save_file(self,  time, heading=""):
         if self.file:
 
-            if self.review and self.review_skip > 0:
+            if self.review and self.review_skip >= 0:
                 return
 
             name = '/llm.'

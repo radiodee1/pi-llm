@@ -231,7 +231,7 @@ def is_skipable(text, identifiers):
             return True
         name = text.split(':')[0].strip()
         name = _remove_bad_chars(name)
-        if identifiers_dict['mem'] in name or identifiers_dict['user'] in name:
+        if identifiers_dict['mem'] in name: # or identifiers_dict['user'] in name:
             return True
     return False
 
