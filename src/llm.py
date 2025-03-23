@@ -52,7 +52,7 @@ class Kernel:
         self.temp = 0.001
         self.timeout = 3.0 
         self.window = 35
-        self.acceptable_pause = 5 
+        self.acceptable_pause = 15 
         self.window_mem = 0 
         self.window_chat = 0 
         self.window_ratio = 1.0 / 2.0 
@@ -193,6 +193,7 @@ class Kernel:
                 num = 0 
                 high = 1000
                 start = time.time()
+                basetime = start 
                 wake_word_found = False
                 while num < high:
                     if int(self.review_skip) < 0 and (not self.test):
@@ -222,13 +223,14 @@ class Kernel:
                             wake_word_found = True
                         rr.append(rx.strip())
                 end = time.time()
-                if not wake_word_found and (end - start) > self.acceptable_pause:
+                if not wake_word_found and (end - basetime)  > self.acceptable_pause:
                     self.p('not wake_word_found in loop-wait', num )
                     #rr.clear()
                     continue
                 else:
                     self.p('wake_word_found in loop-wait', num)
                     num = 0 
+                    basetime = end
 
             else : #if self.questions:
                 if (not self.review_skip >= 0): # or self.questions == -1:
