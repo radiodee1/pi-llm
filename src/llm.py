@@ -669,7 +669,7 @@ class Kernel:
 
     def model(self):
         if self.review_skip > -1 and not self.test:
-            return ''
+            #return ''
             pass 
         if self.test:
             self.reply = 'reply to question ' + str(self.questions_num)
