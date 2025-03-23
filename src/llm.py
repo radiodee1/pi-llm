@@ -223,7 +223,7 @@ class Kernel:
                             wake_word_found = True
                         rr.append(rx.strip())
                 end = time.time()
-                if not wake_word_found and (end - basetime)  > self.acceptable_pause:
+                if ((not wake_word_found) and (end - basetime)  > self.acceptable_pause):# and end - start > self.acceptable_pause:
                     self.p('not wake_word_found in loop-wait', num )
                     #rr.clear()
                     continue
