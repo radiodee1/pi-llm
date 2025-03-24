@@ -866,6 +866,8 @@ def do_args(parser, k):
     k.pc = args.pc 
     k.review = args.review
     k.test_review = args.test_review
+    if k.review:
+        review.skip_read_write = k.test 
 
     if args.voice == 'male' or args.voice == 'female':
         args.voice = voice_gender[args.voice]

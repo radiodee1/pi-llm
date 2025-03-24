@@ -27,6 +27,7 @@ remove_ai = True
 sample_len = 2 
 add_auto = False
 similarity_ratio = 0.8 
+skip_read_write = False
 
 def _is_weight_surprise(text_comparison, text_surprise):
     if isinstance(text_comparison, list):  
@@ -211,7 +212,7 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
             #print('already have one', save)
             return True## <-- we already have one !! 
             
-        if len(save.strip()) > 0 :
+        if len(save.strip()) > 0 and not skip_read_write :
             #print('???', save)
             sub_review.append(save.strip().lower())
             f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME, "a")# as f:
@@ -273,6 +274,8 @@ def _check_words_do_match(memory, save):
     return False
 
 def _rem_matching_sentence(memory, save):
+    if skip_read_write:
+        return True ## line_found
     words_match = False 
     line_skipped = False
     line_found = False
@@ -335,9 +338,10 @@ if __name__ == '__main__':
     read_review(50)
     d = {'mem': 'memory'}
     #add_auto = True
+    skip_read_write = False
     ai_list_test = ['hi', 'how are you?', 'that is good.']
     user_list_test = ['hello.', 'i am well.', 'thanks. I agree.']
-    ai_text = '* memory: my name is jane with exclamation point \n  x is the word y is the word * '
+    ai_text = ADD_TEXT + ' memory: my name is jane with exclamation point \n  x is the word y is the word ' + ADD_TEXT
     print('is_skipable', is_skipable(ai_text, d))
     print('find_marked_text', ai_text, find_marked_text(user_list_test, ai_list_test, ai_text, d))
     print("--")
