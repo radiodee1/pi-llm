@@ -34,6 +34,7 @@ identifiers = { 'user':'user', 'ai':'jane', 'mem': 'memory' }
 
 voice_gender = { 'male': 'en-US-Neural2-D', 'female': 'en-US-Neural2-F' }
 
+wake = [ 'hello', 'wake', 'wakeup' ]
 
 class Kernel:
 
@@ -81,6 +82,7 @@ class Kernel:
         self.test_review = -1
         self.tokens_recent = 0
         self.recognize_audio_error = False
+        self.wake_words = []
 
         vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
 
@@ -902,7 +904,14 @@ def do_args(parser, k):
     if args.mic_timeout != None and args.mic_timeout > -1:
         k.mic_timeout = args.mic_timeout
         #k.p(k.mic_timeout, ' mic_timeout ')
-
+    k.wake_words = wake
+    for i in identifiers.values():
+        if i.strip() not in k.wake_words:
+            k.wake_words.append(i.strip())
+    if len(args.wake_words) > 0:
+        for i in args.wake_words:
+            if i.strip() not in k.wake_words:
+                k.wake_words.append(i.strip())
 
     if int(args.questions) != -1:
         k.checkpoint_num = 0 
@@ -953,6 +962,7 @@ if __name__ == '__main__':
     parser.add_argument('--pc', action="store_true", help="use prompt-completion for prompt.")
     parser.add_argument('--review', action="store_true", help="use review * function.")
     parser.add_argument('--test_review', type=int, default=-1, help="test review fn at different indexes.")
+    parser.add_argument('--wake_words', nargs='+', type=str, default=['wake', 'hello'], help="list of useable wake words.")
     ## NOTE: local is not implemented!! 
     
     while True:
@@ -964,3 +974,4 @@ if __name__ == '__main__':
             break 
         k.p("interrupt here")
 
+    
