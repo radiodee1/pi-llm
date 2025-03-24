@@ -904,6 +904,7 @@ def do_args(parser, k):
     if args.mic_timeout != None and args.mic_timeout > -1:
         k.mic_timeout = args.mic_timeout
         #k.p(k.mic_timeout, ' mic_timeout ')
+
     k.wake_words = wake
     for i in identifiers.values():
         if i.strip() not in k.wake_words:
