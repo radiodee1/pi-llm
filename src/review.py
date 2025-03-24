@@ -326,6 +326,7 @@ def _remove_bad_chars(save):
     save = save.replace('"', '')
     save = save.replace("'", '')
     save = save.replace(",", '')
+    save = save.strip('.')
     return save
 
 def _prepare_for_segmenting(save):
