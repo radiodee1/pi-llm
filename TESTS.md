@@ -23,7 +23,7 @@ There are two components for testing presently, the `--questions` argument and t
 
 - `--test` takes one input value, an input between 0 and some larger number less then or equal to the number specified in `--questions`.
 - `--test` disables the model input and output, essentially removing the model from the processing loop.
-- `--test` replaces model output with a single sentence. The sentence is constructed from the number of the reply and the text string 'reply to question n' where n is the loop number.
+- `--test` replaces model output with a single sentence. The sentence is constructed from the number of the reply and the text string 'reply to question n' where 'n' is the loop number.
 - `--test` uses the 'questions' iterator for the 'n' number specified above. This means the `--test` code works better with the `--questions` code.
 - `--test` uses a timer to space out the replies from the code by about two seconds for each iteration through the loop.
 - `--test` checks the contents of the 'questions' iterator, and when the value matches the `--test` value the `review` test functions are triggered.
