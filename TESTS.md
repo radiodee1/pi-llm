@@ -30,3 +30,6 @@ There are two components for testing presently, the `--questions` argument and t
 - `--test` checks the contents of the 'questions' iterator, and when the value matches the `--test` value the `review` test functions are triggered.
 - `--test` will work without `--questions` but it will not trigger the `review` test function.
 
+## Planned tests
+
+We want to provide some way for the program to accept longer input. To start with we need to see if the speech recognition code will accept an arbitrary number of repeated inputs. We want to test the loop_wait code and see about repeatedly calling the speech recognition code a number of times. The argument on the command line might be something like `--loop_wait_test` having one integer value. Then we test if we can call the speech recognition code that number of times consecutively. This test would not work with other tests.
