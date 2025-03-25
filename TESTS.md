@@ -14,6 +14,7 @@ There are two components for testing presently, the `--questions` argument and t
 - `--questions` takes one input value, an integer between 0 and some larger number we will call n.
 - `--questions` uses a file called 'questions.txt', located in the repository at 'files/questions.txt'.
 - `--questions` code uses the first n sentences from the questions.txt file and uses them as input.
+- `--questions` uses an iterator referred to as the 'questions' iterator. It keeps track of the code's position in the questions.txt file.
 - `--questions` code halts execution when the n sentences have been used.
 - `--questions` does not allow for the input of audio using speech recognition.
 - `--questions` code can use any sentences at all, as long as they are recorded in the 'files/questions.txt' file.
