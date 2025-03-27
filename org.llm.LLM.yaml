@@ -1,6 +1,6 @@
 id: org.llm.LLM 
 runtime: org.gnome.Platform
-runtime-version: '45'
+runtime-version: '48'
 sdk: org.gnome.Sdk
 command: llm.py
 finish-args:
@@ -18,8 +18,8 @@ modules:
     buildsystem: meson 
     sources:
       - type: archive 
-        url: https://files.pythonhosted.org/packages/ac/4a/f24ddf1d20cc4b56affc7921e29928559a06c922eb60077448392792b914/PyGObject-3.46.0.tar.gz
-        sha256: 481437b05af0a66b7c366ea052710eb3aacbb979d22d30b797f7ec29347ab1e6
+        url: https://files.pythonhosted.org/packages/4a/36/fec530a313d3d48f12e112ac0a65ee3ccc87f385123a0493715609e8e99c/pygobject-3.52.3.tar.gz
+        sha256: 00e427d291e957462a8fad659a9f9c8be776ff82a8b76bdf402f1eaeec086d82
 
   - name: portaudio
     buildsystem: cmake-ninja
