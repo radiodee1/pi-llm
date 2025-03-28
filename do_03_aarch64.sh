@@ -6,8 +6,4 @@ flatpak install flathub org.gnome.Platform/aarch64/48 -y
 
 flatpak-builder --user --arch=aarch64 --disable-tests --repo=repo build-dir org.llm.LLM.yaml --force-clean 
 
-#flatpak-builder --repo=repo --force-clean build-dir org.llm.LLM.yaml
-
-#flatpak-builder --install build-dir org.llm.LLM.yaml
-
 flatpak build-bundle --arch=aarch64 ./repo org.llm.LLM.aarch64.flatpak org.llm.LLM

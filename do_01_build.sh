@@ -6,7 +6,4 @@ flatpak install flathub org.gnome.Platform//48 -y
 
 flatpak-builder --user --install build-dir org.llm.LLM.yaml --force-clean 
 
-#flatpak-builder --repo=repo --force-clean build-dir org.llm.LLM.yaml
-
-#flatpak-builder --install build-dir org.llm.LLM.yaml
 
