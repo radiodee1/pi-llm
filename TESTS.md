@@ -3,7 +3,7 @@ Containerized llm for rapberry-pi.
 
 ## Early tests
 
-Early tests were mostly composed of replacing the speech recognition functions with functions that took typed text as input.
+This doc does not explain 'tests' in the common programming sense, but instead some flags or arguments that I've written to help in programming. Early tests were mostly composed of replacing the speech recognition functions with functions that took typed text as input. These were replaced over time.
 
 ## Current tests
 
