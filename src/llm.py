@@ -47,7 +47,7 @@ class Kernel:
         self.loop_wait = False
         self.loop_wait_saved = False
         self.loop_wait_test = -1
-        self.loop_wait_test_end = 5 
+        self.loop_wait_test_end = 0  
         self.loop_wait_test_start = 5 
         self.no_check = False
         self.offset = 0.0
@@ -199,6 +199,7 @@ class Kernel:
                 high = 1000
                 start = time.time()
                 basetime = start
+                midtime = start
                 loop_end_found = False
                 loop_start_found = False
                 wake_word_found = False
@@ -208,17 +209,18 @@ class Kernel:
                         rr.clear()
  
                 while num < high:
-                    #if int(self.review_skip) < 0 and (not self.test):
-                    #    if loop_end_found :
-                    #        rr.clear()
-                    
+                   
                     old_queue_size = self.q.qsize()
                     self.p("say something in loop-wait.")
-                    self.recognize_audio()
+                    if not loop_end_found:
+                        self.recognize_audio()
+                        midtime = time.time()
                     end = time.time()
 
-                    if self.q.qsize() > 0 and old_queue_size == self.q.qsize() and end - start > self.loop_wait_test_end:
+                    if self.q.qsize() > 0 and old_queue_size == self.q.qsize() and end - midtime > self.loop_wait_test_end:
                         loop_end_found = True 
+                    else:
+                        midtime = time.time()
                     if self.q.qsize() > 0 or self.recognize_audio_error:
                         if loop_end_found :
                             break
@@ -226,6 +228,7 @@ class Kernel:
                             break
                     if self.q.qsize() != 0 and old_queue_size < self.q.qsize() and end - start > self.loop_wait_test_start:
                         loop_start_found = True
+                        
 
                     if (end - start)  > self.timeout * 60 and not loop_start_found :
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
