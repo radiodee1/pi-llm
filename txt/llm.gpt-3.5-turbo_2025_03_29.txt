@@ -1,0 +1,61 @@
+Namespace(local=False, verbose=True, test=False, truncate=True, loop_wait=True, check=False, name='Jane', offset=None, mics=False, mic_timeout=30, file=True, temp=0.95, timeout=2.5, window=35, cloud_stt=True, cloud_tts=True, json=False, voice='en-US-Neural2-F', questions=-1, pc=False, review=False, test_review=-1, wake_words=['hi', 'jane', 'cosmo'], loop_wait_test=-1)
+0
+user : hello how can I assist you today
+jane : I am just here to chat and answer any questions you may have
+---
+6.609594106674194
++++
+1
+user : great feel free to ask me anything you'd like to know
+jane : What are your hobbies or interests
+---
+8.266361713409424
++++
+2
+user : yes my hobbies include cooking and chatting with
+jane : Thats great
+---
+8.482869625091553
++++
+3
+user : I am glad you think
+jane : Yes, I always enjoy chatting with you
+---
+6.99699854850769
++++
+4
+user : enjoy our conversations too
+jane : Im glad to hear that
+---
+7.703665018081665
++++
+5
+user : is there anything else you would like to check
+jane : Not at the moment, but thank you for asking
+---
+6.733617544174194
++++
+6
+user : you're welcome
+jane : Thank you, have a great day
+---
+6.413131952285767
++++
+7
+user : you're welcome you have a great day too
+jane : Thank you, take care
+---
+8.21855902671814
++++
+8
+user : you're welcome you take care as well
+jane : Thank you, bye
+---
+8.285841226577759
++++
+9
+user : goodbye have a wonderful day
+jane : Goodbye, you too
+---
+8.135875701904297
++++

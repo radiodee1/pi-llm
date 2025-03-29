@@ -11,3 +11,13 @@
 | llm.gpt-4o-mini-epoch01.txt | 15 minutes, name Jane | 2024-08-29 |
 | llm.gpt-4o-mini-epoch02.txt | 15 minutes, name Jane | 2024-08-29 |
 
+## 2025-03-29 And Later
+
+Note: exchanges for this date range require `--truncate` option.
+
+| file | description | date |
+|---|---|---|
+| llm.gpt-3.5-turbo_2025_03_29.txt | less than 10 minutes, truncate option used | 2025-03-29 |
+
+
+
