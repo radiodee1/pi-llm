@@ -17,7 +17,7 @@ Note: exchanges for this date range require `--truncate` option.
 
 | file | description | date |
 |---|---|---|
-| llm.gpt-3.5-turbo_2025_03_29.txt | less than 10 minutes, truncate option used, 9 exchanges | 2025-03-29 |
+| llm.gpt-3.5-turbo_2025_03_29.txt | less than 10 minutes, truncate option used, 9 exchanges, no interruptions or collisions | 2025-03-29 |
 
 
 
