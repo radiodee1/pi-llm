@@ -56,7 +56,7 @@ class Kernel:
         self.temp = 0.001
         self.timeout = 3.0 
         self.window = 35
-        self.acceptable_pause = 15 
+        self.acceptable_pause = 1500 
         self.window_mem = 0 
         self.window_chat = 0 
         self.window_ratio = 1.0 / 2.0 
@@ -203,29 +203,35 @@ class Kernel:
                 loop_start_found = False
                 wake_word_found = False
                 old_queue_size = 0 
+                if int(self.review_skip) < 0 and (not self.test):
+                    if loop_end_found :
+                        rr.clear()
+ 
                 while num < high:
-                    if int(self.review_skip) < 0 and (not self.test):
-                        if loop_end_found :
-                            rr.clear()
-                    #shadow_say_text = False
+                    #if int(self.review_skip) < 0 and (not self.test):
+                    #    if loop_end_found :
+                    #        rr.clear()
+                    
                     old_queue_size = self.q.qsize()
                     self.p("say something in loop-wait.")
                     self.recognize_audio()
                     end = time.time()
+
                     if self.q.qsize() > 0 and old_queue_size == self.q.qsize() and end - start > self.loop_wait_test_end:
-                        loop_end_found = True  
+                        loop_end_found = True 
                     if self.q.qsize() > 0 or self.recognize_audio_error:
                         if loop_end_found :
                             break
+                        if self.recognize_audio_error:
+                            break
                     if self.q.qsize() != 0 and old_queue_size < self.q.qsize() and end - start > self.loop_wait_test_start:
                         loop_start_found = True
+
                     if (end - start)  > self.timeout * 60 and not loop_start_found :
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
-                        #rr = ['say', 'something']
                         rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
                         break
                     if num == high - 1  :
-                        #rr = [ 'say', 'something' ]
                         rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
                         break
 
@@ -965,7 +971,7 @@ if __name__ == '__main__':
     parser.add_argument('--name', type=str, help="define new name.")
     parser.add_argument('--offset', type=float, help="time in seconds to offset on startup.")
     parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
-    parser.add_argument('--mic_timeout', type=int, default=20, help="mic timeout in seconds.")
+    parser.add_argument('--mic_timeout', type=int, default=30, help="mic timeout in seconds.")
     parser.add_argument('--file', action="store_true", help="save statistics in text file.")
     parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
     parser.add_argument('--timeout', type=float, default=0.5, help="minutes to timeout.")
