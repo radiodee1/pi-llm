@@ -47,6 +47,8 @@ class Kernel:
         self.loop_wait = False
         self.loop_wait_saved = False
         self.loop_wait_test = -1
+        self.loop_wait_test_end = 5 
+        self.loop_wait_test_start = 5 
         self.no_check = False
         self.offset = 0.0
         self.file = False
@@ -196,24 +198,28 @@ class Kernel:
                 num = 0 
                 high = 1000
                 start = time.time()
-                basetime = start 
+                basetime = start
+                loop_end_found = False
+                loop_start_found = False
                 wake_word_found = False
+                old_queue_size = 0 
                 while num < high:
                     if int(self.review_skip) < 0 and (not self.test):
-                        if self.loop_wait_test <= 0:
+                        if loop_end_found :
                             rr.clear()
-                        else:
-                            self.p(self.loop_wait_test)
-                            self.loop_wait_test -= 1 
                     #shadow_say_text = False
+                    old_queue_size = self.q.qsize()
                     self.p("say something in loop-wait.")
                     self.recognize_audio()
                     end = time.time()
+                    if self.q.qsize() > 0 and old_queue_size == self.q.qsize() and end - start > self.loop_wait_test_end:
+                        loop_end_found = True  
                     if self.q.qsize() > 0 or self.recognize_audio_error:
-                        if self.loop_wait_test <= 0:
+                        if loop_end_found :
                             break
-                        
-                    if (end - start)  > self.timeout * 60 :
+                    if self.q.qsize() != 0 and old_queue_size < self.q.qsize() and end - start > self.loop_wait_test_start:
+                        loop_start_found = True
+                    if (end - start)  > self.timeout * 60 and not loop_start_found :
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
                         #rr = ['say', 'something']
                         rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
