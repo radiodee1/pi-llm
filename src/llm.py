@@ -892,6 +892,9 @@ def do_args(parser, k):
     if k.review:
         review.skip_read_write = k.test 
 
+    if k.loop_wait:
+        k.mic_timeout = 0 ## NOTE: this is not -1, as that carries with it some default pause.
+
     if args.voice == 'male' or args.voice == 'female':
         args.voice = voice_gender[args.voice]
     k.voice = args.voice
