@@ -200,14 +200,19 @@ class Kernel:
                 wake_word_found = False
                 while num < high:
                     if int(self.review_skip) < 0 and (not self.test):
-                        pass 
-                        rr.clear()
+                        if self.loop_wait_test <= 0:
+                            rr.clear()
+                        else:
+                            self.p(self.loop_wait_test)
+                            self.loop_wait_test -= 1 
                     #shadow_say_text = False
                     self.p("say something in loop-wait.")
                     self.recognize_audio()
                     end = time.time()
                     if self.q.qsize() > 0 or self.recognize_audio_error:
-                        break 
+                        if self.loop_wait_test <= 0:
+                            break
+                        
                     if (end - start)  > self.timeout * 60 :
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
                         #rr = ['say', 'something']
@@ -217,6 +222,8 @@ class Kernel:
                         #rr = [ 'say', 'something' ]
                         rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
                         break
+
+
                     num += 1 
                 ###############
                 while self.q.qsize() > 0 and self.review_skip < 0:
