@@ -199,7 +199,7 @@ class Kernel:
                 high = 1000
                 start = time.time()
                 basetime = start
-                #midtime = start
+                midtime = start
                 loop_end_found = False
                 loop_start_found = False
                 wake_word_found = False
@@ -213,11 +213,11 @@ class Kernel:
                     old_queue_size = self.q.qsize()
                     self.p("say something in loop-wait.")
                     if not loop_end_found:
+                        midtime = time.time()
                         self.recognize_audio()
-                        #midtime = time.time()
                     end = time.time()
 
-                    if self.q.qsize() > 0 and old_queue_size == self.q.qsize(): # and end - midtime > self.loop_wait_test_end:
+                    if self.q.qsize() > 0 and old_queue_size == self.q.qsize() and end - midtime > self.loop_wait_test_end:
                         loop_end_found = True 
                     else:
                         #midtime = time.time()
