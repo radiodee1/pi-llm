@@ -199,7 +199,7 @@ class Kernel:
                 high = 1000
                 start = time.time()
                 basetime = start
-                midtime = start
+                #midtime = start
                 loop_end_found = False
                 loop_start_found = False
                 wake_word_found = False
