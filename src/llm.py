@@ -214,13 +214,14 @@ class Kernel:
                     self.p("say something in loop-wait.")
                     if not loop_end_found:
                         self.recognize_audio()
-                        midtime = time.time()
+                        #midtime = time.time()
                     end = time.time()
 
-                    if self.q.qsize() > 0 and old_queue_size == self.q.qsize() and end - midtime > self.loop_wait_test_end:
+                    if self.q.qsize() > 0 and old_queue_size == self.q.qsize(): # and end - midtime > self.loop_wait_test_end:
                         loop_end_found = True 
                     else:
-                        midtime = time.time()
+                        #midtime = time.time()
+                        pass 
                     if self.q.qsize() > 0 or self.recognize_audio_error:
                         if loop_end_found :
                             break
