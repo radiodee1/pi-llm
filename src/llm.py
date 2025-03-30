@@ -47,8 +47,8 @@ class Kernel:
         self.loop_wait = False
         self.loop_wait_saved = False
         self.loop_wait_test = -1
-        self.loop_wait_test_end = 0  
-        self.loop_wait_test_start = 5 
+        self.loop_wait_test_end = 0 # seconds 
+        self.loop_wait_test_start = 5 # seconds
         self.no_check = False
         self.offset = 0.0
         self.file = False
@@ -256,7 +256,7 @@ class Kernel:
                     num = 0 
                     basetime = end
 
-            else : #if self.questions:
+            else : ### NOTE: outside of loop-wait!!
                 if (not self.review_skip >= 0): # or self.questions == -1:
                     rr.clear() ## DO THIS??
                     #self.p('clear here...')
@@ -271,7 +271,7 @@ class Kernel:
                 use_block =  self.questions > -1 
                 if self.review_skip < 0:
                     self.recognize_audio()
-                    while (not self.q.empty()): # and (not self.review_skip > 0):
+                    while (not self.q.empty()): 
                         rx = self.q.get(block=use_block) ## False usually !!
                         if rx.strip() != '':
                             #self.p('c-rr', rx)
@@ -283,6 +283,7 @@ class Kernel:
                     rr = self.long_pause_statement(False, (end - start))
                     #skip_say_text = True
 
+            ## NOTE: end of input section 
             if self.review:
                 review.read_review(self.window_mem)
 
