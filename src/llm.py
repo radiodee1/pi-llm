@@ -178,22 +178,20 @@ class Kernel:
         start = time.time()
         end = time.time()
         tt = "hello."
-        # skip_say_text = False
         while z == True:
             self.p("ai here")
             self.empty_queue()
-            #shadow_say_text = True
             if (not self.review_skip >= 0) and (self.questions == -1):
                 rr.clear()
             self.say_text(tt)
             if (self.needs_restart()):
                 return 
-            ## try join here!! remove sleep !!
+            
             tt = ""
             self.empty_queue()
             x += 1
             x = x % len(prompt_txt)
-            ### second process ###
+            ### loop-wait ###
             if self.loop_wait and self.questions == -1 :
                 num = 0 
                 high = 1000
@@ -208,7 +206,7 @@ class Kernel:
                     if loop_end_found :
                         rr.clear()
  
-                while num < high:
+                while num < high: ## NOTE: loop-wait loop start ##
                    
                     old_queue_size = self.q.qsize()
                     self.p("say something in loop-wait.")
@@ -256,15 +254,12 @@ class Kernel:
                     num = 0 
                     basetime = end
 
-            else : ### NOTE: outside of loop-wait!!
+            else : ### NOTE: outside of loop-wait!! ###
                 if (not self.review_skip >= 0): # or self.questions == -1:
                     rr.clear() ## DO THIS??
-                    #self.p('clear here...')
                     pass 
                 if self.questions > -1:
                     self.empty_queue()
-                    #rr.clear()
-                #self.recognize_audio()
                    
                 self.p("len q:", self.q.qsize(), 'say something outside loop-wait.')
 
@@ -274,16 +269,13 @@ class Kernel:
                     while (not self.q.empty()): 
                         rx = self.q.get(block=use_block) ## False usually !!
                         if rx.strip() != '':
-                            #self.p('c-rr', rx)
                             rr.append(rx.strip())
 
                 if len(rr) == 0 and self.questions == -1:
-                    #rr = ['say' , 'something' ]
                     end = time.time()
                     rr = self.long_pause_statement(False, (end - start))
-                    #skip_say_text = True
 
-            ## NOTE: end of input section 
+            ## NOTE: end of input section ##
             if self.review:
                 review.read_review(self.window_mem)
 
