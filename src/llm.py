@@ -213,7 +213,7 @@ class Kernel:
                     old_queue_size = self.q.qsize()
                     self.p("say something in loop-wait.")
                     if not loop_end_found:
-                        midtime = time.time()
+                        midtime = time.time() ## before recognize_audio!!
                         self.recognize_audio()
                     end = time.time()
 
