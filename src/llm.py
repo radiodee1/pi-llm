@@ -219,9 +219,7 @@ class Kernel:
 
                     if self.q.qsize() > 0 and old_queue_size == self.q.qsize() and end - midtime > self.loop_wait_test_end:
                         loop_end_found = True 
-                    else:
-                        #midtime = time.time()
-                        pass 
+
                     if self.q.qsize() > 0 or self.recognize_audio_error:
                         if loop_end_found :
                             break
