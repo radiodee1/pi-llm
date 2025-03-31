@@ -237,6 +237,7 @@ class Kernel:
 
 
                     num += 1 
+
                 ###############
                 while self.q.qsize() > 0 and self.review_skip < 0:
                     rx = self.q.get(block=True) ## <--
