@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 
 import queue
 import re
@@ -6,6 +7,19 @@ import sys
 from google.cloud import speech
 
 import pyaudio
+from dotenv import  dotenv_values 
+import os
+
+vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
+
+try:
+    GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
+except:
+    GOOGLE_APPLICATION_CREDENTIALS=''
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
+
+print(GOOGLE_APPLICATION_CREDENTIALS)
 
 # Audio recording parameters
 RATE = 16000
