@@ -190,8 +190,7 @@ def listen_print_loop(responses: object) -> str:
             collect_characters +=  transcript
             num_chars_printed = 0
 
-    #print(collect_characters)
-    return collect_characters
+    return collect_characters ## transcript
 
 
 def main() -> str:
