@@ -47,8 +47,6 @@ class Kernel:
         self.loop_wait = False
         self.loop_wait_saved = False
         self.loop_wait_test = -1
-        self.loop_wait_test_end = 0 # seconds 
-        self.loop_wait_test_start = 5 # seconds
         self.no_check = False
         self.offset = 0.0
         self.file = False
@@ -56,7 +54,7 @@ class Kernel:
         self.temp = 0.001
         self.timeout = 3.0 
         self.window = 35
-        self.acceptable_pause = 1500 
+        self.acceptable_pause = 15 
         self.window_mem = 0 
         self.window_chat = 0 
         self.window_ratio = 1.0 / 2.0 
@@ -178,66 +176,48 @@ class Kernel:
         start = time.time()
         end = time.time()
         tt = "hello."
+        # skip_say_text = False
         while z == True:
             self.p("ai here")
             self.empty_queue()
+            #shadow_say_text = True
             if (not self.review_skip >= 0) and (self.questions == -1):
                 rr.clear()
             self.say_text(tt)
             if (self.needs_restart()):
                 return 
-            
+            ## try join here!! remove sleep !!
             tt = ""
             self.empty_queue()
             x += 1
             x = x % len(prompt_txt)
-            ### loop-wait ###
+            ### second process ###
             if self.loop_wait and self.questions == -1 :
                 num = 0 
                 high = 1000
                 start = time.time()
-                basetime = start
-                midtime = start
-                loop_end_found = False
-                loop_start_found = False
+                basetime = start 
                 wake_word_found = False
-                old_queue_size = 0 
-                if int(self.review_skip) < 0 and (not self.test):
-                    if loop_end_found :
+                while num < high:
+                    if int(self.review_skip) < 0 and (not self.test):
+                        pass 
                         rr.clear()
- 
-                while num < high: ## NOTE: loop-wait loop start ##
-                   
-                    old_queue_size = self.q.qsize()
+                    #shadow_say_text = False
                     self.p("say something in loop-wait.")
-                    if not loop_end_found:
-                        midtime = time.time() ## before recognize_audio!!
-                        self.recognize_audio()
+                    self.recognize_audio()
                     end = time.time()
-
-                    if self.q.qsize() > 0 and old_queue_size == self.q.qsize() and end - midtime > self.loop_wait_test_end:
-                        loop_end_found = True 
-
-                    if self.q.qsize() > 0 or self.recognize_audio_error or loop_end_found:
-                        if loop_end_found :
-                            break
-                        if self.recognize_audio_error:
-                            break
-                    if self.q.qsize() != 0 and old_queue_size < self.q.qsize() and end - start > self.loop_wait_test_start:
-                        loop_start_found = True
-                        
-
-                    if (end - start)  > self.timeout * 60 and not loop_start_found :
+                    if self.q.qsize() > 0 or self.recognize_audio_error:
+                        break 
+                    if (end - start)  > self.timeout * 60 :
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
+                        #rr = ['say', 'something']
                         rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
                         break
                     if num == high - 1  :
+                        #rr = [ 'say', 'something' ]
                         rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
                         break
-
-
                     num += 1 
-
                 ###############
                 while self.q.qsize() > 0 and self.review_skip < 0:
                     rx = self.q.get(block=True) ## <--
@@ -246,7 +226,7 @@ class Kernel:
                             wake_word_found = True
                         rr.append(rx.strip())
                 end = time.time()
-                if ((not wake_word_found) and (end - basetime)  > self.acceptable_pause):
+                if ((not wake_word_found) and (end - basetime)  > self.acceptable_pause):# and end - start > self.acceptable_pause:
                     self.p('not wake_word_found in loop-wait', num )
                     #rr.clear()
                     continue
@@ -255,28 +235,33 @@ class Kernel:
                     num = 0 
                     basetime = end
 
-            else : ### NOTE: outside of loop-wait!! ###
-                if (not self.review_skip >= 0): 
+            else : #if self.questions:
+                if (not self.review_skip >= 0): # or self.questions == -1:
                     rr.clear() ## DO THIS??
+                    #self.p('clear here...')
                     pass 
                 if self.questions > -1:
                     self.empty_queue()
+                    #rr.clear()
+                #self.recognize_audio()
                    
                 self.p("len q:", self.q.qsize(), 'say something outside loop-wait.')
 
                 use_block =  self.questions > -1 
                 if self.review_skip < 0:
                     self.recognize_audio()
-                    while (not self.q.empty()): 
+                    while (not self.q.empty()): # and (not self.review_skip > 0):
                         rx = self.q.get(block=use_block) ## False usually !!
                         if rx.strip() != '':
+                            #self.p('c-rr', rx)
                             rr.append(rx.strip())
 
                 if len(rr) == 0 and self.questions == -1:
+                    #rr = ['say' , 'something' ]
                     end = time.time()
                     rr = self.long_pause_statement(False, (end - start))
+                    #skip_say_text = True
 
-            ## NOTE: end of input section ##
             if self.review:
                 review.read_review(self.window_mem)
 
@@ -888,9 +873,6 @@ def do_args(parser, k):
     if k.review:
         review.skip_read_write = k.test 
 
-    if k.loop_wait:
-        k.mic_timeout = 0 ## NOTE: this is not -1, as that carries with it some default pause.
-
     if args.voice == 'male' or args.voice == 'female':
         args.voice = voice_gender[args.voice]
     k.voice = args.voice
@@ -970,7 +952,7 @@ if __name__ == '__main__':
     parser.add_argument('--name', type=str, help="define new name.")
     parser.add_argument('--offset', type=float, help="time in seconds to offset on startup.")
     parser.add_argument('--mics', action="store_true", help="display microphone data and quit.")
-    parser.add_argument('--mic_timeout', type=int, default=30, help="mic timeout in seconds.")
+    parser.add_argument('--mic_timeout', type=int, default=20, help="mic timeout in seconds.")
     parser.add_argument('--file', action="store_true", help="save statistics in text file.")
     parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
     parser.add_argument('--timeout', type=float, default=0.5, help="minutes to timeout.")
