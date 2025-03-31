@@ -218,6 +218,7 @@ class Kernel:
                         #rr = [ 'say', 'something' ]
                         rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
                         break
+
                     num += 1 
                 ###############
                 while self.q.qsize() > 0 and self.review_skip < 0:
