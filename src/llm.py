@@ -215,27 +215,15 @@ class Kernel:
                         self.recognize_audio()
                     end = time.time()
 
-                    if self.q.qsize() > 0 and old_queue_size == self.q.qsize() and end - midtime > self.loop_wait_test_end:
-                        loop_end_found = True 
-
-                    if self.q.qsize() > 0 or self.recognize_audio_error or loop_end_found:
-                        if loop_end_found :
-                            break
-                        if self.recognize_audio_error:
-                            break
-                    if self.q.qsize() != 0 and old_queue_size < self.q.qsize() and end - start > self.loop_wait_test_start:
-                        loop_start_found = True
-                        
-
-                    if (end - start)  > self.timeout * 60 and not loop_start_found :
+                    if self.q.qsize() > 0 or self.recognize_audio_error:
+                        break 
+                    if (end - start)  > self.timeout * 60 :
                         self.p("elapsed:", (end - start), 'timeout:', self.timeout * 60 )
                         rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
                         break
                     if num == high - 1  :
                         rr = self.long_pause_statement(not int(self.questions) > -1, (end - start))
                         break
-
-
                     num += 1 
 
                 ###############
