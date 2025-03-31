@@ -206,6 +206,7 @@ class Kernel:
                     self.p("say something in loop-wait.")
                     self.recognize_audio()
                     end = time.time()
+
                     if self.q.qsize() > 0 or self.recognize_audio_error:
                         break 
                     if (end - start)  > self.timeout * 60 :
