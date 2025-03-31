@@ -20,7 +20,7 @@ except:
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
 
-print(GOOGLE_APPLICATION_CREDENTIALS)
+#print(GOOGLE_APPLICATION_CREDENTIALS)
 
 # Audio recording parameters
 RATE = 16000
@@ -147,7 +147,10 @@ def listen_print_loop(responses: object) -> str:
     Returns:
         The transcribed text.
     """
+
     num_chars_printed = 0
+    collect_characters = ""
+
     for response in responses:
         if not response.results:
             continue
@@ -184,16 +187,19 @@ def listen_print_loop(responses: object) -> str:
                 print("Exiting..")
                 break
 
+            collect_characters +=  transcript
             num_chars_printed = 0
 
-    return transcript
+    #print(collect_characters)
+    return collect_characters
 
 
-def main() -> None:
+def main() -> str:
     """Transcribe speech from audio file."""
     # See http://g.co/cloud/speech/docs/languages
     # for a list of supported languages.
     language_code = "en-US"  # a BCP-47 language tag
+    collected_values = ""
 
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(
@@ -216,8 +222,10 @@ def main() -> None:
         responses = client.streaming_recognize(streaming_config, requests)
 
         # Now, put the transcription responses to use.
-        listen_print_loop(responses)
-
+        collected_values += ' ' + listen_print_loop(responses)
+    
+    return collected_values
 
 if __name__ == "__main__":
-    main()
+    x = main()
+    print('xx', x.strip(), 'xx')
