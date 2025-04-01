@@ -36,7 +36,9 @@ time_start = 0
 time_last_output = 0
 time_end = 0 
 counted_responses = 0
-starting_timeout = 3 ## seconds
+starting_timeout = 6 ## seconds
+overall_timeout = 8 ## seconds
+separator = ", "
 
 class MicrophoneStream:
     """Opens a recording stream as a generator yielding the audio chunks."""
@@ -161,7 +163,7 @@ def listen_print_loop(responses: object) -> str:
     Returns:
         The transcribed text.
     """
-    global time_end, time_start, time_last_output, counted_responses 
+    global time_end, time_start, time_last_output, counted_responses, separator 
     
     num_chars_printed = 0
 
@@ -204,7 +206,7 @@ def listen_print_loop(responses: object) -> str:
                 print("Exiting..")
                 break
 
-            collect_characters +=  transcript 
+            collect_characters += separator + transcript.strip() 
             num_chars_printed = 0
 
             if len(transcript.strip()) > 0:
@@ -214,13 +216,16 @@ def listen_print_loop(responses: object) -> str:
     return collect_characters ## transcript
 
 def should_exit() -> bool:
-    global counted_responses, time_last_output, time_end, time_start, starting_timeout 
+    global counted_responses, time_last_output, time_end, time_start, starting_timeout, overall_timeout 
     time_last_output = time.time()
+    #overall_timeout = min(8, counted_responses + 2)
     if counted_responses > 0 and time_last_output > 0 and  time_last_output - time_end  > counted_responses + 2:
         print("Exiting...")
         print('loop time', time_end - time_start,  time_last_output - time_end, counted_responses)
         return True
     if counted_responses == 0 and time_last_output - time_start > starting_timeout:
+        return True
+    if time_end > 0 and time_last_output - time_end > overall_timeout:
         return True
     return False
 
@@ -230,7 +235,7 @@ def main() -> str:
     # for a list of supported languages.
     language_code = "en-US"  # a BCP-47 language tag
     collected_values = ""
-    global time_start 
+    global time_start , counted_responses
 
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(
@@ -254,10 +259,10 @@ def main() -> str:
 
         responses = client.streaming_recognize(streaming_config, requests)
         # Now, put the transcription responses to use.
-        collected_values += ', ' + listen_print_loop(responses)
+        collected_values +=  listen_print_loop(responses)
     
     return collected_values
 
 if __name__ == "__main__":
     x = main()
-    print('xx', x.strip(), 'xx')
+    print('xx', x.strip().strip(','), 'xx')
