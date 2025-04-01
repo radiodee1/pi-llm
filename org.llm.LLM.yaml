@@ -44,6 +44,15 @@ modules:
     sources:
       - type: file
         path: src/review.py 
+
+  - name: stt
+    buildsystem: simple
+    build-commands:
+      - install -D stt.py /app/bin/stt.py 
+    sources:
+      - type: file
+        path: src/stt.py 
+
   - name: org.llm.LLM.desktop
     buildsystem: simple
     sources:
