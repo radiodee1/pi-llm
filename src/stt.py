@@ -254,7 +254,7 @@ def main() -> str:
 
         responses = client.streaming_recognize(streaming_config, requests)
         # Now, put the transcription responses to use.
-        collected_values += ' ' + listen_print_loop(responses)
+        collected_values += ', ' + listen_print_loop(responses)
     
     return collected_values
 
