@@ -10,8 +10,16 @@ import pyaudio
 
 from dotenv import  dotenv_values 
 import os
+import time
 
 vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
+
+try:
+    MICROPHONE_INDEX=int(vals['MICROPHONE_INDEX'])
+except:
+    MICROPHONE_INDEX=-1
+
+
 
 try:
     GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
@@ -53,6 +61,7 @@ class MicrophoneStream:
             # This is necessary so that the input device's buffer doesn't
             # overflow while the calling thread makes network requests, etc.
             stream_callback=self._fill_buffer,
+            input_device_index=MICROPHONE_INDEX,
         )
 
         self.closed = False
@@ -149,7 +158,9 @@ def listen_print_loop(responses: object) -> str:
     """
 
     num_chars_printed = 0
+
     collect_characters = ""
+    time_start = time.time()
 
     for response in responses:
         if not response.results:
@@ -180,15 +191,18 @@ def listen_print_loop(responses: object) -> str:
 
         else:
             print(transcript + overwrite_chars)
-
+            
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
             if re.search(r"\b(exit|quit)\b", transcript, re.I):
                 print("Exiting..")
                 break
 
-            collect_characters +=  transcript
+            collect_characters +=  transcript 
             num_chars_printed = 0
+            
+            time_end = time.time()
+            print('loop time', time_end - time_start)
 
     return collect_characters ## transcript
 
@@ -219,7 +233,6 @@ def main() -> str:
         )
 
         responses = client.streaming_recognize(streaming_config, requests)
-
         # Now, put the transcription responses to use.
         collected_values += ' ' + listen_print_loop(responses)
     
@@ -228,3 +241,6 @@ def main() -> str:
 if __name__ == "__main__":
     x = main()
     print('xx', x.strip(), 'xx')
+    print('now again')
+    y = main()
+    print(y.strip())
