@@ -32,10 +32,10 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
-time_start = 0
-time_last_output = 0
-time_end = 0 
-counted_responses = 0
+time_start = 0 ## seconds
+time_last_output = 0 ## seconds
+time_end = 0 ## seconds
+counted_responses = 0 ## lines
 starting_timeout = 6 ## seconds
 overall_timeout = 8 ## seconds
 separator = ", "
@@ -168,7 +168,6 @@ def listen_print_loop(responses: object) -> str:
     num_chars_printed = 0
 
     collect_characters = ""
-    #time_start = time.time()
 
     for response in responses:
         if not response.results:
@@ -202,9 +201,9 @@ def listen_print_loop(responses: object) -> str:
             
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
-            if re.search(r"\b(exit|quit)\b", transcript, re.I):
-                print("Exiting..")
-                break
+            #if re.search(r"\b(exit|quit)\b", transcript, re.I):
+            #    print("Exiting..")
+            #    break
 
             collect_characters += separator + transcript.strip() 
             num_chars_printed = 0
@@ -218,10 +217,7 @@ def listen_print_loop(responses: object) -> str:
 def should_exit() -> bool:
     global counted_responses, time_last_output, time_end, time_start, starting_timeout, overall_timeout 
     time_last_output = time.time()
-    #overall_timeout = min(8, counted_responses + 2)
     if counted_responses > 0 and time_last_output > 0 and  time_last_output - time_end  > counted_responses + 2:
-        print("Exiting...")
-        print('loop time', time_end - time_start,  time_last_output - time_end, counted_responses)
         return True
     if counted_responses == 0 and time_last_output - time_start > starting_timeout:
         return True
@@ -245,7 +241,7 @@ def main() -> str:
     )
 
     streaming_config = speech.StreamingRecognitionConfig(
-        config=config, interim_results=True
+        config=config, interim_results=False
     )
 
     time_start = time.time()
