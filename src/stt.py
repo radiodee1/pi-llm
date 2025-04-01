@@ -33,7 +33,10 @@ RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
 time_start = 0
+time_last_output = 0
 time_end = 0 
+counted_responses = 0
+starting_timeout = 3 ## seconds
 
 class MicrophoneStream:
     """Opens a recording stream as a generator yielding the audio chunks."""
@@ -113,6 +116,8 @@ class MicrophoneStream:
         Returns:
             A generator that outputs audio chunks.
         """
+        global time_start 
+        time_start = time.time()
         while not self.closed:
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the
@@ -120,8 +125,9 @@ class MicrophoneStream:
             chunk = self._buff.get()
             if chunk is None:
                 return
+            if should_exit():
+                return
             data = [chunk]
-
             # Now consume whatever other data's still buffered.
             while True:
                 try:
@@ -131,7 +137,6 @@ class MicrophoneStream:
                     data.append(chunk)
                 except queue.Empty:
                     break
-
             yield b"".join(data)
 
 
@@ -156,8 +161,8 @@ def listen_print_loop(responses: object) -> str:
     Returns:
         The transcribed text.
     """
-    global time_end, time_start 
-
+    global time_end, time_start, time_last_output, counted_responses 
+    
     num_chars_printed = 0
 
     collect_characters = ""
@@ -201,12 +206,23 @@ def listen_print_loop(responses: object) -> str:
 
             collect_characters +=  transcript 
             num_chars_printed = 0
-            
-            time_end = time.time()
-            print('loop time', time_end - time_start)
+
+            if len(transcript.strip()) > 0:
+                counted_responses += 1 
+                time_end = time.time()
 
     return collect_characters ## transcript
 
+def should_exit() -> bool:
+    global counted_responses, time_last_output, time_end, time_start, starting_timeout 
+    time_last_output = time.time()
+    if counted_responses > 0 and time_last_output > 0 and  time_last_output - time_end  > counted_responses + 2:
+        print("Exiting...")
+        print('loop time', time_end - time_start,  time_last_output - time_end, counted_responses)
+        return True
+    if counted_responses == 0 and time_last_output - time_start > starting_timeout:
+        return True
+    return False
 
 def main() -> str:
     """Transcribe speech from audio file."""
@@ -245,6 +261,3 @@ def main() -> str:
 if __name__ == "__main__":
     x = main()
     print('xx', x.strip(), 'xx')
-    print('now again')
-    y = main()
-    print(y.strip())
