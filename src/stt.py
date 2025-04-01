@@ -19,8 +19,6 @@ try:
 except:
     MICROPHONE_INDEX=-1
 
-
-
 try:
     GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
 except:
@@ -34,6 +32,8 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
+time_start = 0
+time_end = 0 
 
 class MicrophoneStream:
     """Opens a recording stream as a generator yielding the audio chunks."""
@@ -156,11 +156,12 @@ def listen_print_loop(responses: object) -> str:
     Returns:
         The transcribed text.
     """
+    global time_end, time_start 
 
     num_chars_printed = 0
 
     collect_characters = ""
-    time_start = time.time()
+    #time_start = time.time()
 
     for response in responses:
         if not response.results:
@@ -213,6 +214,7 @@ def main() -> str:
     # for a list of supported languages.
     language_code = "en-US"  # a BCP-47 language tag
     collected_values = ""
+    global time_start 
 
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(
@@ -224,6 +226,8 @@ def main() -> str:
     streaming_config = speech.StreamingRecognitionConfig(
         config=config, interim_results=True
     )
+
+    time_start = time.time()
 
     with MicrophoneStream(RATE, CHUNK) as stream:
         audio_generator = stream.generator()
