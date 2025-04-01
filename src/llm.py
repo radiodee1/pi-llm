@@ -248,11 +248,11 @@ class Kernel:
                 self.p("len q:", self.q.qsize(), 'say something outside loop-wait.')
 
                 use_block =  self.questions > -1   or  self.cloud_stt
-                print(use_block, 'use_block')
+                self.p(use_block, 'use_block')
                 if self.review_skip < 0 :
                     #self.empty_queue()
                     self.recognize_audio()
-                    print('after recognize_audio')
+                    self.p('after recognize_audio')
                     while ( self.q.qsize() > 0 ): 
                         rx = self.q.get(block=use_block) ## False usually !!
                         if rx.strip() != '':
