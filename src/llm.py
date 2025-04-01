@@ -20,6 +20,7 @@ import json
 #import hashlib
 
 import review
+import stt 
 
 prompt_txt = [
         [ 'hi', 'hello' ],
@@ -243,17 +244,19 @@ class Kernel:
                 if self.questions > -1:
                     self.empty_queue()
                     #rr.clear()
-                #self.recognize_audio()
                    
                 self.p("len q:", self.q.qsize(), 'say something outside loop-wait.')
 
-                use_block =  self.questions > -1 
-                if self.review_skip < 0:
+                use_block =  self.questions > -1   or  self.cloud_stt
+                print(use_block, 'use_block')
+                if self.review_skip < 0 :
+                    #self.empty_queue()
                     self.recognize_audio()
-                    while (not self.q.empty()): # and (not self.review_skip > 0):
+                    print('after recognize_audio')
+                    while ( self.q.qsize() > 0 ): 
                         rx = self.q.get(block=use_block) ## False usually !!
                         if rx.strip() != '':
-                            #self.p('c-rr', rx)
+                            self.p('c-rr', rx)
                             rr.append(rx.strip())
 
                 if len(rr) == 0 and self.questions == -1:
@@ -348,6 +351,23 @@ class Kernel:
                     self.q.put(i, block=True)
             time.sleep(2)
             return
+        
+        if self.cloud_stt:
+            stt.time_start = 0 
+            stt.time_last_output = 0 
+            stt.time_end = 0
+            stt.counted_responses = 0 
+            x = stt.main()
+            ret = x.strip().strip(',')
+            self.empty_queue()
+            for i in ret.split(' '):
+                if i.strip() != "":
+                    self.p('d-rr', i)
+                    #self.q.put(i)
+                    self.q.put(i.strip(), block=True)
+                #self.q.task_done() 
+            return 
+
 
         r = sr.Recognizer()
         
@@ -388,9 +408,9 @@ class Kernel:
             ret = ''
             #self.p(GOOGLE_SPEECH_RECOGNITION_API_KEY)
             if self.cloud_stt == False:
-                ret = r.recognize_google(audio) #,  key=GOOGLE_SPEECH_RECOGNITION_API_KEY)
-            elif self.cloud_stt == True:
-                ret = str(r.recognize_google_cloud(audio, self.GOOGLE_APPLICATION_CREDENTIALS))
+                ret = r.recognize_google(audio) 
+            #elif self.cloud_stt == True:
+            #    ret = str(r.recognize_google_cloud(audio, self.GOOGLE_APPLICATION_CREDENTIALS))
 
             self.p("speech recognition: " + ret)
             

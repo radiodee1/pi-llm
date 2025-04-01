@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import queue
-import re
+#import re
 import sys
 
 from google.cloud import speech
@@ -233,6 +233,8 @@ def main() -> str:
     collected_values = ""
     global time_start , counted_responses
 
+    counted_responses = 0 
+
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
@@ -244,7 +246,7 @@ def main() -> str:
         config=config, interim_results=False
     )
 
-    time_start = time.time()
+    #time_start = time.time()
 
     with MicrophoneStream(RATE, CHUNK) as stream:
         audio_generator = stream.generator()
