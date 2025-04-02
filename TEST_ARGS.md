@@ -30,13 +30,13 @@ There are two components for testing presently, the `--questions` argument and t
 - `--test` checks the contents of the 'questions' iterator, and when the value matches the `--test` value the `review` test functions are triggered.
 - `--test` will work without `--questions` but it will not trigger the `review` test function.
 
-To see the current tests work, put the following in your `~/.llm.env` file.
+To see the current tests work, put the following in your `~/.llm.env` file along side of your other configurations.
 
 ```
 PROJECT_LAUNCH_ARGS='--file  --voice female --name Jane  --verbose --temp 0.95 --timeout 2.5 --mic_timeout 0 --wake_words hi jane cosmo --cloud_stt --cloud_tts --truncate --questions 6 --test_review 2 --review --test '
 ```
 
-The part of the environment variable that does the testing is `--questions 6 --test_review 2 --review --test`. 
+The part of the environment variable that specifies the testing is `--questions 6 --test_review 2 --review --test`. 
 
 ## Planned tests
 
