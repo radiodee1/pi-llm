@@ -70,7 +70,7 @@ question6 num six here
 question7 num seven here
 ```
 
-Note that upper case text is totally arbitrary.
+Note that upper case text is totally arbitrary. This text can be changed in the source repository.
 
 2. `~/llm.CHECKPOINT_001.gpt-3.5-turbo.txt`
 
@@ -98,4 +98,4 @@ jane : reply to question 5
 +++
 ```
 
-Note that `reply to question 2` is skipped. This is because `--test_review` is set to `2`.
+Note that `reply to question 2` is skipped. This is because `--test_review` is set to `2`. This is the output when the project is run.
