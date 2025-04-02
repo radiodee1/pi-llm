@@ -980,7 +980,7 @@ if __name__ == '__main__':
     parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
     parser.add_argument('--timeout', type=float, default=0.5, help="minutes to timeout.")
     parser.add_argument('--window', type=int, default=35, help="number of memory units used in input.")
-    parser.add_argument('--cloud_stt', action="store_true", help="Google Cloud Speech Recognition.")
+    parser.add_argument('--cloud_stt', action="store_true", help="Google Cloud Speech Recognition. Disables --loop_wait")
     parser.add_argument('--cloud_tts', action="store_true", help="Google Cloud Text to Speech.")
     parser.add_argument('--json', action="store_true", help="use json for model prompt.")
     parser.add_argument('--voice', type=str, default="en-US-Journey-F", help="Google Cloud TTS Voice Code.") ## en-US-Journey-D en-US-Journey-F
