@@ -36,8 +36,8 @@ time_start = 0 ## seconds
 time_last_output = 0 ## seconds
 time_end = 0 ## seconds
 counted_responses = 0 ## lines
-starting_timeout = 6 ## seconds
-overall_timeout = 8 ## seconds
+starting_timeout = 6 ## seconds -- set to -1 to cancel test and always wait. 
+overall_timeout = 8 ## seconds -- must not cancel test!!
 separator = ", "
 
 class MicrophoneStream:
@@ -204,8 +204,9 @@ def listen_print_loop(responses: object) -> str:
             #if re.search(r"\b(exit|quit)\b", transcript, re.I):
             #    print("Exiting..")
             #    break
+            if len(transcript.strip()) > 0:
+                collect_characters += separator + transcript.strip() 
 
-            collect_characters += separator + transcript.strip() 
             num_chars_printed = 0
 
             if len(transcript.strip()) > 0:
@@ -219,7 +220,7 @@ def should_exit() -> bool:
     time_last_output = time.time()
     if counted_responses > 0 and time_last_output > 0 and  time_last_output - time_end  > counted_responses + 2:
         return True
-    if counted_responses == 0 and time_last_output - time_start > starting_timeout:
+    if starting_timeout != -1 and counted_responses == 0 and time_last_output - time_start > starting_timeout:
         return True
     if time_end > 0 and time_last_output - time_end > overall_timeout:
         return True

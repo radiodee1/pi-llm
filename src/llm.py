@@ -356,6 +356,7 @@ class Kernel:
             stt.time_last_output = 0 
             stt.time_end = 0
             stt.counted_responses = 0 
+            stt.starting_timeout = -1
             x = stt.main()
             ret = x.strip().strip(',')
             self.empty_queue()
