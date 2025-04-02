@@ -565,6 +565,7 @@ class Kernel:
             ai[0]['content'] += instructions 
             ret += instructions + '\n'
             
+        if self.review: ## ???
             if not self.json:
                 ret = self._pre_prompt_ret(ret)
             if self.json:
