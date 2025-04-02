@@ -219,11 +219,11 @@ def should_exit() -> bool:
     global counted_responses, time_last_output, time_end, time_start, starting_timeout, overall_timeout 
     time_last_output = time.time()
     if counted_responses > 0 and time_last_output > 0 and  time_last_output - time_end  > counted_responses + 2:
-        return True
+        return True ## should_exit after a short reply
     if starting_timeout != -1 and counted_responses == 0 and time_last_output - time_start > starting_timeout:
-        return True
+        return True ## should_exit before a reply but after a long pause
     if time_end > 0 and time_last_output - time_end > overall_timeout:
-        return True
+        return True ## should_exit after a regular to long reply
     return False
 
 def main() -> str:
