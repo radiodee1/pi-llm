@@ -40,6 +40,4 @@ PROJECT_LAUNCH_ARGS='--file  --voice female --name Jane  --verbose --temp 0.95 -
 
 The part of the environment variable that specifies the testing is `--questions 6 --test_review 2 --review --test`. 
 
-## Planned tests
 
-We want to provide some way for the program to accept longer input. To start with we need to see if the speech recognition code will accept an arbitrary number of repeated inputs. We want to test the loop_wait code and see about repeatedly calling the speech recognition code a number of times. The argument on the command line might be something like `--loop_wait_test` having one integer value. Then we test if we can call the speech recognition code that number of times consecutively. This test would not work with other tests. If the test shows the speech recognition does not work well repeatedly, that's the end of that test.
