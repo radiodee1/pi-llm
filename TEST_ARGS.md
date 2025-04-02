@@ -30,6 +30,20 @@ There are two components for testing presently, the `--questions` argument and t
 - `--test` checks the contents of the 'questions' iterator, and when the value matches the `--test` value the `review` test functions are triggered.
 - `--test` will work without `--questions` but it will not trigger the `review` test function.
 
+3. Here is some `--test_review` info.
+
+- `--test_review` takes a single integer as an argument. This integer should be smaller than the input value from the '--questions' argument.
+- `--test_review` specifies the point where 'review' is tested. At that index the program adds the string '++' to the model output line.
+- `--test_review` then processes the input as if it were issued by the model and meant for the 'review' process. 
+- `--test_review` then has the program then skip a line of input so that the model can consider the most recent line from the user. 
+- `--test_review` is used to watch the skipping process and to finish it correctly.
+
+4. Notes on `--test` flag.
+
+- `--test` takes no argument.
+- `--test` makes sure that the program operates without asking for real audio output from the user.
+- `--test` also disables the file operations in the `review` code because the `--test_review` function is not using true model output for it's '++' operation.
+
 ## Example Configuration 
 
 To see the current tests work, put the following in your `~/.llm.env` file along side of your other configurations.
