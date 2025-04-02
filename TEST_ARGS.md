@@ -30,6 +30,8 @@ There are two components for testing presently, the `--questions` argument and t
 - `--test` checks the contents of the 'questions' iterator, and when the value matches the `--test` value the `review` test functions are triggered.
 - `--test` will work without `--questions` but it will not trigger the `review` test function.
 
+## Example Configuration 
+
 To see the current tests work, put the following in your `~/.llm.env` file along side of your other configurations.
 
 ```
