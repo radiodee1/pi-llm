@@ -47,7 +47,6 @@ class Kernel:
         self.truncate = False
         self.loop_wait = False
         self.loop_wait_saved = False
-        self.loop_wait_test = -1
         self.no_check = False
         self.offset = 0.0
         self.file = False
@@ -883,7 +882,6 @@ def do_args(parser, k):
     k.verbose = args.verbose
     k.loop_wait = args.loop_wait
     k.loop_wait_saved = args.loop_wait
-    k.loop_wait_test = args.loop_wait_test
     k.no_check = not args.check
     k.cloud_stt = args.cloud_stt 
     k.cloud_tts = args.cloud_tts
@@ -989,7 +987,6 @@ if __name__ == '__main__':
     parser.add_argument('--review', action="store_true", help="use review * function.")
     parser.add_argument('--test_review', type=int, default=-1, help="test review fn at different indexes.")
     parser.add_argument('--wake_words', nargs='+', type=str, default=['wake', 'hello'], help="list of useable wake words.")
-    parser.add_argument('--loop_wait_test', type=int, default=-1, help="arbitrary number of repeated calls of speech_recognition.")
     ## NOTE: local is not implemented!! 
     
     while True:
