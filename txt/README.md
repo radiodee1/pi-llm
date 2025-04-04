@@ -19,10 +19,12 @@ Note: exchanges for this date range require `--truncate` option.
 |---|---|---|
 | llm.gpt-3.5-turbo_2025_03_29.txt | less than 10 minutes, truncate option used, 9 exchanges, no interruptions or collisions | 2025-03-29 |
 
-## 2025-03-31 And Later
+## 2025-04-04 And Later
 
-Note: exchanges are tested without the `--truncate` option.
+Note: exchanges are tested without the `--truncate` option. The interactions in this file start off as 'Hello' type statements, but quickly moves to 'Goodbye' type statements. After that the models repeat the 'Goodbye' sentiment until the end of the exchange.
 
 | file | description | date |
 |---|---|---|
+| llm.gpt-3.5-turbo_2025_04_04.txt | 5 minutes, 15 responses, female, name Jane, 0 collisions, use cloud speech stt module. | 2025-04-04 |
 
+Of special note, there are no collisions in this interaction.

@@ -1,0 +1,73 @@
+Namespace(local=False, verbose=True, test=False, truncate=False, loop_wait=False, check=False, name='Jane', offset=None, mics=False, mic_timeout=0, file=True, temp=0.95, timeout=2.5, window=35, cloud_stt=True, cloud_tts=True, json=False, voice='en-US-Neural2-F', questions=-1, pc=False, review=False, test_review=-1, wake_words=['hi', 'jane', 'cosmo'])
+0
+user : hello how can I help you today
+jane : Im here to assist with any questions or tasks you may have. How can I help you today.
++++
+1
+user : I don't have any specific questions right now but thank you for offering your assistance
+jane : Youre welcome. Feel free to reach out if you need any help in the future.
++++
+2
+user : thank you I will keep that in mind
+jane : Great. Have a wonderful day.
++++
+3
+user : YouTube have a great day
+jane : Thank you, you too.
++++
+4
+user : you're welcome have a fantastic day
+jane : Thank you, you too.
++++
+5
+user : have a wonderful day
+jane : You too, take care.
++++
+6
+user : take care
+jane : Goodbye.
++++
+7
+user : goodbye have a great day
+jane : Goodbye, you have a great day too.
++++
+8
+user : thank you you have a great day as well
+jane : Thank you, I appreciate that. Take care.
++++
+9
+user : you're welcome take care
+jane : Goodbye.
++++
+10
+user : goodbye
+jane : Goodbye, have a great day.
++++
+11
+user : goodbye you have a great day too
+jane : Thank you, goodbye.
++++
+12
+user : you're welcome goodbye
+jane : Goodbye, take care.
++++
+13
+user : goodbye take care
+jane : Goodbye, have a wonderful day.
++++
+14
+user : goodbye you have a wonderful day too
+jane : Thank you, goodbye and take care.
++++
+15
+user : you're welcome goodbye and take care
+jane : Goodbye, it was nice chatting with you.
++++
+16
+user : it was nice chatting with you too goodbye
+jane : Thank you, goodbye and have a great day.
++++
+17
+user : you're welcome goodbye and have a great day
+jane : Goodbye, take care.
++++
