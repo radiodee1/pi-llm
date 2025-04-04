@@ -27,4 +27,4 @@ Note: exchanges are tested without the `--truncate` option. The interactions in 
 |---|---|---|
 | llm.gpt-3.5-turbo_2025_04_04.txt | 5 minutes, 15 responses, female, name Jane, 0 collisions, use cloud speech stt module. | 2025-04-04 |
 
-Of special note, there are no collisions in this interaction.
+Of special note, there are no interruptions or collisions in this interaction.
