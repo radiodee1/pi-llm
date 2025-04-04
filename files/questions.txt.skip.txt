@@ -1,0 +1,9 @@
+# inspirational question is paramount
+Question0 num zero here
+Question1 num one here
+Question2 num two here
+question3 num three here
+question4 num four here
+question5 num five here
+question6 num six here 
+question7 num seven here
