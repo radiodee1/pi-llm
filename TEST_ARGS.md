@@ -56,6 +56,8 @@ The part of the environment variable that specifies the testing is `--questions 
 
 ## Example File Contents 
 
+To perform this test, copy the file `files/questions.txt.skip.txt` to the location `files/questions.txt` and run the code `cd src; ./llm.py` outside of the flatpak with the environment variables set as specified above.
+
 1. `file/questions.txt`
 
 ```
@@ -72,7 +74,7 @@ question7 num seven here
 
 Note that upper case text is totally arbitrary. This text can be changed in the source repository.
 
-2. `~/llm.CHECKPOINT_001.gpt-3.5-turbo.txt`
+2. `~/llm.CHECKPOINT_001.gpt-3.5-turbo.txt` 
 
 ```
 Namespace(local=False, verbose=True, test=True, truncate=True, loop_wait=False, check=False, name='Jane', offset=None, mics=False, mic_timeout=0, file=True, temp=0.95, timeout=2.5, window=35, cloud_stt=True, cloud_tts=True, json=False, voice='en-US-Neural2-F', questions=6, pc=False, review=True, test_review=2, wake_words=['hi', 'jane', 'cosmo'], loop_wait_test=-1)
