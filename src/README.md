@@ -22,5 +22,11 @@ I was reading about methods employed to enhance gpt models. One concern was the 
 
 - Problem Solving - we have no special mechanism for enhancing the problem solving abilities of these gpt models. Most Problem Solving ideas are implemented in the gpt architecture, and are not issues at test time. 
 
+## `stt.py`
 
+This code replaces the 'speech-recognition' python module downloadable from pip. The speech-recognition module times out and returns text after the speaker has completed a certian amount of text. The optimal relationship would be for the module to accept more text endlessly and time out after a certian period of silence. This cannot be achieved easily with the speech-recognition module from pip. 
+
+The code that is used instead comes from the google site where they give examples on how to do streaming speech recognition from a microphone in the python language. It was modified just a little bit to allow the code to time out after inactivity. Using this replacement allows the pi-llm project to accept long input sequences and not clip them off. This way interaction between two of the pi-llm models does not require the '--truncate' option.
+
+Additionally the code allows for longer input from a user if a user is interacting with the model.
 
