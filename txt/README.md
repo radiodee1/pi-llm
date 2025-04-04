@@ -11,7 +11,7 @@
 | llm.gpt-4o-mini-epoch01.txt | 15 minutes, name Jane | 2024-08-29 |
 | llm.gpt-4o-mini-epoch02.txt | 15 minutes, name Jane | 2024-08-29 |
 
-## 2025-03-29 And Later
+## 2025-03-29 
 
 Note: exchanges for this date range require `--truncate` option.
 
@@ -19,7 +19,7 @@ Note: exchanges for this date range require `--truncate` option.
 |---|---|---|
 | llm.gpt-3.5-turbo_2025_03_29.txt | less than 10 minutes, truncate option used, 9 exchanges, no interruptions or collisions | 2025-03-29 |
 
-## 2025-04-04 And Later
+## 2025-04-04 
 
 Note: exchanges are tested without the `--truncate` option. The interactions in this file start off as 'Hello' type statements, but quickly moves to 'Goodbye' type statements. After that the models repeat the 'Goodbye' sentiment until the end of the exchange.
 
