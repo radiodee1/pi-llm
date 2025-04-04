@@ -22,7 +22,7 @@ I was reading about methods employed to enhance gpt models. One concern was the 
 
 - Problem Solving - we have no special mechanism for enhancing the problem solving abilities of these gpt models. Most Problem Solving ideas are implemented in the gpt architecture, and are not issues at test time. 
 
-## `stt.py`
+## `stt.py` - Speech To Text 
 
 This code replaces the 'speech-recognition' python module downloadable from pip. The speech-recognition module times out and returns text after the speaker has completed a certian amount of text. The optimal relationship would be for the module to accept more text endlessly and time out after a certian period of silence. This cannot be achieved easily with the speech-recognition module from pip. 
 
