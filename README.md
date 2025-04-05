@@ -57,7 +57,7 @@ PROJECT_LAUNCH_ARGS='--file --loop_wait --verbose --name Bob --offset 20 --timeo
 - If you leave the `OPENAI_MODEL` unset, the default will be used, which is "gpt-3.5-turbo".
 - You can choose a male or female voice using the `--voice` flag.
 - You can use the `--questions` flag as noted below.
-
+- Do not use `--loop_wait` if you are using the `--cloud_stt` flag.
 
 ## `--questions` Flag 
 
