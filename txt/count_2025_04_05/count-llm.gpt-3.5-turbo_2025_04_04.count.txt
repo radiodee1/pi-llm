@@ -1,0 +1,13 @@
+you, 14
+goodbye, 11
+have, 6
+thank, 6
+day, 5
+take, 5
+care, 5
+great, 4
+too, 4
+
+displayed: 9 categories: 44 words: 106 sentence: 5.888888888888889
+sentences: 18 exchanges: 9.0
+restarts: 0 repitition_total: 60 files: []
