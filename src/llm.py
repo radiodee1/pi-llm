@@ -31,7 +31,7 @@ prompt_txt = [
         [ 'what is your favorite food', 'I like pizza']
             ]
 
-identifiers = { 'user':'user', 'ai':'jane', 'mem': 'memory' }
+identifiers = { 'user':'user', 'ai':'jane', 'mem': 'storage' }
 
 voice_gender = { 'male': 'en-US-Neural2-D', 'female': 'en-US-Neural2-F' }
 
