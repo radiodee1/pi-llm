@@ -317,7 +317,7 @@ class Kernel:
             skip = review.is_skipable(tt, identifiers)
             tt = review._return_without_name(tt)
 
-            self.p('1>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
+            #self.p('1>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
             
             if self.review_skip >= 0: ## countdown maintenence
                 self.review_skip = -1 # -= 1 #  -= 1
@@ -329,7 +329,7 @@ class Kernel:
                 self.loop_wait = False
                 self.p('<<<2')
 
-            self.p('2>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
+            self.p('1>>>', tt, skip, self.review_skip, self.test_review, self.questions_num)
         return tt 
 
     def list_microphones(self):
