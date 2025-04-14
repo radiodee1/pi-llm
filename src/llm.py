@@ -300,7 +300,7 @@ class Kernel:
         if self.review:
             ## set size of self.window_chat here.
             if self.window <= 0:
-                self.window_chat = len(self.memory_ai) * 2 
+                self.window_chat = (len(self.memory_ai) * 2) + (len(prompt_txt) * 2 ) 
                 self.window_mem = floor( (self.window_chat * self.window_mem_ratio) / self.window_ratio)
                 self.p('window_mem', self.window_mem)
                 pass 
@@ -548,7 +548,7 @@ class Kernel:
 
     def _pre_prompt_ret(self, i):
         for a in review.memory_review:
-            a = a.replace(";", '')
+            a = a.replace(";", '').strip()
             i += identifiers['mem'] + ": " + a + "\n" # ";"
             self.window_line_count += 1 
         i = i.strip()
@@ -932,7 +932,7 @@ def do_args(parser, k):
     if args.window <= 0:
         k.window = args.window
         k.window_mem_ratio  = 1 - k.window_ratio 
-        k.window_chat = len(prompt_txt)
+        k.window_chat = len(prompt_txt) * 2 
         k.window_mem = floor( (k.window_chat * k.window_mem_ratio) / k.window_ratio)
         pass 
     k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
