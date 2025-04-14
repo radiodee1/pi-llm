@@ -924,12 +924,12 @@ def do_args(parser, k):
     if not k.review:
         k.window_ratio = 1 
 
-    if args.window > 0:
+    if args.window > 0 : ## and args.window >= len(prompt_txt) * 2:
         k.window = args.window
         k.window_mem_ratio = 1 - k.window_ratio
         k.window_chat = floor(k.window * k.window_ratio )
         k.window_mem = k.window - k.window_chat 
-    if args.window <= 0:
+    if args.window <= 0 :
         k.window = args.window
         k.window_mem_ratio  = 1 - k.window_ratio 
         k.window_chat = len(prompt_txt) * 2 
@@ -993,7 +993,7 @@ if __name__ == '__main__':
     parser.add_argument('--file', action="store_true", help="save statistics in text file.")
     parser.add_argument('--temp', type=float, default=0.001, help="temperature for LLM operation.")
     parser.add_argument('--timeout', type=float, default=0.5, help="minutes to timeout.")
-    parser.add_argument('--window', type=int, default=35, help="number of memory units used in input.")
+    parser.add_argument('--window', type=int, default=35, help="number of memory units used in input. (Use -1 for 'always-growing'.)")
     parser.add_argument('--cloud_stt', action="store_true", help="Google Cloud Speech Recognition. Disables --loop_wait")
     parser.add_argument('--cloud_tts', action="store_true", help="Google Cloud Text to Speech.")
     parser.add_argument('--json', action="store_true", help="use json for model prompt.")
