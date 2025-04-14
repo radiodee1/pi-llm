@@ -58,6 +58,7 @@ class Kernel:
         self.window_mem = 0 
         self.window_chat = 0 
         self.window_ratio = 1.0 / 2.0 
+        self.window_mem_ratio = 1 
         self.window_line_count = 0 
         self.cloud_stt = False
         self.cloud_tts = False
@@ -297,6 +298,12 @@ class Kernel:
             tt = 'reply to question ' + str(self.questions_num)
             
         if self.review:
+            ## set size of self.window_chat here.
+            if self.window <= 0:
+                self.window_chat = len(self.memory_ai) * 2 
+                self.window_mem = floor( (self.window_chat * self.window_mem_ratio) / self.window_ratio)
+                self.p('window_mem', self.window_mem)
+                pass 
 
             if int(self.test_review) != -1:
                 tt = tt.replace(review.ADD_TEXT, '')
@@ -917,11 +924,18 @@ def do_args(parser, k):
     if not k.review:
         k.window_ratio = 1 
 
-    if args.window != 0:
+    if args.window > 0:
         k.window = args.window
-    k.window_chat = floor(k.window * k.window_ratio )
-    k.window_mem = k.window - k.window_chat 
-    #k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
+        k.window_mem_ratio = 1 - k.window_ratio
+        k.window_chat = floor(k.window * k.window_ratio )
+        k.window_mem = k.window - k.window_chat 
+    if args.window <= 0:
+        k.window = args.window
+        k.window_mem_ratio  = 1 - k.window_ratio 
+        k.window_chat = len(prompt_txt)
+        k.window_mem = floor( (k.window_chat * k.window_mem_ratio) / k.window_ratio)
+        pass 
+    k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
 
     if args.json != None and args.json == True:
         k.json = args.json
