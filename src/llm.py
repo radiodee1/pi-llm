@@ -60,6 +60,9 @@ class Kernel:
         self.window_ratio = 1.0 / 2.0 
         self.window_mem_ratio = 1 
         self.window_line_count = 0 
+        self.size_trim = 0 ## number of lines to trim from prompt. Always increasing.
+        self.size_goal = 0 ## number of TOKENS inside context-area to use. User input.
+        self.size_const = 5 ## number_of_lines to pad in context-area. Magic number.
         self.cloud_stt = False
         self.cloud_tts = False
         self.json = False
@@ -268,6 +271,8 @@ class Kernel:
             if self.review:
                 review.read_review(self.window_mem)
 
+            self.resize_prompt()
+
             self.prompt = self.make_prompt()
 
             self.modify_prompt_before_model("", ' '.join(rr) )
@@ -300,7 +305,7 @@ class Kernel:
         if self.review:
             ## set size of self.window_chat here.
             if self.window <= 0:
-                self.window_chat = (len(self.memory_ai) * 2) + (len(prompt_txt) * 2 ) 
+                self.window_chat = (len(self.memory_ai) * 2) + (len(prompt_txt) * 2) - floor(self.window_ratio * self.size_trim) 
                 self.window_mem = floor( (self.window_chat * self.window_mem_ratio) / self.window_ratio)
                 self.p('window_mem', self.window_mem)
                 pass 
@@ -518,6 +523,17 @@ class Kernel:
             return b
         return a 
 
+    def resize_prompt(self):
+        if self.window_line_count > self.tokens_recent:
+            return
+        line_size = self.tokens_recent / self.window_line_count 
+        if self.window <= 0 and self.tokens_recent > self.size_goal:
+            number_of_lines = (self.size_goal - (line_size * self.size_const)) / line_size
+            if self.size_trim + floor(number_of_lines) < self.window_line_count :
+                self.size_trim += floor(number_of_lines)
+        return
+
+
     def format_json(self, user, text):
         user = user.lower().split(' ')[0]
         user = user.replace('\'', "\"")
@@ -532,8 +548,6 @@ class Kernel:
 
         x = { 'role' : t, 'content': user + " : " + text }
         return x 
-
-
 
     def _pre_prompt_ai(self, i):
         for j in range(len(review.memory_review)):
@@ -924,16 +938,20 @@ def do_args(parser, k):
     if not k.review:
         k.window_ratio = 1 
 
-    if args.window > 0 : ## and args.window >= len(prompt_txt) * 2:
+    k.size_goal = args.size 
+
+    if args.window > 0 and floor( args.window * k.window_ratio ) >= len(prompt_txt) * 2:
         k.window = args.window
         k.window_mem_ratio = 1 - k.window_ratio
         k.window_chat = floor(k.window * k.window_ratio )
         k.window_mem = k.window - k.window_chat 
+        k.size_trim = 0 
     if args.window <= 0 :
         k.window = args.window
         k.window_mem_ratio  = 1 - k.window_ratio 
         k.window_chat = len(prompt_txt) * 2 
         k.window_mem = floor( (k.window_chat * k.window_mem_ratio) / k.window_ratio)
+        k.size_trim = 0
         pass 
     k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
 
@@ -1003,6 +1021,7 @@ if __name__ == '__main__':
     parser.add_argument('--review', action="store_true", help="use review * function.")
     parser.add_argument('--test_review', type=int, default=-1, help="test review fn at different indexes.")
     parser.add_argument('--wake_words', nargs='+', type=str, default=['wake', 'hello'], help="list of useable wake words.")
+    parser.add_argument('--size', type=int, default=2048, help="Number of TOKENS to use from context-area.")
     ## NOTE: local is not implemented!! 
     
     while True:
