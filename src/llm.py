@@ -302,13 +302,6 @@ class Kernel:
             tt = 'reply to question ' + str(self.questions_num)
             
         if self.review:
-            ## set size of self.window_chat here.
-            if self.window <= 0:
-                self.window_chat = (len(self.memory_ai) * 2) + (len(prompt_txt) * 2) - floor(self.window_ratio * self.size_trim) 
-                self.window_mem = floor( (self.window_chat * self.window_mem_ratio) / self.window_ratio)
-                self.p('window_mem', self.window_mem)
-                pass 
-
             if int(self.test_review) != -1:
                 tt = tt.replace(review.ADD_TEXT, '')
                 tt = tt.replace(review.REM_TEXT, '')
@@ -527,6 +520,12 @@ class Kernel:
             return
         line_size = self.tokens_recent / self.window_line_count 
         can_trim = False
+        ## set size of self.window_chat here.
+        if self.window <= 0:
+            self.window_chat = (len(self.memory_ai) * 2) + (len(prompt_txt) * 2) - floor(self.window_ratio * self.size_trim) 
+            self.window_mem = floor( (self.window_chat * self.window_mem_ratio) / self.window_ratio)
+            self.p('window_mem', self.window_mem)
+        ## set size of self.size_trim here.
         if self.window <= 0 and self.tokens_recent > self.size_goal:
             number_of_lines = (self.size_goal - (line_size * self.size_const)) / line_size
             if self.size_trim + floor(number_of_lines) < self.window_line_count :
