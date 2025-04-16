@@ -524,7 +524,7 @@ class Kernel:
         return a 
 
     def resize_prompt(self):
-        if self.window_line_count > self.tokens_recent:
+        if self.window_line_count > self.tokens_recent or self.review_skip != -1:
             return
         line_size = self.tokens_recent / self.window_line_count 
         if self.window <= 0 and self.tokens_recent > self.size_goal:
