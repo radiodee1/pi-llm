@@ -284,7 +284,6 @@ class Kernel:
             tt = self.prune_input(tt) # + '.'
 
             self.p("====\n", self.prompt, "\n====")
-            self.p("++++", self.tokens_recent, self.window_line_count , "++++")
             #self.p("++++", self.count_tokens(self.prompt), self.tokens_recent, "++++")
 
             self.modify_prompt_after_model(tt, ' '.join(rr))
@@ -527,10 +526,13 @@ class Kernel:
         if self.window_line_count > self.tokens_recent or self.review_skip != -1:
             return
         line_size = self.tokens_recent / self.window_line_count 
+        can_trim = False
         if self.window <= 0 and self.tokens_recent > self.size_goal:
             number_of_lines = (self.size_goal - (line_size * self.size_const)) / line_size
             if self.size_trim + floor(number_of_lines) < self.window_line_count :
                 self.size_trim += floor(number_of_lines)
+                can_trim = True
+        self.p("++++ tokens:", self.tokens_recent,'line_count:', self.window_line_count , 'size_trim:', self.size_trim, 'can_trim:', can_trim, "++++")
         return
 
 
