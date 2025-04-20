@@ -518,6 +518,8 @@ class Kernel:
     def resize_prompt(self):
         if self.window_line_count > self.tokens_recent or self.review_skip != -1:
             return
+        if self.window_line_count == 0:
+            self.window_line_count = 1 
         line_size = self.tokens_recent / self.window_line_count 
         can_trim = False
         ## set size of self.window_chat here.
