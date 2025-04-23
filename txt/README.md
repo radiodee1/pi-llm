@@ -35,6 +35,6 @@ Note: exchanges are tested with the `--truncate` option. The interactions in thi
 
 | file | description | date |
 |---|---|---|
-| llm.gpt-4o_2025_04_23.txt | 5 minutes, 15 responses, female, name Jane, 0 collisions, use cloud speech stt module. | 2025-04-23 |
+| llm.gpt-4o_2025_04_23.txt | 5 minutes, 17 responses, female, name Jane, 0 collisions, use cloud speech stt module. | 2025-04-23 |
 
 Of special note, there are no interruptions or collisions in this interaction because of the `--truncate` option.
