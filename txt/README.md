@@ -28,3 +28,13 @@ Note: exchanges are tested without the `--truncate` option. The interactions in 
 | llm.gpt-3.5-turbo_2025_04_04.txt | 5 minutes, 15 responses, female, name Jane, 0 collisions, use cloud speech stt module. | 2025-04-04 |
 
 Of special note, there are no interruptions or collisions in this interaction.
+
+## 2025-04-23 
+
+Note: exchanges are tested with the `--truncate` option. The interactions in this file start off as 'Hello' type statements, but quickly moves to 'Thank you' and 'You're Welcome' type statements. After that the models repeat the 'Thank you' sentiment until the end of the exchange.
+
+| file | description | date |
+|---|---|---|
+| llm.gpt-4o_2025_04_23.txt | 5 minutes, 15 responses, female, name Jane, 0 collisions, use cloud speech stt module. | 2025-04-23 |
+
+Of special note, there are no interruptions or collisions in this interaction because of the `--truncate` option.
