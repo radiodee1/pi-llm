@@ -361,7 +361,7 @@ class Kernel:
             stt.time_end = 0
             stt.counted_responses = 0 
             stt.starting_timeout = -1
-            stt.overall_timeout = 16
+            stt.overall_timeout = self.mic_timeout
             x = stt.main()
             ret = x.strip().strip(',')
             self.empty_queue()
@@ -964,7 +964,9 @@ def do_args(parser, k):
 
     if args.mic_timeout != None and args.mic_timeout > -1:
         k.mic_timeout = args.mic_timeout
-        #k.p(k.mic_timeout, ' mic_timeout ')
+        if args.cloud_stt and args.mic_timeout <= 0:
+            k.mic_timeout = 20 
+
 
     k.wake_words = wake
     for i in identifiers.values():
