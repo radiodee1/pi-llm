@@ -3,6 +3,7 @@
 import argparse
 from math import floor
 import string
+import sys
 from types import NoneType
 from wave import Error
 from dotenv import  dotenv_values 
@@ -39,7 +40,7 @@ wake = [ 'hello', 'wake', 'wakeup' ]
 
 class Kernel:
 
-    def __init__(self):
+    def __init__(self, user_dir):
         self.verbose = False
         self.local = False
         self.remote = False
@@ -88,8 +89,11 @@ class Kernel:
         self.tokens_recent = 0
         self.recognize_audio_error = False
         self.wake_words = []
+        self.user_dir = user_dir
 
-        vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
+        if self.user_dir.strip() == '':
+            self.user_dir = os.path.expanduser('~')
+        vals = dotenv_values(self.user_dir + "/.llm.env")
 
         try:
             self.TEST_SIX=int(vals['TEST_SIX']) 
@@ -823,7 +827,7 @@ class Kernel:
             if int(self.questions) > -1:
                 num = ('0000' + str(self.checkpoint_num ))[-3:]
                 name += 'CHECKPOINT_' + num + '.'
-            f = open(os.path.expanduser('~') + name + self.OPENAI_MODEL.strip() +'.txt', 'a')
+            f = open(self.user_dir + name + self.OPENAI_MODEL.strip() +'.txt', 'a')
             if heading.strip() != "":
                 f.write(str(heading) + '\n')
                 f.close()
@@ -868,7 +872,7 @@ class Kernel:
 
     def needs_restart(self):
         out = False
-        file = os.path.expanduser("~") + "/" + ".llm.restart"
+        file = self.user_dir + "/" + ".llm.restart"
         if os.path.exists(file):
             out = True
             os.remove(file)
@@ -880,6 +884,13 @@ class Kernel:
 ################### end class ########################################
 
 def do_args(parser, k):
+
+    #print(k.PROJECT_LAUNCH_ARGS, '<<before<<')
+    if len(sys.argv) > 1:
+        for i in sys.argv[1:]:
+            k.PROJECT_LAUNCH_ARGS += ' ' + i 
+    #print(k.PROJECT_LAUNCH_ARGS,'<<after<<')
+
     args = parser.parse_args()
     if len(k.PROJECT_LAUNCH_ARGS.strip()) > 0:
         print(k.PROJECT_LAUNCH_ARGS.strip())
@@ -1028,10 +1039,13 @@ if __name__ == '__main__':
     parser.add_argument('--test_review', type=int, default=-1, help="test review fn at different indexes.")
     parser.add_argument('--wake_words', nargs='+', type=str, default=['wake', 'hello'], help="list of useable wake words.")
     parser.add_argument('--size', type=int, default=2048, help="Number of TOKENS to use from context-area.")
+    parser.add_argument('--user_dir', type=str, default='', help="Override user dir. Set from command line, not environment file.")
     ## NOTE: local is not implemented!! 
-    
+    args = parser.parse_args()
+    user_dir = args.user_dir
+
     while True:
-        k = Kernel()
+        k = Kernel(user_dir)
         args = do_args(parser, k)
         k.save_file(0, str(args))
         k.loop()
