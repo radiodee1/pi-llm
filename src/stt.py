@@ -12,20 +12,6 @@ from dotenv import  dotenv_values
 import os
 import time
 
-vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
-
-try:
-    MICROPHONE_INDEX=int(vals['MICROPHONE_INDEX'])
-except:
-    MICROPHONE_INDEX=-1
-
-try:
-    GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
-except:
-    GOOGLE_APPLICATION_CREDENTIALS=''
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
-
 #print(GOOGLE_APPLICATION_CREDENTIALS)
 
 # Audio recording parameters
@@ -39,6 +25,44 @@ counted_responses = 0 ## lines
 starting_timeout = 6 ## seconds -- set to -1 to cancel test and always wait. 
 overall_timeout = 8 ## seconds -- must not cancel test!!
 separator = ", "
+user_dir = os.path.expanduser('~')
+
+vals = dotenv_values(user_dir + "/.llm.env")
+
+try:
+    MICROPHONE_INDEX=int(vals['MICROPHONE_INDEX'])
+except:
+    MICROPHONE_INDEX=-1
+
+try:
+    GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
+except:
+    GOOGLE_APPLICATION_CREDENTIALS=''
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
+
+
+def set_user_dir(directory):
+    global user_dir
+    global vals 
+    global MICROPHONE_INDEX
+    global GOOGLE_APPLICATION_CREDENTIALS
+
+    user_dir = directory
+    vals = dotenv_values(user_dir + "/.llm.env")
+    try:
+        MICROPHONE_INDEX=int(vals['MICROPHONE_INDEX'])
+    except:
+        MICROPHONE_INDEX=-1
+
+    try:
+        GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
+    except:
+        GOOGLE_APPLICATION_CREDENTIALS=''
+
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
+
+
 
 class MicrophoneStream:
     """Opens a recording stream as a generator yielding the audio chunks."""

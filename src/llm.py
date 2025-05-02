@@ -174,9 +174,14 @@ class Kernel:
             self.GOOGLE_APPLICATION_CREDENTIALS=''
 
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = self.GOOGLE_APPLICATION_CREDENTIALS
-
+        
 
     def loop(self):
+        if self.review:
+            review.set_user_dir(self.user_dir)
+        if self.cloud_stt:
+            stt.set_user_dir(self.user_dir)
+
         time.sleep(self.offset)
         z = True
         x = 0

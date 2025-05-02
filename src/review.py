@@ -4,13 +4,6 @@ import os
 from dotenv import  dotenv_values 
 import random
 
-vals = dotenv_values(os.path.expanduser('~') + "/.llm.env")
-
-try:
-    PROJECT_REVIEW_NAME=str(vals['PROJECT_REVIEW_NAME'])
-except:
-    PROJECT_REVIEW_NAME='.llm.review.txt'
-
 ADD_TEXT = "++"
 REM_TEXT = "--"
 ADD_AUTO = " ++"
@@ -28,6 +21,15 @@ sample_len = 2
 add_auto = False
 similarity_ratio = 0.8 
 skip_read_write = False
+user_dir = os.path.expanduser('~')
+
+vals = dotenv_values(user_dir + "/.llm.env")
+
+try:
+    PROJECT_REVIEW_NAME=str(vals['PROJECT_REVIEW_NAME'])
+except:
+    PROJECT_REVIEW_NAME='.llm.review.txt'
+
 
 def _is_weight_surprise(text_comparison, text_surprise):
     if isinstance(text_comparison, list):  
@@ -116,18 +118,36 @@ def _segment_text(txt):
             a.append(y)
     return a 
 
+def set_user_dir(directory):
+    global user_dir
+    global vals 
+    global PROJECT_REVIEW_NAME
+    user_dir = directory
+    vals = dotenv_values(user_dir + "/.llm.env")
+    try:
+        PROJECT_REVIEW_NAME=str(vals['PROJECT_REVIEW_NAME'])
+    except:
+        PROJECT_REVIEW_NAME='.llm.review.txt'
+
+
 def read_review( selection ):
     global memory_review 
     global sub_review 
     global index_review
-    global memory_final_index 
+    global memory_final_index
+    global PROJECT_REVIEW_NAME 
+
+    global user_dir
+    vals =  dotenv_values(user_dir + "/.llm.env")
+
     memory_review = []
     sub_review = []
     index_review = []
     memory_final_index = []
 
+
     name = PROJECT_REVIEW_NAME 
-    path = os.path.expanduser("~") + "/" + name
+    path = user_dir + "/" + name
     #print(path)
     if os.path.exists(path) == False:
         return
@@ -166,7 +186,10 @@ def find_marked_text( user_list, ai_list, text, identifiers={'ai':'jane'} ):
 def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
     global memory_review ## <<-- not needed here??
     global identifiers_dict 
-    global sub_review 
+    global sub_review
+    global PROJECT_REVIEW_NAME
+    global user_dir
+
     identifiers_dict = identifiers
     listx = _last_entries(user_list, ai_list )
     save = ''
@@ -215,7 +238,7 @@ def _proc_text( user_list, ai_list,  text, identifiers={'ai': 'jane'}):
         if len(save.strip()) > 0 and not skip_read_write :
             #print('???', save)
             sub_review.append(save.strip().lower())
-            f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME, "a")# as f:
+            f = open(user_dir + "/" + PROJECT_REVIEW_NAME, "a")# as f:
             f.write(save.strip().lower() + "\n")
             f.flush()
             f.close()
@@ -274,14 +297,17 @@ def _check_words_do_match(memory, save):
     return False
 
 def _rem_matching_sentence(memory, save):
+    global PROJECT_REVIEW_NAME
+    global user_dir
+
     if skip_read_write:
         return True ## line_found
     words_match = False 
     line_skipped = False
     line_found = False
-    if os.path.exists(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak"):
-        os.remove(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak")
-    f = open(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak", "a")
+    if os.path.exists(user_dir + "/" + PROJECT_REVIEW_NAME + ".bak"):
+        os.remove(user_dir + "/" + PROJECT_REVIEW_NAME + ".bak")
+    f = open(user_dir + "/" + PROJECT_REVIEW_NAME + ".bak", "a")
 
     for i in memory:
         i = _remove_bad_chars(i)
@@ -312,8 +338,8 @@ def _rem_matching_sentence(memory, save):
             line_skipped = True
             line_found = True
     f.close()
-    if os.path.exists(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak"):
-        os.rename(os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME + ".bak", os.path.expanduser('~') + "/" + PROJECT_REVIEW_NAME )
+    if os.path.exists(user_dir + "/" + PROJECT_REVIEW_NAME + ".bak"):
+        os.rename(user_dir + "/" + PROJECT_REVIEW_NAME + ".bak", user_dir + "/" + PROJECT_REVIEW_NAME )
     return line_found
 
 def _remove_bad_chars(save):
