@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-USER_DIR=''
+USER_DIR='/home/dave'
 
 
 if [ $# -ne '1' ]; then
@@ -18,5 +18,7 @@ cd ./env_docker
 ./setup_volume.sh /home/
 
 cd ..
+
+cp virtualenv/requirements.flatpak.txt src/.
 
 sudo docker compose --env-file ./env_docker/docker_volume.env  up 

@@ -1,2 +1,5 @@
 pyaudio
 sys
+
+requirements.flatpak.txt
+requirements.*.txt 
