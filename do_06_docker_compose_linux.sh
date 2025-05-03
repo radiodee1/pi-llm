@@ -1,8 +1,9 @@
 #!/bin/bash 
 
-USER_DIR='/home/dave'
+USER_DIR=$HOME 
 
 echo $UID
+echo $USER_DIR
 
 if [ $# -ne '1' ]; then
     echo ""
