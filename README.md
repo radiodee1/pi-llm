@@ -106,3 +106,4 @@ Comment=Containeriized LLM for raspberry pi
 - Output to the new location is dependent on the permissions that the app has when it is run. If you do not set the `--user_dir` below the user's home dir, things like the `--file` output, which requires 'write' permission, may not work.
 - You can also put the `--user_dir` argument in the `.llm.env` file, but you results may be unpredictable.
 - `--user_dir` is not employed in the 'flatpak'.
+- You should consider that the environment file has a variable that points to the GOOGLE_APPLICATION_CREDENTIALS location. If this is not readable the `--cloud_stt` option will fail. This might happen in a Docker-compose setting. If the code is meant to point to a Windows 'users' directory, the GOOGLE_APPLICATION_CREDENTIALS location should also be in that directory.
