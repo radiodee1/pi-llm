@@ -926,7 +926,8 @@ def do_args(parser, k):
     if args.truncate == True:
         k.truncate = True
 
-    k.user_dir = args.user_dir
+    if args.user_dir.strip() != '':
+        k.user_dir = args.user_dir
     k.test = args.test
     k.verbose = args.verbose
     k.loop_wait = args.loop_wait
