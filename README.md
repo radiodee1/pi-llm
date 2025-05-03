@@ -1,5 +1,5 @@
 # pi-llm
-containerized llm for raspberry pi
+containerized llm for raspberry pi, and maybe other platforms.
 
 ## On-Line Services
 
