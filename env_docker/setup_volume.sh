@@ -1,6 +1,5 @@
 #!/bin/bash 
 
-cd ../env 
 
 HOST_FILE='docker_volume.env'
 

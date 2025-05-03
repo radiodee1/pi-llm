@@ -1,8 +1,5 @@
 #!/bin/bash 
 
-
-HOST_FILE='docker_user_dir.env'
-
 USER_DIR=''
 
 
@@ -15,7 +12,11 @@ else
 fi 
 
 
-echo "# env" > $HOST_FILE
-echo "ENV_USER_DIR=${USER_DIR}" >> $HOST_FILE
-echo "# empty?? " >> $HOST_FILE
+cd ./env_docker
 
+./setup_user_dir.sh $USER_DIR
+./setup_volume.sh /home/
+
+cd ..
+
+sudo docker compose --env-file ./env_docker/docker_volume.env  up 

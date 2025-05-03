@@ -1,0 +1,15 @@
+
+services:
+    pi-llm:
+        build: src/.
+        ports:
+            - "80:80"
+        env_file: 
+            - ./env_docker/docker_user_dir.env
+        container_name: "pi-llm"
+        volumes:
+            - $ENV_VOLUME:$ENV_VOLUME
+
+volumes:
+    $ENV_VOLUME:
+
