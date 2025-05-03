@@ -101,5 +101,6 @@ Comment=Containeriized LLM for raspberry pi
 
 ## Resetting `--user_dir`
 
+- The `--user_dir` flag takes one argument.
 - You can set `--user_dir` at the command line (not in `.llm.env`). Then the program will look for the `.llm.env` file in the newly specified location. 
 - You can also put the `--user_dir` argument in the `.llm.env` file, but you results may be unpredictable.
