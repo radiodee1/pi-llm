@@ -9,6 +9,10 @@ services:
         container_name: "pi-llm"
         volumes:
             - $ENV_VOLUME:$ENV_VOLUME
+
+            - /tmp/.X11-unix:/tmp/.X11-unix
+            - /run/user/$UID/pulse:/run/user/$UID/pulse
+            - $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
         environment:
             - PULSE_SERVER=unix:/run/user/$UID/pulse/native
             - XDG_RUNTIME_DIR=/run/user/$UID

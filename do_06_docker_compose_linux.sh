@@ -2,6 +2,7 @@
 
 USER_DIR='/home/dave'
 
+echo $UID
 
 if [ $# -ne '1' ]; then
     echo ""
@@ -21,4 +22,4 @@ cd ..
 
 cp virtualenv/requirements.flatpak.txt src/.
 
-sudo docker compose --env-file ./env_docker/docker_volume.env  up 
+sudo ENV_USER_DIR=$USER_DIR UID=$UID docker compose --env-file ./env_docker/docker_volume.env up 
