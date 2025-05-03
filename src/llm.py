@@ -832,23 +832,28 @@ class Kernel:
             if int(self.questions) > -1:
                 num = ('0000' + str(self.checkpoint_num ))[-3:]
                 name += 'CHECKPOINT_' + num + '.'
-            f = open(self.user_dir + name + self.OPENAI_MODEL.strip() +'.txt', 'a')
-            if heading.strip() != "":
-                f.write(str(heading) + '\n')
+            
+            try:
+                f = open(self.user_dir + name + self.OPENAI_MODEL.strip() +'.txt', 'a')
+                if heading.strip() != "":
+                    f.write(str(heading) + '\n')
+                    f.close()
+                    return
+
+                f.write(str(self.file_num) + '\n')
+                f.write(identifiers['user'] + " : "+ str(self.memory_user[-1]) + "\n")
+                f.write(identifiers['ai'] + " : " + str(self.memory_ai[-1]) + "\n")
+                #f.write(str(prompt) + "\n")
+                if self.loop_wait:
+                    f.write("---\n")
+                    f.write(str(time) + "\n")
+                f.write("+++\n")
+
                 f.close()
-                return
+                self.file_num += 1
+            except:
+                self.p('Save file failed')
 
-            f.write(str(self.file_num) + '\n')
-            f.write(identifiers['user'] + " : "+ str(self.memory_user[-1]) + "\n")
-            f.write(identifiers['ai'] + " : " + str(self.memory_ai[-1]) + "\n")
-            #f.write(str(prompt) + "\n")
-            if self.loop_wait:
-                f.write("---\n")
-                f.write(str(time) + "\n")
-            f.write("+++\n")
-
-            f.close()
-            self.file_num += 1
         pass 
 
     def read_questions(self):
