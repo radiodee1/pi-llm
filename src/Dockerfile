@@ -31,8 +31,8 @@ RUN ["/app/venv/bin/python3", "-m", "pip" , "install" , "--break-system-packages
 
 #CMD echo ${ENV_USER_DIR}
 
-RUN apt install -y mpg123
-COPY *.mp3 /app 
+#RUN apt install -y mpg123
+#COPY *.mp3 /app 
 
 CMD  /app/venv/bin/python3 /app/llm.py --user_dir  ${ENV_USER_DIR}
 
