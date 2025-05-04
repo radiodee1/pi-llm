@@ -107,3 +107,9 @@ Comment=Containeriized LLM for raspberry pi
 - You can also put the `--user_dir` argument in the `.llm.env` file, but your results may be unpredictable.
 - `--user_dir` is not employed in the 'flatpak'.
 - You should consider that the environment file has a variable that points to the GOOGLE_APPLICATION_CREDENTIALS location. If this is not readable the `--cloud_stt` option will fail. This might happen in a Docker-compose setting. If the code is meant to point to a Windows 'users' directory, the GOOGLE_APPLICATION_CREDENTIALS location should also be in that directory.
+
+## Notes
+
+```
+sudo docker image rmi --force $(sudo docker images -a -q)
+```
