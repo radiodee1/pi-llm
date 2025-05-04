@@ -2,4 +2,5 @@ pyaudio
 sys
 
 requirements.flatpak.txt
-requirements.*.txt 
+requirements.*.txt
+output.mp3
