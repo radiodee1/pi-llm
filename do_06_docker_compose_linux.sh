@@ -17,7 +17,7 @@ fi
 cd ./env_docker
 
 ./setup_user_dir.sh $USER_DIR
-./setup_volume.sh /home/
+./setup_volume.sh $USER_DIR
 
 cd ..
 
