@@ -111,12 +111,14 @@ Comment=Containeriized LLM for raspberry pi
 ## Docker for Linux
 
 ```
+## Note: this code uses 'pulseaudio.'
+
 ./do_06_docker_compose_linux.sh 
 ```
 ## Docker for Windows
 
 ```
-## Note: this has yet to be written.
+## Note: this code has yet to be written. If/when it is done instructions will be found here.
 ## The idea is to install the following on Windows: pulseaudio, git-for-windows, docker, (possibly WSL if necessary)
 
 ./do_07_docker_compose_win.sh
