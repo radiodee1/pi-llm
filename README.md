@@ -108,7 +108,23 @@ Comment=Containeriized LLM for raspberry pi
 - `--user_dir` is not employed in the 'flatpak'.
 - You should consider that the environment file has a variable that points to the GOOGLE_APPLICATION_CREDENTIALS location. If this is not readable the `--cloud_stt` option will fail. This might happen in a Docker-compose setting. If the code is meant to point to a Windows 'users' directory, the GOOGLE_APPLICATION_CREDENTIALS location should also be in that directory.
 
+## Docker for Linux
+
+```
+./do_06_docker_compose_linux.sh 
+```
+## Docker for Windows
+
+```
+## Note: this has yet to be written.
+## The idea is to install the following on Windows: pulseaudio, git-for-windows, docker, (possibly WSL if necessary)
+
+./do_07_docker_compose_win.sh
+```
+
 ## Notes
+
+Here are some notes so I don't forget how to do things at the command line that I have not memorized.
 
 ```
 sudo docker image rmi --force $(sudo docker images -a -q)
