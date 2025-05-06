@@ -1,0 +1,24 @@
+
+services:
+    pi-llm:
+        build: src/.
+        ports:
+            - "80:80"
+        env_file: 
+            - ./env_docker/docker_user_dir.env
+        container_name: "pi-llm"
+        volumes:
+            - $ENV_VOLUME:$ENV_VOLUME
+
+            - /tmp/.X11-unix:/tmp/.X11-unix
+            - /run/user/$UID/pulse:/run/user/$UID/pulse
+            - $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
+        environment:
+            - PULSE_SERVER=unix:/run/user/$UID/pulse/native
+            - XDG_RUNTIME_DIR=/run/user/$UID
+        devices:
+            - /dev/snd:/dev/snd
+        privileged: true
+#volumes:
+#    $ENV_VOLUME:
+
