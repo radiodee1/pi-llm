@@ -9,13 +9,14 @@ services:
         container_name: "pi-llm"
         volumes:
             - $ENV_VOLUME:$ENV_VOLUME
-
             - /tmp/.X11-unix:/tmp/.X11-unix
             - /run/user/$ENV_UID/pulse:/run/user/$ENV_UID/pulse
-            - $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
+            - ~/.config/pulse:/root/.config/pulse 
+            #- $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
         environment:
             - PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
             - XDG_RUNTIME_DIR=/run/user/$ENV_UID
+            - DISPLAY=${DISPLAY:-:0}
         devices:
             - /dev/snd:/dev/snd
         privileged: true
