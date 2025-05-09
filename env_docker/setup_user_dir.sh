@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/usr/bin/env bash 
 
 
 HOST_FILE='docker_user_dir.env'

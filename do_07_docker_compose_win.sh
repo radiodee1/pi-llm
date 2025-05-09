@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 echo $HOME
 echo $UID
