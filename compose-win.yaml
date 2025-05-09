@@ -11,11 +11,11 @@ services:
             - $ENV_VOLUME:$ENV_VOLUME
 
             - /tmp/.X11-unix:/tmp/.X11-unix
-            - /run/user/$UID/pulse:/run/user/$UID/pulse
+            - /run/user/$ENV_UID/pulse:/run/user/$ENV_UID/pulse
             - $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
         environment:
-            - PULSE_SERVER=unix:/run/user/$UID/pulse/native
-            - XDG_RUNTIME_DIR=/run/user/$UID
+            - PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
+            - XDG_RUNTIME_DIR=/run/user/$ENV_UID
         devices:
             - /dev/snd:/dev/snd
         privileged: true
