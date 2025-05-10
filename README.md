@@ -124,6 +124,7 @@ Install the following:
 ```
 ./do_07_docker_compose_win.sh
 ```
+Using `winget` to install Docker CLI did not work for me. Also, make sure to open Docker Desktop and go to "Settings" > "Resources" > "WSL Integration" and enable integration with your Linux distro (for me this was Ubuntu.)
 
 ## Notes
 
