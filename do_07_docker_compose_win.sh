@@ -32,7 +32,7 @@ cd ..
 
 cp virtualenv/requirements.flatpak.txt src/.
 
-ENV_USER_DIR=$USER_DIR ENV_UID=$UID docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
+sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
 
 #sudo ENV_USER_DIR=$USER_DIR UID=$UID docker compose --env-file ./env_docker/docker_volume.env exec pi-llm bash
 
