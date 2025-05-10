@@ -109,18 +109,19 @@ Comment=Containeriized LLM for raspberry pi
 - You should consider that the environment file has a variable that points to the GOOGLE_APPLICATION_CREDENTIALS location. If this is not readable the `--cloud_stt` option will fail. This might happen in a Docker-compose setting. If the code is meant to point to a Windows 'users' directory, the GOOGLE_APPLICATION_CREDENTIALS location should also be in that directory.
 
 ## Docker for Linux
-
+This was tested on Debian 11 and Ubuntu 24.10. 
 ```
 ## Note: this code uses 'pulseaudio.'
 
 ./do_06_docker_compose_linux.sh 
 ```
 ## Docker for Windows
-
+Install the following:
+- WSL - Necessary for Docker.
+- pulseaudio - An installer package is called `pasetup.exe` from Patrick Gaskin at 'pgaskin.net'.
+- git-for-windows
+- Docker Desktop Installer.exe - available for users in small organizations that make less than a certain amount.
 ```
-## Note: this code has yet to be written. If/when it is done instructions will be found here.
-## The idea is to install the following on Windows: pulseaudio, git-for-windows, docker, (possibly WSL if necessary)
-
 ./do_07_docker_compose_win.sh
 ```
 
