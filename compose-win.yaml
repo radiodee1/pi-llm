@@ -10,11 +10,12 @@ services:
             - /tmp/.X11-unix:/tmp/.X11-unix
             - /run/user/$ENV_UID/pulse:/run/user/$ENV_UID/pulse
             - ~/.config/pulse:/root/.config/pulse 
-            - ~/.config/pulse/cookie:/run/pulse/cookie
+            #- ~/.config/pulse/cookie:/run/pulse/cookie
 
             #- $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
         environment:
-            - PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
+            #- PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
+            - PULSE_SERVER=tcp:127.0.0.1
             - XDG_RUNTIME_DIR=/run/user/$ENV_UID
             - DISPLAY=${DISPLAY:-:0}
             - PULSE_COOKIE=/run/pulse/cookie
