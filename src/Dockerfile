@@ -32,8 +32,9 @@ RUN ["/app/venv/bin/python3", "-m", "pip" , "install" , "--break-system-packages
 
 COPY *.mp3 /app 
 
-COPY *.conf /etc/pulse/client.conf.d/.
-COPY *.pa /etc/pulse/default.pa.d/.
+COPY *.client.conf /etc/pulse/client.conf.d/.
+COPY *.default.pa /etc/pulse/default.pa.d/.
+COPY *.daemon.conf /etc/pulse/daemon.conf
 
 RUN apt install -y mpg123 pulseaudio-utils
 
