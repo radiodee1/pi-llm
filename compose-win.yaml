@@ -17,7 +17,7 @@ services:
             - /run/user/$ENV_UID/pulse:/run/user/$ENV_UID/pulse
             - $ENV_VOLUME/.config/pulse:$ENV_VOLUME/.config/pulse 
             - /var/run/pulse/:/var/run/pulse/
-            - /dev/snd:/dev/snd
+            - /mnt/wslg/PulseServer:/mnt/wslg/PulseServer
             #- $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
         environment:
             #- PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
@@ -27,8 +27,8 @@ services:
             #- DISPLAY=${DISPLAY:-:0}
             - PULSE_COOKIE=$ENV_VOLUME/.config/pulse/cookie
         user: ${ENV_UID}:${ENV_GID} 
-        #devices:
-            #- /dev/snd:/dev/snd
+        devices:
+            - /dev/snd:/dev/snd
         privileged: true
 #volumes:
 #    $ENV_VOLUME:
