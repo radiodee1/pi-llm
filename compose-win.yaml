@@ -5,22 +5,30 @@ services:
         env_file: 
             - ./env_docker/docker_user_dir.env
         container_name: "pi-llm"
+        group_add:
+            - audio 
+            # - sound
+            - pulse
+            - pulse-access
+            # - wslg
         volumes:
             - $ENV_VOLUME:$ENV_VOLUME
             - /tmp/.X11-unix:/tmp/.X11-unix
             - /run/user/$ENV_UID/pulse:/run/user/$ENV_UID/pulse
-            - ~/.config/pulse:/root/.config/pulse 
-            #- ~/.config/pulse/cookie:/run/pulse/cookie
-
+            - $ENV_VOLUME/.config/pulse:$ENV_VOLUME/.config/pulse 
+            - /var/run/pulse/:/var/run/pulse/
+            - /dev/snd:/dev/snd
             #- $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
         environment:
+            #- PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
             - PULSE_SERVER=unix:/mnt/wslg/PulseServer 
-            #- PULSE_SERVER=tcp:127.0.0.1
+            #- PULSE_SERVER=tcp:0.0.0.0
             - XDG_RUNTIME_DIR=/run/user/$ENV_UID
-            - DISPLAY=${DISPLAY:-:0}
-            - PULSE_COOKIE=/run/pulse/cookie
-        devices:
-            - /dev/snd:/dev/snd
+            #- DISPLAY=${DISPLAY:-:0}
+            - PULSE_COOKIE=$ENV_VOLUME/.config/pulse/cookie
+        user: ${ENV_UID}:${ENV_GID} 
+        #devices:
+            #- /dev/snd:/dev/snd
         privileged: true
 #volumes:
 #    $ENV_VOLUME:

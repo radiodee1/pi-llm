@@ -13,6 +13,8 @@ USER_DIR=$HOME
 
 echo $UID
 echo $USER_DIR
+GROUP=$(id -g)
+echo $GROUP
 
 if [ $# -ne '1' ]; then
     echo ""
@@ -32,8 +34,10 @@ cd ..
 
 cp virtualenv/requirements.flatpak.txt src/.
 
-sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
+pactl load-module module-native-protocol-unix socket=/mnt/wslg/PulseServer
 
-#sudo ENV_USER_DIR=$USER_DIR UID=$UID docker compose --env-file ./env_docker/docker_volume.env exec pi-llm bash
+sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
+
+#sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID docker compose --env-file ./env_docker/docker_volume.env exec pi-llm bash
 
 echo 'run "docker compose down" to stop'
