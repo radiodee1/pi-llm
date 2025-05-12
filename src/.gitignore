@@ -4,3 +4,5 @@ sys
 requirements.flatpak.txt
 requirements.*.txt
 output.mp3
+*.conf
+

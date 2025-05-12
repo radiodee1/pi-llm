@@ -35,6 +35,8 @@ cd ..
 
 cp virtualenv/requirements.flatpak.txt src/.
 
+cp files/pulseaudio.client.conf src/.
+
 pactl load-module module-native-protocol-unix socket=/mnt/wslg/PulseServer
 
 sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
