@@ -10,11 +10,12 @@ echo $(id -u)
 #!/bin/bash 
 
 USER_DIR=$HOME 
-
+USER_PWD=$PWD 
 echo $UID
 echo $USER_DIR
 GROUP=$(id -g)
 echo $GROUP
+echo $USER_PWD 
 
 if [ $# -ne '1' ]; then
     echo ""
@@ -36,7 +37,7 @@ cp virtualenv/requirements.flatpak.txt src/.
 
 pactl load-module module-native-protocol-unix socket=/mnt/wslg/PulseServer
 
-sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
+sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
 
 #sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID docker compose --env-file ./env_docker/docker_volume.env exec pi-llm bash
 

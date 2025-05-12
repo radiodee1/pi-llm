@@ -18,6 +18,7 @@ services:
             - $ENV_VOLUME/.config/pulse:$ENV_VOLUME/.config/pulse 
             - /var/run/pulse/:/var/run/pulse/
             - /mnt/wslg/PulseServer:/mnt/wslg/PulseServer
+            - $ENV_PWD/files/pulseaudio.client.conf:/etc/pulse/client.conf
             #- $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
         environment:
             #- PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
