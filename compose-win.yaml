@@ -24,7 +24,7 @@ services:
         environment:
             #- PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
             #- PULSE_SERVER=unix:/mnt/wslg/PulseServer 
-            - PULSE_SERVER=tcp:0.0.0.0
+            - PULSE_SERVER=tcp:127.0.0.1
             - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID
             - DISPLAY=${DISPLAY:-:0}
             - PULSE_COOKIE=/root/.config/pulse/cookie
