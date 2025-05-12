@@ -21,6 +21,8 @@ services:
             - /var/run/pulse/:/var/run/pulse/
             - /mnt/wslg/PulseServer:/mnt/wslg/PulseServer
             - $ENV_VOLUME/.config/pulse/cookie:/root/.config/pulse/cookie
+            - /var/run/pulse/.config/pulse/cookie:/var/run/pulse/.config/pulse/cookie
+
             #- $ENV_PWD/files/pulseaudio.client.conf:/etc/pulse/client.conf.d/client.conf
             #- $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
         environment:
