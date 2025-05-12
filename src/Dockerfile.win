@@ -36,7 +36,7 @@ COPY *.client.conf /etc/pulse/client.conf.d/.
 COPY *.default.pa /etc/pulse/default.pa.d/.
 COPY *.daemon.conf /etc/pulse/daemon.conf
 
-RUN apt install -y mpg123 pulseaudio-utils libx11-6
+RUN apt install -y mpg123 pulseaudio-utils xorg
 
 CMD tail -f /dev/null ## do something forever
 
