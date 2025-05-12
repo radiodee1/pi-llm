@@ -39,6 +39,9 @@ cp files/pulseaudio.client.conf src/.
 cp files/pulseaudio.default.pa src/. 
 cp files/pulseaudio.daemon.conf src/.
 
+pactl load-module module-waveout sink_name=output source_name=input record=0
+pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
+
 sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
 
 #sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID docker compose --env-file ./env_docker/docker_volume.env exec pi-llm bash
