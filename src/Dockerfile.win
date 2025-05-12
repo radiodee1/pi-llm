@@ -30,8 +30,16 @@ RUN ["/app/venv/bin/python3", "-m", "pip" , "install" , "--break-system-packages
 RUN ["/app/venv/bin/python3", "-m", "pip" , "install" , "--break-system-packages" , "--no-cache-dir" , "PyGObject==3.50.0"]
 
 
-#CMD tail -f /dev/null ## do something forever
+COPY *.mp3 /app 
 
-CMD  /app/venv/bin/python3 /app/llm.py --user_dir  ${ENV_USER_DIR}
+COPY *.client.conf /etc/pulse/client.conf.d/.
+COPY *.default.pa /etc/pulse/default.pa.d/.
+COPY *.daemon.conf /etc/pulse/daemon.conf
+
+RUN apt install -y mpg123 pulseaudio-utils libx11-6
+
+CMD tail -f /dev/null ## do something forever
+
+#### CMD  /app/venv/bin/python3 /app/llm.py --user_dir  ${ENV_USER_DIR}
 
 

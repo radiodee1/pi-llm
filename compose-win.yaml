@@ -1,7 +1,9 @@
 
 services:
     pi-llm:
-        build: src/.
+        build: 
+            context: src/.
+            dockerfile: Dockerfile.win
         env_file: 
             - ./env_docker/docker_user_dir.env
         container_name: "pi-llm"
@@ -26,7 +28,8 @@ services:
             #- PULSE_SERVER=unix:/mnt/wslg/PulseServer 
             - PULSE_SERVER=tcp:127.0.0.1
             - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID
-            - DISPLAY=${DISPLAY:-:0}
+            #- DISPLAY=${DISPLAY:-:0}
+            - DISPLAY=127.0.0.1:0.0
             - PULSE_COOKIE=/root/.config/pulse/cookie
         user: ${ENV_UID}:${ENV_GID} 
         devices:
