@@ -9,7 +9,7 @@ echo $(id -u)
 #do_06_docker_compose_linux.sh
 #!/bin/bash 
 
-sudo apt install net-tools
+sudo apt install net-tools -y
 
 USER_DIR=$HOME 
 USER_PWD=$PWD 
