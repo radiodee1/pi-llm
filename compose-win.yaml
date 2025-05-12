@@ -30,7 +30,7 @@ services:
             - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID
             #- DISPLAY=${DISPLAY:-:0}
             - DISPLAY=127.0.0.1:0.0
-            - PULSE_COOKIE=/root/.config/pulse/cookie
+            - PULSE_COOKIE=/var/run/pulse/.config/pulse/cookie
         user: ${ENV_UID}:${ENV_GID} 
         devices:
             - /dev/snd:/dev/snd
