@@ -9,7 +9,7 @@ echo $(id -u)
 #do_06_docker_compose_linux.sh
 #!/bin/bash 
 
-sudo apt install net-tools -y
+#sudo apt install net-tools -y
 
 USER_DIR=$HOME 
 USER_PWD=$PWD 
@@ -41,10 +41,10 @@ cp files/pulseaudio.client.conf src/.
 cp files/pulseaudio.default.pa src/. 
 cp files/pulseaudio.daemon.conf src/.
 
-echo "module-waveout"
-pactl load-module module-waveout sink_name=output source_name=input record=0
-echo "module-native-protocol-tcp"
-pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
+#echo "module-waveout"
+#pactl load-module module-waveout sink_name=output source_name=input record=0
+#echo "module-native-protocol-tcp"
+#pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
 
 sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
 
