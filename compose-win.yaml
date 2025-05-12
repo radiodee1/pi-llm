@@ -21,14 +21,14 @@ services:
             - /var/run/pulse/:/var/run/pulse/
             - /mnt/wslg/PulseServer:/mnt/wslg/PulseServer
             #- $ENV_VOLUME/.config/pulse/cookie:/root/.config/pulse/cookie
-            - /var/run/pulse/.config/pulse/cookie:/var/run/pulse/.config/pulse/cookie
+            - ~/.config/pulse/cookie:~/.config/pulse/cookie
 
             #- $ENV_PWD/files/pulseaudio.client.conf:/etc/pulse/client.conf.d/client.conf
             #- $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
         environment:
-            #- PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
+            - PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
             #- PULSE_SERVER=unix:/mnt/wslg/PulseServer 
-            - PULSE_SERVER=tcp:127.0.0.1
+            #- PULSE_SERVER=tcp:127.0.0.1
             - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID
             #- DISPLAY=${DISPLAY:-:0}
             - DISPLAY=127.0.0.1:0.0
