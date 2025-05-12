@@ -18,6 +18,7 @@ services:
             - $ENV_VOLUME/.config/pulse:$ENV_VOLUME/.config/pulse 
             - /var/run/pulse/:/var/run/pulse/
             - /mnt/wslg/PulseServer:/mnt/wslg/PulseServer
+            - $ENV_VOLUME/.config/pulse/cookie:/root/.config/pulse/cookie
             #- $ENV_PWD/files/pulseaudio.client.conf:/etc/pulse/client.conf.d/client.conf
             #- $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
         environment:
@@ -26,7 +27,7 @@ services:
             #- PULSE_SERVER=tcp:0.0.0.0
             - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID
             - DISPLAY=${DISPLAY:-:0}
-            - PULSE_COOKIE=root/.config/pulse/cookie
+            - PULSE_COOKIE=/root/.config/pulse/cookie
         user: ${ENV_UID}:${ENV_GID} 
         devices:
             - /dev/snd:/dev/snd
