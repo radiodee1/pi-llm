@@ -30,7 +30,7 @@ services:
         environment:
             #- PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
             #- PULSE_SERVER=unix:/mnt/wslg/PulseServer 
-
+            - ENV_IP
             - PULSE_SERVER=tcp:$ENV_IP:4713
             - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID
             #- DISPLAY=${DISPLAY:-:0}
