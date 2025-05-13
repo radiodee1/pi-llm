@@ -22,7 +22,7 @@ echo $USER_PWD
 Hostip="$(ip -4 -o a | awk '{print $4}' | cut -d/ -f1 | grep -v 127.0.0.1 | head -n1)"
 echo $Hostip
 
-pactl load-module module-native-protocol-tcp auth-ip-acl=$Hostip
+pactl load-module module-native-protocol-tcp auth-ip-acl=tcp:$Hostip:4713
 
 if [ $# -ne '1' ]; then
     echo ""
