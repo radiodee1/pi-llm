@@ -22,6 +22,8 @@ echo $USER_PWD
 Hostip="$(ip -4 -o a | awk '{print $4}' | cut -d/ -f1 | grep -v 127.0.0.1 | head -n1)"
 echo $Hostip
 
+pactl load-module module-native-protocol-tcp auth-ip-acl=$Hostip
+
 if [ $# -ne '1' ]; then
     echo ""
     echo "Enter a USER_DIR or leave blank for this user."
@@ -59,6 +61,5 @@ sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD ENV_IP
 #Containerip="$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pi-llm)"
 #echo $Containerip
 #sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID docker compose --env-file ./env_docker/docker_volume.env exec pi-llm bash
-pactl load-module module-native-protocol-tcp auth-ip-acl=$Containerip
 
 echo 'run "docker compose down" to stop'
