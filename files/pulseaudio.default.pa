@@ -1,5 +1,5 @@
 
-#load-module module-native-protocol-unix socket=/mnt/wslg/PulseServer
+load-module module-native-protocol-unix socket=/mnt/wslg/PulseServer
 
 #load-module module-waveout sink_name=output source_name=input record=0
 
