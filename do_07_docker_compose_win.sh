@@ -22,6 +22,7 @@ echo $USER_PWD
 Hostip="$(ip -4 -o a | awk '{print $4}' | cut -d/ -f1 | grep -v 127.0.0.1 | head -n1)"
 echo $Hostip
 
+ENV_IP=$Hostip
 
 if [ $# -ne '1' ]; then
     echo ""
