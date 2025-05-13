@@ -34,12 +34,13 @@ COPY *.mp3 /app
 
 COPY *.client.conf /etc/pulse/client.conf.d/.
 COPY *.default.pa /etc/pulse/default.pa.d/.
-COPY *.daemon.conf /etc/pulse/daemon.conf
+RUN  cat *.daemon.conf >> /etc/pulse/daemon.conf
 
-RUN apt install -y mpg123 pulseaudio-utils xorg
+RUN apt install -y mpg123 pulseaudio-utils # xorg
 
-ENV PULSE_SERVER=$ENV_PULSE_SERVER
-CMD export PULSE_SERVER
+#ENV PULSE_SERVER=$ENV_PULSE_SERVER
+
+#CMD export PULSE_SERVER
 
 CMD tail -f /dev/null ## do something forever
 
