@@ -48,7 +48,7 @@ cp files/pulseaudio.default.pa src/.
 cp files/pulseaudio.daemon.conf src/.
 
 sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
-#sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
+sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
 sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
 
 
