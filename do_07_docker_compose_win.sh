@@ -52,7 +52,7 @@ sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
 #sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
 sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
 
-pactl load-module module-native-protocol-unix socket=/mnt/wslg/PulseServer
+pactl load-module module-native-protocol-unix # socket=/mnt/wslg/PulseServer
 
 #pactl load-module module-native-protocol-tcp   auth-ip-acl=tcp:0.0.0.0:4713
 #echo "module-waveout"
