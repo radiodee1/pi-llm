@@ -52,7 +52,7 @@ sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
 sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
 
 
-pactl load-module module-native-protocol-tcp auth-ip-acl=tcp:$Hostip:4713
+pactl load-module module-native-protocol-tcp auth-ip-acl=tcp:0.0.0.0:4713
 #echo "module-waveout"
 #pactl load-module module-waveout sink_name=output source_name=input record=0
 #echo "module-native-protocol-tcp"
