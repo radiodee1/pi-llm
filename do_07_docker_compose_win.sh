@@ -41,6 +41,11 @@ cp files/pulseaudio.client.conf src/.
 cp files/pulseaudio.default.pa src/. 
 cp files/pulseaudio.daemon.conf src/.
 
+sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
+sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
+sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
+
+
 #echo "module-waveout"
 #pactl load-module module-waveout sink_name=output source_name=input record=0
 #echo "module-native-protocol-tcp"
