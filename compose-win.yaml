@@ -21,7 +21,7 @@ services:
         volumes:
             - $ENV_VOLUME:$ENV_VOLUME
             - /tmp/.X11-unix:/tmp/.X11-unix
-            - /run/user/$ENV_UID/pulse:/run/user/$ENV_UID/pulse
+            - /var/run/user/$ENV_UID/pulse:/var/run/user/$ENV_UID/pulse
             - $ENV_VOLUME/.config/pulse:$ENV_VOLUME/.config/pulse 
             - /var/run/pulse/:/var/run/pulse/
             - /mnt/wslg/PulseServer:/mnt/wslg/PulseServer
@@ -32,8 +32,8 @@ services:
             #- $ENV_PWD/files/pulseaudio.client.conf:/etc/pulse/client.conf.d/client.conf
             #- $ENV_USER_DIR/.config/pulse:$ENV_USER_DIR/.config/pulse
         environment:
-            #- PULSE_SERVER=unix:/run/user/$ENV_UID/pulse/native
-            - PULSE_SERVER=unix:/mnt/wslg/PulseServer 
+            - PULSE_SERVER=unix:/var/run/user/$ENV_UID/pulse/native
+            #- PULSE_SERVER=unix:/mnt/wslg/PulseServer 
             - ENV_IP=$ENV_IP
             #- PULSE_SERVER=tcp:$ENV_IP:4713
             - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID
