@@ -59,9 +59,9 @@ pactl load-module module-native-protocol-tcp auth-ip-acl=tcp:$Hostip:4713
 #pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
 
 
-sudo  docker compose --env-file ./env_docker/docker_volume.env --env-file ./env_docker/docker_pulse_server.env -f compose-win.yaml  --env ENV_USER_DIR=$USER_DIR --env ENV_UID=$UID --env ENV_GID=$GROUP --env ENV_PWD=$USER_PWD --env ENV_IP=$Hostip up 
+#sudo  docker compose --env-file ./env_docker/docker_volume.env --env-file ./env_docker/docker_pulse_server.env -f compose-win.yaml  --env ENV_USER_DIR=$USER_DIR --env ENV_UID=$UID --env ENV_GID=$GROUP --env ENV_PWD=$USER_PWD --env ENV_IP=$Hostip up 
 
-#sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD ENV_IP=$Hostip docker compose --env-file ./env_docker/docker_volume.env --env-file ./env_docker/docker_pulse_server.env -f compose-win.yaml up   
+sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD ENV_IP=$Hostip docker compose --env-file ./env_docker/docker_volume.env --env-file ./env_docker/docker_pulse_server.env -f compose-win.yaml up   
 
 #Containerip="$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pi-llm)"
 #echo $Containerip
