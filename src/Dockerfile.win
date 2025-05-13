@@ -40,7 +40,7 @@ COPY pulseaudio.daemon.conf /etc/pulse/daemon.conf
 
 RUN apt install -y mpg123 pulseaudio-utils # xorg
 
-ENV PULSE_SERVER=tcp:$ENV_PULSE_SERVER:4713
+#ENV PULSE_SERVER=tcp:$ENV_PULSE_SERVER:4713
 
 
 CMD tail -f /dev/null ## do something forever
