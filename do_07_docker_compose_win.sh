@@ -19,6 +19,9 @@ GROUP=$(id -g)
 echo $GROUP
 echo $USER_PWD 
 
+Hostip="$(ip -4 -o a | awk '{print $4}' | cut -d/ -f1 | grep -v 127.0.0.1 | head -n1)"
+echo $Hostip
+
 if [ $# -ne '1' ]; then
     echo ""
     echo "Enter a USER_DIR or leave blank for this user."
@@ -51,8 +54,11 @@ sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
 #echo "module-native-protocol-tcp"
 #pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
 
-sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
+sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD ENV_IP=$Hostip docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
 
+#Containerip="$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pi-llm)"
+#echo $Containerip
 #sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID docker compose --env-file ./env_docker/docker_volume.env exec pi-llm bash
+pactl load-module module-native-protocol-tcp auth-ip-acl=$Containerip
 
 echo 'run "docker compose down" to stop'
