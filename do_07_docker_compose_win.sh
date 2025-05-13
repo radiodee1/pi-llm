@@ -37,8 +37,8 @@ cd ./env_docker
 
 ./setup_user_dir.sh $USER_DIR
 ./setup_volume.sh $USER_DIR
-./setup_pulse_server.sh tcp:${Hostip}:4713
-./setup_pulse_server.sh unix:/mnt/wslg/PulseServer
+#./setup_pulse_server.sh tcp:${Hostip}:4713
+./setup_pulse_server.sh unix:/var/run/user/$UID/pulse/native
 
 cd ..
 
