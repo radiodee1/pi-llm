@@ -6,6 +6,7 @@ services:
             dockerfile: Dockerfile.win
         env_file: 
             - ./env_docker/docker_user_dir.env
+            - ./env_docker/docker_pulse_server.env 
         container_name: "pi-llm"
         group_add:
             - audio 

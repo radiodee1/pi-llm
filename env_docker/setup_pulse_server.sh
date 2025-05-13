@@ -16,6 +16,6 @@ fi
 
 
 echo "# env" > $HOST_FILE
-echo "ENV_PULSE_SERVER=${PULSE}" >> $HOST_FILE
+echo "PULSE_SERVER=${PULSE}" >> $HOST_FILE
 echo "# empty?? " >> $HOST_FILE
 

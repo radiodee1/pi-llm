@@ -37,6 +37,7 @@ cd ./env_docker
 
 ./setup_user_dir.sh $USER_DIR
 ./setup_volume.sh $USER_DIR
+./setup_pulse_server.sh "tcp:${Hostip}:4713"
 
 cd ..
 
@@ -46,9 +47,9 @@ cp files/pulseaudio.client.conf src/.
 cp files/pulseaudio.default.pa src/. 
 cp files/pulseaudio.daemon.conf src/.
 
-sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
-sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
-sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
+#sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
+#sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
+#sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
 
 
 #echo "module-waveout"
@@ -56,7 +57,7 @@ sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
 #echo "module-native-protocol-tcp"
 #pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
 
-sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD ENV_IP=$Hostip docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
+#sudo ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD ENV_IP=$Hostip docker compose --env-file ./env_docker/docker_volume.env -f compose-win.yaml up   
 
 #Containerip="$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pi-llm)"
 #echo $Containerip
