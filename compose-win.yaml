@@ -4,6 +4,10 @@ services:
         build: 
             context: src/.
             dockerfile: Dockerfile.win
+            args:
+              - ENV_IP=$ENV_IP
+              - ENV_PULSE_SERVER=$ENV_PULSE_SERVER
+
         env_file: 
             - ./env_docker/docker_user_dir.env
             - ./env_docker/docker_pulse_server.env 
