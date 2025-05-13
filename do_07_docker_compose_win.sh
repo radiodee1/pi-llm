@@ -22,7 +22,6 @@ echo $USER_PWD
 Hostip="$(ip -4 -o a | awk '{print $4}' | cut -d/ -f1 | grep -v 127.0.0.1 | head -n1)"
 echo $Hostip
 
-pactl load-module module-native-protocol-tcp auth-ip-acl=tcp:$Hostip:4713
 
 if [ $# -ne '1' ]; then
     echo ""
@@ -37,7 +36,7 @@ cd ./env_docker
 
 ./setup_user_dir.sh $USER_DIR
 ./setup_volume.sh $USER_DIR
-./setup_pulse_server.sh "tcp:${Hostip}:4713"
+./setup_pulse_server.sh tcp:${Hostip}:4713
 
 cd ..
 
@@ -48,10 +47,11 @@ cp files/pulseaudio.default.pa src/.
 cp files/pulseaudio.daemon.conf src/.
 
 sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
-sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
+#sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
 sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
 
 
+pactl load-module module-native-protocol-tcp auth-ip-acl=tcp:$Hostip:4713
 #echo "module-waveout"
 #pactl load-module module-waveout sink_name=output source_name=input record=0
 #echo "module-native-protocol-tcp"
