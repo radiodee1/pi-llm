@@ -65,12 +65,9 @@ sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
 #pactl load-module module-waveout sink_name=output source_name=input record=0
 #echo "module-native-protocol-tcp"
 #pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
-sudo chown -R 0 $USER_DIR
-#export USER_DIR 
-#export UID 
-#export GROUP
-#export USER_PWD
-#export Hostip
+
+#sudo chown -R 0 $USER_DIR
+
  ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP  ENV_IP=$Hostip ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml up   
 
 
