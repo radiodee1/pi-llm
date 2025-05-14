@@ -14,9 +14,6 @@ services:
               #export USER_PWD
               #export Hostip
 
-
-        port:
-            - 4713:4713 
         env_file: 
             - ./env_docker/docker_user_dir.env
             - ./env_docker/docker_pulse_server.env 
