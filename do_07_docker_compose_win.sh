@@ -65,7 +65,7 @@ sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
 #pactl load-module module-waveout sink_name=output source_name=input record=0
 #echo "module-native-protocol-tcp"
 #pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
-
+sudo chown -R $UID $USER_DIR
 #export USER_DIR 
 #export UID 
 #export GROUP

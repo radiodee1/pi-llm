@@ -39,7 +39,7 @@ services:
             - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID
             - DISPLAY=127.0.0.1:0.0
             - PULSE_COOKIE=$ENV_VOLUME/.config/pulse/cookie
-        #user: ${ENV_UID}:${ENV_GID} 
+        user: ${ENV_UID}:${ENV_GID} 
         devices:
             - /dev/snd:/dev/snd
         privileged: true
