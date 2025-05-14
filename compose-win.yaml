@@ -44,5 +44,5 @@ services:
             - /dev/snd:/dev/snd
         privileged: true
 volumes:
-    $ENV_VOLUME:
+    $ENV_VOLUME
 
