@@ -66,11 +66,11 @@ pactl load-module module-native-protocol-unix  socket=/mnt/wslg/PulseServer
 #echo "module-native-protocol-tcp"
 #pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
 
-export USER_DIR 
-export UID 
-export GROUP
-export USER_PWD
-export Hostip
+#export USER_DIR 
+#export UID 
+#export GROUP
+#export USER_PWD
+#export Hostip
 
 #sudo  docker compose --env-file ./env_docker/docker_volume.env --env-file ./env_docker/docker_pulse_server.env -f compose-win.yaml  --env ENV_USER_DIR=$USER_DIR --env ENV_UID=$UID --env ENV_GID=$GROUP --env ENV_PWD=$USER_PWD --env ENV_IP=$Hostip up 
 

@@ -7,6 +7,14 @@ services:
             args:
               - ENV_IP=$ENV_IP
               - ENV_PULSE_SERVER=$ENV_PULSE_SERVER
+              - USER_DIR=$USER_DIR
+              - DISPLAY=$DISPLAY
+              #export UID 
+              #export GROUP
+              #export USER_PWD
+              #export Hostip
+
+
         port:
             - 4713:4713 
         env_file: 
@@ -32,7 +40,7 @@ services:
             - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID
             - DISPLAY=127.0.0.1:0.0
             - PULSE_COOKIE=$ENV_VOLUME/.config/pulse/cookie
-        user: ${ENV_UID}:${ENV_GID} 
+        #user: ${ENV_UID}:${ENV_GID} 
         devices:
             - /dev/snd:/dev/snd
         privileged: true
