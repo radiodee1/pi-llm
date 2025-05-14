@@ -5,12 +5,11 @@ services:
             context: src/.
             dockerfile: Dockerfile.win
             args:
-              - ENV_IP=$ENV_IP
+              - ENV_IP
               - ENV_PULSE_SERVER=$ENV_PULSE_SERVER
-              - USER_DIR=$ENV_USER_DIR
+              - ENV_USER_DIR
               - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID/
               - ENV_VOLUME=$ENV_USER_DIR
-              - ENV_USER_DIR=$ENV_USER_DIR
               #- DISPLAY=$DISPLAY
               #export UID 
               #export GROUP
@@ -18,8 +17,7 @@ services:
               #export Hostip
 
         env_file: 
-            - ./env_docker/docker_user_dir.env
-            - ./env_docker/docker_pulse_server.env 
+            - ./pulseaudio-win.env
         container_name: "pi-llm"
         group_add:
             - audio 
