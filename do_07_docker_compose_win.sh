@@ -43,7 +43,8 @@ echo "" > ../pulseaudio-win.env ## empty
 #./setup_pulse_server.sh tcp:${Hostip}:4713
 ./setup_pulse_server.sh unix:/mnt/wslg/PulseServer
 #/var/run/user/$UID/pulse/native
-./setup_env_pair.sh ENV_VOLUME $USER_DIR
+
+#./setup_env_pair.sh ENV_VOLUME $USER_DIR
 
 cat docker*.env >> ../pulseaudio-win.env 
 

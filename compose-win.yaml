@@ -26,10 +26,10 @@ services:
             - pulse-access
             # - wslg
         volumes:
-            - $ENV_VOLUME/:$ENV_VOLUME/
+            - ${ENV_VOLUME}/:${ENV_VOLUME}/
             - /tmp/.X11-unix:/tmp/.X11-unix
-            - /var/run/user/$ENV_UID/:/var/run/user/$ENV_UID/
-            - $ENV_VOLUME/.config/pulse:$ENV_VOLUME/.config/pulse 
+            - /var/run/user/${ENV_UID}/:/var/run/user/${ENV_UID}/
+            #- $ENV_VOLUME/.config/pulse:$ENV_VOLUME/.config/pulse 
             - /mnt/wslg/PulseServer:/mnt/wslg/PulseServer
         environment:
             - PULSE_SERVER=unix:/mnt/wslg/PulseServer
