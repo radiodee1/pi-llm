@@ -43,6 +43,7 @@ echo "" > ../pulseaudio-win.env ## empty
 #./setup_pulse_server.sh tcp:${Hostip}:4713
 ./setup_pulse_server.sh unix:/mnt/wslg/PulseServer
 #/var/run/user/$UID/pulse/native
+./setup_env_pair.sh ENV_VOLUME $USER_DIR
 
 cat docker*.env >> ../pulseaudio-win.env 
 
@@ -53,6 +54,7 @@ cp virtualenv/requirements.flatpak.txt src/.
 cp files/pulseaudio.client.conf src/.
 cp files/pulseaudio.default.pa src/. 
 cp files/pulseaudio.daemon.conf src/.
+
 
 sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
 sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
@@ -68,7 +70,7 @@ sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
 
 #sudo chown -R 0 $USER_DIR
 
-ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP  ENV_IP=$Hostip ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml up   
+ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP  ENV_IP=$Hostip ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml --env-file ./pulseaudio-win.env up   
 
 
 
