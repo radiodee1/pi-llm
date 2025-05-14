@@ -43,6 +43,6 @@ services:
         devices:
             - /dev/snd:/dev/snd
         privileged: true
-volumes:
-    - $ENV_VOLUME
+#volumes:
+    #- $ENV_VOLUME
 
