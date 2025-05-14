@@ -34,6 +34,7 @@ services:
         environment:
             - PULSE_SERVER=unix:/mnt/wslg/PulseServer
             #/var/run/user/$ENV_UID/pulse/native
+            #- ENV_VOLUME=$ENV_VOLUME
             - ENV_IP=$ENV_IP
             - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID
             - DISPLAY=127.0.0.1:0.0
@@ -42,6 +43,6 @@ services:
         devices:
             - /dev/snd:/dev/snd
         privileged: true
-#volumes:
-#    $ENV_VOLUME:
+volumes:
+    $ENV_VOLUME:
 
