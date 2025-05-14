@@ -58,7 +58,7 @@ sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
 sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
 sudo cp files/*.daemon.conf /etc/pulse/daemon.conf
 
-pactl load-module module-native-protocol-unix  socket=/mnt/wslg/PulseServer
+#pactl load-module module-native-protocol-unix  socket=/mnt/wslg/PulseServer
 
 #pactl load-module module-native-protocol-tcp   auth-ip-acl=tcp:0.0.0.0:4713
 #echo "module-waveout"
@@ -71,10 +71,11 @@ pactl load-module module-native-protocol-unix  socket=/mnt/wslg/PulseServer
 #export GROUP
 #export USER_PWD
 #export Hostip
+sudo  ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD ENV_IP=$Hostip docker compose -f compose-win.yaml up   
 
-#sudo  docker compose --env-file ./env_docker/docker_volume.env --env-file ./env_docker/docker_pulse_server.env -f compose-win.yaml  --env ENV_USER_DIR=$USER_DIR --env ENV_UID=$UID --env ENV_GID=$GROUP --env ENV_PWD=$USER_PWD --env ENV_IP=$Hostip up 
 
-sudo  ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD ENV_IP=$Hostip docker compose --env-file ./pulseaudio-win.env -f compose-win.yaml up   
+
+#sudo  ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_PWD=$USER_PWD ENV_IP=$Hostip docker compose --env-file ./pulseaudio-win.env -f compose-win.yaml up   
 
 #Containerip="$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' pi-llm)"
 #echo $Containerip

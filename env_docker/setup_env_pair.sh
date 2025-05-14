@@ -3,7 +3,7 @@
 
 HOST_FILE='docker_pairs.env'
 
-VOLUME=''
+VALUE=''
 
 
 if [ $# -ne '2' ]; then

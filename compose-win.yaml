@@ -8,7 +8,8 @@ services:
               - ENV_IP=$ENV_IP
               - ENV_PULSE_SERVER=$ENV_PULSE_SERVER
               - USER_DIR=$ENV_USER_DIR
-              - DISPLAY=$DISPLAY
+              - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID/
+              #- DISPLAY=$DISPLAY
               #export UID 
               #export GROUP
               #export USER_PWD
