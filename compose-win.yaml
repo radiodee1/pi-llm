@@ -9,6 +9,7 @@ services:
               - ENV_PULSE_SERVER=$ENV_PULSE_SERVER
               - USER_DIR=$ENV_USER_DIR
               - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID/
+              - ENV_VOLUME=$ENV_USER_DIR
               #- DISPLAY=$DISPLAY
               #export UID 
               #export GROUP
