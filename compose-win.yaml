@@ -10,6 +10,7 @@ services:
               - USER_DIR=$ENV_USER_DIR
               - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID/
               - ENV_VOLUME=$ENV_USER_DIR
+              - ENV_USER_DIR=$ENV_USER_DIR
               #- DISPLAY=$DISPLAY
               #export UID 
               #export GROUP
@@ -27,7 +28,7 @@ services:
             - pulse-access
             # - wslg
         volumes:
-            - $ENV_VOLUME:$ENV_VOLUME
+            - $ENV_VOLUME/:$ENV_VOLUME/
             - /tmp/.X11-unix:/tmp/.X11-unix
             - /var/run/user/$ENV_UID/:/var/run/user/$ENV_UID/
             - $ENV_VOLUME/.config/pulse:$ENV_VOLUME/.config/pulse 
