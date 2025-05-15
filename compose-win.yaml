@@ -9,7 +9,7 @@ services:
               - ENV_PULSE_SERVER=$ENV_PULSE_SERVER
               - ENV_USER_DIR
               - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID/
-              - ENV_VOLUME=$ENV_USER_DIR
+              - ENV_VOLUME=$ENV_VOLUME
               #- DISPLAY=$DISPLAY
               #export UID 
               #export GROUP
@@ -24,7 +24,6 @@ services:
             # - sound
             - pulse
             - pulse-access
-            - docker
         volumes:
             - ${ENV_VOLUME}/:${ENV_VOLUME}/
             - /tmp/.X11-unix:/tmp/.X11-unix
