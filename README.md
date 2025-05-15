@@ -116,7 +116,7 @@ This was tested on Debian 11 and Ubuntu 24.10.
 ./do_06_docker_compose_linux.sh 
 ```
 ## Docker for Windows
-Install the following:
+This currently does not work. Install the following:
 - WSL - Necessary for Docker.
 - pulseaudio - An installer package is called `pasetup.exe` from Patrick Gaskin at 'pgaskin.net'. Also you can install the package from WSL, and this is what I have been attempting. Maybe try `sudo apt install pulseaudio`.
 - git-for-windows
