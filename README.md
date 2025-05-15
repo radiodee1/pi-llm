@@ -121,6 +121,7 @@ This currently does not work. Install the following:
 - pulseaudio - An installer package is called `pasetup.exe` from Patrick Gaskin at 'pgaskin.net'. Also you can install the package from WSL, and this is what I have been attempting. Maybe try `sudo apt install pulseaudio`.
 - git-for-windows
 - Docker Desktop Installer.exe - available for users in small organizations that make less than a certain amount.
+- The size of the Windows install is important. If you use a VM, the size of the disk image should probably be larger than 80G.
 ```
 ./do_07_docker_compose_win.sh
 ```
