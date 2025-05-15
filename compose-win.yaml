@@ -11,38 +11,25 @@ services:
               - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID/
               - ENV_VOLUME=$ENV_VOLUME
               - ENV_UID
-              #- DISPLAY=$DISPLAY
-              #export UID 
-              #export GROUP
-              #export USER_PWD
-              #export Hostip
-
         env_file: 
             - ./pulseaudio-win.env
         container_name: "pi-llm"
         group_add:
             - audio 
-            # - sound
             - pulse
             - pulse-access
         volumes:
             - ${ENV_VOLUME}/:${ENV_VOLUME}/
             - /tmp/.X11-unix:/tmp/.X11-unix
             - /var/run/user/${ENV_UID}/:/var/run/user/${ENV_UID}/
-            #- $ENV_VOLUME/.config/pulse:$ENV_VOLUME/.config/pulse 
             - /mnt/wslg/PulseServer:/mnt/wslg/PulseServer
         environment:
             - PULSE_SERVER=unix:/mnt/wslg/PulseServer
-            #/var/run/user/$ENV_UID/pulse/native
-            #- ENV_VOLUME=$ENV_VOLUME
             - ENV_IP=$ENV_IP
             - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID
             - DISPLAY=127.0.0.1:0.0
             - PULSE_COOKIE=$ENV_VOLUME/.config/pulse/cookie
-        #user: ${ENV_UID}:${ENV_GID} 
         devices:
             - /dev/snd:/dev/snd
         privileged: true
-#volumes:
-    #- $ENV_VOLUME
 
