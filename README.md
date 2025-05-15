@@ -117,7 +117,7 @@ This was tested on Debian 11 and Ubuntu 24.10.
 ```
 ## Docker for Windows
 This currently does not work. Install the following:
-- WSL - Necessary for Docker.
+- WSL - Necessary for Docker. In PowerShell type: `wsl --install`
 - pulseaudio - An installer package is called `pasetup.exe` from Patrick Gaskin at 'pgaskin.net'. Also you can install the package from WSL, and this is what I have been attempting. Maybe try `sudo apt install pulseaudio`.
 - git-for-windows
 - Docker Desktop Installer.exe - available for users in small organizations that make less than a certain amount.
