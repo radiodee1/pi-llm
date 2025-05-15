@@ -57,13 +57,13 @@ cp files/pulseaudio.default.pa src/.
 cp files/pulseaudio.daemon.conf src/.
 
 
-sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
-sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
-sudo cat files/*.daemon.conf >> /etc/pulse/daemon.conf
+ cp files/*.client.conf /etc/pulse/client.conf.d/.
+ cp files/*.default.pa /etc/pulse/default.pa.d/.
+ cat files/*.daemon.conf >> /etc/pulse/daemon.conf
 
 #sudo chown -R 0 $USER_DIR
 #chmod -R 777 $USER_DIR
 
-sudo COMPOSE_CONVERT_WINDOWS_PATHS=1  ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP  ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml --env-file ./pulseaudio-win.env up   
+ COMPOSE_CONVERT_WINDOWS_PATHS=1  ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP  ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml --env-file ./pulseaudio-win.env up   
 
 echo 'run "docker compose down" to stop'
