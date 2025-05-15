@@ -24,7 +24,7 @@ services:
             # - sound
             - pulse
             - pulse-access
-            # - wslg
+            - docker
         volumes:
             - ${ENV_VOLUME}/:${ENV_VOLUME}/
             - /tmp/.X11-unix:/tmp/.X11-unix
