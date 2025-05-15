@@ -10,6 +10,7 @@ services:
               - ENV_USER_DIR
               - XDG_RUNTIME_DIR=/var/run/user/$ENV_UID/
               - ENV_VOLUME=$ENV_VOLUME
+              - ENV_UID
               #- DISPLAY=$DISPLAY
               #export UID 
               #export GROUP

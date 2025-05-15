@@ -19,8 +19,8 @@ GROUP=$(id -g)
 echo $GROUP
 echo $USER_PWD 
 
-#Hostip="$(ip -4 -o a | awk '{print $4}' | cut -d/ -f1 | grep -v 127.0.0.1 | head -n1)"
-#echo $Hostip
+HOSTIP="$(ip -4 -o a | awk '{print $4}' | cut -d/ -f1 | grep -v 127.0.0.1 | head -n1)"
+echo $HOSTIP
 
 #ENV_IP=$Hostip
 
@@ -72,7 +72,7 @@ sudo cat files/*.daemon.conf >> /etc/pulse/daemon.conf
 #sudo chown -R 0 $USER_DIR
 chmod -R 777 $USER_DIR
 
-sudo ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP  ENV_IP=$Hostip ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml --env-file ./pulseaudio-win.env up   
+sudo ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP  ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml --env-file ./pulseaudio-win.env up   
 
 
 
