@@ -19,10 +19,10 @@ services:
             - pulse
             - pulse-access
         volumes:
-            - ${ENV_VOLUME}/:${ENV_VOLUME}/
             #- /tmp/.X11-unix:/tmp/.X11-unix
             - /var/run/user/${ENV_UID}/:/var/run/user/${ENV_UID}/
             - /mnt/wslg/PulseServer:/mnt/wslg/PulseServer
+            - ${ENV_VOLUME}/:${ENV_VOLUME}/
         environment:
             - PULSE_SERVER=unix:/mnt/wslg/PulseServer
             - ENV_IP=$ENV_IP
