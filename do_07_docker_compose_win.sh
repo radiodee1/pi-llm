@@ -11,7 +11,7 @@ echo $(id -u)
 
 #sudo apt install net-tools -y
 
-USER_DIR=$HOME 
+USER_DIR=$HOME
 USER_PWD=$PWD 
 echo $UID
 echo $USER_DIR
@@ -32,6 +32,7 @@ else
     USER_DIR=$1 
 fi 
 
+echo $USER_DIR
 
 cd ./env_docker
 
