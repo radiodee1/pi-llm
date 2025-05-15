@@ -145,4 +145,6 @@ sudo docker image rmi --force $(sudo docker images -a -q)
 tr -d '\r' < input.txt > output.txt
 
 docker run -it pi-llm-pi-llm bash
+
+winget install --id=Docker.DockerCLI -e 
 ```
