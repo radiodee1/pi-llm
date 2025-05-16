@@ -142,8 +142,16 @@ cd ~/workspace/pi-llm/
 
 ## You should type this in the WSL terminal!!
 ./do_07_docker_compose_win.sh
+
+## You should be able to specify another WSL path for the pi-llm installation.
+./do_07_docker_compose_win.sh /mnt/some/other/path 
+
+## The above only works with Linux path names, 
+## but need not be limited to the /mnt or /home directory.
 ```
 Using `winget` to install Docker CLI did not work for me. Also, make sure to open Docker Desktop and go to "Settings" > "Resources" > "WSL Integration" and enable integration with your Linux distro (for me this was Ubuntu.)
+
+If you specify your own install path, it will probably only work in the WSL name space. If you try to use Windows paths, the program will complain that the path that you supply contains too many colons. If you manage to call the script (`do_07_docker_compose_win.sh`) using colon free path names, you may be able to run the model. Note that the config file (`.llm.env`) has an entry for GOOGLE_APPLICATION_CREDENTIALS, and this entry contains a path to the Google json file. This should be considered and possibly adjusted.
 
 ## Notes
 
