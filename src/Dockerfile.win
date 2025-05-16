@@ -57,8 +57,8 @@ ENV ENV_IP=$ENV_IP
 ENV ENV_VOLUME=$ENV_USER_DIR
 ENV ENV_UID=$ENV_UID
 
-CMD tail -f /dev/null ## do something forever
+#CMD tail -f /dev/null ## do something forever
 
-#### CMD  /app/venv/bin/python3 /app/llm.py --user_dir  ${ENV_USER_DIR}
+CMD  /app/venv/bin/python3 /app/llm.py --user_dir  ${ENV_USER_DIR}
 
 
