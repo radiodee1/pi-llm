@@ -71,7 +71,7 @@ sudo cat files/*.daemon.conf >> /etc/pulse/daemon.conf
 ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml --env-file ./pulseaudio-win.env up -d 
 echo $USER_DIR
 
-ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker run -it -v $USER_DIR:$USER_DIR -v /var/run/user/${UID}/:/var/run/user/${UID}/ -v /mnt/wslg/PulseServer:/mnt/wslg/PulseServer pi-llm-pi-llm # bash    
+ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker run -it -v $USER_DIR:$USER_DIR -v /var/run/user/${UID}/:/var/run/user/${UID}/ -v /mnt/wslg/PulseServer:/mnt/wslg/PulseServer pi-llm-pi-llm  bash    
 
 
 # COMPOSE_CONVERT_WINDOWS_PATHS=1  ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP  ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml --env-file ./pulseaudio-win.env up   
