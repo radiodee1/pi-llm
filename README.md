@@ -131,6 +131,14 @@ This currently works only minimally. On a fresh install of Windows 10, install t
 - Docker Desktop Installer.exe - available for users in small organizations that make less than a certain amount.
 - The size of the Windows install is important. If you use a VM, the size of the disk image should probably be larger than 80G.
 ```
+## Start in the home directory in the WSL terminal.
+
+mkdir workspace 
+cd workspace
+git clone https://github.com/radiodee1/pi-llm.git 
+cd ~/workspace/pi-llm/
+
+## You should type this in the WSL terminal!!
 ./do_07_docker_compose_win.sh
 ```
 Using `winget` to install Docker CLI did not work for me. Also, make sure to open Docker Desktop and go to "Settings" > "Resources" > "WSL Integration" and enable integration with your Linux distro (for me this was Ubuntu.)
