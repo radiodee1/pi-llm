@@ -124,7 +124,7 @@ cd ~/workspace/pi-llm/
 ./do_06_docker_compose_linux.sh 
 ```
 ## Docker for Windows
-This currently does not work. Install the following:
+This currently works only minimally. On a fresh install of Windows 10, install the following:
 - WSL - Necessary for Docker. In PowerShell type: `wsl --install`
 - pulseaudio - An installer package is called `pasetup.exe` from Patrick Gaskin at 'pgaskin.net'. Also you can install the package from WSL, and this is what I have been attempting. Maybe try `sudo apt install pulseaudio`.
 - git-for-windows
