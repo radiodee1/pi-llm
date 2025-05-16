@@ -129,7 +129,7 @@ This currently works only minimally. On a fresh install of Windows 10, install t
 - WSL - Necessary for Docker. In PowerShell type: `wsl --install`
 - pulseaudio - An installer package is called `pasetup.exe` from Patrick Gaskin at 'pgaskin.net'. Also you can install the package from WSL, and this is what I have been attempting. Maybe try `sudo apt install pulseaudio`.
 - Git-for-windows
-- Docker Desktop Installer.exe - available for users in small organizations that make less than a certain amount.
+- Docker Desktop Installer.exe - available for users in small organizations that make less than a certain amount. Using `winget` to install Docker CLI did not work for me. Also, make sure to open Docker Desktop and go to "Settings" > "Resources" > "WSL Integration" and enable integration with your Linux distro (for me this was Ubuntu.)
 - The size of the Windows install is important. If you use a VM, the size of the disk image should probably be larger than 80G.
 ```
 ## Start in the home directory using the WSL terminal.
@@ -149,7 +149,6 @@ cd ~/workspace/pi-llm/
 ## The above only works with Linux path names, 
 ## but need not be limited to the /mnt or /home directory.
 ```
-Using `winget` to install Docker CLI did not work for me. Also, make sure to open Docker Desktop and go to "Settings" > "Resources" > "WSL Integration" and enable integration with your Linux distro (for me this was Ubuntu.)
 
 If you specify your own install path, it will probably only work in the WSL name space. If you try to use Windows paths, the program will complain that the path that you supply contains too many colons. If you manage to call the script (`do_07_docker_compose_win.sh`) using colon free path names, you may be able to run the model. Note that the config file (`.llm.env`) has an entry for GOOGLE_APPLICATION_CREDENTIALS, and this entry contains a path to the Google json file. This should be considered and possibly adjusted.
 
