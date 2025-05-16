@@ -115,6 +115,7 @@ This was tested on Debian 11 and Ubuntu 24.10.
 
 sudo apt install -y pulseaudio pulseaudio-utils
 
+cd ~
 mkdir workspace
 cd workspace
 git clone https://github.com/radiodee1/pi-llm.git 
@@ -127,12 +128,13 @@ cd ~/workspace/pi-llm/
 This currently works only minimally. On a fresh install of Windows 10, install the following:
 - WSL - Necessary for Docker. In PowerShell type: `wsl --install`
 - pulseaudio - An installer package is called `pasetup.exe` from Patrick Gaskin at 'pgaskin.net'. Also you can install the package from WSL, and this is what I have been attempting. Maybe try `sudo apt install pulseaudio`.
-- git-for-windows
+- Git-for-windows
 - Docker Desktop Installer.exe - available for users in small organizations that make less than a certain amount.
 - The size of the Windows install is important. If you use a VM, the size of the disk image should probably be larger than 80G.
 ```
-## Start in the home directory in the WSL terminal.
+## Start in the home directory using the WSL terminal.
 
+cd ~
 mkdir workspace 
 cd workspace
 git clone https://github.com/radiodee1/pi-llm.git 
