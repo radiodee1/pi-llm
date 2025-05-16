@@ -62,9 +62,9 @@ cp files/pulseaudio.default.pa src/.
 cp files/pulseaudio.daemon.conf src/.
 
 
- cp files/*.client.conf /etc/pulse/client.conf.d/.
- cp files/*.default.pa /etc/pulse/default.pa.d/.
- cat files/*.daemon.conf >> /etc/pulse/daemon.conf
+sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
+sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
+sudo cat files/*.daemon.conf >> /etc/pulse/daemon.conf
 
 #sudo chown -R 0 $USER_DIR
 #chmod -R 777 $USER_DIR
