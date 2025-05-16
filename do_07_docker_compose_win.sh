@@ -66,10 +66,13 @@ sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
 sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
 sudo cat files/*.daemon.conf >> /etc/pulse/daemon.conf
 
-#sudo chown -R 0 $USER_DIR
 #chmod -R 777 $USER_DIR
+
 ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml --env-file ./pulseaudio-win.env up -d 
-echo $USER_DIR
+
+#echo $USER_DIR
+
+echo 'type "exit" below to get terminal back'
 
 ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker run -it -v $USER_DIR:$USER_DIR -v /var/run/user/${UID}/:/var/run/user/${UID}/ -v /mnt/wslg/PulseServer:/mnt/wslg/PulseServer pi-llm-pi-llm  bash    
 
