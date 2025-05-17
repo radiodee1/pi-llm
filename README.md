@@ -1,5 +1,7 @@
 # pi-llm
-containerized llm for raspberry pi, and maybe other platforms.
+Containerized llm for raspberry pi, and maybe other platforms.
+
+What follows is a verbose set of notes put together from the start of the project.
 
 ## On-Line Services
 
@@ -83,6 +85,8 @@ Say something inspirational about how to spend your time wiseley.
 The two `questions.txt` files produce slightly different results. The `--questions` flag must specify a number equal to or greater than the number of lines in the `questions.txt` file. Though the examples on this page use comments, no actual comment lines are allowed in the `questions.txt` file.
 
 Again, this option goes through the checkpoints in the `OPENAI_CHECKPOINTS` environment variable and uses the `questions.txt` file to query the model. Resulting output is saved to the `/home/<name>` folder as different files for each checkpoint. You can then use the `count.py` and `plot.py` scripts on the checkpoint file in batches.
+
+The `--questions` flag may not work on the docker images.
 
 ## Autostart
 
