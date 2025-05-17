@@ -114,14 +114,11 @@ This was tested on Debian 11 and Ubuntu 24.10.
 ## Note: this code uses 'pulseaudio.'
 
 sudo apt install -y pulseaudio pulseaudio-utils
-
 cd ~
 mkdir workspace
 cd workspace
 git clone https://github.com/radiodee1/pi-llm.git 
-
 cd ~/workspace/pi-llm/
-
 ./do_06_docker_compose_linux.sh 
 ```
 ## Docker for Windows
