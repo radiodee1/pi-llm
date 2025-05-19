@@ -167,3 +167,5 @@ repo/
 
 *.flatpak 
 .output.mp3
+
+pulseaudio-win.env 
