@@ -26,6 +26,7 @@ It is possible to run the code from the project without containerization. This i
 - `do_02_try.sh` - runs the flatpak in the `x86_64` environment. 
 - `do_03_aarch64.sh` - build a flatpak package for `aarch64`.
 - `do_04_stop.sh` - stop the flatpak that may or may not be running in the `x86_64` environment.
+- `do_05_prep_flatpak.sh` - Often when you go to a new architecture it is necessary to install some base flatpak packages. This script is suposed to make installing base flatpak packages more easy.
 
 ## Env File
 
