@@ -6,3 +6,5 @@ requirements.*.txt
 output.mp3
 *.conf
 *.pa 
+questions.txt
+
