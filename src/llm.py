@@ -861,7 +861,7 @@ class Kernel:
             try:
                 f = open('../files/questions.txt', 'r')
             except:
-                f = open('/app/bin/questions.txt', 'r')
+                f = open('/app/questions.txt', 'r')
                 self.p('look for questions.txt inside flatpak')
 
             c = f.readlines()

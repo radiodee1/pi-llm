@@ -66,7 +66,7 @@ modules:
       - type: file
         path: files/questions.txt
     build-commands:
-      - install -D questions.txt /app/bin/questions.txt
+      - install -D questions.txt /app/questions.txt
 
 
 
