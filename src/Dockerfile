@@ -6,6 +6,8 @@ COPY llm.py stt.py review.py  /app
 
 COPY requirements.flatpak.txt /app 
 
+COPY questions.txt /app
+
 RUN apt update
 RUN apt upgrade -y
 RUN apt install -y pulseaudio python3-pip python3-dotenv python3-pyaudio python3-gst-1.0  portaudio19-dev gstreamer1.0-pulseaudio python3-espeak python3-mesonpy libcairo2-dev libgirepository1.0-dev libsqlite3-dev libghc-setenv-dev  

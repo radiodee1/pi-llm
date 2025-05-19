@@ -36,6 +36,8 @@ COPY *.client.conf /etc/pulse/client.conf.d/.
 COPY *.default.pa /etc/pulse/default.pa.d/.
 COPY pulseaudio.daemon.conf /etc/pulse/daemon.conf
 
+COPY questions.txt /app
+
 #RUN  cat /app/pulseaudio.daemon.conf >> /etc/pulse/daemon.conf
 
 RUN apt install -y mpg123 pulseaudio-utils # xorg
