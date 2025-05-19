@@ -1,9 +1,12 @@
 # inspirational question is paramount
-Question0 num zero here
-Question1 num one here
-Question2 num two here
-question3 num three here
-question4 num four here
-question5 num five here
-question6 num six here 
-question7 num seven here
+#Question0 num zero here
+#Question1 num one here
+#Question2 num two here
+#question3 num three here
+#question4 num four here
+#question5 num five here
+#question6 num six here 
+#question7 num seven here
+Say something inspirational about how to use your time wisely.
+What makes cooking such an interesting subject for so many people?
+Why is it so easy to forget about the most important things?
