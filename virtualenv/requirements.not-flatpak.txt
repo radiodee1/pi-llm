@@ -1,4 +1,5 @@
-setuptools==74.0.0
+#setuptools==74.0.0
+setuptools==80.8.0
 
 python-dotenv==1.0.1
 requirements-parser==0.9.0
