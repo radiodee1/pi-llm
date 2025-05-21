@@ -2,7 +2,7 @@
 setuptools==80.8.0
 
 python-dotenv==1.0.1
-requirements-parser==0.9.0
+requirements-parser==0.13.0
 gTTS==2.5.1
 playsound==1.2.2  
 pgi==0.0.11.2
@@ -14,7 +14,7 @@ requests==2.32.3
 google-cloud-speech==2.31.1
 google-cloud-texttospeech==2.17.1
 google-auth==2.38.0
-
+#google-api-core
 
 pycairo==1.27.0
 pygobject==3.42.2
