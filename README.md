@@ -44,7 +44,16 @@ GOOGLE_APPLICATION_CREDENTIALS=/path-to-json-file/file.json
 
 OPENAI_CHECKPOINTS="abc,abc,abc"
 
+GOOGLE_GEMINI_URL="https://generativelanguage.googleapis.com/v1beta/models/"
+
+GOOGLE_GEMINI_API_KEY="" ## get this from google web site...
+## https://aistudio.google.com/app/apikey 
+
+GOOGLE_GEMINI_MODEL="gemini-2.0-flash"
+
 ```
+When google gemini usage works, the GOOGLE_GEMINI key/value pairs will be important. For now they don't do anything.
+
 ## Launch Args 
 
 Below are some test arguments for the `PROJECT_LAUNCH_ARGS` variable. If the `PROJECT_LAUNCH_ARGS` variable is not empty, the program will launch using the variable contents only. In other words if the variable is set the program will no longer parse command line arguments, and will parse the `PROJECT_LAUNCH_ARGS` instead. This is so that the program can launch with different configurations from run to run when containerized in a flatpak.
