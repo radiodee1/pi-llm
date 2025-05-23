@@ -50,7 +50,7 @@ OPENAI_CHECKPOINTS="abc,abc,abc"
 Below are some test arguments for the `PROJECT_LAUNCH_ARGS` variable. If the `PROJECT_LAUNCH_ARGS` variable is not empty, the program will launch using the variable contents only. In other words if the variable is set the program will no longer parse command line arguments, and will parse the `PROJECT_LAUNCH_ARGS` instead. This is so that the program can launch with different configurations from run to run when containerized in a flatpak.
 
 ```
-PROJECT_LAUNCH_ARGS='--file --loop_wait --verbose --name Bob --offset 20 --timeout 0.5 --cloud_stt --cloud_tts --voice male '
+PROJECT_LAUNCH_ARGS='--file --verbose --name Bob --offset 20 --timeout 0.5 --cloud_stt --cloud_tts --voice male '
 ```
 
 - Collision checking does not work well. Do not use `--check`. 
