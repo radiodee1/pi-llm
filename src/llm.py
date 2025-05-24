@@ -1100,7 +1100,7 @@ if __name__ == '__main__':
     parser.add_argument('--wake_words', nargs='+', type=str, default=['wake', 'hello'], help="list of useable wake words. (Not implemented)")
     parser.add_argument('--size', type=int, default=2048, help="Number of TOKENS to use from context-area.")
     parser.add_argument('--user_dir', type=str, default='', help="Override user dir. Set from command line, not environment file.")
-    parser.add_argument('--google_gemini', action="store_true", help="User Google Gemini model.")
+    parser.add_argument('--google_gemini', action="store_true", help="Use Google Gemini model.")
     ## NOTE: local is not implemented!! 
     args = parser.parse_args()
     user_dir = args.user_dir
