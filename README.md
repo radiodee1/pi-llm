@@ -52,7 +52,7 @@ GOOGLE_GEMINI_API_KEY="" ## get this from google web site...
 GOOGLE_GEMINI_MODEL="gemini-2.0-flash"
 
 ```
-When google gemini usage works, the GOOGLE_GEMINI key/value pairs will be important. For now they don't do anything.
+Google gemini usage works. The GOOGLE_GEMINI key/value pairs work but you don't need them if you use OpenAI. For now they don't do anything unless you pass the flag `--google_gemini` in the Env file.
 
 ## Launch Args 
 
