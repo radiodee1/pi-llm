@@ -145,6 +145,8 @@ This currently works only minimally. On a fresh install of Windows 10, install t
 ```
 ## Start in the home directory using the WSL terminal.
 
+sudo apt install pulseaudio
+
 cd ~
 mkdir workspace 
 cd workspace
