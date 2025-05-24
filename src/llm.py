@@ -81,6 +81,7 @@ class Kernel:
         self.questions_num = 0
         self.checkpoint_num = 0 
         self.pc = False
+        self.gemini = False
         self.review = False
         self.review_skip = -1 
         self.review_skip_high = 1 
@@ -174,7 +175,22 @@ class Kernel:
             self.GOOGLE_APPLICATION_CREDENTIALS=''
 
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = self.GOOGLE_APPLICATION_CREDENTIALS
-        
+
+        try:
+            self.GOOGLE_GEMINI_URL=(vals['GOOGLE_GEMINI_URL'])
+        except:
+            self.GOOGLE_GEMINI_URL='https://generativelanguage.googleapis.com/v1beta/models/'
+
+        try:
+            self.GOOGLE_GEMINI_API_KEY=(vals['GOOGLE_GEMINI_API_KEY'])
+        except:
+            self.GOOGLE_GEMINI_API_KEY=''
+
+        try:
+            self.GOOGLE_GEMINI_MODEL=(vals['GOOGLE_GEMINI_MODEL'])
+        except:
+            self.GOOGLE_GEMINI_MODEL='gemini-2.0-flash'
+
 
     def loop(self):
         if self.review:
@@ -765,11 +781,38 @@ class Kernel:
                 "temperature" : self.temp
             }
 
+        if self.gemini:
+            url = self.GOOGLE_GEMINI_URL.strip() + self.GOOGLE_GEMINI_MODEL.strip() + ':generateContent?key=' + self.GOOGLE_GEMINI_API_KEY.strip()
+            z_args = {
+                "Content-Type": "application/json"
+            }
+            data = {
+                "contents": [{
+                    "parts":[{
+                        "text": self.prompt
+                    }]
+                }]
+            }
+
         r = requests.post(url, headers=z_args, json=data)
+       
+        if self.gemini:
+
+            if r.status_code == 200:
+                self.p("Response received successfully:")
+                self.reply = r.json()["candidates"][0]["content"]["parts"][0]["text"]
+                self.p(self.reply)
+            else:
+                self.p(f"Error: {r.status_code}")
+                self.p(r.text)
+
+            return self.reply
 
         self.p(r.text)
         r = json.loads(r.text)
         self.p(r)
+ 
+
         try:
             self.reply = r['choices'][0]['message']['content']
         except:
@@ -936,6 +979,7 @@ def do_args(parser, k):
     k.cloud_stt = args.cloud_stt 
     k.cloud_tts = args.cloud_tts
     k.pc = args.pc 
+    k.gemini = args.google_gemini
     k.review = args.review
     k.test_review = args.test_review
     if k.cloud_stt:
@@ -1049,9 +1093,10 @@ if __name__ == '__main__':
     parser.add_argument('--pc', action="store_true", help="use prompt-completion for prompt.")
     parser.add_argument('--review', action="store_true", help="use review * function.")
     parser.add_argument('--test_review', type=int, default=-1, help="test review fn at different indexes.")
-    parser.add_argument('--wake_words', nargs='+', type=str, default=['wake', 'hello'], help="list of useable wake words.")
+    parser.add_argument('--wake_words', nargs='+', type=str, default=['wake', 'hello'], help="list of useable wake words. (Not implemented)")
     parser.add_argument('--size', type=int, default=2048, help="Number of TOKENS to use from context-area.")
     parser.add_argument('--user_dir', type=str, default='', help="Override user dir. Set from command line, not environment file.")
+    parser.add_argument('--google_gemini', action="store_true", help="User Google Gemini model.")
     ## NOTE: local is not implemented!! 
     args = parser.parse_args()
     user_dir = args.user_dir
