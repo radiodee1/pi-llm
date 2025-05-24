@@ -877,7 +877,11 @@ class Kernel:
                 name += 'CHECKPOINT_' + num + '.'
             
             try:
-                f = open(self.user_dir + name + self.OPENAI_MODEL.strip() +'.txt', 'a')
+                file = self.OPENAI_MODEL.strip()
+                if self.gemini:
+                    file = self.GOOGLE_GEMINI_MODEL.strip()
+
+                f = open(self.user_dir + name + file +'.txt', 'a')
                 if heading.strip() != "":
                     f.write(str(heading) + '\n')
                     f.close()
