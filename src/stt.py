@@ -18,8 +18,8 @@ import time
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
-sleep = False
-wake_words = []
+sleep = False  ## set in llm.py 
+wake_words = [] ## set in llm.py 
 time_start = 0 ## seconds
 time_last_output = 0 ## seconds
 time_end = 0 ## seconds

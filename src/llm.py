@@ -90,6 +90,8 @@ class Kernel:
         self.tokens_recent = 0
         self.recognize_audio_error = False
         self.wake_words = []
+        self.sleep_wake = False
+        self.sleep = False 
         self.user_dir = user_dir
 
         if self.user_dir.strip() == '':
@@ -387,6 +389,8 @@ class Kernel:
             stt.counted_responses = 0 
             stt.starting_timeout = -1
             stt.overall_timeout = self.mic_timeout
+            stt.wake_words = self.wake_words
+            stt.sleep = self.sleep
             x = stt.main()
             ret = x.strip().strip(',')
             self.empty_queue()
@@ -395,7 +399,8 @@ class Kernel:
                     self.p('d-rr', i)
                     #self.q.put(i)
                     self.q.put(i.strip(), block=True)
-                #self.q.task_done() 
+                #self.q.task_done()
+            self.sleep = self.sleep_wake 
             return 
 
 
@@ -1038,15 +1043,16 @@ def do_args(parser, k):
         if args.cloud_stt and args.mic_timeout <= 0:
             k.mic_timeout = 20 
 
-
-    k.wake_words = wake
-    for i in identifiers.values():
-        if i.strip() not in k.wake_words:
-            k.wake_words.append(i.strip())
-    if len(args.wake_words) > 0:
-        for i in args.wake_words:
+    k.sleep_wake = args.sleep_wake
+    if args.sleep_wake:
+        k.wake_words = wake
+        for i in identifiers.values():
             if i.strip() not in k.wake_words:
                 k.wake_words.append(i.strip())
+        if len(args.wake_words) > 0:
+            for i in args.wake_words:
+                if i.strip() not in k.wake_words:
+                    k.wake_words.append(i.strip())
 
     if int(args.questions) != -1:
         k.checkpoint_num = 0 
@@ -1098,6 +1104,7 @@ if __name__ == '__main__':
     parser.add_argument('--review', action="store_true", help="use review * function.")
     parser.add_argument('--test_review', type=int, default=-1, help="test review fn at different indexes.")
     parser.add_argument('--wake_words', nargs='+', type=str, default=['wake', 'hello'], help="list of useable wake words. (Not implemented)")
+    parser.add_argument('--sleep_wake', action="store_true", help="enable sleep/wake type operation for --cloud_stt.")
     parser.add_argument('--size', type=int, default=2048, help="Number of TOKENS to use from context-area.")
     parser.add_argument('--user_dir', type=str, default='', help="Override user dir. Set from command line, not environment file.")
     parser.add_argument('--google_gemini', action="store_true", help="Use Google Gemini model.")
