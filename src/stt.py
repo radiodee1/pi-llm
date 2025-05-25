@@ -18,6 +18,8 @@ import time
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
+sleep = False
+wake_words = []
 time_start = 0 ## seconds
 time_last_output = 0 ## seconds
 time_end = 0 ## seconds
@@ -143,6 +145,9 @@ class MicrophoneStream:
             A generator that outputs audio chunks.
         """
         global time_start 
+        global sleep
+        global wake_words
+
         time_start = time.time()
         while not self.closed:
             # Use a blocking get() to ensure there's at least one chunk of
@@ -152,6 +157,8 @@ class MicrophoneStream:
             if chunk is None:
                 return
             if should_exit():
+                if len(wake_words) > 0:
+                    sleep = True
                 return
             data = [chunk]
             # Now consume whatever other data's still buffered.
@@ -187,7 +194,8 @@ def listen_print_loop(responses: object) -> str:
     Returns:
         The transcribed text.
     """
-    global time_end, time_start, time_last_output, counted_responses, separator 
+    global time_end, time_start, time_last_output, counted_responses, separator
+    global sleep, wake_words
     
     num_chars_printed = 0
 
@@ -228,7 +236,11 @@ def listen_print_loop(responses: object) -> str:
             #if re.search(r"\b(exit|quit)\b", transcript, re.I):
             #    print("Exiting..")
             #    break
-            if len(transcript.strip()) > 0:
+            for i in wake_words:
+                if i in transcript:
+                    sleep = False
+
+            if len(transcript.strip()) > 0 and sleep == False:
                 collect_characters += separator + transcript.strip() 
 
             num_chars_printed = 0
@@ -241,7 +253,12 @@ def listen_print_loop(responses: object) -> str:
 
 def should_exit() -> bool:
     global counted_responses, time_last_output, time_end, time_start, starting_timeout, overall_timeout 
+    global sleep, wake_words
+
     time_last_output = time.time()
+    if len(wake_words) > 0 and sleep == True:
+        return False
+
     if counted_responses > 0 and time_last_output > 0 and  time_last_output - time_end  > counted_responses + 2:
         return True ## should_exit after a short reply
     if starting_timeout != -1 and counted_responses == 0 and time_last_output - time_start > starting_timeout:
@@ -257,6 +274,8 @@ def main() -> str:
     language_code = "en-US"  # a BCP-47 language tag
     collected_values = ""
     global time_start , counted_responses
+    #global wake_words
+    #global sleep
 
     counted_responses = 0 
 
@@ -281,11 +300,19 @@ def main() -> str:
         )
 
         responses = client.streaming_recognize(streaming_config, requests)
+
         # Now, put the transcription responses to use.
         collected_values +=  listen_print_loop(responses)
     
     return collected_values
 
 if __name__ == "__main__":
-    x = main()
-    print('xx', x.strip().strip(','), 'xx')
+    sleep = False
+    wake_words = ['hi', 'hello']
+    xx = []
+    for _ in range(1):
+        x = main()
+        print('xx', x.strip().strip(','), 'xx')
+        xx.append(x.strip().strip(','))
+    print('done')
+    print(xx)
