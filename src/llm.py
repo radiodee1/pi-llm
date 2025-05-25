@@ -1044,6 +1044,7 @@ def do_args(parser, k):
             k.mic_timeout = 20 
 
     k.sleep_wake = args.sleep_wake
+    k.wake_words = []
     if args.sleep_wake:
         k.wake_words = wake
         for i in identifiers.values():
