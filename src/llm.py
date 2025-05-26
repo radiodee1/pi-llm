@@ -797,6 +797,12 @@ class Kernel:
                         "text": self.prompt
                     }]
                 }]
+                ##
+                ,
+                'generationConfig': {
+                    'temperature': self.temp
+                }
+                ##
             }
 
         r = requests.post(url, headers=z_args, json=data)
