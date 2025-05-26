@@ -1016,7 +1016,9 @@ def do_args(parser, k):
     if args.temp != 0:
         k.temp = args.temp
         if k.OPENAI_MODEL.startswith('o') or '4' in k.OPENAI_MODEL:
-            k.temp = 1 
+            if not args.google_gemini:
+                ## set temp == 1.0 for advanced OPENAI_MODEL
+                k.temp = 1 
 
     if args.timeout != 0:
         k.timeout = args.timeout
