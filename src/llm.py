@@ -813,6 +813,14 @@ class Kernel:
                 self.p("Response received successfully:")
                 self.reply = r.json()["candidates"][0]["content"]["parts"][0]["text"]
                 self.p(self.reply)
+
+                try:
+                    self.tokens_recent = r.json()["usageMetadata"]['totalTokenCount']
+                except:
+                    self.tokens_recent = 0 
+
+                #self.p(self.tokens_recent, '<<<<++++')
+                #self.p('=========\n', r.text)
             else:
                 self.p(f"Error: {r.status_code}")
                 self.p(r.text)
