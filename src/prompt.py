@@ -142,6 +142,7 @@ class List:
                 if i.startswith('#') or len(i.strip()) == 0:
                     continue
                 self.list.append(i.strip('\n'))
+            f.close()
         self.size = len(self.list)
 
     def set_identifiers(self, identifiers):
