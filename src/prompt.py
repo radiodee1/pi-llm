@@ -19,6 +19,7 @@ class Prompt:
                 j.set_identifiers(self.identifiers)
                 j.modify_init()
                 j.read_file()
+                j.shrink(2)
                 self.mem.append(j)
 
     def get_size(self):
@@ -66,9 +67,11 @@ class List:
         self.list = []
         self.growable = False
         self.shrinkable = False
+        self.shrink_unit = 0
         self.modify = False
         self.pairs = True
         self.size = -1 
+        
         self.identifiers = {}
         self.identifiers_pair_a = ""
         self.identifiers_pair_b = ""
@@ -88,7 +91,7 @@ class List:
         }
         self.filenames = {
             'growable': '',
-            'shrinkable': '',
+            'shrinkable': 'conversation.csv',
             'pairs': 'conversation.csv',
             'modify': '',
             'single': 'combined.csv'
@@ -136,7 +139,7 @@ class List:
                 if i.startswith('#') or len(i.strip()) == 0:
                     continue
                 self.list.append(i.strip('\n'))
-        pass 
+        self.size = len(self.list)
 
     def set_identifiers(self, identifiers):
         self.identifiers = identifiers
@@ -170,20 +173,28 @@ class List:
 
     def shrink(self, size):
         if self.shrinkable:
-            print(size)
+            self.shrink_unit = size
+            print(size, 'shrink')
 
     def output(self):
         self.mod_list()
         duplicate = ''
-        for i in range(len(self.list)):
-            if self.pairs:
-                x = i % 2
-                if x == 0:
-                    duplicate += self.identifiers_pair_a + ': ' + self.list[i] + '\n'
-                else:
-                    duplicate += self.identifiers_pair_b + ': ' + self.list[i] + '\n'
+        for i in range(len(self.list) ):
+            if self.shrinkable:
+                j = self.shrink_unit  
             else:
-                duplicate += self.identifiers_single + ': ' + self.list[i] + '\n'
+                j = 0 
+            y =  i + j 
+            if (y < 0 or y >= len(self.list)): 
+                continue
+            if self.pairs:
+                x = (y) % 2
+                if x == 0:
+                    duplicate += self.identifiers_pair_a + ': ' + self.list[y] + '\n'
+                else:
+                    duplicate += self.identifiers_pair_b + ': ' + self.list[y] + '\n'
+            else:
+                duplicate += self.identifiers_single + ': ' + self.list[y] + '\n'
 
         return duplicate
 
@@ -192,6 +203,9 @@ class List:
 
     def get_size(self):
         return len(self.list)
+
+    def set_size(self, size):
+        self.size = size
 
 if __name__ == '__main__':
     m = Prompt('MEMORY:review:../files/combined.csv:../files/conversation.csv', {'mem':'test', 'user':'me', 'ai': 'jane'})
