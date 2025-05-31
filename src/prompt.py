@@ -52,7 +52,10 @@ class Prompt:
         return duplicate
 
     def json_output(self):
-        return '{}'
+        duplicate = []
+        for i in self.mem:
+            duplicate += i.json_output()
+        return duplicate
 
     def set_identifiers(self, ident):
         self.identifiers = ident
@@ -198,8 +201,40 @@ class List:
 
         return duplicate
 
+    def format_json(self, user, text):
+        user = user.lower().split(' ')[0]
+        user = user.replace('\'', "\"")
+        text = text.strip()
+        text = text.replace('\'', '"')
+        if user == self.identifiers['ai'].lower() :
+            t = 'assistant'
+        else:
+            t = 'user'
+
+        x = { 'role' : t, 'content': user + " : " + text }
+        return x 
+
     def json_output(self):
-        return '{}'
+        self.mod_list()
+        duplicate = []
+        for i in range(len(self.list) ):
+            if self.shrinkable:
+                j = self.shrink_unit  
+            else:
+                j = 0 
+            y =  i + j 
+            if (y < 0 or y >= len(self.list)): 
+                continue
+            if self.pairs:
+                x = (y) % 2
+                if x == 0:
+                    duplicate += [self.format_json( self.identifiers_pair_a, self.list[y] )]
+                else:
+                    duplicate += [self.format_json( self.identifiers_pair_b, self.list[y] )] 
+            else:
+                duplicate += [self.format_json( self.identifiers_single, self.list[y] )]
+
+        return duplicate
 
     def get_size(self):
         return len(self.list)
@@ -208,11 +243,11 @@ class List:
         self.size = size
 
 if __name__ == '__main__':
-    m = Prompt('MEMORY:review:../files/combined.csv:../files/conversation.csv', {'mem':'test', 'user':'me', 'ai': 'jane'})
+    m = Prompt('MEMORY:review:../files/combined.csv:../files/conversation.csv', {'mem':'storage', 'user':'user', 'ai': 'jane'})
     print(m, m.identifiers)
     print(m.mem)
     for i in m.mem:
         print(i.init_string, 'pairs', i.pairs)
         print(i.list)
 
-    print(m.output())
+    print(m.json_output())
