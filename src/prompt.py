@@ -16,6 +16,7 @@ class Prompt:
         for i in self.init_string.split(':'):
             if len(i.strip()) > 0:
                 j = List(i.strip())
+                j.set_identifiers(self.identifiers)
                 j.modify_init()
                 j.read_file()
                 self.mem.append(j)
@@ -44,7 +45,10 @@ class Prompt:
         pass 
 
     def output(self):
-        return ''
+        duplicate = ''
+        for i in self.mem:
+            duplicate += i.output()
+        return duplicate
 
     def json_output(self):
         return '{}'
@@ -118,6 +122,13 @@ class List:
 
 
     def read_file(self):
+        if not os.path.exists(self.init_string):
+            i = self.init_string.strip().split('/')[-1]
+            if os.path.exists('/app/'):
+                self.init_string = '/app/' + i 
+        
+        print(self.init_string)
+
         if os.path.exists(self.init_string):
             f = open(self.init_string, 'r')
             x = f.readlines()
@@ -147,18 +158,34 @@ class List:
                 self.list.append(single)
 
     def mod_list(self):
+        duplicate = []
+        for i in self.list:
+            duplicate.append(self.mod_entry(i))
+        self.list = duplicate
         pass
 
     def mod_entry(self, line):
         print(line)
-        pass 
+        return line 
 
     def shrink(self, size):
         if self.shrinkable:
             print(size)
 
     def output(self):
-        return ''
+        self.mod_list()
+        duplicate = ''
+        for i in range(len(self.list)):
+            if self.pairs:
+                x = i % 2
+                if x == 0:
+                    duplicate += self.identifiers_pair_a + ': ' + self.list[i] + '\n'
+                else:
+                    duplicate += self.identifiers_pair_b + ': ' + self.list[i] + '\n'
+            else:
+                duplicate += self.identifiers_single + ': ' + self.list[i] + '\n'
+
+        return duplicate
 
     def json_output(self):
         return '{}'
@@ -173,3 +200,5 @@ if __name__ == '__main__':
     for i in m.mem:
         print(i.init_string, 'pairs', i.pairs)
         print(i.list)
+
+    print(m.output())
