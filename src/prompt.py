@@ -52,6 +52,7 @@ class Prompt:
                     if p in self.filenames['modify']:
                         j.modify = True
 
+                j.read_file()
                 self.mem.append(j)
 
     def get_size(self):
@@ -105,6 +106,16 @@ class List:
         self.identifiers_single = ""
         pass
 
+    def read_file(self):
+        if os.path.exists(self.init_string):
+            f = open(self.init_string, 'r')
+            x = f.readlines()
+            for i in x:
+                if i.startswith('#') or len(i.strip()) == 0:
+                    continue
+                self.list.append(i.strip('\n'))
+        pass 
+
     def set_identifiers(self, identifiers):
         self.identifiers = identifiers
         self.identifiers_pair_a = identifiers['user']
@@ -150,3 +161,4 @@ if __name__ == '__main__':
     print(m.mem)
     for i in m.mem:
         print(i.init_string, 'pairs', i.pairs)
+        print(i.list)
