@@ -94,7 +94,7 @@ class List:
         }
         self.filenames = {
             'growable': '',
-            'shrinkable': 'conversation.csv',
+            'shrinkable': '', # 'conversation.csv',
             'pairs': 'conversation.csv',
             'modify': '',
             'single': 'combined.csv'
