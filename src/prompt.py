@@ -114,7 +114,7 @@ class List:
                 p = i.strip()
                 if os.path.exists(p):
                     p = p.split('/')[-1]
-                    print(p)
+                    #print(p)
                     if p in self.filenames['growable']:
                         self.growable = True
                     if p in self.filenames['shrinkable']:
@@ -133,7 +133,7 @@ class List:
             if os.path.exists('/app/'):
                 self.init_string = '/app/' + i 
         
-        print(self.init_string)
+        #print(self.init_string)
 
         if os.path.exists(self.init_string):
             f = open(self.init_string, 'r')
@@ -167,7 +167,7 @@ class List:
         duplicate = []
         for i in self.list:
             duplicate.append(self.mod_entry(i))
-        self.list = duplicate
+        return duplicate
         pass
 
     def mod_entry(self, line):
@@ -180,24 +180,24 @@ class List:
             print(size, 'shrink')
 
     def output(self):
-        self.mod_list()
+        d_list = self.mod_list()
         duplicate = ''
-        for i in range(len(self.list) ):
+        for i in range(len(d_list) ):
             if self.shrinkable:
                 j = self.shrink_unit  
             else:
                 j = 0 
             y =  i + j 
-            if (y < 0 or y >= len(self.list)): 
+            if (y < 0 or y >= len(d_list)): 
                 continue
             if self.pairs:
                 x = (y) % 2
                 if x == 0:
-                    duplicate += self.identifiers_pair_a + ': ' + self.list[y] + '\n'
+                    duplicate += self.identifiers_pair_a + ': ' + d_list[y] + '\n'
                 else:
-                    duplicate += self.identifiers_pair_b + ': ' + self.list[y] + '\n'
+                    duplicate += self.identifiers_pair_b + ': ' + d_list[y] + '\n'
             else:
-                duplicate += self.identifiers_single + ': ' + self.list[y] + '\n'
+                duplicate += self.identifiers_single + ': ' + d_list[y] + '\n'
 
         return duplicate
 
@@ -215,24 +215,24 @@ class List:
         return x 
 
     def json_output(self):
-        self.mod_list()
+        d_list = self.mod_list()
         duplicate = []
-        for i in range(len(self.list) ):
+        for i in range(len(d_list) ):
             if self.shrinkable:
                 j = self.shrink_unit  
             else:
                 j = 0 
             y =  i + j 
-            if (y < 0 or y >= len(self.list)): 
+            if (y < 0 or y >= len(d_list)): 
                 continue
             if self.pairs:
                 x = (y) % 2
                 if x == 0:
-                    duplicate += [self.format_json( self.identifiers_pair_a, self.list[y] )]
+                    duplicate += [self.format_json( self.identifiers_pair_a, d_list[y] )]
                 else:
-                    duplicate += [self.format_json( self.identifiers_pair_b, self.list[y] )] 
+                    duplicate += [self.format_json( self.identifiers_pair_b, d_list[y] )] 
             else:
-                duplicate += [self.format_json( self.identifiers_single, self.list[y] )]
+                duplicate += [self.format_json( self.identifiers_single, d_list[y] )]
 
         return duplicate
 
