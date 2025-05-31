@@ -167,7 +167,7 @@ class List:
         return len(self.list)
 
 if __name__ == '__main__':
-    m = Prompt('MEMORY:review:../files/combined.csv', {'mem':'test', 'user':'me', 'ai': 'jane'})
+    m = Prompt('MEMORY:review:../files/combined.csv:../files/conversation.csv', {'mem':'test', 'user':'me', 'ai': 'jane'})
     print(m, m.identifiers)
     print(m.mem)
     for i in m.mem:
