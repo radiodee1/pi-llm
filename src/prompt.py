@@ -9,19 +9,6 @@ class Prompt:
         self.mem = []
         self.optimal_size = -1 
         self.identifiers = identifiers 
-        self.keywords = {
-            'growable': 'MEMORY,CONVERSATION',
-            'shrinkable': 'MEMORY,CONVERSATION',
-            'pairs': 'MEMORY,CONVERSATION',
-            'modify': 'COMBINED'
-        }
-        self.filenames = {
-            'growable': '',
-            'shrinkable': '',
-            'pairs': 'conversation.csv',
-            'modify': '',
-            'single': 'combined.csv'
-        }
         self.build_mem()
         pass
 
@@ -29,29 +16,7 @@ class Prompt:
         for i in self.init_string.split(':'):
             if len(i.strip()) > 0:
                 j = List(i.strip())
-
-                if i.strip().upper() in self.keywords['growable']:
-                    j.growable = True
-                if i.strip().upper() in self.keywords['shrinkable']:
-                    j.shrinkable = True
-                if i.strip().upper() in self.keywords['pairs']:
-                    j.pairs = True
-
-                p = i.strip()
-                if os.path.exists(p):
-                    p = p.split('/')[-1]
-                    print(p)
-                    if p in self.filenames['growable']:
-                        j.growable = True
-                    if p in self.filenames['shrinkable']:
-                        j.shrinkable = True
-                    if p in self.filenames['pairs']:
-                        j.pairs = True
-                    if p in self.filenames['single']:
-                        j.pairs = False
-                    if p in self.filenames['modify']:
-                        j.modify = True
-
+                j.modify_init()
                 j.read_file()
                 self.mem.append(j)
 
@@ -104,7 +69,53 @@ class List:
         self.identifiers_pair_a = ""
         self.identifiers_pair_b = ""
         self.identifiers_single = ""
+        self.keywords = {}
+        self.filenames = {}
+
+        self.set_keywords()
         pass
+
+    def set_keywords(self):
+        self.keywords = {
+            'growable': 'MEMORY,CONVERSATION',
+            'shrinkable': 'MEMORY,CONVERSATION',
+            'pairs': 'MEMORY,CONVERSATION',
+            'modify': 'COMBINED'
+        }
+        self.filenames = {
+            'growable': '',
+            'shrinkable': '',
+            'pairs': 'conversation.csv',
+            'modify': '',
+            'single': 'combined.csv'
+        }
+
+    def modify_init(self):
+        for i in self.init_string.split(':'):
+            if len(i.strip()) > 0:
+
+                if i.strip().upper() in self.keywords['growable']:
+                    self.growable = True
+                if i.strip().upper() in self.keywords['shrinkable']:
+                    self.shrinkable = True
+                if i.strip().upper() in self.keywords['pairs']:
+                    self.pairs = True
+
+                p = i.strip()
+                if os.path.exists(p):
+                    p = p.split('/')[-1]
+                    print(p)
+                    if p in self.filenames['growable']:
+                        self.growable = True
+                    if p in self.filenames['shrinkable']:
+                        self.shrinkable = True
+                    if p in self.filenames['pairs']:
+                        self.pairs = True
+                    if p in self.filenames['single']:
+                        self.pairs = False
+                    if p in self.filenames['modify']:
+                        self.modify = True
+
 
     def read_file(self):
         if os.path.exists(self.init_string):
