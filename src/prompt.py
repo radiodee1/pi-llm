@@ -49,16 +49,16 @@ class Prompt:
         #self.mem.append(single)
         pass 
 
-    def output(self):
+    def output(self, question=''):
         duplicate = ''
         for i in self.mem:
-            duplicate += i.output()
+            duplicate += i.output(question)
         return duplicate
 
-    def json_output(self):
+    def json_output(self, question=''):
         duplicate = []
         for i in self.mem:
-            duplicate += i.json_output()
+            duplicate += i.json_output(question)
         return duplicate
 
     def set_identifiers(self, ident):
@@ -91,7 +91,13 @@ class Prompt:
             if index == i.index:
                 i.show = show
                 return 
-    
+
+    def replace_list(self, x, index):
+        for i in self.mem:
+            if index == i.index:
+                i.replace_list(x, index)
+                return
+        pass 
 
 class List:
 
@@ -104,7 +110,8 @@ class List:
         self.modify = False
         self.pairs = True
         self.size = -1 
-        self.show = True       
+        self.show = True      
+        self.replace = False
         self.index = -1
 
         self.identifiers = {}
@@ -122,7 +129,9 @@ class List:
             'growable': 'MEMORY,CONVERSATION',
             'shrinkable': 'MEMORY,CONVERSATION',
             'pairs': 'MEMORY,CONVERSATION',
-            'modify': 'COMBINED'
+            'modify': 'COMBINED',
+            'single': 'REVIEW',
+            'replace': 'REVIEW'
         }
         self.filenames = {
             'growable': '',
@@ -142,6 +151,10 @@ class List:
                     self.shrinkable = True
                 if i.strip().upper() in self.keywords['pairs']:
                     self.pairs = True
+                if i.strip().upper() in self.keywords['single']:
+                    self.pairs = False
+                if i.strip().upper() in self.keywords['replace']:
+                    self.replace = True
 
                 p = i.strip()
                 if os.path.exists(p):
@@ -199,7 +212,7 @@ class List:
                     self.list.append(single)
 
     def replace_list(self, x, index = -1):
-        if index == -1 or self.index == -1 or self.index == index:
+        if (index == -1 or self.index == -1 or self.index == index) and self.replace == True:
             if isinstance(x, list):
                 if isinstance(x[0], list): 
                     if len(x[0]) == 2 and isinstance(x[0][0], str) and isinstance(x[0][1], str) :
@@ -233,7 +246,7 @@ class List:
                     self.shrink_unit += 1 
             print(self.shrink_unit, 'shrink')
 
-    def output(self):
+    def output(self, question='', index= -1):
         if not self.show:
             return ''
         d_list = self.mod_list()
@@ -255,6 +268,9 @@ class List:
             else:
                 duplicate += self.identifiers_single + ': ' + d_list[y] + '\n'
 
+        if question.strip() != "" and self.growable and index == self.index:
+            duplicate += self.identifiers_pair_a + ': ' + question.strip() + '\n'
+
         return duplicate
 
     def format_json(self, user, text):
@@ -270,7 +286,7 @@ class List:
         x = { 'role' : t, 'content': user + " : " + text }
         return x 
 
-    def json_output(self):
+    def json_output(self, question = '', index= -1):
         if not self.show:
             return []
         d_list = self.mod_list()
@@ -292,6 +308,9 @@ class List:
             else:
                 duplicate += [self.format_json( self.identifiers_single, d_list[y] )]
 
+        if question.strip() != "" and self.growable and index == self.index:
+            duplicate += [ self.format_json( self.identifiers_pair_a , question.strip() )]
+
         return duplicate
 
     def get_size(self):
@@ -308,7 +327,7 @@ class List:
             self.show = show
 
 if __name__ == '__main__':
-    m = Prompt('review:../files/combined.csv:../files/conversation.csv:MEMORY', {'mem':'storage', 'user':'user', 'ai': 'jane'})
+    m = Prompt('REVIEW:../files/combined.csv:../files/conversation.csv:MEMORY', {'mem':'storage', 'user':'user', 'ai': 'jane'})
     print(m, m.identifiers)
     print(m.mem)
     for i in m.mem:

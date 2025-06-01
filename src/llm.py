@@ -176,7 +176,7 @@ class Kernel:
         try:
             self.PROJECT_PROMPT_ORDER=str(vals['PROJECT_PROMPT_ORDER'])
         except:
-            self.PROJECT_PROMPT_ORDER="review:../files/combined.csv:../files/conversation.csv:MEMORY"
+            self.PROJECT_PROMPT_ORDER="REVIEW:../files/combined.csv:../files/conversation.csv:MEMORY"
 
         try:
             self.GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
