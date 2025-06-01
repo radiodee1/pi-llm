@@ -135,10 +135,10 @@ class List:
         }
         self.filenames = {
             'growable': '',
-            'shrinkable': '', # 'conversation.csv',
-            'pairs': 'conversation.csv',
-            'modify': '',
-            'single': 'combined.csv'
+            'shrinkable': '', # 'conversation.txt',
+            'pairs': 'conversation.txt',
+            'modify': 'review-instructions.txt,combined.txt',
+            'single': 'review-instructions.txt,combined.txt'
         }
 
     def modify_init(self):
