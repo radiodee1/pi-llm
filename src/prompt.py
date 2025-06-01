@@ -13,6 +13,7 @@ class Prompt:
         pass
 
     def build_mem(self):
+        num = 0 
         for i in self.init_string.split(':'):
             if len(i.strip()) > 0:
                 j = List(i.strip())
@@ -20,7 +21,9 @@ class Prompt:
                 j.modify_init()
                 j.read_file()
                 j.shrink(2)
+                j.set_index(num)
                 self.mem.append(j)
+                num += 1
 
     def get_size(self):
         j = 0
@@ -74,7 +77,9 @@ class List:
         self.modify = False
         self.pairs = True
         self.size = -1 
-        
+        self.show = True       
+        self.index = -1
+
         self.identifiers = {}
         self.identifiers_pair_a = ""
         self.identifiers_pair_b = ""
@@ -154,15 +159,17 @@ class List:
     def get_identifiers(self):
         return self.identifiers
 
-    def add_pair(self, pair):
-        if self.pairs == True and self.growable == True:
-            if isinstance(pair, list) and len(pair) == 2:
-                self.list.extend(pair)
+    def add_pair(self, pair, index = -1):
+        if index == -1 or self.index == -1 or self.index == index:
+            if self.pairs == True and self.growable == True:
+                if isinstance(pair, list) and len(pair) == 2:
+                    self.list.extend(pair)
 
-    def add_single(self, single):
-        if self.pairs == False and self.growable == True:
-            if isinstance(single, str):
-                self.list.append(single)
+    def add_single(self, single, index = -1):
+        if index == -1 or self.index == -1 or self.index == index:
+            if self.pairs == False and self.growable == True:
+                if isinstance(single, str):
+                    self.list.append(single)
 
     def mod_list(self):
         duplicate = []
@@ -181,6 +188,8 @@ class List:
             print(size, 'shrink')
 
     def output(self):
+        if not self.show:
+            return ''
         d_list = self.mod_list()
         duplicate = ''
         for i in range(len(d_list) ):
@@ -216,6 +225,8 @@ class List:
         return x 
 
     def json_output(self):
+        if not self.show:
+            return []
         d_list = self.mod_list()
         duplicate = []
         for i in range(len(d_list) ):
@@ -242,6 +253,9 @@ class List:
 
     def set_size(self, size):
         self.size = size
+
+    def set_index(self, i):
+        self.index = i 
 
 if __name__ == '__main__':
     m = Prompt('MEMORY:review:../files/combined.csv:../files/conversation.csv', {'mem':'storage', 'user':'user', 'ai': 'jane'})
