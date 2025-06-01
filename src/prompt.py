@@ -9,6 +9,7 @@ class Prompt:
         self.init_string = path
         self.mem = []
         self.optimal_size = -1 
+        self.shrink_unit = 0
         self.identifiers = identifiers 
         self.build_mem()
         pass
@@ -68,6 +69,7 @@ class Prompt:
         return self.identifiers
 
     def shrink(self, num):
+        self.shrink_unit = num
         s = 0
         for i in self.mem:
             if i.shrinkable:
@@ -98,6 +100,12 @@ class Prompt:
                 i.replace_list(x, index)
                 return
         pass 
+
+    def get_recent(self):
+        for i in self.mem:
+            if i.growable and i.shrinkable:
+                return i.get_recent()
+        return ['','']
 
 class List:
 
@@ -272,7 +280,7 @@ class List:
             else:
                 duplicate += self.identifiers_single + ': ' + d_list[y] + '\n'
 
-        if question.strip() != "" and self.growable and index == self.index:
+        if question.strip() != "" and self.growable: # and index == self.index:
             duplicate += self.identifiers_pair_a + ': ' + question.strip() + '\n'
 
         return duplicate
@@ -312,7 +320,7 @@ class List:
             else:
                 duplicate += [self.format_json( self.identifiers_single, d_list[y] )]
 
-        if question.strip() != "" and self.growable and index == self.index:
+        if question.strip() != "" and self.growable: # and index == self.index:
             duplicate += [ self.format_json( self.identifiers_pair_a , question.strip() )]
 
         return duplicate
@@ -326,16 +334,25 @@ class List:
     def set_index(self, i):
         self.index = i 
 
+    def get_recent(self):
+        if self.growable and self.shrinkable and len(self.list) % 2 == 0:
+            return [ self.list[ -2 ], self.list[ -1 ] ]
+        else:
+            return ['', '']
+        pass 
+
     def set_show(self, index, show):
         if self.index == index:
             self.show = show
 
 if __name__ == '__main__':
-    m = Prompt('REVIEW:../files/combined.csv:../files/conversation.csv:MEMORY', {'mem':'storage', 'user':'user', 'ai': 'jane'})
-    print(m, m.identifiers)
+    m = Prompt('../files/review-instructions.txt:REVIEW:../files/combined.txt:../files/conversation.txt:MEMORY', {'mem':'storage', 'user':'user', 'ai': 'jane'})
     print(m.mem)
     for i in m.mem:
-        print(i.init_string, 'pairs', i.pairs)
+        print(i.init_string, 'pairs', i.pairs, 'index', i.index)
         print(i.list)
-
+    m.add_pair(['hi','howdy'])
+    m.add_pair(['whazzup', 'nothing'])
+    print(m.get_recent())
+    print('====')
     print(m.output())
