@@ -144,8 +144,8 @@ class List:
             'shrinkable': 'MEMORY,CONVERSATION',
             'pairs': 'MEMORY,CONVERSATION',
             'modify': 'COMBINED',
-            'single': 'REVIEW',
-            'replace': 'REVIEW'
+            'single': 'REVIEW,RULES',
+            'replace': 'REVIEW,RULES'
         }
         self.filenames = {
             'growable': '',
@@ -371,7 +371,7 @@ class List:
             self.show = show
 
 if __name__ == '__main__':
-    m = Prompt('../files/review-instructions.txt:REVIEW:../files/combined.txt:../files/conversation.txt:MEMORY', {'mem':'storage', 'user':'user', 'ai': 'jane'})
+    m = Prompt('RULES:REVIEW:../files/combined.txt:../files/conversation.txt:MEMORY', {'mem':'storage', 'user':'user', 'ai': 'jane'})
     m.add_pair(['hi','howdy'])
     m.add_pair(['whazzup', 'nothing'])
     print(m.get_recent())
