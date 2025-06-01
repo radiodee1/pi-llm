@@ -21,7 +21,7 @@ class Prompt:
                 j.set_identifiers(self.identifiers)
                 j.modify_init()
                 j.read_file()
-                j.shrink(2)
+                #j.shrink(2)
                 j.set_index(num)
                 self.mem.append(j)
                 num += 1
