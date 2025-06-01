@@ -62,6 +62,12 @@ class Prompt:
             duplicate += i.json_output(question)
         return duplicate
 
+    def pc_output(self, question=''):
+        duplicate = []
+        for i in self.mem:
+            duplicate += i.pc_output(question)
+        return duplicate
+
     def set_identifiers(self, ident):
         self.identifiers = ident
 
@@ -322,6 +328,33 @@ class List:
 
         if question.strip() != "" and self.growable: # and index == self.index:
             duplicate += [ self.format_json( self.identifiers_pair_a , question.strip() )]
+
+        return duplicate
+
+    def pc_output(self, question='', index= -1):
+        if not self.show:
+            return ''
+        d_list = self.mod_list()
+        duplicate = ''
+        for i in range(len(d_list) ):
+            if self.shrinkable:
+                j = self.shrink_unit  
+            else:
+                j = 0 
+            y =  i + j 
+            if (y < 0 or y >= len(d_list)): 
+                continue
+            if self.pairs:
+                x = (y) % 2
+                if x == 0:
+                    duplicate += d_list[y] + '\n'
+                else:
+                    duplicate += d_list[y] + '\n'
+            else:
+                duplicate += d_list[y] + '\n'
+
+        if question.strip() != "" and self.growable: # and index == self.index:
+            duplicate += question.strip() + '\n'
 
         return duplicate
 
