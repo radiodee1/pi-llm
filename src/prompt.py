@@ -63,7 +63,7 @@ class Prompt:
         return duplicate
 
     def pc_output(self, question=''):
-        duplicate = []
+        duplicate = ''
         for i in self.mem:
             duplicate += i.pc_output(question)
         return duplicate
@@ -252,7 +252,7 @@ class List:
         return duplicate
 
     def mod_entry(self, line):
-        print(line)
+        #print(line, '<---')
         return line 
 
     def shrink(self, size):
@@ -344,18 +344,10 @@ class List:
             y =  i + j 
             if (y < 0 or y >= len(d_list)): 
                 continue
-            if self.pairs:
-                x = (y) % 2
-                if x == 0:
-                    duplicate += d_list[y] + '\n'
-                else:
-                    duplicate += d_list[y] + '\n'
-            else:
-                duplicate += d_list[y] + '\n'
+            duplicate +=  (  d_list[y] + '\n')
 
         if question.strip() != "" and self.growable: # and index == self.index:
             duplicate += question.strip() + '\n'
-
         return duplicate
 
     def get_size(self):
@@ -380,12 +372,8 @@ class List:
 
 if __name__ == '__main__':
     m = Prompt('../files/review-instructions.txt:REVIEW:../files/combined.txt:../files/conversation.txt:MEMORY', {'mem':'storage', 'user':'user', 'ai': 'jane'})
-    print(m.mem)
-    for i in m.mem:
-        print(i.init_string, 'pairs', i.pairs, 'index', i.index)
-        print(i.list)
     m.add_pair(['hi','howdy'])
     m.add_pair(['whazzup', 'nothing'])
     print(m.get_recent())
     print('====')
-    print(m.output())
+    print(m.pc_output())
