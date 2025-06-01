@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os 
+import math
 
 class Prompt:
 
@@ -65,6 +66,20 @@ class Prompt:
 
     def get_identifiers(self):
         return self.identifiers
+
+    def shrink(self, num):
+        s = 0
+        for i in self.mem:
+            if i.shrinkable:
+                s += 1
+        if num > 0 and s > 0:
+            k = num // s 
+            if k < 1:
+                k = 1
+            k = math.ceil(k)
+            for i in self.mem:
+                if i.shrinkable:
+                    i.shrink(k)
 
 class List:
 
@@ -171,6 +186,21 @@ class List:
                 if isinstance(single, str):
                     self.list.append(single)
 
+    def replace_list(self, x, index = -1):
+        if index == -1 or self.index == -1 or self.index == index:
+            if isinstance(x, list):
+                if isinstance(x[0], list): 
+                    if len(x[0]) == 2 and isinstance(x[0][0], str) and isinstance(x[0][1], str) :
+                        self.list = [] 
+                        for i in x:
+                            if isinstance(i, list) and len(i) == 2:
+                                self.list.append(i[0])
+                                self.list.append(i[1])
+                else:
+                    self.list = x 
+            self.size = len(self.list)
+
+
     def mod_list(self):
         duplicate = []
         for i in self.list:
@@ -185,7 +215,11 @@ class List:
     def shrink(self, size):
         if self.shrinkable:
             self.shrink_unit = size
-            print(size, 'shrink')
+            if self.pairs:
+                x = size % 2
+                if x != 0:
+                    self.shrink_unit += 1 
+            print(self.shrink_unit, 'shrink')
 
     def output(self):
         if not self.show:
