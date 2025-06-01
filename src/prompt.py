@@ -155,6 +155,8 @@ class List:
                     self.pairs = False
                 if i.strip().upper() in self.keywords['replace']:
                     self.replace = True
+                if i.strip().upper() in self.keywords['modify']:
+                    self.modify = True
 
                 p = i.strip()
                 if os.path.exists(p):
@@ -229,9 +231,11 @@ class List:
     def mod_list(self):
         duplicate = []
         for i in self.list:
-            duplicate.append(self.mod_entry(i))
+            if self.modify:
+                duplicate.append(self.mod_entry(i))
+            else:
+                duplicate.append(i)
         return duplicate
-        pass
 
     def mod_entry(self, line):
         print(line)
@@ -334,4 +338,4 @@ if __name__ == '__main__':
         print(i.init_string, 'pairs', i.pairs)
         print(i.list)
 
-    print(m.json_output())
+    print(m.output())
