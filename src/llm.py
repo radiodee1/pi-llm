@@ -22,6 +22,7 @@ import json
 
 import review
 import stt 
+import prompt
 
 prompt_txt = [
         [ 'hi', 'hello' ],
@@ -93,6 +94,7 @@ class Kernel:
         self.sleep_wake = False
         self.sleep = False 
         self.user_dir = user_dir
+        self.m = None 
 
         if self.user_dir.strip() == '':
             self.user_dir = os.path.expanduser('~')
@@ -172,6 +174,11 @@ class Kernel:
             self.PROJECT_REVIEW_NAME='.llm.review.txt'
 
         try:
+            self.PROJECT_PROMPT_ORDER=str(vals['PROJECT_PROMPT_ORDER'])
+        except:
+            self.PROJECT_PROMPT_ORDER="review:../files/combined.csv:../files/conversation.csv:MEMORY"
+
+        try:
             self.GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
         except:
             self.GOOGLE_APPLICATION_CREDENTIALS=''
@@ -199,6 +206,7 @@ class Kernel:
             review.set_user_dir(self.user_dir)
         if self.cloud_stt:
             stt.set_user_dir(self.user_dir)
+        self.m = prompt.Prompt(self.PROJECT_PROMPT_ORDER, identifiers)
 
         time.sleep(self.offset)
         z = True

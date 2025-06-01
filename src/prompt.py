@@ -81,6 +81,18 @@ class Prompt:
                 if i.shrinkable:
                     i.shrink(k)
 
+    def get_index_from_name(self, name):
+        for i in self.mem:
+            if name.strip() in i.init_string:
+                return i.index
+
+    def set_show(self, index, show):
+        for i in self.mem:
+            if index == i.index:
+                i.show = show
+                return 
+    
+
 class List:
 
     def __init__(self, path='') -> None:
@@ -291,8 +303,12 @@ class List:
     def set_index(self, i):
         self.index = i 
 
+    def set_show(self, index, show):
+        if self.index == index:
+            self.show = show
+
 if __name__ == '__main__':
-    m = Prompt('MEMORY:review:../files/combined.csv:../files/conversation.csv', {'mem':'storage', 'user':'user', 'ai': 'jane'})
+    m = Prompt('review:../files/combined.csv:../files/conversation.csv:MEMORY', {'mem':'storage', 'user':'user', 'ai': 'jane'})
     print(m, m.identifiers)
     print(m.mem)
     for i in m.mem:
