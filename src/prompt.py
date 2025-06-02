@@ -157,8 +157,8 @@ class List:
             'shrinkable': 'MEMORY,CONVERSATION',
             'pairs': 'MEMORY,CONVERSATION',
             'modify': 'COMBINED',
-            'single': 'REVIEW,RULES',
-            'replace': 'REVIEW,RULES'
+            'single': 'REVIEW,RULES,INSTRUCTIONS',
+            'replace': 'REVIEW,RULES,INSTRUCTIONS'
         }
         self.filenames = {
             'growable': '',

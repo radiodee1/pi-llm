@@ -5,5 +5,5 @@ date
 location
 occupation
 
-general-instructions
+# general-instructions
 # review-instructions

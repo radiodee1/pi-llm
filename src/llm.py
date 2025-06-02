@@ -625,10 +625,12 @@ class Kernel:
         index = self.m.get_index_from_name('RULES')
         self.p(index, 'index')
         self.m.replace_list([], index)
+        self.m.set_hide_from_name('RULES')
 
         index = self.m.get_index_from_name('INSTRUCTIONS')
         self.p(index, 'index2')
         self.m.replace_list(rule_instruct, index)
+        self.m.set_show_from_name('INSTRUCTIONS')
  
         #ai = [{ 'content': 'You are a ficticious person named ' + identifiers['ai'] + 
         #     '. Use your imagination to answer all questions in English.' 
@@ -641,6 +643,7 @@ class Kernel:
 
             index = self.m.get_index_from_name('RULES')
             self.m.replace_list([ instructions ], index)
+            self.m.set_show_from_name('RULES')
             
         if self.review: ## ???
             if not self.json:
