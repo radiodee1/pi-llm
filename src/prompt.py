@@ -93,6 +93,19 @@ class Prompt:
         for i in self.mem:
             if name.strip() in i.init_string:
                 return i.index
+        return -1 
+
+    def set_show_from_name(self, name):
+        for i in self.mem:
+            if name.strip() in i.init_string:
+                i.show = True
+                return
+
+    def set_hide_from_name(self, name):
+        for i in self.mem:
+            if name.strip() in i.init_string:
+                i.show = False
+                return
 
     def set_show(self, index, show):
         for i in self.mem:
@@ -230,7 +243,7 @@ class List:
     def replace_list(self, x, index = -1):
         if (index == -1 or self.index == -1 or self.index == index) and self.replace == True:
             if isinstance(x, list):
-                if isinstance(x[0], list): 
+                if len(x) == 2 and isinstance(x[0], list): 
                     if len(x[0]) == 2 and isinstance(x[0][0], str) and isinstance(x[0][1], str) :
                         self.list = [] 
                         for i in x:
@@ -371,7 +384,7 @@ class List:
             self.show = show
 
 if __name__ == '__main__':
-    m = Prompt('RULES:REVIEW:../files/combined.txt:../files/conversation.txt:MEMORY', {'mem':'storage', 'user':'user', 'ai': 'jane'})
+    m = Prompt('INSTRUCTIONS:RULES:REVIEW:../files/combined.txt:../files/conversation.txt:MEMORY', {'mem':'storage', 'user':'user', 'ai': 'jane'})
     m.add_pair(['hi','howdy'])
     m.add_pair(['whazzup', 'nothing'])
     print(m.get_recent())

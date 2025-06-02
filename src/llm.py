@@ -176,7 +176,7 @@ class Kernel:
         try:
             self.PROJECT_PROMPT_ORDER=str(vals['PROJECT_PROMPT_ORDER'])
         except:
-            self.PROJECT_PROMPT_ORDER="RULES:REVIEW:../files/combined.txt:../files/conversation.txt:MEMORY"
+            self.PROJECT_PROMPT_ORDER="INSTRUCTIONS:RULES:REVIEW:../files/combined.txt:../files/conversation.txt:MEMORY"
 
         try:
             self.GOOGLE_APPLICATION_CREDENTIALS=str(vals['GOOGLE_APPLICATION_CREDENTIALS'])
@@ -620,6 +620,16 @@ class Kernel:
              '. Use your imagination to answer all questions in English.' 
             } 
         ]
+        rule_instruct = ['You are a ficticious person named ' + identifiers['ai'] + '. Use your imagination to answer all questions in English.' ]
+        
+        index = self.m.get_index_from_name('RULES')
+        self.p(index, 'index')
+        self.m.replace_list([], index)
+
+        index = self.m.get_index_from_name('INSTRUCTIONS')
+        self.p(index, 'index2')
+        self.m.replace_list(rule_instruct, index)
+ 
         #ai = [{ 'content': 'You are a ficticious person named ' + identifiers['ai'] + 
         #     '. Use your imagination to answer all questions in English.' 
         #}]
@@ -628,6 +638,9 @@ class Kernel:
                 ' Repeat anything out loud with the "' + review.REM_TEXT + '" characters as a flag to delete any marked sentence from the memory list permanently.')
             ai[0]['content'] += instructions 
             ret += instructions + '\n'
+
+            index = self.m.get_index_from_name('RULES')
+            self.m.replace_list([ instructions ], index)
             
         if self.review: ## ???
             if not self.json:
@@ -688,14 +701,19 @@ class Kernel:
 
             self.prompt += [self.format_json(identifiers['user'], rr) ]# + "\n"
             self.prompt += [self.format_json(identifiers['ai'], "") ]
+
+            self.prompt = self.m.json_output(rr)
             return
         if self.pc:
             self.window_line_count += 1 
             self.prompt +=  rr + '\n'#, 'completion': ''}]
+
+            self.prompt = self.m.pc_output(rr)
             return
         self.prompt += identifiers['user'] + ': ' + rr + "\n" 
         self.prompt += identifiers['ai'] + ': '
         self.window_line_count += 2 
+        self.prompt = self.m.output(rr)
 
     def modify_prompt_after_model(self, tt, rr):
         if self.review and self.review_skip >= 0:
@@ -703,6 +721,7 @@ class Kernel:
             pass 
         self.memory_user.append(rr)
         self.memory_ai.append(tt) 
+        self.m.add_pair([rr, tt])
         pass 
 
     def prune_input(self, text):
@@ -915,8 +934,11 @@ class Kernel:
                     return
 
                 f.write(str(self.file_num) + '\n')
-                f.write(identifiers['user'] + " : "+ str(self.memory_user[-1]) + "\n")
-                f.write(identifiers['ai'] + " : " + str(self.memory_ai[-1]) + "\n")
+                #f.write(identifiers['user'] + " : "+ str(self.memory_user[-1]) + "\n")
+                #f.write(identifiers['ai'] + " : " + str(self.memory_ai[-1]) + "\n")
+                pair = self.m.get_recent()
+                f.write(identifiers['user'] + " : "+ str(pair[0]) + "\n")
+                f.write(identifiers['ai'] + " : " + str(pair[1]) + "\n")
                 #f.write(str(prompt) + "\n")
                 if self.loop_wait:
                     f.write("---\n")
