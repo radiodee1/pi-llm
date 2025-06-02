@@ -651,6 +651,10 @@ class Kernel:
             if self.json:
                 ai  = self._pre_prompt_ai(ai)
 
+            index = self.m.get_index_from_name('REVIEW')
+            self.m.replace_list( review.memory_review, index )
+            self.m.set_show_from_name('REVIEW')
+
         pc = ""
         for i in range(len(prompt_txt) + len(self.memory_ai) - self.window_chat, len(prompt_txt)):
             if i < 0:
