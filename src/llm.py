@@ -24,15 +24,6 @@ import review
 import stt 
 import prompt
 
-prompt_txt = [
-        [ 'hi', 'hello' ],
-        [ 'what is your last name?', 'my last name is Smith' ],
-        [ 'tell me about yourself', 'i like to talk about cooking.' ],
-        [ 'what is your favorite color?', 'i like the color blue' ],
-        [ 'how old are you?', 'I am thirty three years old' ],
-        [ 'what is your favorite food', 'I like pizza']
-            ]
-
 identifiers = { 'user':'user', 'ai':'jane', 'mem': 'storage' }
 
 voice_gender = { 'male': 'en-US-Neural2-D', 'female': 'en-US-Neural2-F' }
@@ -74,8 +65,8 @@ class Kernel:
         self.q = mp.Queue()
         self.prompt = ""
         self.reply = ""
-        self.memory_ai = []
-        self.memory_user = []
+        #self.memory_ai = []
+        #self.memory_user = []
         self.y_iter = 0 
         self.questions = -1
         self.questions_list = []
@@ -229,7 +220,7 @@ class Kernel:
             tt = ""
             self.empty_queue()
             x += 1
-            x = x % len(prompt_txt)
+            x = x % (self.m.get_size_by_name('conversation') // 2 )# len(prompt_txt)
             ### second process ###
             if self.loop_wait and self.questions == -1 :
                 num = 0 
@@ -306,9 +297,10 @@ class Kernel:
             if self.review:
                 review.read_review(self.window_mem)
 
-            self.resize_prompt()
+            ## self.resize_prompt() ## <-- redo
 
-            self.prompt = self.make_prompt()
+            #self.prompt = self.make_prompt()
+            self.make_prompt()
 
             self.modify_prompt_before_model("", ' '.join(rr) )
             
@@ -318,14 +310,11 @@ class Kernel:
 
             tt = self.prune_input(tt) # + '.'
 
-            self.p("====\n", self.prompt, "\n====")
-            #self.p("++++", self.count_tokens(self.prompt), self.tokens_recent, "++++")
-
             self.modify_prompt_after_model(tt, ' '.join(rr))
 
+            self.p("====\n", self.prompt, "\n====")
+
             self.save_file(  end - start )
-            #if (not self.review_skip > 0) and False:
-            #    rr.clear() ## <-- don't do this, especially at first
 
             if int(self.questions) > -1:
                 self.questions_num += 1 
@@ -345,7 +334,7 @@ class Kernel:
                 if self.questions_num == int(self.test_review):
                     tt = tt + " " + review.ADD_TEXT 
                 self.p(tt)
-            review.find_marked_text(self.memory_user, self.memory_ai, tt, identifiers)
+            review.find_marked_text(self.m.pc_output(), [], tt, identifiers)
             skip = review.is_skipable(tt, identifiers)
             tt = review._return_without_name(tt)
 
@@ -655,79 +644,37 @@ class Kernel:
             self.m.replace_list( review.memory_review, index )
             self.m.set_show_from_name('REVIEW')
 
-        pc = ""
-        for i in range(len(prompt_txt) + len(self.memory_ai) - self.window_chat, len(prompt_txt)):
-            if i < 0:
-                continue
-            u = prompt_txt[i][0]
-            a = prompt_txt[i][1]
-            self.window_line_count += 2 
-            if self.json:
-                ai += [self.format_json(identifiers['user'], u) ]
-                ai += [self.format_json(identifiers['ai'], a) ]
-                continue
-            if self.pc:
-                pc +=  u + '\n' + a + '\n'
-                continue
-            ret += identifiers['user'] + ": " + u 
-            ret += '\n'
-            ret += identifiers['ai'] + ": " + a 
-            ret += '\n\n'
-        if len(self.memory_ai) == len(self.memory_user):
-            for i in range(len(self.memory_ai) - self.window_chat ,len(self.memory_ai)):
-                if i < 0:
-                    continue
-                a = self.memory_ai[i]
-                u = self.memory_user[i]
-                self.window_line_count += 2 
-                if len(a) == 0 or len(u) == 0:
-                    continue
-                if self.json:
-                    ai += [self.format_json(identifiers['user'], u) ]
-                    ai += [self.format_json(identifiers['ai'], a) ]
-                    continue 
-                if self.pc:
-                    pc += u + '\n' + a + '\n'
-                    continue
-                ret += identifiers['user'] + ": " + u 
-                ret += '\n'
-                ret += identifiers['ai'] + ": " + a 
-                ret += '\n\n'
-        if self.json:
-            return ai 
-        if self.pc:
-            return pc 
-        return ret 
+        return
 
     def modify_prompt_before_model(self, tt, rr):
         if self.review and self.review_skip >= 0:
             #return
             pass 
         if self.json:
-            self.window_line_count += 2 
+            #self.window_line_count += 2 
 
-            self.prompt += [self.format_json(identifiers['user'], rr) ]# + "\n"
-            self.prompt += [self.format_json(identifiers['ai'], "") ]
+            #self.prompt += [self.format_json(identifiers['user'], rr) ]# + "\n"
+            #self.prompt += [self.format_json(identifiers['ai'], "") ]
 
             self.prompt = self.m.json_output(rr)
             return
         if self.pc:
-            self.window_line_count += 1 
-            self.prompt +=  rr + '\n'#, 'completion': ''}]
+            #self.window_line_count += 1 
+            #self.prompt +=  rr + '\n'#, 'completion': ''}]
 
             self.prompt = self.m.pc_output(rr)
             return
-        self.prompt += identifiers['user'] + ': ' + rr + "\n" 
-        self.prompt += identifiers['ai'] + ': '
-        self.window_line_count += 2 
+        #self.prompt += identifiers['user'] + ': ' + rr + "\n" 
+        #self.prompt += identifiers['ai'] + ': '
+        #self.window_line_count += 2 
         self.prompt = self.m.output(rr)
 
     def modify_prompt_after_model(self, tt, rr):
         if self.review and self.review_skip >= 0:
             return
             pass 
-        self.memory_user.append(rr)
-        self.memory_ai.append(tt) 
+        #self.memory_user.append(rr)
+        #self.memory_ai.append(tt) 
         self.m.add_pair([rr, tt])
         pass 
 
@@ -1073,21 +1020,6 @@ def do_args(parser, k):
 
     k.size_goal = args.size 
 
-    if args.window > 0 and floor( args.window * k.window_ratio ) >= len(prompt_txt) * 2:
-        k.window = args.window
-        k.window_mem_ratio = 1 - k.window_ratio
-        k.window_chat = floor(k.window * k.window_ratio )
-        k.window_mem = k.window - k.window_chat 
-        k.size_trim = 0 
-    if args.window <= 0 :
-        k.window = args.window
-        k.window_mem_ratio  = 1 - k.window_ratio 
-        k.window_chat = len(prompt_txt) * 2 
-        k.window_mem = floor( (k.window_chat * k.window_mem_ratio) / k.window_ratio)
-        k.size_trim = 0
-        pass 
-    k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
-
     if args.json != None and args.json == True:
         k.json = args.json
 
@@ -1175,4 +1107,20 @@ if __name__ == '__main__':
             break 
         k.p("interrupt here")
 
-    
+'''
+    if args.window > 0 and floor( args.window * k.window_ratio ) >= len(prompt_txt) * 2:
+        k.window = args.window
+        k.window_mem_ratio = 1 - k.window_ratio
+        k.window_chat = floor(k.window * k.window_ratio )
+        k.window_mem = k.window - k.window_chat 
+        k.size_trim = 0 
+    if args.window <= 0 :
+        k.window = args.window
+        k.window_mem_ratio  = 1 - k.window_ratio 
+        k.window_chat = len(prompt_txt) * 2 
+        k.window_mem = floor( (k.window_chat * k.window_mem_ratio) / k.window_ratio)
+        k.size_trim = 0
+        pass 
+    k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
+'''
+   

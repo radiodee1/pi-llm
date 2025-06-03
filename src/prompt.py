@@ -126,6 +126,12 @@ class Prompt:
                 return i.get_recent()
         return ['','']
 
+    def get_size_by_name(self, name):
+        for i in self.mem:
+            if name.strip() in i.init_string:
+                return len(i.list)
+        return 0 
+
 class List:
 
     def __init__(self, path='') -> None:
@@ -390,3 +396,4 @@ if __name__ == '__main__':
     print(m.get_recent())
     print('====')
     print(m.pc_output())
+    print(m.get_size_by_name('conversation'))

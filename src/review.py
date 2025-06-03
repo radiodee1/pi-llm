@@ -108,6 +108,23 @@ def _last_entries(user_list, ai_list):
             last.append(u_line)
             if not remove_ai:
                 last.append(a_line)
+    else:
+        if len(user_list) == 0 and len(ai_list) > 0:
+            user_list = ai_list
+        if num * 2 > len(user_list) :
+            num = len(user_list) // 2
+        for i in range(num * 2):
+            ii = num * 2 - i 
+            x = (len(user_list) - ii ) % 2 
+            if len(user_list) - ii >= len(user_list) or len(user_list) - ii < 0:
+                continue
+            u_line = user_list[len(user_list) - ii]
+            #a_line = user_list[len(user_list) - ii]
+            if x == 0:
+                last.append(u_line)
+                pass 
+            elif x == 1 and remove_ai:
+                last.append(u_line)
     #print(last)
     return last 
 
@@ -370,7 +387,7 @@ if __name__ == '__main__':
     user_list_test = ['hello.', 'i am well.', 'thanks. I agree.']
     ai_text = ADD_TEXT + ' memory: my name is jane with exclamation point \n  x is the word y is the word ' + ADD_TEXT
     print('is_skipable', is_skipable(ai_text, d))
-    print('find_marked_text', ai_text, find_marked_text(user_list_test, ai_list_test, ai_text, d))
+    print('find_marked_text', ai_text, find_marked_text(user_list_test, [], ai_text, d))
     print("--")
     for i in sub_review:
         print(i)
