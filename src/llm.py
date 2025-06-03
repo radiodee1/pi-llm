@@ -295,8 +295,6 @@ class Kernel:
 
             if self.review:
                 review.read_review(self.window_mem)
-                #print(self.window_mem, review.memory_review)
-                #exit()
 
             self.resize_prompt() ## <-- redo
 
