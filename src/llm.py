@@ -563,43 +563,6 @@ class Kernel:
         self.p("++++ tokens:", self.tokens_recent,'line_count:', self.window_line_count , 'size_trim:', self.size_trim, 'can_trim:', can_trim, "++++")
         return
 
-
-    def format_json(self, user, text):
-        user = user.lower().split(' ')[0]
-        user = user.replace('\'', "\"")
-        text = text.strip()
-        text = text.replace('\'', '"')
-        #x = "{'role' :'" + user + "', 'content' : '" + text +"'}"
-        #print(user, text , '++++')
-        if user == identifiers['ai'].lower() :
-            t = 'assistant'
-        else:
-            t = 'user'
-
-        x = { 'role' : t, 'content': user + " : " + text }
-        return x 
-
-    def _pre_prompt_ai(self, i):
-        for j in range(len(review.memory_review)):
-            a = review.memory_review[j]
-            a = a.replace(";", "")
-            #i[0]['content'] += " " + a 
-            #if j < len(self.memory_review) - 1 or True:
-            #    i[0]['content'] += "\n" #";"
-            i += [ self.format_json( identifiers['mem'], a) ]
-            self.window_line_count += 1 
-        return i
-
-    def _pre_prompt_ret(self, i):
-        for a in review.memory_review:
-            a = a.replace(";", '').strip()
-            i += identifiers['mem'] + ": " + a + "\n" # ";"
-            self.window_line_count += 1 
-        i = i.strip()
-        i = i.strip(';')
-        i += "\n"
-        return i 
-
     def make_prompt(self):
         self.window_line_count = 0 
         ret = ""
@@ -626,19 +589,14 @@ class Kernel:
         if self.review and self.review_skip == -1:
             instructions = str(' Say anything with the "' + review.ADD_TEXT + '" characters as a flag to save any marked sentence permanently. Use your intuition to mark sentences. ' +
                 ' Repeat anything out loud with the "' + review.REM_TEXT + '" characters as a flag to delete any marked sentence from the memory list permanently.')
-            ai[0]['content'] += instructions 
-            ret += instructions + '\n'
+            #ai[0]['content'] += instructions 
+            #ret += instructions + '\n'
 
             index = self.m.get_index_from_name('RULES')
             self.m.replace_list([ instructions ], index)
             self.m.set_show_from_name('RULES')
             
         if self.review: ## ???
-            if not self.json:
-                ret = self._pre_prompt_ret(ret)
-            if self.json:
-                ai  = self._pre_prompt_ai(ai)
-
             index = self.m.get_index_from_name('REVIEW')
             self.m.replace_list( review.memory_review, index )
             self.m.set_show_from_name('REVIEW')
