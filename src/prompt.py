@@ -162,7 +162,7 @@ class List:
             'growable': 'MEMORY,CONVERSATION',
             'shrinkable': 'MEMORY,CONVERSATION',
             'pairs': 'MEMORY,CONVERSATION',
-            'modify': 'COMBINED',
+            'modify': 'COMBINED,REVIEW',
             'single': 'REVIEW,RULES,INSTRUCTIONS',
             'replace': 'REVIEW,RULES,INSTRUCTIONS'
         }

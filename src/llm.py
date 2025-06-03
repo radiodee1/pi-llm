@@ -197,7 +197,6 @@ class Kernel:
             review.set_user_dir(self.user_dir)
         if self.cloud_stt:
             stt.set_user_dir(self.user_dir)
-        self.m = prompt.Prompt(self.PROJECT_PROMPT_ORDER, identifiers)
 
         time.sleep(self.offset)
         z = True
@@ -296,8 +295,10 @@ class Kernel:
 
             if self.review:
                 review.read_review(self.window_mem)
+                #print(self.window_mem, review.memory_review)
+                #exit()
 
-            ## self.resize_prompt() ## <-- redo
+            self.resize_prompt() ## <-- redo
 
             #self.prompt = self.make_prompt()
             self.make_prompt()
@@ -547,12 +548,12 @@ class Kernel:
         if self.window_line_count > self.tokens_recent or self.review_skip != -1:
             return
         if self.window_line_count == 0:
-            self.window_line_count = len(prompt_txt) * 2  
+            self.window_line_count =  self.m.get_size_by_name('conversation') ##len(prompt_txt) * 2  
         line_size = self.tokens_recent / self.window_line_count 
         can_trim = False
         ## set size of self.window_chat here.
         if self.window <= 0:
-            self.window_chat = (len(self.memory_ai) * 2) + (len(prompt_txt) * 2) - floor(self.window_ratio * self.size_trim) 
+            self.window_chat = len(self.prompt) - floor(self.window_ratio * self.size_trim) 
             self.window_mem = floor( (self.window_chat * self.window_mem_ratio) / self.window_ratio)
             self.p('window_mem', self.window_mem)
         ## set size of self.size_trim here.
@@ -643,7 +644,8 @@ class Kernel:
             index = self.m.get_index_from_name('REVIEW')
             self.m.replace_list( review.memory_review, index )
             self.m.set_show_from_name('REVIEW')
-
+            
+            #print( index, '\n', review.memory_review )
         return
 
     def modify_prompt_before_model(self, tt, rr):
@@ -995,6 +997,7 @@ def do_args(parser, k):
     if k.review:
         review.skip_read_write = k.test 
 
+
     if args.voice == 'male' or args.voice == 'female':
         args.voice = voice_gender[args.voice]
     k.voice = args.voice
@@ -1018,7 +1021,23 @@ def do_args(parser, k):
     if not k.review:
         k.window_ratio = 1 
 
-    k.size_goal = args.size 
+    k.size_goal = args.size
+
+    k.m = prompt.Prompt(k.PROJECT_PROMPT_ORDER, identifiers)
+    if args.window > 0 and floor( args.window * k.window_ratio ) >= k.m.get_size_by_name('conversation') : #len(prompt_txt) * 2:
+        k.window = args.window
+        k.window_mem_ratio = 1 - k.window_ratio
+        k.window_chat = floor(k.window * k.window_ratio )
+        k.window_mem = k.window - k.window_chat 
+        k.size_trim = 0 
+    if args.window <= 0 :
+        k.window = args.window
+        k.window_mem_ratio  = 1 - k.window_ratio 
+        k.window_chat = k.m.get_size_by_name('conversation')# len(prompt_txt) * 2 
+        k.window_mem = floor( (k.window_chat * k.window_mem_ratio) / k.window_ratio)
+        k.size_trim = 0
+        pass 
+    k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
 
     if args.json != None and args.json == True:
         k.json = args.json
@@ -1107,20 +1126,3 @@ if __name__ == '__main__':
             break 
         k.p("interrupt here")
 
-'''
-    if args.window > 0 and floor( args.window * k.window_ratio ) >= len(prompt_txt) * 2:
-        k.window = args.window
-        k.window_mem_ratio = 1 - k.window_ratio
-        k.window_chat = floor(k.window * k.window_ratio )
-        k.window_mem = k.window - k.window_chat 
-        k.size_trim = 0 
-    if args.window <= 0 :
-        k.window = args.window
-        k.window_mem_ratio  = 1 - k.window_ratio 
-        k.window_chat = len(prompt_txt) * 2 
-        k.window_mem = floor( (k.window_chat * k.window_mem_ratio) / k.window_ratio)
-        k.size_trim = 0
-        pass 
-    k.p(k.window_mem, k.window_chat, k.window_ratio, 'window')
-'''
-   
