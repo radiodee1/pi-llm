@@ -2,6 +2,7 @@
 
 import os 
 import math
+import datetime
 
 class Prompt:
 
@@ -271,6 +272,16 @@ class List:
         return duplicate
 
     def mod_entry(self, line):
+        if line.strip() == 'time':
+            now = datetime.datetime.now()
+            return 'The Time is ' + now.strftime("%H:%M") 
+        if line.strip() == 'date':
+            now = datetime.datetime.now()
+            return 'The Date is ' + now.strftime("%A, %b %d, %Y") 
+        if line.strip() == 'location':
+            return 'The location is New York'
+        if line.strip() == 'occupation':
+            return 'My occupation is "Student"'
         #print(line, '<---')
         return line 
 
