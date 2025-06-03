@@ -609,30 +609,22 @@ class Kernel:
             #return
             pass 
         if self.json:
-            #self.window_line_count += 2 
+            if not self.gemini:
+                self.prompt = self.m.json_output(rr)
 
-            #self.prompt += [self.format_json(identifiers['user'], rr) ]# + "\n"
-            #self.prompt += [self.format_json(identifiers['ai'], "") ]
-
-            self.prompt = self.m.json_output(rr)
+            if self.gemini:
+                self.prompt = json.dumps(self.m.json_output(rr))
             return
         if self.pc:
-            #self.window_line_count += 1 
-            #self.prompt +=  rr + '\n'#, 'completion': ''}]
 
             self.prompt = self.m.pc_output(rr)
             return
-        #self.prompt += identifiers['user'] + ': ' + rr + "\n" 
-        #self.prompt += identifiers['ai'] + ': '
-        #self.window_line_count += 2 
         self.prompt = self.m.output(rr)
 
     def modify_prompt_after_model(self, tt, rr):
         if self.review and self.review_skip >= 0:
             return
             pass 
-        #self.memory_user.append(rr)
-        #self.memory_ai.append(tt) 
         self.m.add_pair([rr, tt])
         pass 
 

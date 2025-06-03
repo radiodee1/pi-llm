@@ -7,6 +7,7 @@
 #question5 num five here
 #question6 num six here 
 #question7 num seven here
+What time is it?
 Say something inspirational about how to use your time wisely.
 What makes cooking such an interesting subject for so many people?
 Why is it so easy to forget about the most important things?
