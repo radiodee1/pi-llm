@@ -624,6 +624,8 @@ class Kernel:
     def modify_prompt_after_model(self, tt, rr):
         if self.review and self.review_skip >= 0:
             return
+        if 'time' in tt or 'time' in rr:
+            #return
             pass 
         self.m.add_pair([rr, tt])
         pass 
@@ -633,6 +635,9 @@ class Kernel:
             return text
 
         self.p(text, '<<< unmodified')
+        if self.gemini and self.json:
+            text = text['content']
+
         if self.json:
             t = text.strip().split(':')
             if self.review:
@@ -744,6 +749,8 @@ class Kernel:
                 self.p("Response received successfully:")
                 self.reply = r.json()["candidates"][0]["content"]["parts"][0]["text"]
                 self.p(self.reply)
+                if self.json:
+                    self.reply = json.loads(self.reply)
 
                 try:
                     self.tokens_recent = r.json()["usageMetadata"]['totalTokenCount']
@@ -838,8 +845,6 @@ class Kernel:
                     return
 
                 f.write(str(self.file_num) + '\n')
-                #f.write(identifiers['user'] + " : "+ str(self.memory_user[-1]) + "\n")
-                #f.write(identifiers['ai'] + " : " + str(self.memory_ai[-1]) + "\n")
                 pair = self.m.get_recent()
                 f.write(identifiers['user'] + " : "+ str(pair[0]) + "\n")
                 f.write(identifiers['ai'] + " : " + str(pair[1]) + "\n")
@@ -1050,7 +1055,7 @@ if __name__ == '__main__':
     parser.add_argument('--window', type=int, default=35, help="number of memory units used in input. (Use -1 for 'always-growing'.)")
     parser.add_argument('--cloud_stt', action="store_true", help="Google Cloud Speech Recognition. Disables --loop_wait")
     parser.add_argument('--cloud_tts', action="store_true", help="Google Cloud Text to Speech.")
-    parser.add_argument('--json', action="store_true", help="use json for model prompt.")
+    parser.add_argument('--json', action="store_true", help="use json for model prompt with OpenAI model.")
     parser.add_argument('--voice', type=str, default="en-US-Journey-F", help="Google Cloud TTS Voice Code.") ## en-US-Journey-D en-US-Journey-F
     parser.add_argument('--questions', type=int, default=-1, help="Simulate two parties with preset question list. Specify number of simulated questions. Must disable loop_wait.")
     parser.add_argument('--pc', action="store_true", help="use prompt-completion for prompt.")
