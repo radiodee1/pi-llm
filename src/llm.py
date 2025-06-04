@@ -757,8 +757,6 @@ class Kernel:
                 except:
                     self.tokens_recent = 0 
 
-                #self.p(self.tokens_recent, '<<<<++++')
-                #self.p('=========\n', r.text)
             else:
                 self.p(f"Error: {r.status_code}")
                 self.p(r.text)
