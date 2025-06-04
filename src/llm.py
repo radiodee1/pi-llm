@@ -636,7 +636,7 @@ class Kernel:
 
         self.p(text, '<<< unmodified')
         if self.gemini and self.json:
-            text = text['content']
+            text = text['content'].strip()
 
         if self.json:
             t = text.strip().split(':')
@@ -648,8 +648,8 @@ class Kernel:
                     t[0] = t[0].replace(review.REM_TEXT, '')
                     t[1] += review.REM_TEXT
 
-            if len(t) > 1:
-                text = ' '.join(t[1:])
+            if len(t) > 1 and t[0].strip() in identifiers.values():
+                text = ':'.join(t[1:])
             if len(t) == 1 and t[0].strip() in identifiers.values():
                 text = 'pause'
         #text = text.replace(':', ' ')
@@ -660,16 +660,12 @@ class Kernel:
         text = text.replace("?", '.')
         text = text.replace("!", '.')
         text = text.replace("\n", '')
-        if self.review:
-            #text = text.replace(review.ADD_TEXT, '')
-            #text = text.replace(review.REM_TEXT, '')
-            pass 
         if ':' in text:
             t = text.strip().split(':')
             if (len(t) == 2 or t[0].strip() in [identifiers['mem']]) and self.review:
                 text += review.REM_TEXT #' '.join(t[1:])
-            elif len(t) == 2 or t[0].strip() in identifiers.values():
-                text = ' '.join(t[1:])
+            elif len(t) == 2 and t[0].strip() in identifiers.values():
+                text = ':'.join(t[1:])
 
 
         if '\n' in text:
@@ -750,7 +746,10 @@ class Kernel:
                 self.reply = r.json()["candidates"][0]["content"]["parts"][0]["text"]
                 self.p(self.reply)
                 if self.json:
-                    self.reply = json.loads(self.reply)
+                    
+                    count = self.reply.count('"')
+                    if count == 8: ## magic number 
+                        self.reply = json.loads(self.reply)
 
                 try:
                     self.tokens_recent = r.json()["usageMetadata"]['totalTokenCount']
