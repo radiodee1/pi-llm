@@ -1,7 +1,7 @@
 FROM python:3.10-slim 
 
 WORKDIR /app
-COPY llm.py stt.py review.py  /app 
+COPY llm.py stt.py review.py prompt.py /app 
 
 
 COPY requirements.flatpak.txt /app 
@@ -36,7 +36,7 @@ COPY *.client.conf /etc/pulse/client.conf.d/.
 COPY *.default.pa /etc/pulse/default.pa.d/.
 COPY pulseaudio.daemon.conf /etc/pulse/daemon.conf
 
-COPY questions.txt /app
+COPY questions.txt combined.txt conversation.txt  /app
 
 #RUN  cat /app/pulseaudio.daemon.conf >> /etc/pulse/daemon.conf
 

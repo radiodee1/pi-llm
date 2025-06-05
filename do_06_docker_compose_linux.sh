@@ -23,7 +23,7 @@ cd ..
 
 cp virtualenv/requirements.flatpak.txt src/.
 
-cp files/questions.txt src/.
+cp files/questions.txt files/combined.txt files/conversation.txt src/.
 
 sudo ENV_USER_DIR=$USER_DIR UID=$UID docker compose --env-file ./env_docker/docker_volume.env up   
 
