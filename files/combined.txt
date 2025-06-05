@@ -3,7 +3,7 @@ time
 date
 
 location
-occupation
+# occupation
 
 # general-instructions
 # review-instructions
