@@ -564,13 +564,7 @@ class Kernel:
         return
 
     def make_prompt(self):
-        self.window_line_count = 0 
-        ret = ""
-        ai = [ 
-            { 'role': 'user', 'content': 'You are a ficticious person named ' + identifiers['ai'] + 
-             '. Use your imagination to answer all questions in English.' 
-            } 
-        ]
+        #self.window_line_count = 0 
         rule_instruct = ['You are a ficticious person named ' + identifiers['ai'] + '. Use your imagination to answer all questions in English.' ]
         
         index = self.m.get_index_from_name('RULES')
@@ -583,14 +577,9 @@ class Kernel:
         self.m.replace_list(rule_instruct, index)
         self.m.set_show_from_name('INSTRUCTIONS')
  
-        #ai = [{ 'content': 'You are a ficticious person named ' + identifiers['ai'] + 
-        #     '. Use your imagination to answer all questions in English.' 
-        #}]
         if self.review and self.review_skip == -1:
             instructions = str(' Say anything with the "' + review.ADD_TEXT + '" characters as a flag to save any marked sentence permanently. Use your intuition to mark sentences. ' +
                 ' Repeat anything out loud with the "' + review.REM_TEXT + '" characters as a flag to delete any marked sentence from the memory list permanently.')
-            #ai[0]['content'] += instructions 
-            #ret += instructions + '\n'
 
             index = self.m.get_index_from_name('RULES')
             self.m.replace_list([ instructions ], index)
@@ -601,13 +590,14 @@ class Kernel:
             self.m.replace_list( review.memory_review, index )
             self.m.set_show_from_name('REVIEW')
             
-            #print( index, '\n', review.memory_review )
         return
 
     def modify_prompt_before_model(self, tt, rr):
         if self.review and self.review_skip >= 0:
             #return
             pass 
+        self.m.shrink(self.size_trim)
+
         if self.json:
             if not self.gemini:
                 self.prompt = self.m.json_output(rr)
