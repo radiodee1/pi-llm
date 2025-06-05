@@ -37,6 +37,7 @@ modules:
     sources:
       - type: file
         path: src/llm.py
+
   - name: review
     buildsystem: simple
     build-commands:
@@ -53,6 +54,14 @@ modules:
       - type: file
         path: src/stt.py 
 
+  - name: prompt
+    buildsystem: simple
+    build-commands:
+      - install -D prompt.py /app/bin/prompt.py 
+    sources:
+      - type: file
+        path: src/prompt.py 
+
   - name: org.llm.LLM.desktop
     buildsystem: simple
     sources:
@@ -60,6 +69,7 @@ modules:
         path: ./files/org.llm.LLM.desktop 
     build-commands:
       - install -Dm755 org.llm.LLM.desktop /app/share/applications/org.llm.LLM.desktop
+
   - name: questions.txt
     buildsystem: simple
     sources:
@@ -67,6 +77,22 @@ modules:
         path: files/questions.txt
     build-commands:
       - install -D questions.txt /app/questions.txt
+
+  - name: combined.txt
+    buildsystem: simple
+    sources:
+      - type: file
+        path: files/combined.txt
+    build-commands:
+      - install -D combined.txt /app/combined.txt
+
+  - name: conversation.txt
+    buildsystem: simple
+    sources:
+      - type: file
+        path: files/conversation.txt
+    build-commands:
+      - install -D conversation.txt /app/conversation.txt
 
 
 
