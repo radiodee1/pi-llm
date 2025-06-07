@@ -45,39 +45,22 @@ echo "" > ../pulseaudio-win.env ## empty
 
 ./setup_user_dir.sh $USER_DIR
 ./setup_volume.sh $USER_DIR
-#./setup_pulse_server.sh tcp:${Hostip}:4713
 ./setup_pulse_server.sh unix:/mnt/wslg/PulseServer
-#/var/run/user/$UID/pulse/native
-
-#./setup_env_pair.sh ENV_VOLUME $USER_DIR
 
 cat docker*.env >> ../pulseaudio-win.env 
 
 cd ..
 
-#cp virtualenv/requirements.flatpak.txt src/.
-
-#cp files/pulseaudio.client.conf src/.
-#cp files/pulseaudio.default.pa src/. 
-#cp files/pulseaudio.daemon.conf src/.
-
-#cp files/questions.txt files/combined.txt files/conversation.txt src/.
-
 sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
 sudo cp files/*.default.pa /etc/pulse/default.pa.d/.
 sudo cat files/*.daemon.conf >> /etc/pulse/daemon.conf
 
-#chmod -R 777 $USER_DIR
 
 ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml --env-file ./pulseaudio-win.env up -d 
 
-#echo $USER_DIR
 
 echo 'type "exit" below to get terminal back'
 
 ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker run -it -v $USER_DIR:$USER_DIR -v /var/run/user/${UID}/:/var/run/user/${UID}/ -v /mnt/wslg/PulseServer:/mnt/wslg/PulseServer pi-llm-pi-llm  bash    
-
-
-# COMPOSE_CONVERT_WINDOWS_PATHS=1  ENV_VOLUME=$USER_DIR ENV_USER_DIR=$USER_DIR ENV_UID=$UID ENV_GID=$GROUP  ENV_IP=$HOSTIP ENV_PULSE_SERVER=unix:/mnt/wslg/PulseServer docker compose -f compose-win.yaml --env-file ./pulseaudio-win.env up   
 
 echo 'run "docker compose down" to stop'
