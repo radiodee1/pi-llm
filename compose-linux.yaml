@@ -1,7 +1,9 @@
 
 services:
     pi-llm:
-        build: src/.
+        build: 
+            context: . 
+            dockerfile: Dockerfile.linux
         ports:
             - "80:80"
         env_file: 

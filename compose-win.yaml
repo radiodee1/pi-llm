@@ -2,7 +2,7 @@
 services:
     pi-llm:
         build: 
-            context: src/.
+            context: .
             dockerfile: Dockerfile.win
             args:
               - ENV_IP
