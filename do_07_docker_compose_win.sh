@@ -55,13 +55,13 @@ cat docker*.env >> ../pulseaudio-win.env
 
 cd ..
 
-cp virtualenv/requirements.flatpak.txt src/.
+#cp virtualenv/requirements.flatpak.txt src/.
 
-cp files/pulseaudio.client.conf src/.
-cp files/pulseaudio.default.pa src/. 
-cp files/pulseaudio.daemon.conf src/.
+#cp files/pulseaudio.client.conf src/.
+#cp files/pulseaudio.default.pa src/. 
+#cp files/pulseaudio.daemon.conf src/.
 
-cp files/questions.txt files/combined.txt files/conversation.txt src/.
+#cp files/questions.txt files/combined.txt files/conversation.txt src/.
 
 sudo cp files/*.client.conf /etc/pulse/client.conf.d/.
 sudo cp files/*.default.pa /etc/pulse/default.pa.d/.

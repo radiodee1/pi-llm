@@ -1,12 +1,12 @@
 FROM python:3.10-slim 
 
 WORKDIR /app
-COPY llm.py stt.py review.py prompt.py  /app 
+COPY src/llm.py src/stt.py src/review.py src/prompt.py  /app 
 
 
-COPY requirements.flatpak.txt /app 
+COPY virtualenv/requirements.flatpak.txt /app 
 
-COPY questions.txt combined.txt conversation.txt /app
+COPY files/questions.txt files/combined.txt files/conversation.txt /app
 
 RUN apt update
 RUN apt upgrade -y

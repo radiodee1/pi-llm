@@ -1,10 +1,10 @@
 FROM python:3.10-slim 
 
 WORKDIR /app
-COPY llm.py stt.py review.py prompt.py /app 
+COPY src/llm.py src/stt.py src/review.py src/prompt.py /app 
 
 
-COPY requirements.flatpak.txt /app 
+COPY virtualenv/requirements.flatpak.txt /app 
 
 RUN apt update
 RUN apt upgrade -y
@@ -32,11 +32,11 @@ RUN ["/app/venv/bin/python3", "-m", "pip" , "install" , "--break-system-packages
 
 COPY *.mp3 /app 
 
-COPY *.client.conf /etc/pulse/client.conf.d/.
-COPY *.default.pa /etc/pulse/default.pa.d/.
-COPY pulseaudio.daemon.conf /etc/pulse/daemon.conf
+COPY files/*.client.conf /etc/pulse/client.conf.d/.
+COPY files/*.default.pa /etc/pulse/default.pa.d/.
+COPY files/pulseaudio.daemon.conf /etc/pulse/daemon.conf
 
-COPY questions.txt combined.txt conversation.txt  /app
+COPY files/questions.txt files/combined.txt files/conversation.txt  /app
 
 #RUN  cat /app/pulseaudio.daemon.conf >> /etc/pulse/daemon.conf
 
