@@ -239,6 +239,7 @@ def listen_print_loop(responses: object) -> str:
             for i in wake_words:
                 if i in transcript:
                     sleep = False
+                    zero_out_time()
 
             if len(transcript.strip()) > 0 and sleep == False:
                 collect_characters += separator + transcript.strip() 
@@ -266,6 +267,12 @@ def should_exit() -> bool:
     if time_end > 0 and time_last_output - time_end > overall_timeout:
         return True ## should_exit after a regular to long reply
     return False
+
+def zero_out_time():
+    global time_start, time_end, time_last_output
+    time_last_output = 0
+    time_end = 0
+    time_start = 0 
 
 def main() -> str:
     """Transcribe speech from audio file."""
