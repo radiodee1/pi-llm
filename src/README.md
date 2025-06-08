@@ -8,6 +8,10 @@ The concept for the review code is the implementation of a system where the AI t
 
 This file handles all the methods necessary for a chatbot that can perform headlessly and use Speech-to-text and Text-to-speach. This file also handles all input argument parsing. It contains the main loop of the program, and the part of the code that connects to or makes requests of other online services.
 
+## `prompt.py`
+
+This file handles an implementation of a complex prompt for the llm.
+
 ## `review.py`
 
 I was reading about methods employed to enhance gpt models. One concern was the ability of the models to recall important information. This was related to the context size. The other concern was for problem solving. Problem solving seems to demand an inner monologue. Sometimes this monologue is achieved through token manipulation, and sometimes it seems to be achieved through a recurrent mechanism like that used in RNNs. I had some ideas concerning what I was reading, especially the Long Term Memories, and I tried to implement them in the `review` code.
