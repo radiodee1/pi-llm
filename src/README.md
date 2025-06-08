@@ -10,7 +10,7 @@ This file handles all the methods necessary for a chatbot that can perform headl
 
 ## `prompt.py`
 
-This file handles an implementation of a complex prompt for the llm.
+This file handles an implementation of a complex prompt for the llm. It is essentially a Python object that is responsible for building the prompt from many small pieces. You can change the order of the various pieces by editing the config value of the `~/.llm.env` file. The key/value pair is called 'PROJECT_PROMPT_ORDER' 
 
 ## `review.py`
 
