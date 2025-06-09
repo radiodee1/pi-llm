@@ -1,5 +1,7 @@
 # File Descriptions
 
+These files show exchanges between two nearly identical installations of the pi-llm models. One install is on an amd64 and one is on a Raspberry Pi 4B device. For the span of the test the two computers are not given human input. They just interact with each other.
+
 | file | description | date |
 |---|---|---|
 | llm.05a.txt | 15 minutes, 13 responses, 0.95 temperature, 3 collisions, use cloud speech recognition, no collision checking, name Bob | 2024-07-20 |
