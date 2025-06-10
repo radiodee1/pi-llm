@@ -193,6 +193,12 @@ class List:
                     self.modify = True
 
                 p = i.strip()
+
+                if not os.path.exists(p):
+                    i = p.strip().split('/')[-1]
+                    if os.path.exists('/app/'):
+                        p = '/app/' + i 
+
                 if os.path.exists(p):
                     p = p.split('/')[-1]
                     #print(p)
