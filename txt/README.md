@@ -1,6 +1,6 @@
 # File Descriptions
 
-These files show exchanges between two nearly identical installations of the pi-llm models. One install is on an amd64 and one is on a Raspberry Pi 4B device. For the span of the test the two computers are not given human input. They just interact with each other.
+These files show exchanges between two nearly identical installations of the pi-llm models. One install is on an amd64 desktop computer and one is on a Raspberry Pi 4B device (aarch64). For the span of the test the two computers are not given human input. They just interact with each other. In the table, if a 'collision' is mentioned, that indicates that the two models were talking at the same time.
 
 | file | description | date |
 |---|---|---|
