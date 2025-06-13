@@ -237,7 +237,7 @@ def listen_print_loop(responses: object) -> str:
             #    print("Exiting..")
             #    break
             for i in wake_words:
-                if i in transcript:
+                if i.lower() in transcript.lower():
                     sleep = False
                     zero_out_time()
 
@@ -315,11 +315,12 @@ def main() -> str:
 
 if __name__ == "__main__":
     sleep = False
-    wake_words = ['hi', 'hello']
+    wake_words = ['hi', 'hello', 'jane']
     xx = []
-    for _ in range(1):
+    for _ in range(2):
         x = main()
         print('xx', x.strip().strip(','), 'xx')
         xx.append(x.strip().strip(','))
+        sleep = True 
     print('done')
     print(xx)
