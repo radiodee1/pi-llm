@@ -319,8 +319,9 @@ if __name__ == "__main__":
     xx = []
     for _ in range(2):
         x = main()
-        print('xx', x.strip().strip(','), 'xx')
-        xx.append(x.strip().strip(','))
+        s = x.strip().strip(',').strip()
+        print('xx', s, 'xx')
+        xx.append(s)
         sleep = True 
     print('done')
     print(xx)
